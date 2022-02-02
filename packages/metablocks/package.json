@@ -15,6 +15,7 @@
   "devDependencies": {
     "@swc/cli": "^0.1.55",
     "@swc/core": "^1.2.131",
+    "chokidar": "^3.5.3",
     "prettier": "^2.5.1"
   },
   "dependencies": {
