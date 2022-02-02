@@ -617,10 +617,6 @@ const idl = {
             name: "vaultBump",
             type: "u8",
           },
-          {
-            name: "userNftBump",
-            type: "u8",
-          },
         ],
       },
     },
