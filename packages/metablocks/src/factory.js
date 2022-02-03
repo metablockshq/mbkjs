@@ -1,4 +1,4 @@
-import { Program, Provider } from "@kyra/anchor";
+import { Program, Provider } from "@kyraa/anchor";
 import { PublicKey } from "@solana/web3.js";
 import idl from "./mbIdl";
 const programId = new PublicKey(idl.metadata.address);
