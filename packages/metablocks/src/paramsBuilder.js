@@ -101,16 +101,19 @@ const computeInitDepositNftParams = async (usersKey, mintKey, universeKey) => {
     receiptMint
   );
 
-  const [vaultAta, vaultAtaBump] = await findAssociatedAddress(
+  const vaultAtaBump = await findAssociatedAddress(
     vaultAuthorityKey,
     mintKey
-  );
+  )[1];
 
   const [receiptTokenAddress, receiptTokenBump] = await findReceiptTokenAddress(
     receiptMint
   );
 
-  const [userNftKey, userNftBump] = await findUserNftAddress(usersKey, mintKey);
+  const [userNftKey, userNftBump] = await findUserNftAddress(
+    usersKey,
+    receiptMint
+  );
 
   const [userReceiptAta, userReceiptAtaBump] = await findAssociatedAddress(
     usersKey,
@@ -164,18 +167,19 @@ const computeDepositNftParams = async (usersKey, mintKey, universeKey) => {
     mintKey
   );
 
-  const [receiptTokenAddress, receiptTokenBump] = await findReceiptTokenAddress(
-    receiptMint
-  );
+  const receiptTokenBump = await findReceiptTokenAddress(receiptMint)[1];
 
-  const [userNftKey, userNftBump] = await findUserNftAddress(usersKey, mintKey);
-
-  const [userReceiptAta, userReceiptAtaBump] = await findAssociatedAddress(
+  const [userNftKey, userNftBump] = await findUserNftAddress(
     usersKey,
     receiptMint
   );
 
-  const [userNftMetadata, _] = await findMetadataAddress(mintKey);
+  const userReceiptAtaBump = await findAssociatedAddress(
+    usersKey,
+    receiptMint
+  )[1];
+
+  const userNftMetadata = await findMetadataAddress(mintKey)[0];
 
   const args = {
     userNftBump: userNftBump,
@@ -224,23 +228,23 @@ const computeTransferReceiptNftParams = async (
   const [vaultAuthorityKey, vaultAuthorityBump] =
     await findVaultAuthorityAddress(universeKey, usersKey, receiptMint);
 
-  const [vaultReceiptAta, vaultReceiptAtaBump] = await findAssociatedAddress(
+  const vaultReceiptAta = await findAssociatedAddress(
     vaultAuthorityKey,
     receiptMint
-  );
+  )[0];
 
-  const [userNftKey, userNftBump] = await findUserNftAddress(usersKey, mintKey);
-
-  const [userReceiptAta, userReceiptAtaBump] = await findAssociatedAddress(
+  const [userNftKey, userNftBump] = await findUserNftAddress(
     usersKey,
     receiptMint
   );
 
-  const [receiptMetadataAddress, _receiptMetadataBump] =
-    await findMetadataAddress(receiptMint);
+  const userReceiptAta = await findAssociatedAddress(usersKey, receiptMint)[0];
 
-  const [receiptMasterEditionAddress, _receiptMasterEditionBump] =
-    await findMasterEditionAddress(receiptMint);
+  const receiptMetadataAddress = await findMetadataAddress(receiptMint)[0];
+
+  const receiptMasterEditionAddress = await findMasterEditionAddress(
+    receiptMint
+  )[0];
 
   const vaultCreator = {
     address: vaultAuthorityKey,
@@ -325,7 +329,10 @@ const computeGroupedDepositNftParams = async (
     receiptMint
   );
 
-  const [userNftKey, userNftBump] = await findUserNftAddress(usersKey, mintKey);
+  const [userNftKey, userNftBump] = await findUserNftAddress(
+    usersKey,
+    receiptMint
+  );
 
   const [userReceiptAta, userReceiptAtaBump] = await findAssociatedAddress(
     usersKey,
@@ -486,6 +493,61 @@ const computeGroupedDepositNftParams = async (
   };
 };
 
+const computeWithdrawNftParams = async (usersKey, mintKey, universeKey) => {
+  const receiptMint = await findReceiptMintAddress(
+    universeKey,
+    usersKey,
+    mintKey
+  )[0];
+
+  const [userNftKey, userNftBump] = await findUserNftAddress(
+    usersKey,
+    receiptMint
+  );
+
+  const userNftAta = await findAssociatedAddress(usersKey, mintKey)[0];
+  const [vaultAuthorityKey, vaultAuthorityBump] =
+    await findVaultAuthorityAddress(universeKey, usersKey, receiptMint);
+
+  const vaultNftAta = await findAssociatedAddress(
+    vaultAuthorityKey,
+    mintKey
+  )[0];
+
+  const vaultReceiptAta = await findAssociatedAddress(
+    vaultAuthorityKey,
+    receiptMint
+  )[0];
+
+  const userReceiptAta = await findAssociatedAddress(usersKey, receiptMint)[0];
+
+  const args = {
+    userNftBump: userNftBump,
+    vaultAuthorityBump: vaultAuthorityBump,
+  };
+  const withdrawAccounts = {
+    userNft: userNftKey,
+    vaultAuthority: vaultAuthorityKey,
+    authority: usersKey,
+    universe: universeKey,
+    userNftAta: userNftAta, // recipientKey,
+    vaultNftAta: vaultNftAta,
+    tokenMint: mintKey,
+    receiptMint: receiptMint,
+    userReceiptAta: userReceiptAta,
+    vaultReceiptAta: vaultReceiptAta,
+    tokenProgram: new PublicKey(programIds.token),
+    associatedTokenProgram: new PublicKey(programIds.associatedToken),
+    systemProgram: SystemProgram.programId,
+    rent: SYSVAR_RENT_PUBKEY,
+  };
+
+  return {
+    args,
+    withdrawAccounts,
+  };
+};
+
 export {
   computeCreateUniverseParams,
   computeUpdateUniverseParams,
@@ -494,4 +556,5 @@ export {
   computeDepositNftParams,
   computeTransferReceiptNftParams,
   computeGroupedDepositNftParams,
+  computeWithdrawNftParams,
 };

@@ -1,6 +1,6 @@
 # Meta Blocks Monoreop
 
-## To install @kyraa/metablocks, you can:
+## To install @kyraa/metablocks, you can
 
 ```bash
 yarn add ../kyra/packages/anchor # anchor is peer dep
@@ -13,7 +13,9 @@ And then use Meta Blocks in your app like:
 import { api } from "@kyraa/metablocks";
 ```
 
-## Live reloads might not work with yarn add.
+## Live reloads
+
+Might not work with `yarn add`
 
 In local workflow, currently symlinking kyraa/packages to @kyraa in the project root, and then importing it as normal js code.
 

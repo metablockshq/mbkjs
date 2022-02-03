@@ -257,6 +257,32 @@ const groupedDepositNftV1 = async (
   }
 };
 
+const withdrawNftV1 = async (
+  connection,
+  wallet,
+  usersKey,
+  mintKey,
+  universeKey
+) => {
+  try {
+    const program = getMetaBlocksProgram(connection, wallet);
+    const withdrawNftInstruction = await getWithdrawNftInstruction(
+      program,
+      usersKey,
+      mintKey,
+      universeKey
+    );
+    const transaction = new Transaction();
+    transaction.add(withdrawNftInstruction);
+
+    return await program.provider.send(transaction, []);
+  } catch (e) {
+    console.log("from api", e);
+    throw e;
+  } finally {
+  }
+};
+
 export {
   createUniverseV1,
   updateUniverseV1,
@@ -265,4 +291,5 @@ export {
   depositNftV1,
   transferReceiptNftToUserV1,
   groupedDepositNftV1,
+  withdrawNftV1,
 };

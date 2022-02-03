@@ -3,6 +3,7 @@ import {
   computeInitDepositNftParams,
   computeInitReceiptMintParams,
   computeTransferReceiptNftParams,
+  computeWithdrawNftParams,
 } from "./paramsBuilder";
 
 const getInitReceiptMintInstruction = async ({
@@ -70,9 +71,26 @@ const getTransferReceiptNftToUserInstruction = async ({
   });
 };
 
+const getWithdrawNftInstruction = async ({
+  program,
+  usersKey,
+  mintKey,
+  universeKey,
+}) => {
+  const { withdrawNftArgs, withdrawNftAccounts } =
+    await computeWithdrawNftParams(usersKey, mintKey, universeKey);
+
+  return program.instruction.withdrawNftV1(
+    withdrawNftArgs.userNftBump,
+    withdrawNftArgs.vaultAuthorityBump,
+    { accounts: withdrawNftAccounts }
+  );
+};
+
 export {
   getInitReceiptMintInstruction,
   getInitDepositNftInstruction,
   getDepositNftInstruction,
   getTransferReceiptNftToUserInstruction,
+  getWithdrawNftInstruction,
 };
