@@ -47,17 +47,6 @@ const findVaultAuthorityAddress = async (universeKey, usersKey, mintKey) => {
   );
 };
 
-// const findVaultAssociatedAddress = async (tokenRecipient, mintKey) => {
-//   return await PublicKey.findProgramAddress(
-//     [
-//       tokenRecipient.toBuffer(),
-//       new PublicKey(programIds.token).toBuffer(),
-//       mintKey.toBuffer(),
-//     ],
-//     new PublicKey(programIds.associatedToken)
-//   );
-// };
-
 const findReceiptMintAddress = async (universeKey, authorityKey, tokenMint) => {
   return await PublicKey.findProgramAddress(
     [
