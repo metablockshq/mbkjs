@@ -37,10 +37,7 @@ const createUniverseV1 = async ({
     });
     return tx;
   } catch (e) {
-    console.log("from api", e);
     throw e;
-  } finally {
-    console.log(universeKey);
   }
 };
 
@@ -53,13 +50,14 @@ const updateUniverseV1 = async ({
 }) => {
   const program = getMetaBlocksProgram(connection, wallet);
   const usersKey = wallet.publicKey;
-  const { universeKey, accounts, updateUniverseArgs } =
-    await computeUpdateUniverseParams({
+  const { _, accounts, updateUniverseArgs } = await computeUpdateUniverseParams(
+    {
       usersKey,
       name,
       description,
       websiteUrl,
-    });
+    }
+  );
 
   try {
     const tx = await program.rpc.updateUniverseV1(updateUniverseArgs, {
@@ -68,10 +66,7 @@ const updateUniverseV1 = async ({
     });
     return tx;
   } catch (e) {
-    console.log("from api", e);
     throw e;
-  } finally {
-    console.log(universeKey);
   }
 };
 
@@ -96,9 +91,7 @@ const initReceiptMintV1 = async ({
     const tx = await program.provider.send(transaction, []);
     return tx;
   } catch (e) {
-    console.log("from api", e);
     throw e;
-  } finally {
   }
 };
 
@@ -122,9 +115,7 @@ const initDepositNftV1 = async ({
 
     return await program.provider.send(transaction, []);
   } catch (e) {
-    console.log("from api", e);
     throw e;
-  } finally {
   }
 };
 
@@ -143,9 +134,7 @@ const depositNftV1 = async ({ connection, wallet, mintKey, universeKey }) => {
 
     return await program.provider.send(transaction, []);
   } catch (e) {
-    console.log("from api", e);
     throw e;
-  } finally {
   }
 };
 
@@ -175,9 +164,7 @@ const transferReceiptNftToUserV1 = async ({
     const tx = await program.provider.send(transaction, []);
     return tx;
   } catch (e) {
-    console.log("from api", e);
     throw e;
-  } finally {
   }
 };
 
@@ -246,9 +233,7 @@ const groupedDepositNftV1 = async ({
 
     return { tx1, tx2 };
   } catch (e) {
-    console.log("from api", e);
     throw e;
-  } finally {
   }
 };
 
@@ -267,9 +252,7 @@ const withdrawNftV1 = async ({ connection, wallet, mintKey, universeKey }) => {
 
     return await program.provider.send(transaction, []);
   } catch (e) {
-    console.log("from api", e);
     throw e;
-  } finally {
   }
 };
 
