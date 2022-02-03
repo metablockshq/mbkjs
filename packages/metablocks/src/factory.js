@@ -8,7 +8,6 @@ const programIds = {
   associatedToken: "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
   metaBlocks: "9pNcm4DmZJgHYynuvhSbZ3m4bqBSKeuXqZ2cCZKbcLJc",
   metaplex: "p1exdMJcjVao65QdewkaZRUnU6VPSXhus9n2GzWfh98",
-  metadata: "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s",
 };
 
 const opts = {
