@@ -1,0 +1,14 @@
+{
+  "name": "kyraa",
+  "version": "0.0.1",
+  "description": "Meta Blocks JS monorepo",
+  "repository": "git@github.com:metablockshq/kyraa.git",
+  "author": "Shivek Khurana <khuranashivek@outlook.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  },
+  "scripts": {
+    "bootstrap": "lerna bootstrap"
+  }
+}

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import useSWR from "swr";
 
-import { random } from "@kyra/utils/string";
+import { random } from "@kyraa/utils/string";
 
 // observe defAtom state changes
 const useAtom = (atom) => {
