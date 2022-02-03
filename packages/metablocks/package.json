@@ -9,9 +9,8 @@
     "clean": "rm -rf dist"
   },
   "peerDependencies": {
-    "@project-serum/anchor": "^0.20.1",
-    "@solana/web3.js": "^1.17.0",
-     "@kyraa/anchor": "*"
+    "@kyraa/anchor": "*",
+    "@solana/web3.js": "^1.17.0"
   },
   "devDependencies": {
     "@swc/cli": "^0.1.55",
@@ -19,6 +18,6 @@
     "prettier": "^2.5.1"
   },
   "dependencies": {
-   
+    "chokidar": "^3.5.3"
   }
 }
