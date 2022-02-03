@@ -55,7 +55,11 @@ const computeUpdateUniverseParams = async ({
   };
 };
 
-const computeInitReceiptMintParams = async (usersKey, mintKey, universeKey) => {
+const computeInitReceiptMintParams = async ({
+  usersKey,
+  mintKey,
+  universeKey,
+}) => {
   const [receiptMint, receiptMintBump] = await findReceiptMintAddress(
     universeKey,
     usersKey,
@@ -86,7 +90,11 @@ const computeInitReceiptMintParams = async (usersKey, mintKey, universeKey) => {
   };
 };
 
-const computeInitDepositNftParams = async (usersKey, mintKey, universeKey) => {
+const computeInitDepositNftParams = async ({
+  usersKey,
+  mintKey,
+  universeKey,
+}) => {
   const [receiptMint, receiptMintBump] = await findReceiptMintAddress(
     universeKey,
     usersKey,
@@ -152,7 +160,7 @@ const computeInitDepositNftParams = async (usersKey, mintKey, universeKey) => {
   };
 };
 
-const computeDepositNftParams = async (usersKey, mintKey, universeKey) => {
+const computeDepositNftParams = async ({ usersKey, mintKey, universeKey }) => {
   const [receiptMint, receiptMintBump] = await findReceiptMintAddress(
     universeKey,
     usersKey,
@@ -212,13 +220,13 @@ const computeDepositNftParams = async (usersKey, mintKey, universeKey) => {
   };
 };
 
-const computeTransferReceiptNftParams = async (
+const computeTransferReceiptNftParams = async ({
   usersKey,
   mintKey,
   universeKey,
   url,
-  isReceiptMasterEdition
-) => {
+  isReceiptMasterEdition,
+}) => {
   const [receiptMint, receiptMintBump] = await findReceiptMintAddress(
     universeKey,
     usersKey,
@@ -299,13 +307,13 @@ const computeTransferReceiptNftParams = async (
   };
 };
 
-const computeGroupedDepositNftParams = async (
+const computeGroupedDepositNftParams = async ({
   usersKey,
   mintKey,
   universeKey,
   url,
-  isReceiptMasterEdition
-) => {
+  isReceiptMasterEdition,
+}) => {
   const [receiptMint, receiptMintBump] = await findReceiptMintAddress(
     universeKey,
     usersKey,
@@ -493,7 +501,7 @@ const computeGroupedDepositNftParams = async (
   };
 };
 
-const computeWithdrawNftParams = async (usersKey, mintKey, universeKey) => {
+const computeWithdrawNftParams = async ({ usersKey, mintKey, universeKey }) => {
   const receiptMint = await findReceiptMintAddress(
     universeKey,
     usersKey,
