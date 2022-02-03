@@ -1,4 +1,4 @@
-import { Program, Provider, utils } from "@project-serum/anchor";
+import { Program, Provider, utils } from "@kyraa/anchor";
 import { PublicKey, SYSVAR_RENT_PUBKEY } from "@solana/web3.js";
 
 import { programIds, getMetaBlocksProgram } from "./factory";
