@@ -12,7 +12,7 @@ import {
   getInitReceiptMintInstruction,
   getTransferReceiptNftToUserInstruction,
 } from "./instructions";
-
+//create universe
 const createUniverseV1 = async ({
   connection,
   wallet,
