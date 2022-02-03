@@ -11,8 +11,21 @@ import {
 } from "./pda";
 
 // compute Create universe params
-const computeCreateUniverseParams = async ({ usersKey }) => {
+const computeCreateUniverseParams = async ({
+  usersKey,
+  name,
+  description,
+  websiteUrl,
+}) => {
   const [universeKey, universeBump] = await findUniverseAddress(usersKey);
+
+  const createUniverseArgs = {
+    name: name,
+    websiteUrl: websiteUrl,
+    description: description,
+    bump: universeBump,
+  };
+
   const accounts = {
     universe: universeKey,
     payer: usersKey,
@@ -21,31 +34,31 @@ const computeCreateUniverseParams = async ({ usersKey }) => {
   };
 
   return {
-    universeKey,
-    universeBump,
+    createUniverseArgs,
     accounts,
   };
 };
 
 const computeUpdateUniverseParams = async ({
-  usersKey: usersKey,
-  name: name,
-  description: description,
-  websiteUrl: websiteUrl,
+  usersKey,
+  name,
+  description,
+  websiteUrl,
 }) => {
   const [universeKey, universeBump] = await findUniverseAddress(usersKey);
-  const accounts = {
-    universe: universeKey,
-    payer: usersKey,
-    universeAuthority: usersKey,
-    systemProgram: SystemProgram.programId,
-  };
 
   const updateUniverseArgs = {
     name: name,
     websiteUrl: websiteUrl,
     description: description,
     bump: universeBump,
+  };
+
+  const accounts = {
+    universe: universeKey,
+    payer: usersKey,
+    universeAuthority: usersKey,
+    systemProgram: SystemProgram.programId,
   };
 
   return {
@@ -311,7 +324,7 @@ const computeGroupedDepositNftParams = async ({
   usersKey,
   mintKey,
   universeKey,
-  url,
+  receiptUrl,
   isReceiptMasterEdition,
 }) => {
   const [receiptMint, receiptMintBump] = await findReceiptMintAddress(
@@ -404,7 +417,7 @@ const computeGroupedDepositNftParams = async ({
     userNftBump: userNftBump,
     vaultBump: vaultAuthorityBump,
     receiptMintBump: receiptMintBump,
-    uri: url,
+    uri: receiptUrl,
     creators: creators,
     name: "MetablocksReceiptNft",
     symbol: "mbk",

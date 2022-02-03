@@ -1,4 +1,4 @@
-# Meta Blocks Monoreop
+# Meta Blocks JS Monorepo
 
 ## To install @kyraa/metablocks, you can
 

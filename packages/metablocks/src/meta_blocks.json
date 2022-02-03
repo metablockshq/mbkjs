@@ -28,20 +28,10 @@
       ],
       "args": [
         {
-          "name": "bump",
-          "type": "u8"
-        },
-        {
-          "name": "name",
-          "type": "string"
-        },
-        {
-          "name": "description",
-          "type": "string"
-        },
-        {
-          "name": "websiteUrl",
-          "type": "string"
+          "name": "args",
+          "type": {
+            "defined": "CreateUniverseArgs"
+          }
         }
       ]
     },
@@ -451,12 +441,10 @@
       ],
       "args": [
         {
-          "name": "userNftBump",
-          "type": "u8"
-        },
-        {
-          "name": "vaultBump",
-          "type": "u8"
+          "name": "args",
+          "type": {
+            "defined": "WithdrawNftArgs"
+          }
         }
       ]
     }
@@ -621,6 +609,30 @@
       }
     },
     {
+      "name": "CreateUniverseArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "websiteUrl",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
       "name": "UpdateUniverseArgs",
       "type": {
         "kind": "struct",
@@ -726,6 +738,22 @@
             "type": {
               "option": "bool"
             }
+          }
+        ]
+      }
+    },
+    {
+      "name": "WithdrawNftArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "userNftBump",
+            "type": "u8"
+          },
+          {
+            "name": "vaultBump",
+            "type": "u8"
           }
         ]
       }

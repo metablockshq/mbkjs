@@ -11,6 +11,7 @@ import {
   getInitDepositNftInstruction,
   getInitReceiptMintInstruction,
   getTransferReceiptNftToUserInstruction,
+  getWithdrawNftInstruction,
 } from "./instructions";
 
 const createUniverseV1 = async ({
@@ -21,20 +22,19 @@ const createUniverseV1 = async ({
   websiteUrl,
 }) => {
   const program = getMetaBlocksProgram(connection, wallet);
-
-  const { universeKey, universeBump, accounts } =
-    await computeCreateUniverseParams({
-      usersKey: wallet.publicKey,
-    });
+  const usersKey = wallet.publicKey;
+  const { createUniverseArgs, accounts } = await computeCreateUniverseParams({
+    usersKey,
+    name,
+    description,
+    websiteUrl,
+  });
 
   try {
-    const tx = await program.rpc.createUniverseV1(
-      universeBump,
-      name,
-      description,
-      websiteUrl,
-      { accounts, signers: [] }
-    );
+    const tx = await program.rpc.createUniverseV1(createUniverseArgs, {
+      accounts,
+      signers: [],
+    });
     return tx;
   } catch (e) {
     console.log("from api", e);
@@ -52,13 +52,13 @@ const updateUniverseV1 = async ({
   websiteUrl,
 }) => {
   const program = getMetaBlocksProgram(connection, wallet);
-
+  const usersKey = wallet.publicKey;
   const { universeKey, accounts, updateUniverseArgs } =
     await computeUpdateUniverseParams({
-      usersKey: wallet.publicKey,
-      name: name,
-      description: description,
-      websiteUrl: websiteUrl,
+      usersKey,
+      name,
+      description,
+      websiteUrl,
     });
 
   try {
@@ -78,12 +78,12 @@ const updateUniverseV1 = async ({
 const initReceiptMintV1 = async ({
   connection,
   wallet,
-  usersKey,
   mintKey,
   universeKey,
 }) => {
   try {
     const program = getMetaBlocksProgram(connection, wallet);
+    const usersKey = wallet.publicKey;
     const initReceiptMintInstruction = await getInitReceiptMintInstruction({
       program,
       usersKey,
@@ -105,12 +105,12 @@ const initReceiptMintV1 = async ({
 const initDepositNftV1 = async ({
   connection,
   wallet,
-  usersKey,
   mintKey,
   universeKey,
 }) => {
   try {
     const program = getMetaBlocksProgram(connection, wallet);
+    const usersKey = wallet.publicKey;
     const initDepositNftInstruction = await getInitDepositNftInstruction({
       program,
       usersKey,
@@ -128,15 +128,10 @@ const initDepositNftV1 = async ({
   }
 };
 
-const depositNftV1 = async ({
-  connection,
-  wallet,
-  usersKey,
-  mintKey,
-  universeKey,
-}) => {
+const depositNftV1 = async ({ connection, wallet, mintKey, universeKey }) => {
   try {
     const program = getMetaBlocksProgram(connection, wallet);
+    const usersKey = wallet.publicKey;
     const depositNftInstruction = await getDepositNftInstruction({
       program,
       usersKey,
@@ -157,7 +152,6 @@ const depositNftV1 = async ({
 const transferReceiptNftToUserV1 = async ({
   connection,
   wallet,
-  usersKey,
   mintKey,
   universeKey,
   url,
@@ -165,6 +159,7 @@ const transferReceiptNftToUserV1 = async ({
 }) => {
   try {
     const program = getMetaBlocksProgram(connection, wallet);
+    const usersKey = wallet.publicKey;
     const transferReceiptNftToUserInstruction =
       await getTransferReceiptNftToUserInstruction({
         program,
@@ -189,7 +184,6 @@ const transferReceiptNftToUserV1 = async ({
 const groupedDepositNftV1 = async ({
   connection,
   wallet,
-  usersKey,
   mintKey,
   universeKey,
   receiptNftUrl,
@@ -197,6 +191,7 @@ const groupedDepositNftV1 = async ({
 }) => {
   try {
     const program = getMetaBlocksProgram(connection, wallet);
+    const usersKey = wallet.publicKey;
 
     const {
       initReceiptMint: { initReceiptMintArgs, initReceiptMintAccounts },
@@ -257,15 +252,10 @@ const groupedDepositNftV1 = async ({
   }
 };
 
-const withdrawNftV1 = async ({
-  connection,
-  wallet,
-  usersKey,
-  mintKey,
-  universeKey,
-}) => {
+const withdrawNftV1 = async ({ connection, wallet, mintKey, universeKey }) => {
   try {
     const program = getMetaBlocksProgram(connection, wallet);
+    const usersKey = wallet.publicKey;
     const withdrawNftInstruction = await getWithdrawNftInstruction({
       program,
       usersKey,
