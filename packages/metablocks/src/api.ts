@@ -17,6 +17,7 @@ import {
   GroupedDepositNftApiArgs,
   InitDepositNftApiArgs,
   InitReceiptMintApiArgs,
+  SendTxRequest,
   TransferReceiptNftApiArgs,
   UniverseApiArgs,
   WithdrawNftApiArgs,
@@ -147,6 +148,8 @@ const transferReceiptNftToUser = async (args: TransferReceiptNftApiArgs) => {
 
 const groupedDepositNft = async (args: GroupedDepositNftApiArgs) => {
   try {
+    const sendTxRequests: Array<SendTxRequest> = [];
+
     const program = getMetaBlocksProgram(args.connection, args.wallet);
     const usersKey = args.wallet.publicKey;
 
@@ -183,7 +186,12 @@ const groupedDepositNft = async (args: GroupedDepositNftApiArgs) => {
     const transaction1 = new Transaction();
     transaction1.add(initReceiptMintInstruction);
     transaction1.add(initDepositNftInstruction);
-    const tx1 = await program.provider.send(transaction1, []);
+
+    // transaction 1
+    sendTxRequests.push({
+      tx: transaction1,
+      signers: [],
+    });
 
     const depositNftInstruction = program.instruction.depositNftV1(
       depositNftArgs,
@@ -199,7 +207,14 @@ const groupedDepositNft = async (args: GroupedDepositNftApiArgs) => {
     const transaction2 = new Transaction();
     transaction2.add(depositNftInstruction);
     transaction2.add(transferReceiptNftToUserInstruction);
-    const tx2 = await program.provider.send(transaction2, []);
+
+    transaction2;
+    sendTxRequests.push({
+      tx: transaction2,
+      signers: [],
+    });
+
+    const [tx1, tx2] = await program.provider.sendAll(sendTxRequests);
 
     return { tx1, tx2 };
   } catch (e) {

@@ -1,5 +1,11 @@
-import { Program } from "@project-serum/anchor";
-import { Connection, PublicKey } from "@solana/web3.js";
+import { Program, Provider } from "@project-serum/anchor";
+import {
+  Connection,
+  Keypair,
+  PublicKey,
+  Signer,
+  Transaction,
+} from "@solana/web3.js";
 import { MetaBlocks } from "./meta_blocks";
 
 export interface UniverseApiArgs {
@@ -88,3 +94,8 @@ export interface TransferReceiptNftInstructionArgs
 }
 
 export interface WithdrawNftInstructionArgs extends BasicInstructionArgs {}
+
+export type SendTxRequest = {
+  tx: Transaction;
+  signers: Array<Signer | undefined>;
+};
