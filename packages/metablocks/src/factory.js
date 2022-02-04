@@ -20,7 +20,6 @@ const getProvider = (conn, wallet) => {
 };
 
 const getMetaBlocksProgram = (conn, wallet) => {
-  console.log("-> naya hai");
   const provider = getProvider(conn, wallet);
   const program = new Program(idl, programId, provider);
   return program;
