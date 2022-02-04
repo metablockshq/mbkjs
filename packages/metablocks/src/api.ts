@@ -17,11 +17,11 @@ import {
   GroupedDepositNftApiArgs,
   InitDepositNftApiArgs,
   InitReceiptMintApiArgs,
+  SendTxRequest,
   TransferReceiptNftApiArgs,
   UniverseApiArgs,
   WithdrawNftApiArgs,
 } from "./types/types";
-import { SendTxRequest } from "@project-serum/anchor/dist/cjs/provider";
 
 const createUniverse = async (args: UniverseApiArgs) => {
   const program = getMetaBlocksProgram(args.connection, args.wallet);
