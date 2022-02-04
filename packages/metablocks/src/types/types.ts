@@ -2,7 +2,7 @@ import { Program } from "@project-serum/anchor";
 import { Connection, PublicKey } from "@solana/web3.js";
 import { MetaBlocks } from "./meta_blocks";
 
-export interface UniverseArgs {
+export interface UniverseApiArgs {
   connection: Connection;
   wallet: any;
   name: string;
@@ -10,29 +10,29 @@ export interface UniverseArgs {
   websiteUrl: string;
 }
 
-interface InputArgs {
+interface ApiInputArgs {
   connection: Connection;
   wallet: any;
   mintKey: PublicKey;
   universeKey: PublicKey;
 }
-export interface InitReceiptMintArgs extends InputArgs {}
+export interface InitReceiptMintApiArgs extends ApiInputArgs {}
 
-export interface InitDepositNftArgs extends InputArgs {}
+export interface InitDepositNftApiArgs extends ApiInputArgs {}
 
-export interface DepositNftArgs extends InputArgs {}
+export interface DepositNftApiArgs extends ApiInputArgs {}
 
-export interface TransferReceiptNftArgs extends InputArgs {
+export interface TransferReceiptNftApiArgs extends ApiInputArgs {
   url: string;
   isReceiptMasterEdition: boolean;
 }
 
-export interface GroupedDepositNftArgs extends InputArgs {
+export interface GroupedDepositNftApiArgs extends ApiInputArgs {
   url: string;
   isReceiptMasterEdition: boolean;
 }
 
-export interface WithdrawNftArgs extends InputArgs {}
+export interface WithdrawNftApiArgs extends ApiInputArgs {}
 
 //paramBuilder.ts arguments
 

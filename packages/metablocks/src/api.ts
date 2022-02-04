@@ -13,16 +13,16 @@ import {
   getWithdrawNftInstruction,
 } from "./instructions";
 import {
-  DepositNftArgs,
-  GroupedDepositNftArgs,
-  InitDepositNftArgs,
-  InitReceiptMintArgs,
-  TransferReceiptNftArgs,
-  UniverseArgs,
-  WithdrawNftArgs,
+  DepositNftApiArgs,
+  GroupedDepositNftApiArgs,
+  InitDepositNftApiArgs,
+  InitReceiptMintApiArgs,
+  TransferReceiptNftApiArgs,
+  UniverseApiArgs,
+  WithdrawNftApiArgs,
 } from "./types/types";
 
-const createUniverse = async (args: UniverseArgs) => {
+const createUniverse = async (args: UniverseApiArgs) => {
   const program = getMetaBlocksProgram(args.connection, args.wallet);
   const usersKey = args.wallet.publicKey;
   const { createUniverseArgs, accounts } = await computeCreateUniverseParams({
@@ -43,7 +43,7 @@ const createUniverse = async (args: UniverseArgs) => {
   }
 };
 
-const updateUniverse = async (args: UniverseArgs) => {
+const updateUniverse = async (args: UniverseApiArgs) => {
   const program = getMetaBlocksProgram(args.connection, args.wallet);
   const usersKey = args.wallet.publicKey;
   const { accounts, updateUniverseArgs } = await computeUpdateUniverseParams({
@@ -64,7 +64,7 @@ const updateUniverse = async (args: UniverseArgs) => {
   }
 };
 
-const initReceiptMint = async (args: InitReceiptMintArgs) => {
+const initReceiptMint = async (args: InitReceiptMintApiArgs) => {
   try {
     const program = getMetaBlocksProgram(args.connection, args.wallet);
     const usersKey = args.wallet.publicKey;
@@ -84,7 +84,7 @@ const initReceiptMint = async (args: InitReceiptMintArgs) => {
   }
 };
 
-const initDepositNft = async (args: InitDepositNftArgs) => {
+const initDepositNft = async (args: InitDepositNftApiArgs) => {
   try {
     const program = getMetaBlocksProgram(args.connection, args.wallet);
     const usersKey = args.wallet.publicKey;
@@ -103,7 +103,7 @@ const initDepositNft = async (args: InitDepositNftArgs) => {
   }
 };
 
-const depositNft = async (args: DepositNftArgs) => {
+const depositNft = async (args: DepositNftApiArgs) => {
   try {
     const program = getMetaBlocksProgram(args.connection, args.wallet);
     const usersKey = args.wallet.publicKey;
@@ -122,7 +122,7 @@ const depositNft = async (args: DepositNftArgs) => {
   }
 };
 
-const transferReceiptNftToUser = async (args: TransferReceiptNftArgs) => {
+const transferReceiptNftToUser = async (args: TransferReceiptNftApiArgs) => {
   try {
     const program = getMetaBlocksProgram(args.connection, args.wallet);
     const usersKey = args.wallet.publicKey;
@@ -145,7 +145,7 @@ const transferReceiptNftToUser = async (args: TransferReceiptNftArgs) => {
   }
 };
 
-const groupedDepositNft = async (args: GroupedDepositNftArgs) => {
+const groupedDepositNft = async (args: GroupedDepositNftApiArgs) => {
   try {
     const program = getMetaBlocksProgram(args.connection, args.wallet);
     const usersKey = args.wallet.publicKey;
@@ -207,7 +207,7 @@ const groupedDepositNft = async (args: GroupedDepositNftArgs) => {
   }
 };
 
-const withdrawNft = async (args: WithdrawNftArgs) => {
+const withdrawNft = async (args: WithdrawNftApiArgs) => {
   try {
     const program = getMetaBlocksProgram(args.connection, args.wallet);
     const usersKey = args.wallet.publicKey;
