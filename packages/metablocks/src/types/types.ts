@@ -1,5 +1,5 @@
-import { Program } from "@project-serum/anchor";
-import { Connection, PublicKey } from "@solana/web3.js";
+import { Program, Provider } from "@project-serum/anchor";
+import { Connection, Keypair, PublicKey, Transaction } from "@solana/web3.js";
 import { MetaBlocks } from "./meta_blocks";
 
 export interface UniverseApiArgs {

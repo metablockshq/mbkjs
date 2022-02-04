@@ -15,6 +15,7 @@ const programIds = {
 const getProvider = (conn: Connection, wallet: any) => {
   return new Provider(conn, wallet, {
     preflightCommitment: "processed",
+    skipPreflight: false,
   });
 };
 
