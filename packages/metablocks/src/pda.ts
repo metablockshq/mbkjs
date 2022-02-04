@@ -1,9 +1,9 @@
-import { utils } from "@kyraa/anchor";
+import { utils } from "@project-serum/anchor";
 import { PublicKey } from "@solana/web3.js";
 
 import { programIds } from "./factory";
 
-const findUniverseAddress = async (universeAuthority) => {
+const findUniverseAddress = async (universeAuthority: PublicKey) => {
   return await PublicKey.findProgramAddress(
     [
       Buffer.from(utils.bytes.utf8.encode("Universe")),
@@ -13,7 +13,10 @@ const findUniverseAddress = async (universeAuthority) => {
   );
 };
 
-const findUserNftAddress = async (userAuthority, mintKey) => {
+const findUserNftAddress = async (
+  userAuthority: PublicKey,
+  mintKey: PublicKey
+) => {
   return await PublicKey.findProgramAddress(
     [
       Buffer.from(utils.bytes.utf8.encode("UserNft")),
@@ -24,7 +27,10 @@ const findUserNftAddress = async (userAuthority, mintKey) => {
   );
 };
 
-const findAssociatedAddress = async (tokenRecipientKey, mintKey) => {
+const findAssociatedAddress = async (
+  tokenRecipientKey: PublicKey,
+  mintKey: PublicKey
+) => {
   return await PublicKey.findProgramAddress(
     [
       tokenRecipientKey.toBuffer(),
@@ -35,7 +41,11 @@ const findAssociatedAddress = async (tokenRecipientKey, mintKey) => {
   );
 };
 
-const findVaultAuthorityAddress = async (universeKey, usersKey, mintKey) => {
+const findVaultAuthorityAddress = async (
+  universeKey: PublicKey,
+  usersKey: PublicKey,
+  mintKey: PublicKey
+) => {
   return await PublicKey.findProgramAddress(
     [
       Buffer.from(utils.bytes.utf8.encode("VaultMetaBlocks")),
@@ -47,7 +57,11 @@ const findVaultAuthorityAddress = async (universeKey, usersKey, mintKey) => {
   );
 };
 
-const findReceiptMintAddress = async (universeKey, authorityKey, tokenMint) => {
+const findReceiptMintAddress = async (
+  universeKey: PublicKey,
+  authorityKey: PublicKey,
+  tokenMint: PublicKey
+) => {
   return await PublicKey.findProgramAddress(
     [
       Buffer.from(utils.bytes.utf8.encode("ReceiptNftMint")),
@@ -59,14 +73,14 @@ const findReceiptMintAddress = async (universeKey, authorityKey, tokenMint) => {
   );
 };
 
-const findReceiptTokenAddress = async (receiptMint) => {
+const findReceiptTokenAddress = async (receiptMint: PublicKey) => {
   return await PublicKey.findProgramAddress(
     [Buffer.from("ReceiptNftToken"), receiptMint.toBuffer()],
     new PublicKey(programIds.metaBlocks)
   );
 };
 
-const findMetadataAddress = async (mint) => {
+const findMetadataAddress = async (mint: PublicKey) => {
   return await PublicKey.findProgramAddress(
     [
       Buffer.from("metadata"),
@@ -76,7 +90,7 @@ const findMetadataAddress = async (mint) => {
     new PublicKey(programIds.metadata)
   );
 };
-const findMasterEditionAddress = async (mint) => {
+const findMasterEditionAddress = async (mint: PublicKey) => {
   return await PublicKey.findProgramAddress(
     [
       Buffer.from("metadata"),

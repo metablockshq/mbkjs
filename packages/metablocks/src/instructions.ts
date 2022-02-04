@@ -1,5 +1,3 @@
-import { Program } from "@project-serum/anchor";
-import { PublicKey } from "@solana/web3.js";
 import {
   computeDepositNftParams,
   computeInitDepositNftParams,
@@ -7,17 +5,17 @@ import {
   computeTransferReceiptNftParams,
   computeWithdrawNftParams,
 } from "./paramsBuilder";
+import {
+  DepositNftInstructionArgs,
+  InitDepositNftInstructionArgs,
+  InitReceiptMintInstructionArgs,
+  TransferReceiptNftInstructionArgs,
+  WithdrawNftInstructionArgs,
+} from "./types/types";
 
-interface InstructionArgs {
-  program: Program;
-  usersKey: PublicKey;
-  mintKey: PublicKey;
-  universeKey: PublicKey;
-  url?: string;
-  isReceiptMasterEdition?: boolean;
-}
-
-const getInitReceiptMintInstruction = async (args: InstructionArgs) => {
+const getInitReceiptMintInstruction = async (
+  args: InitReceiptMintInstructionArgs
+) => {
   const { initReceiptMintArgs, initReceiptMintAccounts } =
     await computeInitReceiptMintParams({
       usersKey: args.usersKey,
@@ -30,7 +28,9 @@ const getInitReceiptMintInstruction = async (args: InstructionArgs) => {
   });
 };
 
-const getInitDepositNftInstruction = async (args: InstructionArgs) => {
+const getInitDepositNftInstruction = async (
+  args: InitDepositNftInstructionArgs
+) => {
   const { initDepositArgs, initDepositAccounts } =
     await computeInitDepositNftParams({
       usersKey: args.usersKey,
@@ -43,7 +43,7 @@ const getInitDepositNftInstruction = async (args: InstructionArgs) => {
   });
 };
 
-const getDepositNftInstruction = async (args: InstructionArgs) => {
+const getDepositNftInstruction = async (args: DepositNftInstructionArgs) => {
   const { depositNftArgs, depositNftAccounts } = await computeDepositNftParams({
     usersKey: args.usersKey,
     mintKey: args.mintKey,
@@ -55,9 +55,9 @@ const getDepositNftInstruction = async (args: InstructionArgs) => {
 };
 
 const getTransferReceiptNftToUserInstruction = async (
-  args: InstructionArgs
+  args: TransferReceiptNftInstructionArgs
 ) => {
-  const { transferReceiptArgs, transferReceiptNftAccounts } =
+  const { transferReceiptNftArgs, transferReceiptNftAccounts } =
     await computeTransferReceiptNftParams({
       usersKey: args.usersKey,
       mintKey: args.mintKey,
@@ -66,14 +66,14 @@ const getTransferReceiptNftToUserInstruction = async (
       isReceiptMasterEdition: args.isReceiptMasterEdition,
     });
   return args.program.instruction.transferReceiptNftToUserV1(
-    transferReceiptArgs,
+    transferReceiptNftArgs,
     {
       accounts: transferReceiptNftAccounts,
     }
   );
 };
 
-const getWithdrawNftInstruction = async (args: InstructionArgs) => {
+const getWithdrawNftInstruction = async (args: WithdrawNftInstructionArgs) => {
   const { withdrawNftArgs, withdrawNftAccounts } =
     await computeWithdrawNftParams({
       usersKey: args.usersKey,

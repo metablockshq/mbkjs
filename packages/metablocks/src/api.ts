@@ -4,7 +4,7 @@ import {
   computeGroupedDepositNftParams,
   computeUpdateUniverseParams,
 } from "./paramsBuilder";
-import { Transaction, Connection, PublicKey } from "@solana/web3.js";
+import { Transaction } from "@solana/web3.js";
 import {
   getDepositNftInstruction,
   getInitDepositNftInstruction,
@@ -12,14 +12,15 @@ import {
   getTransferReceiptNftToUserInstruction,
   getWithdrawNftInstruction,
 } from "./instructions";
-
-interface UniverseArgs {
-  connection: Connection;
-  wallet: any;
-  name: string;
-  description: string;
-  websiteUrl: string;
-}
+import {
+  DepositNftArgs,
+  GroupedDepositNftArgs,
+  InitDepositNftArgs,
+  InitReceiptMintArgs,
+  TransferReceiptNftArgs,
+  UniverseArgs,
+  WithdrawNftArgs,
+} from "./types/types";
 
 const createUniverseV1 = async (args: UniverseArgs) => {
   const program = getMetaBlocksProgram(args.connection, args.wallet);
@@ -63,13 +64,6 @@ const updateUniverseV1 = async (args: UniverseArgs) => {
   }
 };
 
-interface InitReceiptMintArgs {
-  connection: Connection;
-  wallet: any;
-  mintKey: PublicKey;
-  universeKey: PublicKey;
-}
-
 const initReceiptMintV1 = async (args: InitReceiptMintArgs) => {
   try {
     const program = getMetaBlocksProgram(args.connection, args.wallet);
@@ -90,13 +84,6 @@ const initReceiptMintV1 = async (args: InitReceiptMintArgs) => {
   }
 };
 
-interface InitDepositNftArgs {
-  connection: Connection;
-  wallet: any;
-  mintKey: PublicKey;
-  universeKey: PublicKey;
-}
-
 const initDepositNftV1 = async (args: InitDepositNftArgs) => {
   try {
     const program = getMetaBlocksProgram(args.connection, args.wallet);
@@ -116,13 +103,6 @@ const initDepositNftV1 = async (args: InitDepositNftArgs) => {
   }
 };
 
-interface DepositNftArgs {
-  connection: Connection;
-  wallet: any;
-  mintKey: PublicKey;
-  universeKey: PublicKey;
-}
-
 const depositNftV1 = async (args: DepositNftArgs) => {
   try {
     const program = getMetaBlocksProgram(args.connection, args.wallet);
@@ -141,15 +121,6 @@ const depositNftV1 = async (args: DepositNftArgs) => {
     throw e;
   }
 };
-
-interface TransferReceiptNftArgs {
-  connection: Connection;
-  wallet: any;
-  mintKey: PublicKey;
-  universeKey: PublicKey;
-  url: string;
-  isReceiptMasterEdition: boolean;
-}
 
 const transferReceiptNftToUserV1 = async (args: TransferReceiptNftArgs) => {
   try {
@@ -174,15 +145,6 @@ const transferReceiptNftToUserV1 = async (args: TransferReceiptNftArgs) => {
   }
 };
 
-interface GroupedDepositNftArgs {
-  connection: Connection;
-  wallet: any;
-  mintKey: PublicKey;
-  universeKey: PublicKey;
-  url: string;
-  isReceiptMasterEdition: boolean;
-}
-
 const groupedDepositNftV1 = async (args: GroupedDepositNftArgs) => {
   try {
     const program = getMetaBlocksProgram(args.connection, args.wallet);
@@ -200,7 +162,7 @@ const groupedDepositNftV1 = async (args: GroupedDepositNftArgs) => {
       usersKey: usersKey,
       mintKey: args.mintKey,
       universeKey: args.universeKey,
-      receiptUrl: args.url,
+      url: args.url,
       isReceiptMasterEdition: args.isReceiptMasterEdition,
     });
 
@@ -245,12 +207,6 @@ const groupedDepositNftV1 = async (args: GroupedDepositNftArgs) => {
   }
 };
 
-interface WithdrawNftArgs {
-  connection: Connection;
-  wallet: any;
-  mintKey: PublicKey;
-  universeKey: PublicKey;
-}
 const withdrawNftV1 = async (args: WithdrawNftArgs) => {
   try {
     const program = getMetaBlocksProgram(args.connection, args.wallet);

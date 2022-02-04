@@ -6,22 +6,19 @@
   "scripts": {
     "dev": "swc src --out-dir dist --watch --copy-files",
     "build": "swc src --out-dir dist --copy-files",
-    "clean": "rm -rf dist",
-    "prepare": "install-peers"
+    "clean": "rm -rf dist"
   },
   "peerDependencies": {
-    "@kyraa/anchor": "*"
+    "@solana/web3.js": "^1.32.0"
   },
   "devDependencies": {
     "@swc/cli": "^0.1.55",
     "@swc/core": "^1.2.131",
-    "install-peers-cli": "^2.2.0",
     "prettier": "^2.5.1"
   },
   "dependencies": {
-    "@project-serum/anchor": "^0.20.1",
-    "@solana/web3.js": "^1.32.0",
     "chokidar": "^3.5.3",
-    "typescript": "^4.5.5"
+    "typescript": "^4.5.5",
+    "@project-serum/anchor": "0.20.1"
   }
 }
