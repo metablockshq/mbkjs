@@ -1,6 +1,6 @@
 {
   "name": "@kyraa/solana",
-  "version": "0.0.3",
+  "version": null,
   "main": "./dist/index.js",
   "license": "MIT",
   "scripts": {
