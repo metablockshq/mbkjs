@@ -20,5 +20,8 @@
   "devDependencies": {
     "@swc/cli": "^0.1.55",
     "@swc/core": "^1.2.131"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
