@@ -1,5 +1,5 @@
-import { PublicKey, SystemProgram, SYSVAR_RENT_PUBKEY } from "@solana/web3.js";
-import { programIds } from "./factory";
+import { PublicKey, SystemProgram, SYSVAR_RENT_PUBKEY } from '@solana/web3.js';
+import { programIds } from './factory';
 import {
   findUniverseAddress,
   findUserNftAddress,
@@ -9,7 +9,7 @@ import {
   findReceiptTokenAddress,
   findMetadataAddress,
   findMasterEditionAddress,
-} from "./pda";
+} from './pda';
 import {
   DepositNftParamsArgs,
   GroupedDepositNftParamsArgs,
@@ -18,7 +18,7 @@ import {
   TransferReceiptNftParamArgs,
   UniverseParamArgs,
   WithdrawNftParamsArgs,
-} from "./types/types";
+} from './types/types';
 
 // compute Create universe params
 const computeCreateUniverseParams = async (args: UniverseParamArgs) => {
@@ -300,8 +300,8 @@ const computeTransferReceiptNftParams = async ({
     receiptMintBump: receiptMintBump,
     uri: url,
     creators: creators,
-    name: "MetablocksReceiptNft",
-    symbol: "mbk",
+    name: 'MetablocksReceiptNft',
+    symbol: 'mbk',
     sellerFeeBasisPoints: 0,
     isMutable: false,
     isReceiptMasterEdition: isReceiptMasterEdition,
@@ -430,8 +430,8 @@ const computeGroupedDepositNftParams = async ({
     receiptMintBump: receiptMintBump,
     uri: url,
     creators: creators,
-    name: "MetablocksReceiptNft",
-    symbol: "mbk",
+    name: 'MetablocksReceiptNft',
+    symbol: 'mbk',
     sellerFeeBasisPoints: 0,
     isMutable: false,
     isReceiptMasterEdition: isReceiptMasterEdition,

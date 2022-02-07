@@ -1,12 +1,36 @@
 {
   "name": "@kyraa/metablocks",
   "version": "0.0.3",
-  "main": "./dist/index.js",
   "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "author": "Srinivas Valekar <https://github.com/valekar>",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
   "scripts": {
-    "dev": "swc src --out-dir dist --watch --copy-files",
-    "build": "swc src --out-dir dist --copy-files",
-    "clean": "rm -rf dist"
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
   },
   "peerDependencies": {
     "@solana/web3.js": "^1.32.0",
@@ -15,10 +39,15 @@
   "devDependencies": {
     "@swc/cli": "^0.1.55",
     "@swc/core": "^1.2.131",
-    "prettier": "^2.5.1"
-  },
-  "dependencies": {
-    "chokidar": "^3.5.3",
-    "typescript": "^4.5.5"
+    "prettier": "^2.5.1",
+    "@size-limit/preset-small-lib": "^7.0.8",
+    "@types/mocha": "^9.1.0",
+    "husky": "^7.0.4",
+    "mocha": "^9.2.0",
+    "size-limit": "^7.0.8",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.3.1",
+    "typescript": "^4.5.5",
+    "chokidar": "^3.5.3"
   }
 }

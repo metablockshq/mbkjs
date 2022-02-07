@@ -1,19 +1,20 @@
-import { getMetaBlocksProgram } from "./factory";
+import { getMetaBlocksProgram } from './factory';
 import {
   computeCreateUniverseParams,
   computeGroupedDepositNftParams,
   computeUpdateUniverseParams,
-} from "./paramsBuilder";
-import { Transaction } from "@solana/web3.js";
+} from './paramsBuilder';
+import { Transaction } from '@solana/web3.js';
 import {
   getDepositNftInstruction,
   getInitDepositNftInstruction,
   getInitReceiptMintInstruction,
   getTransferReceiptNftToUserInstruction,
   getWithdrawNftInstruction,
-} from "./instructions";
+} from './instructions';
 import {
   DepositNftApiArgs,
+  FetchAccountArgs,
   GroupedDepositNftApiArgs,
   InitDepositNftApiArgs,
   InitReceiptMintApiArgs,
@@ -21,8 +22,8 @@ import {
   TransferReceiptNftApiArgs,
   UniverseApiArgs,
   WithdrawNftApiArgs,
-} from "./types/types";
-import { accounts_api } from ".";
+} from './types/types';
+import { accounts_api } from '.';
 
 const createUniverse = async (args: UniverseApiArgs) => {
   const program = getMetaBlocksProgram(args.connection, args.wallet);
@@ -242,6 +243,17 @@ const withdrawNft = async (args: WithdrawNftApiArgs) => {
   }
 };
 
+// Get all Universes
+const getAllUniverses = async (args: FetchAccountArgs) => {
+  const program = getMetaBlocksProgram(args.connection, args.wallet);
+  return await accounts_api.getAllUniverses(program);
+};
+// Get All user nfts
+const getAllUserNfts = async (args: FetchAccountArgs) => {
+  const program = getMetaBlocksProgram(args.connection, args.wallet);
+  return await accounts_api.getAllUserNfts(program);
+};
+
 export {
   createUniverse,
   updateUniverse,
@@ -251,4 +263,6 @@ export {
   transferReceiptNftToUser,
   groupedDepositNft,
   withdrawNft,
+  getAllUniverses,
+  getAllUserNfts,
 };

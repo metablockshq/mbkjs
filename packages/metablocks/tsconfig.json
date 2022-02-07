@@ -1,18 +1,22 @@
 {
+  "include": ["src", "types"],
   "compilerOptions": {
-    "typeRoots": ["/node_modules/@types", "/node_modules"],
-    "lib": ["es2015"],
-    "target": "es6",
-    "module": "commonjs",
+    "module": "esnext",
+    "lib": ["dom", "esnext"],
+    "importHelpers": true,
     "declaration": true,
-    "allowJs": true,
-    "isolatedModules": true,
-    "resolveJsonModule": true,
-    "outDir": "./dist",
+    "sourceMap": true,
+    "rootDir": "./src",
     "strict": true,
-    "skipLibCheck": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": true,
+    "moduleResolution": "node",
+    "jsx": "react",
     "esModuleInterop": true,
-    "moduleResolution": "node"
-  },
-  "include": ["src/**/*"]
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true
+  }
 }

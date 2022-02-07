@@ -136,3 +136,8 @@ export interface UserNft {
   signature: string | undefined | null;
   blockTime: number | undefined | null;
 }
+
+export interface FetchAccountArgs {
+  connection: Connection;
+  wallet: any;
+}
