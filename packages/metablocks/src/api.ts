@@ -22,6 +22,7 @@ import {
   UniverseApiArgs,
   WithdrawNftApiArgs,
 } from "./types/types";
+import { accounts_api } from ".";
 
 const createUniverse = async (args: UniverseApiArgs) => {
   const program = getMetaBlocksProgram(args.connection, args.wallet);
