@@ -24,6 +24,7 @@ import { clusterApiUrl } from "@solana/web3.js";
 // 2. The network can be set to 'devnet', 'testnet', or 'mainnet-beta'.
 const SolanaProvider = ({ children, network }) => {
   const endpoint = useMemo(() => clusterApiUrl(network), [network]);
+  //const endpoint = useMemo(() => "http://localhost:8899");
   const config = { commitment: "confirmed" };
 
   const wallets = useMemo(
@@ -48,4 +49,4 @@ const SolanaProvider = ({ children, network }) => {
   );
 };
 
-export {SolanaProvider};
+export { SolanaProvider };
