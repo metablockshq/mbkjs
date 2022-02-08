@@ -120,7 +120,6 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
     transaction2.add(depositNftInstruction);
     transaction2.add(transferReceiptNftToUserInstruction);
 
-    transaction2;
     sendTxRequests.push({
       tx: transaction2,
       signers: [],
