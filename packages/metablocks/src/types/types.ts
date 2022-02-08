@@ -1,11 +1,5 @@
-import { Program, Provider } from "@project-serum/anchor";
-import {
-  Connection,
-  Keypair,
-  PublicKey,
-  Signer,
-  Transaction,
-} from "@solana/web3.js";
+import { Program } from "@project-serum/anchor";
+import { Connection, PublicKey, Signer, Transaction } from "@solana/web3.js";
 import { MetaBlocks } from "./meta_blocks";
 
 export interface UniverseApiArgs {
@@ -99,3 +93,51 @@ export type SendTxRequest = {
   tx: Transaction;
   signers: Array<Signer | undefined>;
 };
+
+// Account API interfaces
+export interface Universe {
+  publicKey: string;
+  authority: string;
+  name: string;
+  websiteUrl: string;
+  description: string;
+  lastUpdateTs: number;
+  totalNfts: number;
+  slot: number | undefined | null;
+  signature: string | undefined | null;
+  blockTime: number | undefined | null;
+}
+
+export interface BlockMetadata {
+  slot: number | undefined | null;
+  signature: string | undefined | null;
+  blockTime: number | undefined | null;
+}
+
+export interface UserNft {
+  publicKey: string;
+  userNftBump: number;
+  vaultBump: number;
+  associatedVaultBump: number;
+  nftAuthority: string;
+  universe: string;
+  vaultAuthority: string;
+  receiptMintBump: number;
+  userReceiptAtaBump: number;
+  receiptMint: string;
+  userReceiptAta: string;
+  vaultReceiptAta: string;
+  tokenMint: string;
+  receiptMasterEdition: string;
+  isReceiptMasterEdition: boolean;
+  isUserNftVerified: boolean;
+  isUserNftMetaplex: boolean;
+  slot: number | undefined | null;
+  signature: string | undefined | null;
+  blockTime: number | undefined | null;
+}
+
+export interface FetchAccountArgs {
+  connection: Connection;
+  wallet: any;
+}

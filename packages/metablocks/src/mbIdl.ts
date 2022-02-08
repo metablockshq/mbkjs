@@ -1,449 +1,449 @@
 const idl = {
-  version: "0.1.0",
-  name: "meta_blocks",
+  version: '0.1.0',
+  name: 'meta_blocks',
   instructions: [
     {
-      name: "createUniverseV1",
+      name: 'createUniverseV1',
       accounts: [
         {
-          name: "universe",
+          name: 'universe',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "payer",
+          name: 'payer',
           isMut: true,
           isSigner: true,
         },
         {
-          name: "universeAuthority",
+          name: 'universeAuthority',
           isMut: false,
           isSigner: true,
         },
         {
-          name: "systemProgram",
+          name: 'systemProgram',
           isMut: false,
           isSigner: false,
         },
       ],
       args: [
         {
-          name: "args",
+          name: 'args',
           type: {
-            defined: "CreateUniverseArgs",
+            defined: 'CreateUniverseArgs',
           },
         },
       ],
     },
     {
-      name: "updateUniverseV1",
+      name: 'updateUniverseV1',
       accounts: [
         {
-          name: "universe",
+          name: 'universe',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "payer",
+          name: 'payer',
           isMut: true,
           isSigner: true,
         },
         {
-          name: "universeAuthority",
+          name: 'universeAuthority',
           isMut: false,
           isSigner: true,
         },
         {
-          name: "systemProgram",
+          name: 'systemProgram',
           isMut: false,
           isSigner: false,
         },
       ],
       args: [
         {
-          name: "args",
+          name: 'args',
           type: {
-            defined: "UpdateUniverseArgs",
+            defined: 'UpdateUniverseArgs',
           },
         },
       ],
     },
     {
-      name: "initReceiptMintV1",
+      name: 'initReceiptMintV1',
       accounts: [
         {
-          name: "authority",
+          name: 'authority',
           isMut: true,
           isSigner: true,
         },
         {
-          name: "receiptMint",
+          name: 'receiptMint',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "universe",
+          name: 'universe',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "vaultAuthority",
+          name: 'vaultAuthority',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "tokenProgram",
+          name: 'tokenProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "tokenMint",
+          name: 'tokenMint',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "systemProgram",
+          name: 'systemProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "rent",
+          name: 'rent',
           isMut: false,
           isSigner: false,
         },
       ],
       args: [
         {
-          name: "args",
+          name: 'args',
           type: {
-            defined: "InitReceiptMintArgs",
+            defined: 'InitReceiptMintArgs',
           },
         },
       ],
     },
     {
-      name: "initDepositNftV1",
+      name: 'initDepositNftV1',
       accounts: [
         {
-          name: "authority",
+          name: 'authority',
           isMut: true,
           isSigner: true,
         },
         {
-          name: "userNft",
+          name: 'userNft',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "receiptMint",
+          name: 'receiptMint',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "receiptToken",
+          name: 'receiptToken',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "vaultReceiptAta",
+          name: 'vaultReceiptAta',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "userReceiptAta",
+          name: 'userReceiptAta',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "universe",
+          name: 'universe',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "vaultAuthority",
+          name: 'vaultAuthority',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "tokenProgram",
+          name: 'tokenProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "associatedTokenProgram",
+          name: 'associatedTokenProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "tokenMint",
+          name: 'tokenMint',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "systemProgram",
+          name: 'systemProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "rent",
+          name: 'rent',
           isMut: false,
           isSigner: false,
         },
       ],
       args: [
         {
-          name: "args",
+          name: 'args',
           type: {
-            defined: "InitDepositNftArgs",
+            defined: 'InitDepositNftArgs',
           },
         },
       ],
     },
     {
-      name: "depositNftV1",
+      name: 'depositNftV1',
       accounts: [
         {
-          name: "authority",
+          name: 'authority',
           isMut: true,
           isSigner: true,
         },
         {
-          name: "userNft",
+          name: 'userNft',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "vaultAuthority",
+          name: 'vaultAuthority',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "universe",
+          name: 'universe',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "userNftAta",
+          name: 'userNftAta',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "userNftMetadata",
+          name: 'userNftMetadata',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "vaultNftAta",
+          name: 'vaultNftAta',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "tokenMint",
+          name: 'tokenMint',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "receiptMint",
+          name: 'receiptMint',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "tokenProgram",
+          name: 'tokenProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "associatedTokenProgram",
+          name: 'associatedTokenProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "systemProgram",
+          name: 'systemProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "rent",
+          name: 'rent',
           isMut: false,
           isSigner: false,
         },
       ],
       args: [
         {
-          name: "args",
+          name: 'args',
           type: {
-            defined: "DepositNftArgs",
+            defined: 'DepositNftArgs',
           },
         },
       ],
     },
     {
-      name: "transferReceiptNftToUserV1",
+      name: 'transferReceiptNftToUserV1',
       accounts: [
         {
-          name: "authority",
+          name: 'authority',
           isMut: true,
           isSigner: true,
         },
         {
-          name: "vaultAuthority",
+          name: 'vaultAuthority',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "universe",
+          name: 'universe',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "userNft",
+          name: 'userNft',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "tokenMint",
+          name: 'tokenMint',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "userReceiptAta",
+          name: 'userReceiptAta',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "vaultReceiptAta",
+          name: 'vaultReceiptAta',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "receiptMint",
+          name: 'receiptMint',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "receiptMetadata",
+          name: 'receiptMetadata',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "receiptMasterEdition",
+          name: 'receiptMasterEdition',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "tokenMetadataProgram",
+          name: 'tokenMetadataProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "tokenProgram",
+          name: 'tokenProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "associatedTokenProgram",
+          name: 'associatedTokenProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "systemProgram",
+          name: 'systemProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "rent",
+          name: 'rent',
           isMut: false,
           isSigner: false,
         },
       ],
       args: [
         {
-          name: "args",
+          name: 'args',
           type: {
-            defined: "TransferReceiptNftArgs",
+            defined: 'TransferReceiptNftArgs',
           },
         },
       ],
     },
     {
-      name: "withdrawNftV1",
+      name: 'withdrawNftV1',
       accounts: [
         {
-          name: "authority",
+          name: 'authority',
           isMut: true,
           isSigner: true,
         },
         {
-          name: "userNft",
+          name: 'userNft',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "vaultAuthority",
+          name: 'vaultAuthority',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "vaultNftAta",
+          name: 'vaultNftAta',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "universe",
+          name: 'universe',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "userNftAta",
+          name: 'userNftAta',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "userReceiptAta",
+          name: 'userReceiptAta',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "vaultReceiptAta",
+          name: 'vaultReceiptAta',
           isMut: true,
           isSigner: false,
         },
         {
-          name: "receiptMint",
+          name: 'receiptMint',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "tokenMint",
+          name: 'tokenMint',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "tokenProgram",
+          name: 'tokenProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "associatedTokenProgram",
+          name: 'associatedTokenProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "systemProgram",
+          name: 'systemProgram',
           isMut: false,
           isSigner: false,
         },
         {
-          name: "rent",
+          name: 'rent',
           isMut: false,
           isSigner: false,
         },
       ],
       args: [
         {
-          name: "args",
+          name: 'args',
           type: {
-            defined: "WithdrawNftArgs",
+            defined: 'WithdrawNftArgs',
           },
         },
       ],
@@ -451,309 +451,309 @@ const idl = {
   ],
   accounts: [
     {
-      name: "Universe",
+      name: 'Universe',
       type: {
-        kind: "struct",
+        kind: 'struct',
         fields: [
           {
-            name: "bump",
-            type: "u8",
+            name: 'bump',
+            type: 'u8',
           },
           {
-            name: "lastUpdateTs",
-            type: "i64",
+            name: 'lastUpdateTs',
+            type: 'i64',
           },
           {
-            name: "universeAuthority",
-            type: "publicKey",
+            name: 'universeAuthority',
+            type: 'publicKey',
           },
           {
-            name: "config",
+            name: 'config',
             type: {
-              defined: "Config",
+              defined: 'Config',
             },
           },
           {
-            name: "totalNfts",
-            type: "u64",
+            name: 'totalNfts',
+            type: 'u64',
           },
         ],
       },
     },
     {
-      name: "UserNft",
+      name: 'UserNft',
       type: {
-        kind: "struct",
+        kind: 'struct',
         fields: [
           {
-            name: "userNftBump",
-            type: "u8",
+            name: 'userNftBump',
+            type: 'u8',
           },
           {
-            name: "index",
-            type: "u64",
+            name: 'index',
+            type: 'u64',
           },
           {
-            name: "vaultBump",
-            type: "u8",
+            name: 'vaultBump',
+            type: 'u8',
           },
           {
-            name: "associatedVaultBump",
-            type: "u8",
+            name: 'associatedVaultBump',
+            type: 'u8',
           },
           {
-            name: "nftAuthority",
-            type: "publicKey",
+            name: 'nftAuthority',
+            type: 'publicKey',
           },
           {
-            name: "universe",
-            type: "publicKey",
+            name: 'universe',
+            type: 'publicKey',
           },
           {
-            name: "vaultAuthority",
-            type: "publicKey",
+            name: 'vaultAuthority',
+            type: 'publicKey',
           },
           {
-            name: "receiptMintBump",
-            type: "u8",
+            name: 'receiptMintBump',
+            type: 'u8',
           },
           {
-            name: "userReceiptAtaBump",
-            type: "u8",
+            name: 'userReceiptAtaBump',
+            type: 'u8',
           },
           {
-            name: "receiptMint",
-            type: "publicKey",
+            name: 'receiptMint',
+            type: 'publicKey',
           },
           {
-            name: "userReceiptAta",
-            type: "publicKey",
+            name: 'userReceiptAta',
+            type: 'publicKey',
           },
           {
-            name: "vaultReceiptAta",
-            type: "publicKey",
+            name: 'vaultReceiptAta',
+            type: 'publicKey',
           },
           {
-            name: "tokenMint",
-            type: "publicKey",
+            name: 'tokenMint',
+            type: 'publicKey',
           },
           {
-            name: "receiptMasterEdition",
-            type: "publicKey",
+            name: 'receiptMasterEdition',
+            type: 'publicKey',
           },
           {
-            name: "isReceiptMasterEdition",
-            type: "bool",
+            name: 'isReceiptMasterEdition',
+            type: 'bool',
           },
           {
-            name: "isUserNftVerified",
-            type: "bool",
+            name: 'isUserNftVerified',
+            type: 'bool',
           },
           {
-            name: "isUserNftMetaplex",
-            type: "bool",
+            name: 'isUserNftMetaplex',
+            type: 'bool',
           },
         ],
       },
     },
     {
-      name: "InitDepositNftArgs",
+      name: 'InitDepositNftArgs',
       type: {
-        kind: "struct",
+        kind: 'struct',
         fields: [
           {
-            name: "receiptMintBump",
-            type: "u8",
+            name: 'receiptMintBump',
+            type: 'u8',
           },
           {
-            name: "vaultBump",
-            type: "u8",
+            name: 'vaultBump',
+            type: 'u8',
           },
           {
-            name: "receiptTokenBump",
-            type: "u8",
+            name: 'receiptTokenBump',
+            type: 'u8',
           },
           {
-            name: "vaultReceiptAtaBump",
-            type: "u8",
+            name: 'vaultReceiptAtaBump',
+            type: 'u8',
           },
           {
-            name: "userNftBump",
-            type: "u8",
+            name: 'userNftBump',
+            type: 'u8',
           },
           {
-            name: "associatedVaultBump",
-            type: "u8",
+            name: 'associatedVaultBump',
+            type: 'u8',
           },
           {
-            name: "userReceiptAtaBump",
-            type: "u8",
+            name: 'userReceiptAtaBump',
+            type: 'u8',
           },
         ],
       },
     },
     {
-      name: "InitReceiptMintArgs",
+      name: 'InitReceiptMintArgs',
       type: {
-        kind: "struct",
+        kind: 'struct',
         fields: [
           {
-            name: "receiptMintBump",
-            type: "u8",
+            name: 'receiptMintBump',
+            type: 'u8',
           },
           {
-            name: "vaultBump",
-            type: "u8",
+            name: 'vaultBump',
+            type: 'u8',
           },
         ],
       },
     },
     {
-      name: "CreateUniverseArgs",
+      name: 'CreateUniverseArgs',
       type: {
-        kind: "struct",
+        kind: 'struct',
         fields: [
           {
-            name: "bump",
-            type: "u8",
+            name: 'bump',
+            type: 'u8',
           },
           {
-            name: "name",
-            type: "string",
+            name: 'name',
+            type: 'string',
           },
           {
-            name: "description",
-            type: "string",
+            name: 'description',
+            type: 'string',
           },
           {
-            name: "websiteUrl",
-            type: "string",
+            name: 'websiteUrl',
+            type: 'string',
           },
         ],
       },
     },
     {
-      name: "UpdateUniverseArgs",
+      name: 'UpdateUniverseArgs',
       type: {
-        kind: "struct",
+        kind: 'struct',
         fields: [
           {
-            name: "name",
-            type: "string",
+            name: 'name',
+            type: 'string',
           },
           {
-            name: "websiteUrl",
-            type: "string",
+            name: 'websiteUrl',
+            type: 'string',
           },
           {
-            name: "description",
-            type: "string",
+            name: 'description',
+            type: 'string',
           },
           {
-            name: "bump",
-            type: "u8",
+            name: 'bump',
+            type: 'u8',
           },
         ],
       },
     },
     {
-      name: "DepositNftArgs",
+      name: 'DepositNftArgs',
       type: {
-        kind: "struct",
+        kind: 'struct',
         fields: [
           {
-            name: "userNftBump",
-            type: "u8",
+            name: 'userNftBump',
+            type: 'u8',
           },
           {
-            name: "vaultBump",
-            type: "u8",
+            name: 'vaultBump',
+            type: 'u8',
           },
           {
-            name: "associatedBump",
-            type: "u8",
+            name: 'associatedBump',
+            type: 'u8',
           },
           {
-            name: "receiptMintBump",
-            type: "u8",
+            name: 'receiptMintBump',
+            type: 'u8',
           },
           {
-            name: "receiptAtaBump",
-            type: "u8",
+            name: 'receiptAtaBump',
+            type: 'u8',
           },
           {
-            name: "receiptTokenBump",
-            type: "u8",
+            name: 'receiptTokenBump',
+            type: 'u8',
           },
         ],
       },
     },
     {
-      name: "TransferReceiptNftArgs",
+      name: 'TransferReceiptNftArgs',
       type: {
-        kind: "struct",
+        kind: 'struct',
         fields: [
           {
-            name: "userNftBump",
-            type: "u8",
+            name: 'userNftBump',
+            type: 'u8',
           },
           {
-            name: "receiptMintBump",
-            type: "u8",
+            name: 'receiptMintBump',
+            type: 'u8',
           },
           {
-            name: "vaultBump",
-            type: "u8",
+            name: 'vaultBump',
+            type: 'u8',
           },
           {
-            name: "uri",
-            type: "string",
+            name: 'uri',
+            type: 'string',
           },
           {
-            name: "creators",
+            name: 'creators',
             type: {
               vec: {
-                defined: "Creator",
+                defined: 'Creator',
               },
             },
           },
           {
-            name: "name",
-            type: "string",
+            name: 'name',
+            type: 'string',
           },
           {
-            name: "symbol",
-            type: "string",
+            name: 'symbol',
+            type: 'string',
           },
           {
-            name: "sellerFeeBasisPoints",
-            type: "u16",
+            name: 'sellerFeeBasisPoints',
+            type: 'u16',
           },
           {
-            name: "isMutable",
-            type: "bool",
+            name: 'isMutable',
+            type: 'bool',
           },
           {
-            name: "isReceiptMasterEdition",
+            name: 'isReceiptMasterEdition',
             type: {
-              option: "bool",
+              option: 'bool',
             },
           },
         ],
       },
     },
     {
-      name: "WithdrawNftArgs",
+      name: 'WithdrawNftArgs',
       type: {
-        kind: "struct",
+        kind: 'struct',
         fields: [
           {
-            name: "userNftBump",
-            type: "u8",
+            name: 'userNftBump',
+            type: 'u8',
           },
           {
-            name: "vaultBump",
-            type: "u8",
+            name: 'vaultBump',
+            type: 'u8',
           },
         ],
       },
@@ -761,41 +761,41 @@ const idl = {
   ],
   types: [
     {
-      name: "Config",
+      name: 'Config',
       type: {
-        kind: "struct",
+        kind: 'struct',
         fields: [
           {
-            name: "name",
-            type: "string",
+            name: 'name',
+            type: 'string',
           },
           {
-            name: "description",
-            type: "string",
+            name: 'description',
+            type: 'string',
           },
           {
-            name: "websiteUrl",
-            type: "string",
+            name: 'websiteUrl',
+            type: 'string',
           },
         ],
       },
     },
     {
-      name: "Creator",
+      name: 'Creator',
       type: {
-        kind: "struct",
+        kind: 'struct',
         fields: [
           {
-            name: "address",
-            type: "publicKey",
+            name: 'address',
+            type: 'publicKey',
           },
           {
-            name: "verified",
-            type: "bool",
+            name: 'verified',
+            type: 'bool',
           },
           {
-            name: "share",
-            type: "u8",
+            name: 'share',
+            type: 'u8',
           },
         ],
       },
@@ -803,31 +803,31 @@ const idl = {
   ],
   events: [
     {
-      name: "UniverseEvent",
+      name: 'UniverseEvent',
       fields: [
         {
-          name: "status",
-          type: "string",
+          name: 'status',
+          type: 'string',
           index: false,
         },
         {
-          name: "universeKey",
-          type: "publicKey",
+          name: 'universeKey',
+          type: 'publicKey',
           index: false,
         },
       ],
     },
     {
-      name: "NftEvent",
+      name: 'NftEvent',
       fields: [
         {
-          name: "status",
-          type: "string",
+          name: 'status',
+          type: 'string',
           index: false,
         },
         {
-          name: "message",
-          type: "string",
+          name: 'message',
+          type: 'string',
           index: false,
         },
       ],
@@ -836,32 +836,32 @@ const idl = {
   errors: [
     {
       code: 6000,
-      name: "IndexAdditionError",
-      msg: "Could not add index",
+      name: 'IndexAdditionError',
+      msg: 'Could not add index',
     },
     {
       code: 6001,
-      name: "InvalidUniverseAuthority",
-      msg: "Universe authority does not match",
+      name: 'InvalidUniverseAuthority',
+      msg: 'Universe authority does not match',
     },
     {
       code: 6002,
-      name: "InvalidSigner",
-      msg: "Account is not a signer",
+      name: 'InvalidSigner',
+      msg: 'Account is not a signer',
     },
     {
       code: 6003,
-      name: "Unauthorized",
-      msg: "Unauthorized to access this instruction",
+      name: 'Unauthorized',
+      msg: 'Unauthorized to access this instruction',
     },
     {
       code: 6004,
-      name: "NoMetadata",
-      msg: "No Metadata provided for the nft",
+      name: 'NoMetadata',
+      msg: 'No Metadata provided for the nft',
     },
   ],
   metadata: {
-    address: "9pNcm4DmZJgHYynuvhSbZ3m4bqBSKeuXqZ2cCZKbcLJc",
+    address: '9pNcm4DmZJgHYynuvhSbZ3m4bqBSKeuXqZ2cCZKbcLJc',
   },
 };
 export default idl;

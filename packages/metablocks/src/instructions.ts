@@ -4,14 +4,14 @@ import {
   computeInitReceiptMintParams,
   computeTransferReceiptNftParams,
   computeWithdrawNftParams,
-} from "./paramsBuilder";
+} from './paramsBuilder';
 import {
   DepositNftInstructionArgs,
   InitDepositNftInstructionArgs,
   InitReceiptMintInstructionArgs,
   TransferReceiptNftInstructionArgs,
   WithdrawNftInstructionArgs,
-} from "./types/types";
+} from './types/types';
 
 const getInitReceiptMintInstruction = async (
   args: InitReceiptMintInstructionArgs
@@ -81,11 +81,9 @@ const getWithdrawNftInstruction = async (args: WithdrawNftInstructionArgs) => {
       universeKey: args.universeKey,
     });
 
-  return args.program.instruction.withdrawNftV1(
-    withdrawNftArgs.userNftBump,
-    withdrawNftArgs.vaultAuthorityBump,
-    { accounts: withdrawNftAccounts }
-  );
+  return args.program.instruction.withdrawNftV1(withdrawNftArgs, {
+    accounts: withdrawNftAccounts,
+  });
 };
 
 export {
