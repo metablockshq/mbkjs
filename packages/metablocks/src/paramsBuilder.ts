@@ -25,10 +25,10 @@ const computeCreateUniverseParams = async (args: UniverseParamArgs) => {
   const [universeKey, universeBump] = await findUniverseAddress(args.usersKey);
 
   const createUniverseArgs = {
-    name: args.name,
-    websiteUrl: args.websiteUrl,
-    description: args.description,
     bump: universeBump,
+    name: args.name,
+    description: args.description,
+    websiteUrl: args.websiteUrl,
   };
 
   const accounts = {

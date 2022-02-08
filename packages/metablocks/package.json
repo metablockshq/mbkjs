@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "author": "Srinivas Valekar <https://github.com/valekar>",
+  "repository": "git@github.com:metablockshq/kyraa.git",
   "files": [
     "dist",
     "src"
@@ -37,8 +38,6 @@
     "@project-serum/anchor": "^0.20.1"
   },
   "devDependencies": {
-    "@swc/cli": "^0.1.55",
-    "@swc/core": "^1.2.131",
     "prettier": "^2.5.1",
     "@size-limit/preset-small-lib": "^7.0.8",
     "@types/mocha": "^9.1.0",

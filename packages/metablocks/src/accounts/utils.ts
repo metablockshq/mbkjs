@@ -1,12 +1,12 @@
-import * as anchor from "@project-serum/anchor";
-import { PublicKey } from "@solana/web3.js";
-import { MetaBlocks } from "../types/meta_blocks";
-import { BlockMetadata } from "../types/types";
+import * as anchor from '@project-serum/anchor';
+import { PublicKey } from '@solana/web3.js';
+import { MetaBlocks } from '../types/meta_blocks';
+import { BlockMetadata } from '../types/types';
 
 const camelToSnakeCase = (value: string): string => {
   return value
     .split(/(?=[A-Z])/)
-    .join("_")
+    .join('_')
     .toLowerCase();
 };
 

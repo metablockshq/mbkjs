@@ -13,7 +13,8 @@ import {
   UniverseApiArgs,
   WithdrawNftApiArgs,
 } from './types/types';
-import { accounts_api } from '.';
+
+import * as accountApi from './accounts';
 
 const createUniverse = async (args: UniverseApiArgs) => {
   const program = getMetaBlocksProgram(args.connection, args.wallet);
@@ -155,12 +156,12 @@ const withdrawNft = async (args: WithdrawNftApiArgs) => {
 // Get all Universes
 const getAllUniverses = async (args: FetchAccountArgs) => {
   const program = getMetaBlocksProgram(args.connection, args.wallet);
-  return await accounts_api.getAllUniverses(program);
+  return await accountApi.getAllUniverses(program);
 };
 // Get All user nfts
 const getAllUserNfts = async (args: FetchAccountArgs) => {
   const program = getMetaBlocksProgram(args.connection, args.wallet);
-  return await accounts_api.getAllUserNfts(program);
+  return await accountApi.getAllUserNfts(program);
 };
 
 export {
