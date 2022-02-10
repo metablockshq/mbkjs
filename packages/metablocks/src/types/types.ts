@@ -200,3 +200,14 @@ export interface UserNftLayout {
   isUserNftVerified?: boolean;
   isUserNftMetaplex?: boolean;
 }
+
+export interface UserNftAccount {
+  publicKey: PublicKey;
+  account: UserNftLayout;
+}
+
+export interface UserNftFilterArgs {
+  universes: Array<string>;
+  vaultAuthorities: Array<string>;
+  authorities: Array<string>;
+}
