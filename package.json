@@ -9,7 +9,8 @@
     "lerna": "^4.0.0"
   },
   "scripts": {
-    "bootstrap": "lerna bootstrap"
+    "bootstrap": "lerna bootstrap",
+    "changed": "lerna changed"
   },
   "dependencies": {
     "@solana/web3.js": "^1.32.0",

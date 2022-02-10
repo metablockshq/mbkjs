@@ -1,6 +1,0 @@
-export {* as array} from "./array"
-export {* as colors} from "./colors"
-export {* as image} from "./image"
-export {* as func} from "./func"
-export {* as number} from "./number"
-export {* as string} from "./string"
