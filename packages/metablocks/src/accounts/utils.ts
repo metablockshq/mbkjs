@@ -1,7 +1,7 @@
 import * as anchor from '@project-serum/anchor';
 import { PublicKey } from '@solana/web3.js';
 import { MetaBlocks } from '../types/meta_blocks';
-import { BlockMetadata, UserNftLayout } from '../types/types';
+import { BlockMetadata } from '../types/types';
 import bs58 from 'bs58';
 import camelcase from 'camelcase';
 import { sha256 } from 'js-sha256';
