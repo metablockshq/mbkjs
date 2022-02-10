@@ -11,6 +11,7 @@ import {
   GroupedDepositNftApiArgs,
   SendTxRequest,
   UniverseApiArgs,
+  UserNftFilterArgs,
   WithdrawNftApiArgs,
 } from './types/types';
 
@@ -158,9 +159,12 @@ const getAllUniverses = async (args: FetchAccountArgs) => {
   return await accountApi.getAllUniverses(program);
 };
 // Get All user nfts
-const getAllUserNfts = async (args: FetchAccountArgs) => {
+const getUserNfts = async (
+  args: FetchAccountArgs,
+  filterArgs: UserNftFilterArgs
+) => {
   const program = getMetaBlocksProgram(args.connection, args.wallet);
-  return await accountApi.getAllUserNfts(program);
+  return await accountApi.getUserNfts(program, filterArgs);
 };
 
 export {
@@ -169,5 +173,5 @@ export {
   depositNft,
   withdrawNft,
   getAllUniverses,
-  getAllUserNfts,
+  getUserNfts,
 };
