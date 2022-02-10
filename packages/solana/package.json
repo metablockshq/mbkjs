@@ -12,7 +12,8 @@
     "@solana/wallet-adapter-react": "^0.15.2",
     "@solana/wallet-adapter-react-ui": "^0.9.4",
     "@solana/wallet-adapter-wallets": "^0.14.2",
-    "@solana/web3.js": "^1.31.0"
+    "@solana/web3.js": "^1.31.0",
+    "chokidar": "^3.5.3"
   },
   "peerDependencies": {
     "react": "^17.0.2"
