@@ -13,5 +13,6 @@
   "dependencies": {
     "@swc/cli": "^0.1.55",
     "@swc/core": "^1.2.138"
-  }
+  },
+  "gitHead": "5fdbd35f55419e3d70f0d6405bc8f8ede7fd6f96"
 }
