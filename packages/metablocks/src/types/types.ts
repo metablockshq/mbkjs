@@ -1,6 +1,7 @@
-import { Program } from "@project-serum/anchor";
-import { Connection, PublicKey, Signer, Transaction } from "@solana/web3.js";
-import { MetaBlocks } from "./meta_blocks";
+import { Program } from '@project-serum/anchor';
+import { Connection, PublicKey, Signer, Transaction } from '@solana/web3.js';
+import { MetaBlocks } from './meta_blocks';
+import * as BufferLayout from '@solana/buffer-layout';
 
 export interface UniverseApiArgs {
   connection: Connection;
@@ -140,4 +141,62 @@ export interface UserNft {
 export interface FetchAccountArgs {
   connection: Connection;
   wallet: any;
+}
+
+const publicKey = (property = 'publicKey') => {
+  return BufferLayout.blob(32, property);
+};
+
+const uint64 = (property = 'uint64') => {
+  return BufferLayout.blob(8, property);
+};
+
+export const USER_NFT_ACCOUNT_DATA_LAYOUT_V1 = BufferLayout.struct([
+  BufferLayout.u8('userNftBump'),
+  uint64('index'),
+  BufferLayout.u8('vaultBump'),
+  BufferLayout.u8('associatedVaultBump'),
+  publicKey('nftAuthority'),
+  publicKey('universe'),
+  publicKey('vaultAuthority'),
+]);
+
+export const USER_NFT_ACCOUNT_DATA_LAYOUT_V2 = BufferLayout.struct([
+  BufferLayout.u8('userNftBump'),
+  uint64('index'),
+  BufferLayout.u8('vaultBump'),
+  BufferLayout.u8('associatedVaultBump'),
+  publicKey('nftAuthority'),
+  publicKey('universe'),
+  publicKey('vaultAuthority'),
+  BufferLayout.u8('receiptMintBump'),
+  BufferLayout.u8('userReceiptAtaBump'),
+  publicKey('receiptMint'),
+  publicKey('userReceiptAta'),
+  publicKey('vaultReceiptAta'),
+  publicKey('tokenMint'),
+  publicKey('receiptMasterEdition'),
+  BufferLayout.u8('isReceiptMasterEdition'),
+  BufferLayout.u8('isUserNftVerified'),
+  BufferLayout.u8('isUserNftMetaplex'),
+]);
+
+export interface UserNftLayout {
+  userNftBump: number;
+  index: Uint8Array;
+  vaultBump: number;
+  associatedVaultBump: number;
+  nftAuthority: Uint8Array;
+  universe: Uint8Array;
+  vaultAuthority: Uint8Array;
+  receiptMintBump?: number;
+  userReceiptAtaBump?: number;
+  receiptMint?: Uint8Array;
+  userReceiptAta?: Uint8Array;
+  vaultReceiptAta?: Uint8Array;
+  tokenMint?: Uint8Array;
+  receiptMasterEdition?: Uint8Array;
+  isReceiptMasterEdition?: boolean;
+  isUserNftVerified?: boolean;
+  isUserNftMetaplex?: boolean;
 }
