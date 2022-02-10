@@ -20,8 +20,17 @@ const getRawUserNfts = async (
 };
 
 /**
+ * 
+ * This method returns all the user nfts if no filters are passed or returns all the filtered user nfts
  *  Usage : 
- *  example 1: const filterArgs = {
+ *  example 1:
+ *  
+  const args = {
+    connection: connection,
+    wallet: wallet,
+  }; 
+
+  const filterArgs = {
     universes: [],
     vaultAuthorities: [],
     authorities: ["GD7GyGPWQeb1oPUkUdPZfwkQXVosCHmmH4HDMZD6KhMy"], // Any authority(wallet) key
@@ -66,19 +75,9 @@ const getUserNfts = async (
   }
 
   if (userNftAccounts.length > 0) {
-    userNftAccounts = userNftAccounts.filter((element: UserNftAccount) => {
-      return (
-        filters.universes.indexOf(
-          getPubkeyFromUnit8Array(element.account.universe)
-        ) >= 0 ||
-        filters.vaultAuthorities.indexOf(
-          getPubkeyFromUnit8Array(element.account.vaultAuthority)
-        ) >= 0 ||
-        filters.authorities.indexOf(
-          getPubkeyFromUnit8Array(element.account.nftAuthority)
-        ) >= 0
-      );
-    });
+    if (isFilterNotEmpty(filters)) {
+      userNftAccounts = applyFilter(userNftAccounts, filters);
+    }
 
     const userNfts = await Promise.all(
       userNftAccounts.map(async (userNftAccount: UserNftAccount) => {
@@ -134,6 +133,33 @@ const getUserNfts = async (
   }
 
   return [];
+};
+
+const isFilterNotEmpty = (filters: UserNftFilterArgs) => {
+  return (
+    filters.authorities.length > 0 ||
+    filters.vaultAuthorities.length > 0 ||
+    filters.authorities.length > 0
+  );
+};
+
+const applyFilter = (
+  userNftAccounts: Array<UserNftAccount>,
+  filters: UserNftFilterArgs
+) => {
+  return userNftAccounts.filter((element: UserNftAccount) => {
+    return (
+      filters.universes.indexOf(
+        getPubkeyFromUnit8Array(element.account.universe)
+      ) >= 0 ||
+      filters.vaultAuthorities.indexOf(
+        getPubkeyFromUnit8Array(element.account.vaultAuthority)
+      ) >= 0 ||
+      filters.authorities.indexOf(
+        getPubkeyFromUnit8Array(element.account.nftAuthority)
+      ) >= 0
+    );
+  });
 };
 
 export { getUserNfts };
