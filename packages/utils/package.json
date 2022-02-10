@@ -1,9 +1,17 @@
 {
   "name": "@kyraa/utils",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./dist/index.js",
+  "scripts": {
+    "dev": "swc src --out-dir dist --watch --copy-files",
+    "build": "swc src --out-dir dist --copy-files"
+  },
   "license": "MIT",
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "@swc/cli": "^0.1.55",
+    "@swc/core": "^1.2.138"
   }
 }

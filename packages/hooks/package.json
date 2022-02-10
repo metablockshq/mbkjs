@@ -1,9 +1,22 @@
 {
   "name": "@kyraa/hooks",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "license": "MIT",
+  "scripts": {
+    "dev": "swc src --out-dir dist --watch --copy-files",
+    "build": "swc src --out-dir dist --copy-files"
+  },
   "publishConfig": {
     "access": "public"
+  },
+  "peerDependencies": {},
+  "dependencies": {
+    "@kyraa/utils": "^1.0.0",
+    "@swc/cli": "^0.1.55",
+    "@swc/core": "^1.2.138",
+    "chokidar": "^3.5.3",
+    "react": "^17.0.2",
+    "swr": "^1.2.1"
   }
 }
