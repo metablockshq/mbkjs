@@ -1,11 +1,12 @@
 {
   "name": "@kyraa/hooks",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "./dist/index.js",
   "license": "MIT",
   "scripts": {
     "dev": "swc src --out-dir dist --watch --copy-files",
-    "build": "swc src --out-dir dist --copy-files"
+    "build": "swc src --out-dir dist --copy-files",
+    "prepare": "yarn build"
   },
   "publishConfig": {
     "access": "public"

@@ -1,11 +1,12 @@
 {
   "name": "@kyraa/solana",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "main": "./dist/index.js",
   "license": "MIT",
   "scripts": {
     "dev": "swc src --out-dir dist --watch --copy-files",
-    "build": "swc src --out-dir dist --copy-files"
+    "build": "swc src --out-dir dist --copy-files",
+    "prepare": "yarn build"
   },
   "dependencies": {
     "@solana/wallet-adapter-base": "^0.9.2",
