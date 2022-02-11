@@ -67,7 +67,6 @@ const getUserNfts = async (
       USER_NFT_ACCOUNT_DATA_LAYOUT_V2
     );
   } catch (err) {
-    console.log('Could not parse user nft v2 version, now parsing with v1 ');
     userNftAccounts = await getRawUserNfts(
       program,
       USER_NFT_ACCOUNT_DATA_LAYOUT_V1
