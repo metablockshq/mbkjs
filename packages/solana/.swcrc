@@ -19,6 +19,9 @@
           "decorators": false,
           "dynamicImport": true
         }
+      },
+      "module": {
+        "type": "commonjs"
       }
     }
   ]
