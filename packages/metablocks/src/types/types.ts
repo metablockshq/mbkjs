@@ -211,3 +211,17 @@ export interface UserNftFilterArgs {
   vaultAuthorities: Array<string>;
   authorities: Array<string>;
 }
+
+export interface MetadataData {
+  data: MetadataDataData;
+}
+
+export interface MetadataDataData {
+  creators: Array<Creator>;
+}
+
+export interface Creator {
+  share: number;
+  verified: boolean;
+  address: string;
+}

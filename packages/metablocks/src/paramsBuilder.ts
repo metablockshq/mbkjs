@@ -344,6 +344,8 @@ const computeGroupedDepositNftParams = async ({
     mintKey
   );
 
+  const [userNftAta, _u] = await findAssociatedAddress(usersKey, mintKey);
+
   const [vaultAuthorityKey, vaultAuthorityBump] =
     await findVaultAuthorityAddress(universeKey, usersKey, receiptMint);
 
@@ -402,42 +404,6 @@ const computeGroupedDepositNftParams = async ({
     vaultBump: vaultAuthorityBump,
   };
 
-  // init reposit args
-  const initDepositNftArgs = {
-    receiptMintBump: receiptMintBump,
-    receiptTokenBump: receiptTokenBump,
-    vaultBump: vaultAuthorityBump,
-    vaultReceiptAtaBump: vaultReceiptAtaBump,
-    userNftBump: userNftBump,
-    associatedVaultBump: vaultAtaBump,
-    userReceiptAtaBump: userReceiptAtaBump,
-  };
-
-  // deposit nft args
-  const depositNftArgs = {
-    userNftBump: userNftBump,
-    vaultBump: vaultAuthorityBump,
-    associatedBump: vaultAtaBump,
-    receiptMintBump: receiptMintBump,
-    receiptAtaBump: userReceiptAtaBump,
-    receiptTokenBump: receiptTokenBump,
-  };
-
-  //transfer receipt args
-  const transferReceiptNftArgs = {
-    userNftBump: userNftBump,
-    vaultBump: vaultAuthorityBump,
-    receiptMintBump: receiptMintBump,
-    uri: url,
-    creators: creators,
-    name: 'MetablocksReceiptNft',
-    symbol: 'mbk',
-    sellerFeeBasisPoints: 0,
-    isMutable: false,
-    isReceiptMasterEdition: isReceiptMasterEdition,
-  };
-
-  //accounts
   // init receipt accounts
   const initReceiptMintAccounts = {
     universe: universeKey,
@@ -448,6 +414,17 @@ const computeGroupedDepositNftParams = async ({
     tokenProgram: new PublicKey(programIds.token),
     systemProgram: SystemProgram.programId,
     rent: SYSVAR_RENT_PUBKEY,
+  };
+
+  // init reposit args
+  const initDepositNftArgs = {
+    receiptMintBump: receiptMintBump,
+    receiptTokenBump: receiptTokenBump,
+    vaultBump: vaultAuthorityBump,
+    vaultReceiptAtaBump: vaultReceiptAtaBump,
+    userNftBump: userNftBump,
+    associatedVaultBump: vaultAtaBump,
+    userReceiptAtaBump: userReceiptAtaBump,
   };
 
   //init depsoit Nft Accounts
@@ -467,13 +444,23 @@ const computeGroupedDepositNftParams = async ({
     rent: SYSVAR_RENT_PUBKEY,
   };
 
+  // deposit nft args
+  const depositNftArgs = {
+    userNftBump: userNftBump,
+    vaultBump: vaultAuthorityBump,
+    associatedBump: vaultAtaBump,
+    receiptMintBump: receiptMintBump,
+    receiptAtaBump: userReceiptAtaBump,
+    receiptTokenBump: receiptTokenBump,
+  };
+
   // deposit Nft Accounts
   const depositNftAccounts = {
     userNft: userNftKey,
     vaultAuthority: vaultAuthorityKey,
     authority: usersKey,
     universe: universeKey,
-    userNftAta: userNftKey,
+    userNftAta: userNftAta,
     userNftMetadata: userNftMetadata,
     vaultNftAta: vaultAta,
     tokenMint: mintKey,
@@ -482,6 +469,20 @@ const computeGroupedDepositNftParams = async ({
     associatedTokenProgram: new PublicKey(programIds.associatedToken),
     systemProgram: SystemProgram.programId,
     rent: SYSVAR_RENT_PUBKEY,
+  };
+
+  //transfer receipt args
+  const transferReceiptNftArgs = {
+    userNftBump: userNftBump,
+    vaultBump: vaultAuthorityBump,
+    receiptMintBump: receiptMintBump,
+    uri: url,
+    creators: creators,
+    name: 'MetablocksReceiptNft',
+    symbol: 'mbk',
+    sellerFeeBasisPoints: 0,
+    isMutable: false,
+    isReceiptMasterEdition: isReceiptMasterEdition,
   };
 
   // transfer receipt Nft Accounts
