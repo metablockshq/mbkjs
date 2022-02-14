@@ -212,12 +212,36 @@ export interface UserNftFilterArgs {
   authorities: Array<string>;
 }
 
+export interface Metadata {
+  info: Info;
+  pubkey: string;
+}
+
+export interface Info {
+  data: Uint8Array;
+  executable: boolean;
+  lamports: number;
+  owner: PublicKey;
+  rentEpoch: number;
+}
 export interface MetadataData {
   data: MetadataDataData;
+  editionNonce: number;
+  isMutable: boolean;
+  key: number;
+  mint: string;
+  primarySaleHappened: boolean;
+  tokenStandard: string;
+  updateAuthority: string;
+  uses?: string;
 }
 
 export interface MetadataDataData {
   creators: Array<Creator>;
+  name: string;
+  symbol: string;
+  uri: string;
+  sellerFeeBasisPoints: string;
 }
 
 export interface Creator {
