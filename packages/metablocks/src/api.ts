@@ -4,7 +4,7 @@ import {
   computeGroupedDepositNftParams,
   computeUpdateUniverseParams,
 } from './paramsBuilder';
-import { Transaction } from '@solana/web3.js';
+import { Connection, PublicKey, Transaction } from '@solana/web3.js';
 import { getWithdrawNftInstruction } from './instructions';
 import {
   FetchAccountArgs,
@@ -16,6 +16,7 @@ import {
 } from './types/types';
 
 import * as accountApi from './accounts';
+import { Metadata } from '@metaplex-foundation/mpl-token-metadata';
 
 const createUniverse = async (args: UniverseApiArgs) => {
   const program = getMetaBlocksProgram(args.connection, args.wallet);
@@ -154,12 +155,12 @@ const withdrawNft = async (args: WithdrawNftApiArgs) => {
 };
 
 // Get all Universes
-const getAllUniverses = async (args: FetchAccountArgs) => {
+const getAllUniverseAccounts = async (args: FetchAccountArgs) => {
   const program = getMetaBlocksProgram(args.connection, args.wallet);
   return await accountApi.getAllUniverses(program);
 };
 // Get All user nfts
-const getUserNfts = async (
+const getWrappedUserNftAccounts = async (
   args: FetchAccountArgs,
   filterArgs: UserNftFilterArgs
 ) => {
@@ -167,11 +168,22 @@ const getUserNfts = async (
   return await accountApi.getUserNfts(program, filterArgs);
 };
 
+// Get Metadata for Mint
+const getMetadataForMint = async (connection: Connection, mint: PublicKey) => {
+  try {
+    const metadataPDA = await Metadata.getPDA(mint);
+    return await Metadata.load(connection, metadataPDA);
+  } catch (err) {
+    throw err;
+  }
+};
+
 export {
   createUniverse,
   updateUniverse,
   depositNft,
   withdrawNft,
-  getAllUniverses,
-  getUserNfts,
+  getAllUniverseAccounts,
+  getWrappedUserNftAccounts,
+  getMetadataForMint,
 };
