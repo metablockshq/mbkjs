@@ -17,6 +17,7 @@ import {
 
 import * as accountApi from './accounts';
 import { Metadata } from '@metaplex-foundation/mpl-token-metadata';
+import { KyraaError } from './error';
 
 const createUniverse = async (args: UniverseApiArgs) => {
   const program = getMetaBlocksProgram(args.connection, args.wallet);
@@ -35,7 +36,7 @@ const createUniverse = async (args: UniverseApiArgs) => {
     });
     return tx;
   } catch (e) {
-    throw e;
+    throw new KyraaError(e);
   }
 };
 
@@ -56,7 +57,7 @@ const updateUniverse = async (args: UniverseApiArgs) => {
     });
     return tx;
   } catch (e) {
-    throw e;
+    throw new KyraaError(e);
   }
 };
 
@@ -131,7 +132,7 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
 
     return { tx1, tx2 };
   } catch (e) {
-    throw e;
+    throw new KyraaError(e);
   }
 };
 
@@ -150,7 +151,7 @@ const withdrawNft = async (args: WithdrawNftApiArgs) => {
 
     return await program.provider.send(transaction, []);
   } catch (e) {
-    throw e;
+    throw new KyraaError(e);
   }
 };
 
