@@ -1,5 +1,4 @@
 import * as anchor from '@project-serum/anchor';
-import { getAllAccountInfo, getPubkeyFromUnit8Array } from '.';
 import { MetaBlocks } from '../types/meta_blocks';
 import {
   UserNft,
@@ -9,7 +8,12 @@ import {
   USER_NFT_ACCOUNT_DATA_LAYOUT_V1,
   USER_NFT_ACCOUNT_DATA_LAYOUT_V2,
 } from '../types/types';
-import { camelToSnakeCaseArrayObject, setBlockMetadata } from './utils';
+import {
+  camelToSnakeCaseArrayObject,
+  setBlockMetadata,
+  getAllAccountInfo,
+  getPubkeyFromUnit8Array,
+} from './utils';
 import * as BufferLayout from '@solana/buffer-layout';
 
 const getRawUserNfts = async (

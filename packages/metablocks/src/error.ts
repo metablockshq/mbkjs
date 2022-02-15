@@ -15,8 +15,23 @@ class KyraaError {
     return this._originalError;
   }
 
-  constructor(err: any) {
-    this.parse(err);
+  public constructor(err: any) {
+    try {
+      let message = err.toString().split('/n');
+
+      if (message.length > 0) {
+        let extractedMessage = message[0].split(':')[5];
+        let logs = err.logs;
+        if (hexToDecimal(extractedMessage) == 0 && logs.length > 0) {
+          this._message = logs[3];
+          this._errorCode = hexToDecimal(extractedMessage);
+        } else {
+          this._errorCode = hexToDecimal(extractedMessage);
+          this._message = LangErrorMessage.get(this._errorCode);
+        }
+      }
+    } catch (err) {}
+    this._originalError = err;
   }
 
   set parse(err: any) {
@@ -28,12 +43,10 @@ class KyraaError {
         let logs = err.logs;
         if (hexToDecimal(extractedMessage) == 0 && logs.length > 0) {
           this._message = logs[3];
-          this._errorCode = extractedMessage;
+          this._errorCode = hexToDecimal(extractedMessage);
         } else {
-          const errorCode = hexToDecimal(extractedMessage);
-          const errorMessage = LangErrorMessage.get(errorCode);
-          this._errorCode = errorCode;
-          this._message = errorMessage;
+          this._errorCode = hexToDecimal(extractedMessage);
+          this._message = LangErrorMessage.get(this._errorCode);
         }
       }
     } catch (err) {}
