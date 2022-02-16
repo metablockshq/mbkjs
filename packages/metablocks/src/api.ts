@@ -13,6 +13,7 @@ import {
   UniverseApiArgs,
   UserNftFilterArgs,
   WithdrawNftApiArgs,
+  WithdrawNftWithReceiptApiArgs,
 } from './types/types';
 
 import * as accountApi from './accounts';
@@ -155,6 +156,36 @@ const withdrawNft = async (args: WithdrawNftApiArgs) => {
   }
 };
 
+const withdrawNftWithReceipt = async (args: WithdrawNftWithReceiptApiArgs) => {
+  try {
+    const program = getMetaBlocksProgram(args.connection, args.wallet);
+    const usersKey = args.wallet.publicKey;
+
+    const userNftAccount = await accountApi.getUserNft(
+      program,
+      args.receiptMint,
+      usersKey
+    );
+
+    if (userNftAccount == null) {
+      throw new Error('Could not fetch the Wrapped User Nft Account');
+    }
+
+    const withdrawNftInstruction = await getWithdrawNftInstruction({
+      program: program,
+      usersKey: usersKey,
+      mintKey: userNftAccount.tokenMint,
+      universeKey: args.universeKey,
+    });
+    const transaction = new Transaction();
+    transaction.add(withdrawNftInstruction);
+
+    return await program.provider.send(transaction, []);
+  } catch (e) {
+    throw e;
+  }
+};
+
 // Get all Universes
 const getAllUniverseAccounts = async (args: FetchAccountArgs) => {
   const program = getMetaBlocksProgram(args.connection, args.wallet);
@@ -179,6 +210,21 @@ const getMetadataForMint = async (connection: Connection, mint: PublicKey) => {
   }
 };
 
+const getWrappedUserNftAccount = async (
+  connection: Connection,
+  receiptMintAddress: PublicKey,
+  wallet: any,
+  authority: PublicKey
+) => {
+  try {
+    const program = getMetaBlocksProgram(connection, wallet);
+
+    return await accountApi.getUserNft(program, receiptMintAddress, authority);
+  } catch (err) {
+    throw err;
+  }
+};
+
 export {
   createUniverse,
   updateUniverse,
@@ -187,4 +233,6 @@ export {
   getAllUniverseAccounts,
   getWrappedUserNftAccounts,
   getMetadataForMint,
+  getWrappedUserNftAccount,
+  withdrawNftWithReceipt,
 };

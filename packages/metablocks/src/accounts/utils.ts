@@ -1,12 +1,12 @@
 import * as anchor from '@project-serum/anchor';
-import { PublicKey } from '@solana/web3.js';
+import { Connection, PublicKey } from '@solana/web3.js';
 import { MetaBlocks } from '../types/meta_blocks';
 import { BlockMetadata } from '../types/types';
 import bs58 from 'bs58';
 import camelcase from 'camelcase';
 import { sha256 } from 'js-sha256';
 import { Program } from '@project-serum/anchor';
-import * as BufferLayout from '@solana/buffer-layout';
+import { Layout } from 'buffer-layout';
 
 const camelToSnakeCase = (value: string): string => {
   return value
@@ -56,10 +56,11 @@ const setBlockMetadata = async (
   return metadata;
 };
 
-const getAllAccountInfo = async <T>(
+const getAllAccountInfo = async (
   idlAccountName: string,
   program: Program,
-  layout: BufferLayout.Structure
+  v1Layout: Layout,
+  v2Layout: Layout
 ) => {
   const discriminator = accountDiscriminator(idlAccountName);
 
@@ -80,9 +81,15 @@ const getAllAccountInfo = async <T>(
   );
 
   return resp.map(({ pubkey, account }) => {
+    try {
+      return {
+        publicKey: pubkey,
+        account: v2Layout.decode(account.data.slice(8)),
+      };
+    } catch (err) {}
     return {
       publicKey: pubkey,
-      account: layout.decode(account.data) as T,
+      account: v1Layout.decode(account.data.slice(8)),
     };
   });
 };
@@ -101,6 +108,38 @@ const getPubkeyFromUnit8Array = (input: Uint8Array | PublicKey): string => {
   }
 };
 
+const getNullableAccountInfoBuffer = async (
+  publicKey: PublicKey,
+  connection: Connection
+): Promise<Buffer | null> => {
+  const accountInfo = await connection.getAccountInfo(
+    publicKey,
+    connection.commitment
+  );
+  if (accountInfo == null) {
+    return null;
+  }
+  return accountInfo.data;
+};
+
+const getDeserializedAccount = (
+  buffer: Buffer,
+  layout: Layout,
+  idlAccountName: string
+) => {
+  try {
+    // Assert the account discriminator is correct.
+    const discriminator = accountDiscriminator(idlAccountName);
+    if (discriminator.compare(buffer.slice(0, 8))) {
+      throw new Error('Invalid account discriminator');
+    }
+
+    return layout.decode(buffer.slice(8));
+  } catch (err) {
+    throw new Error('Could not deserialize the account');
+  }
+};
+
 export {
   camelToSnakeCase,
   camelToSnakeCaseArrayObject,
@@ -108,4 +147,6 @@ export {
   setBlockMetadata,
   getAllAccountInfo,
   getPubkeyFromUnit8Array,
+  getNullableAccountInfoBuffer,
+  getDeserializedAccount,
 };
