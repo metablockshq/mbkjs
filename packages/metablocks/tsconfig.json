@@ -7,6 +7,7 @@
     "declaration": true,
     "sourceMap": true,
     "rootDir": "./src",
+    "target": "ESNext",
     "strict": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
@@ -15,7 +16,7 @@
     "moduleResolution": "node",
     "jsx": "react",
     "esModuleInterop": true,
-    "skipLibCheck": true,
+    "skipLibCheck": false,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true
   }
