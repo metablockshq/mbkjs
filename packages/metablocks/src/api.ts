@@ -14,6 +14,7 @@ import {
   UserNftFilterArgs,
   WithdrawNftApiArgs,
   WithdrawNftWithReceiptApiArgs,
+  WrappedUserNftArgs,
 } from './types/types';
 
 import * as accountApi from './accounts';
@@ -210,16 +211,15 @@ const getMetadataForMint = async (connection: Connection, mint: PublicKey) => {
   }
 };
 
-const getWrappedUserNftAccount = async (
-  connection: Connection,
-  receiptMintAddress: PublicKey,
-  wallet: any,
-  authority: PublicKey
-) => {
+const getWrappedUserNftAccount = async (args: WrappedUserNftArgs) => {
   try {
-    const program = getMetaBlocksProgram(connection, wallet);
+    const program = getMetaBlocksProgram(args.connection, args.wallet);
 
-    return await accountApi.getUserNft(program, receiptMintAddress, authority);
+    return await accountApi.getUserNft(
+      program,
+      args.receiptMintAddress,
+      args.authority
+    );
   } catch (err) {
     throw err;
   }

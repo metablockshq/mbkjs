@@ -44,6 +44,13 @@ export interface WithdrawNftWithReceiptApiArgs {
   universeKey: PublicKey;
 }
 
+export interface WrappedUserNftArgs {
+  connection: Connection;
+  receiptMintAddress: PublicKey;
+  wallet: any;
+  authority: PublicKey;
+}
+
 //paramBuilder.ts arguments
 
 export interface UniverseParamArgs {
