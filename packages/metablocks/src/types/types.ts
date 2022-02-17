@@ -1,9 +1,7 @@
 import { Program } from '@project-serum/anchor';
 import { Connection, PublicKey, Signer, Transaction } from '@solana/web3.js';
 import { MetaBlocks } from './meta_blocks';
-//import * as BufferLayout from '@solana/buffer-layout';
 import * as borsh from '@project-serum/borsh';
-import { Layout } from 'buffer-layout';
 
 export interface UniverseApiArgs {
   connection: Connection;
@@ -159,14 +157,6 @@ export interface FetchAccountArgs {
   connection: Connection;
   wallet: any;
 }
-
-// const publicKey = (property = 'publicKey') => {
-//   return Layout.blob(32, property);
-// };
-
-// const uint64 = (property = 'uint64') => {
-//   return Layout.blob(8, property);
-// };
 
 export const USER_NFT_ACCOUNT_DATA_LAYOUT_V1 = borsh.struct([
   borsh.u8('userNftBump'),

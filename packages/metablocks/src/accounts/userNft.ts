@@ -22,7 +22,7 @@ import { Layout } from 'buffer-layout';
 const getRawUserNfts = async (
   program: anchor.Program<MetaBlocks>,
   layouts: Layout[]
-): Promise<Array<any>> => {
+): Promise<Array<UserNftAccount | null>> => {
   return await getAllAccountInfo('UserNft', program, layouts);
 };
 
@@ -75,7 +75,11 @@ const getUserNfts = async (
 
   userNftAccounts = await getRawUserNfts(program, layouts);
 
-  if (userNftAccounts.length > 0) {
+  userNftAccounts = userNftAccounts.filter(
+    (userNftAccount) => userNftAccount !== null
+  ) as Array<UserNftAccount>;
+
+  if (userNftAccounts.length > 0 && userNftAccounts != null) {
     if (isFilterNotEmpty(filters)) {
       userNftAccounts = applyFilter(userNftAccounts, filters);
     }
@@ -142,14 +146,14 @@ const getModifiedUserNftAccount = async (
 };
 
 const applyFilter = (
-  userNftAccounts: Array<any>,
+  userNftAccounts: Array<UserNftAccount>,
   filters: UserNftFilterArgs
 ) => {
-  return userNftAccounts.filter((element: any) => {
+  return userNftAccounts.filter((element: UserNftAccount) => {
     return (
-      filters.universes.indexOf(element.account.universe) >= 0 ||
-      filters.vaultAuthorities.indexOf(element.account.vaultAuthority) >= 0 ||
-      filters.authorities.indexOf(element.account.nftAuthority) >= 0
+      filters.universes.includes(element.account.universe) ||
+      filters.vaultAuthorities.includes(element.account.vaultAuthority) ||
+      filters.authorities.includes(element.account.nftAuthority)
     );
   });
 };
