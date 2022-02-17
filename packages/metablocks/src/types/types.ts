@@ -44,7 +44,7 @@ export interface WithdrawNftWithReceiptApiArgs {
 
 export interface WrappedUserNftArgs {
   connection: Connection;
-  receiptMintAddress: PublicKey;
+  receiptMint: PublicKey;
   wallet: any;
   authority: PublicKey;
 }

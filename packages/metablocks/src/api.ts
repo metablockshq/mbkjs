@@ -11,6 +11,7 @@ import {
   GroupedDepositNftApiArgs,
   SendTxRequest,
   UniverseApiArgs,
+  UserNftAccount,
   UserNftFilterArgs,
   WithdrawNftApiArgs,
   WithdrawNftWithReceiptApiArgs,
@@ -160,29 +161,34 @@ const withdrawNftWithReceipt = async (args: WithdrawNftWithReceiptApiArgs) => {
     const program = getMetaBlocksProgram(args.connection, args.wallet);
     const usersKey = args.wallet.publicKey;
 
-    const userNftAccount = await accountApi.getUserNft(
+    const userNftAccount: any = await accountApi.getUserNft(
       program,
       args.receiptMint,
       usersKey
     );
 
-    if (userNftAccount == null) {
-      throw new Error('Could not fetch the Wrapped User Nft Account');
+    if (
+      userNftAccount == null ||
+      userNftAccount.tokenMint === undefined ||
+      userNftAccount.universe === undefined
+    ) {
+      throw new Error(
+        'userNftAccount failure, either token mint or universe is undefined'
+      );
     }
-    return await callWithdrawNft(
-      program,
-      usersKey,
-      userNftAccount.tokenMint,
-      args.universeKey
-    );
+
+    const tokenMint = new PublicKey(userNftAccount.tokenMint);
+    const universeKey = new PublicKey(userNftAccount.universe);
+
+    return await callWithdrawNft(program, usersKey, tokenMint, universeKey);
   } catch (e) {
-    throw e;
+    throw new KyraaError(e);
   }
 };
 
 const callWithdrawNft = async (
   program: Program<MetaBlocks>,
-  usersKey: any,
+  usersKey: PublicKey,
   mintKey: PublicKey,
   universeKey: PublicKey
 ) => {
@@ -228,7 +234,7 @@ const getWrappedUserNftAccount = async (args: WrappedUserNftArgs) => {
 
     return await accountApi.getUserNft(
       program,
-      args.receiptMintAddress,
+      args.receiptMint,
       args.authority
     );
   } catch (err) {
