@@ -21,10 +21,9 @@ import { Layout } from 'buffer-layout';
 
 const getRawUserNfts = async (
   program: anchor.Program<MetaBlocks>,
-  v1Layout: Layout,
-  v2Layout: Layout
+  layouts: Layout[]
 ): Promise<Array<any>> => {
-  return await getAllAccountInfo('UserNft', program, v1Layout, v2Layout);
+  return await getAllAccountInfo('UserNft', program, layouts);
 };
 
 /**
@@ -69,11 +68,12 @@ const getUserNfts = async (
 ): Promise<Array<UserNft>> => {
   let userNftAccounts = null;
 
-  userNftAccounts = await getRawUserNfts(
-    program,
+  const layouts: Layout[] = [
     USER_NFT_ACCOUNT_DATA_LAYOUT_V1,
-    USER_NFT_ACCOUNT_DATA_LAYOUT_V2
-  );
+    USER_NFT_ACCOUNT_DATA_LAYOUT_V2,
+  ];
+
+  userNftAccounts = await getRawUserNfts(program, layouts);
 
   if (userNftAccounts.length > 0) {
     if (isFilterNotEmpty(filters)) {
@@ -81,7 +81,7 @@ const getUserNfts = async (
     }
 
     const userNfts = await Promise.all(
-      userNftAccounts.map(async (userNftAccount: any) => {
+      userNftAccounts.map(async (userNftAccount: UserNftAccount) => {
         return getModifiedUserNftAccount(userNftAccount, program);
       })
     );

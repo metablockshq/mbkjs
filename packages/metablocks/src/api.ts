@@ -20,6 +20,8 @@ import {
 import * as accountApi from './accounts';
 import { Metadata } from '@metaplex-foundation/mpl-token-metadata';
 import { KyraaError } from './error';
+import { Program } from '@project-serum/anchor';
+import { MetaBlocks } from './types/meta_blocks';
 
 const createUniverse = async (args: UniverseApiArgs) => {
   const program = getMetaBlocksProgram(args.connection, args.wallet);
@@ -142,16 +144,12 @@ const withdrawNft = async (args: WithdrawNftApiArgs) => {
   try {
     const program = getMetaBlocksProgram(args.connection, args.wallet);
     const usersKey = args.wallet.publicKey;
-    const withdrawNftInstruction = await getWithdrawNftInstruction({
-      program: program,
-      usersKey: usersKey,
-      mintKey: args.mintKey,
-      universeKey: args.universeKey,
-    });
-    const transaction = new Transaction();
-    transaction.add(withdrawNftInstruction);
-
-    return await program.provider.send(transaction, []);
+    return await callWithdrawNft(
+      program,
+      usersKey,
+      args.mintKey,
+      args.universeKey
+    );
   } catch (e) {
     throw new KyraaError(e);
   }
@@ -171,20 +169,33 @@ const withdrawNftWithReceipt = async (args: WithdrawNftWithReceiptApiArgs) => {
     if (userNftAccount == null) {
       throw new Error('Could not fetch the Wrapped User Nft Account');
     }
-
-    const withdrawNftInstruction = await getWithdrawNftInstruction({
-      program: program,
-      usersKey: usersKey,
-      mintKey: userNftAccount.tokenMint,
-      universeKey: args.universeKey,
-    });
-    const transaction = new Transaction();
-    transaction.add(withdrawNftInstruction);
-
-    return await program.provider.send(transaction, []);
+    return await callWithdrawNft(
+      program,
+      usersKey,
+      userNftAccount.tokenMint,
+      args.universeKey
+    );
   } catch (e) {
     throw e;
   }
+};
+
+const callWithdrawNft = async (
+  program: Program<MetaBlocks>,
+  usersKey: any,
+  mintKey: PublicKey,
+  universeKey: PublicKey
+) => {
+  const withdrawNftInstruction = await getWithdrawNftInstruction({
+    program: program,
+    usersKey: usersKey,
+    mintKey: mintKey,
+    universeKey: universeKey,
+  });
+  const transaction = new Transaction();
+  transaction.add(withdrawNftInstruction);
+
+  return await program.provider.send(transaction, []);
 };
 
 // Get all Universes

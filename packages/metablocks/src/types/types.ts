@@ -149,6 +149,7 @@ export interface UserNft {
   isReceiptMasterEdition: boolean;
   isUserNftVerified: boolean;
   isUserNftMetaplex: boolean;
+  index: number;
   slot: number | undefined | null;
   signature: string | undefined | null;
   blockTime: number | undefined | null;
@@ -197,29 +198,9 @@ export const USER_NFT_ACCOUNT_DATA_LAYOUT_V2 = borsh.struct([
   borsh.u8('isUserNftMetaplex'),
 ]);
 
-/*export interface UserNftLayout {
-  userNftBump: number;
-  index: Uint8Array;
-  vaultBump: number;
-  associatedVaultBump: number;
-  nftAuthority: Uint8Array;
-  universe: Uint8Array;
-  vaultAuthority: Uint8Array;
-  receiptMintBump?: number;
-  userReceiptAtaBump?: number;
-  receiptMint?: Uint8Array;
-  userReceiptAta?: Uint8Array;
-  vaultReceiptAta?: Uint8Array;
-  tokenMint?: Uint8Array;
-  receiptMasterEdition?: Uint8Array;
-  isReceiptMasterEdition?: boolean;
-  isUserNftVerified?: boolean;
-  isUserNftMetaplex?: boolean;
-}*/
-
 export interface UserNftAccount {
   publicKey: PublicKey;
-  account: any;
+  account: UserNft;
 }
 
 export interface UserNftFilterArgs {

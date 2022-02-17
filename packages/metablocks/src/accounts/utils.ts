@@ -59,8 +59,7 @@ const setBlockMetadata = async (
 const getAllAccountInfo = async (
   idlAccountName: string,
   program: Program,
-  v1Layout: Layout,
-  v2Layout: Layout
+  layouts: Layout[]
 ) => {
   const discriminator = accountDiscriminator(idlAccountName);
 
@@ -80,17 +79,29 @@ const getAllAccountInfo = async (
     }
   );
 
+  return processAccountInfo(resp, layouts);
+};
+
+const processAccountInfo = (
+  resp: {
+    pubkey: anchor.web3.PublicKey;
+    account: anchor.web3.AccountInfo<Buffer>;
+  }[],
+  layouts: Layout[]
+) => {
   return resp.map(({ pubkey, account }) => {
-    try {
-      return {
-        publicKey: pubkey,
-        account: v2Layout.decode(account.data.slice(8)),
-      };
-    } catch (err) {}
-    return {
-      publicKey: pubkey,
-      account: v1Layout.decode(account.data.slice(8)),
-    };
+    let result = null;
+    for (let layout of layouts) {
+      try {
+        result = {
+          publicKey: pubkey,
+          account: layout.decode(account.data.slice(8)),
+        };
+      } catch (err) {
+        continue;
+      }
+    }
+    return result;
   });
 };
 
