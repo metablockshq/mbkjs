@@ -11,7 +11,6 @@ import {
   GroupedDepositNftApiArgs,
   SendTxRequest,
   UniverseApiArgs,
-  UserNftAccount,
   UserNftFilterArgs,
   WithdrawNftApiArgs,
   WithdrawNftWithReceiptApiArgs,
@@ -23,7 +22,7 @@ import { Metadata } from '@metaplex-foundation/mpl-token-metadata';
 import { KyraaError } from './error';
 import { Program } from '@project-serum/anchor';
 import { MetaBlocks } from './types/meta_blocks';
-import { LangErrorCode, LangErrorMessage } from '.';
+import { LangErrorCode, LangErrorMessage } from './error';
 
 const createUniverse = async (args: UniverseApiArgs) => {
   const program = getMetaBlocksProgram(args.connection, args.wallet);
