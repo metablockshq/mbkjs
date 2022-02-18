@@ -1,7 +1,7 @@
 import { Program } from '@project-serum/anchor';
 import { Connection, PublicKey, Signer, Transaction } from '@solana/web3.js';
 import { MetaBlocks } from './meta_blocks';
-import * as BufferLayout from '@solana/buffer-layout';
+import * as borsh from '@project-serum/borsh';
 
 export interface UniverseApiArgs {
   connection: Connection;
@@ -34,6 +34,20 @@ export interface GroupedDepositNftApiArgs extends ApiInputArgs {
 }
 
 export interface WithdrawNftApiArgs extends ApiInputArgs {}
+
+export interface WithdrawNftWithReceiptApiArgs {
+  receiptMint: PublicKey;
+  connection: Connection;
+  wallet: any;
+  universeKey: PublicKey;
+}
+
+export interface WrappedUserNftArgs {
+  connection: Connection;
+  receiptMint: PublicKey;
+  wallet: any;
+  authority: PublicKey;
+}
 
 //paramBuilder.ts arguments
 
@@ -133,6 +147,7 @@ export interface UserNft {
   isReceiptMasterEdition: boolean;
   isUserNftVerified: boolean;
   isUserNftMetaplex: boolean;
+  index: number;
   slot: number | undefined | null;
   signature: string | undefined | null;
   blockTime: number | undefined | null;
@@ -143,67 +158,39 @@ export interface FetchAccountArgs {
   wallet: any;
 }
 
-const publicKey = (property = 'publicKey') => {
-  return BufferLayout.blob(32, property);
-};
-
-const uint64 = (property = 'uint64') => {
-  return BufferLayout.blob(8, property);
-};
-
-export const USER_NFT_ACCOUNT_DATA_LAYOUT_V1 = BufferLayout.struct([
-  BufferLayout.u8('userNftBump'),
-  uint64('index'),
-  BufferLayout.u8('vaultBump'),
-  BufferLayout.u8('associatedVaultBump'),
-  publicKey('nftAuthority'),
-  publicKey('universe'),
-  publicKey('vaultAuthority'),
+export const USER_NFT_ACCOUNT_DATA_LAYOUT_V1 = borsh.struct([
+  borsh.u8('userNftBump'),
+  borsh.u64('index'),
+  borsh.u8('vaultBump'),
+  borsh.u8('associatedVaultBump'),
+  borsh.publicKey('nftAuthority'),
+  borsh.publicKey('universe'),
+  borsh.publicKey('vaultAuthority'),
 ]);
 
-export const USER_NFT_ACCOUNT_DATA_LAYOUT_V2 = BufferLayout.struct([
-  BufferLayout.u8('userNftBump'),
-  uint64('index'),
-  BufferLayout.u8('vaultBump'),
-  BufferLayout.u8('associatedVaultBump'),
-  publicKey('nftAuthority'),
-  publicKey('universe'),
-  publicKey('vaultAuthority'),
-  BufferLayout.u8('receiptMintBump'),
-  BufferLayout.u8('userReceiptAtaBump'),
-  publicKey('receiptMint'),
-  publicKey('userReceiptAta'),
-  publicKey('vaultReceiptAta'),
-  publicKey('tokenMint'),
-  publicKey('receiptMasterEdition'),
-  BufferLayout.u8('isReceiptMasterEdition'),
-  BufferLayout.u8('isUserNftVerified'),
-  BufferLayout.u8('isUserNftMetaplex'),
+export const USER_NFT_ACCOUNT_DATA_LAYOUT_V2 = borsh.struct([
+  borsh.u8('userNftBump'),
+  borsh.u64('index'),
+  borsh.u8('vaultBump'),
+  borsh.u8('associatedVaultBump'),
+  borsh.publicKey('nftAuthority'),
+  borsh.publicKey('universe'),
+  borsh.publicKey('vaultAuthority'),
+  borsh.u8('receiptMintBump'),
+  borsh.u8('userReceiptAtaBump'),
+  borsh.publicKey('receiptMint'),
+  borsh.publicKey('userReceiptAta'),
+  borsh.publicKey('vaultReceiptAta'),
+  borsh.publicKey('tokenMint'),
+  borsh.publicKey('receiptMasterEdition'),
+  borsh.u8('isReceiptMasterEdition'),
+  borsh.u8('isUserNftVerified'),
+  borsh.u8('isUserNftMetaplex'),
 ]);
-
-export interface UserNftLayout {
-  userNftBump: number;
-  index: Uint8Array;
-  vaultBump: number;
-  associatedVaultBump: number;
-  nftAuthority: Uint8Array;
-  universe: Uint8Array;
-  vaultAuthority: Uint8Array;
-  receiptMintBump?: number;
-  userReceiptAtaBump?: number;
-  receiptMint?: Uint8Array;
-  userReceiptAta?: Uint8Array;
-  vaultReceiptAta?: Uint8Array;
-  tokenMint?: Uint8Array;
-  receiptMasterEdition?: Uint8Array;
-  isReceiptMasterEdition?: boolean;
-  isUserNftVerified?: boolean;
-  isUserNftMetaplex?: boolean;
-}
 
 export interface UserNftAccount {
   publicKey: PublicKey;
-  account: UserNftLayout;
+  account: UserNft;
 }
 
 export interface UserNftFilterArgs {

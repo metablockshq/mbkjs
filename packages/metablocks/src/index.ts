@@ -6,3 +6,4 @@ export * as instructions from './instructions';
 export * as utils from './accounts/utils';
 export * from './types';
 export * from './error';
+export * as accountsApi from './accounts';

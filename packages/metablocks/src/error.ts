@@ -15,23 +15,30 @@ class KyraaError {
     return this._originalError;
   }
 
-  public constructor(err: any) {
-    try {
-      let message = err.toString().split('/n');
+  public constructor(err?: any, errorCode?: number, message?: string) {
+    if (err) {
+      try {
+        let message = err.toString().split('/n');
 
-      if (message.length > 0) {
-        let extractedMessage = message[0].split(':')[5];
-        let logs = err.logs;
-        if (hexToDecimal(extractedMessage) == 0 && logs.length > 0) {
-          this._message = logs[3];
-          this._errorCode = hexToDecimal(extractedMessage);
-        } else {
-          this._errorCode = hexToDecimal(extractedMessage);
-          this._message = LangErrorMessage.get(this._errorCode);
+        if (message.length > 0) {
+          let extractedMessage = message[0].split(':')[5];
+          let logs = err.logs;
+          if (hexToDecimal(extractedMessage) == 0 && logs.length > 0) {
+            this._message = logs[3];
+            this._errorCode = hexToDecimal(extractedMessage);
+          } else {
+            this._errorCode = hexToDecimal(extractedMessage);
+            this._message = LangErrorMessage.get(this._errorCode);
+          }
         }
-      }
-    } catch (err) {}
-    this._originalError = err;
+      } catch (err) {}
+      this._originalError = err;
+    }
+
+    if (message && errorCode) {
+      this._errorCode = errorCode;
+      this._message = message;
+    }
   }
 
   set parse(err: any) {
@@ -107,6 +114,9 @@ const LangErrorCode = {
 
   // Used for APIs that shouldn't be used anymore.
   Deprecated: 5000,
+
+  //Kyraa
+  KyraaUserNftAccount: 6000,
 };
 
 const LangErrorMessage = new Map([
@@ -223,10 +233,15 @@ const LangErrorMessage = new Map([
     LangErrorCode.Deprecated,
     'The API being used is deprecated and should no longer be used',
   ],
+
+  [
+    LangErrorCode.KyraaUserNftAccount,
+    'User Nft Account failure, either token mint or universe is undefined',
+  ],
 ]);
 
 const hexToDecimal = (str: string) => {
   return parseInt(str, 16);
 };
 
-export { KyraaError };
+export { KyraaError, LangErrorCode, LangErrorMessage };

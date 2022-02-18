@@ -11,13 +11,19 @@ import {
   GroupedDepositNftApiArgs,
   SendTxRequest,
   UniverseApiArgs,
+  UserNftAccount,
   UserNftFilterArgs,
   WithdrawNftApiArgs,
+  WithdrawNftWithReceiptApiArgs,
+  WrappedUserNftArgs,
 } from './types/types';
 
 import * as accountApi from './accounts';
 import { Metadata } from '@metaplex-foundation/mpl-token-metadata';
 import { KyraaError } from './error';
+import { Program } from '@project-serum/anchor';
+import { MetaBlocks } from './types/meta_blocks';
+import { LangErrorCode, LangErrorMessage } from '.';
 
 const createUniverse = async (args: UniverseApiArgs) => {
   const program = getMetaBlocksProgram(args.connection, args.wallet);
@@ -140,19 +146,65 @@ const withdrawNft = async (args: WithdrawNftApiArgs) => {
   try {
     const program = getMetaBlocksProgram(args.connection, args.wallet);
     const usersKey = args.wallet.publicKey;
-    const withdrawNftInstruction = await getWithdrawNftInstruction({
-      program: program,
-      usersKey: usersKey,
-      mintKey: args.mintKey,
-      universeKey: args.universeKey,
-    });
-    const transaction = new Transaction();
-    transaction.add(withdrawNftInstruction);
-
-    return await program.provider.send(transaction, []);
+    return await callWithdrawNft(
+      program,
+      usersKey,
+      args.mintKey,
+      args.universeKey
+    );
   } catch (e) {
     throw new KyraaError(e);
   }
+};
+
+const withdrawNftWithReceipt = async (args: WithdrawNftWithReceiptApiArgs) => {
+  try {
+    const program = getMetaBlocksProgram(args.connection, args.wallet);
+    const usersKey = args.wallet.publicKey;
+
+    const userNftAccount: any = await accountApi.getUserNft(
+      program,
+      args.receiptMint,
+      usersKey
+    );
+
+    if (
+      userNftAccount == null ||
+      userNftAccount.tokenMint === undefined ||
+      userNftAccount.universe === undefined
+    ) {
+      throw new KyraaError(
+        undefined,
+        LangErrorCode.KyraaUserNftAccount,
+        LangErrorMessage.get(LangErrorCode.KyraaUserNftAccount)
+      );
+    }
+
+    const tokenMint = new PublicKey(userNftAccount.tokenMint);
+    const universeKey = new PublicKey(userNftAccount.universe);
+
+    return await callWithdrawNft(program, usersKey, tokenMint, universeKey);
+  } catch (e) {
+    throw new KyraaError(e);
+  }
+};
+
+const callWithdrawNft = async (
+  program: Program<MetaBlocks>,
+  usersKey: PublicKey,
+  mintKey: PublicKey,
+  universeKey: PublicKey
+) => {
+  const withdrawNftInstruction = await getWithdrawNftInstruction({
+    program: program,
+    usersKey: usersKey,
+    mintKey: mintKey,
+    universeKey: universeKey,
+  });
+  const transaction = new Transaction();
+  transaction.add(withdrawNftInstruction);
+
+  return await program.provider.send(transaction, []);
 };
 
 // Get all Universes
@@ -179,6 +231,20 @@ const getMetadataForMint = async (connection: Connection, mint: PublicKey) => {
   }
 };
 
+const getWrappedUserNftAccount = async (args: WrappedUserNftArgs) => {
+  try {
+    const program = getMetaBlocksProgram(args.connection, args.wallet);
+
+    return await accountApi.getUserNft(
+      program,
+      args.receiptMint,
+      args.authority
+    );
+  } catch (err) {
+    throw err;
+  }
+};
+
 export {
   createUniverse,
   updateUniverse,
@@ -187,4 +253,6 @@ export {
   getAllUniverseAccounts,
   getWrappedUserNftAccounts,
   getMetadataForMint,
+  getWrappedUserNftAccount,
+  withdrawNftWithReceipt,
 };

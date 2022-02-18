@@ -4,7 +4,6 @@ import {
   UserNft,
   UserNftAccount,
   UserNftFilterArgs,
-  UserNftLayout,
   USER_NFT_ACCOUNT_DATA_LAYOUT_V1,
   USER_NFT_ACCOUNT_DATA_LAYOUT_V2,
 } from '../types/types';
@@ -12,15 +11,19 @@ import {
   camelToSnakeCaseArrayObject,
   setBlockMetadata,
   getAllAccountInfo,
-  getPubkeyFromUnit8Array,
+  getDeserializedAccount,
+  getNullableAccountInfoBuffer,
 } from './utils';
-import * as BufferLayout from '@solana/buffer-layout';
+import { Program } from '@project-serum/anchor';
+import { PublicKey } from '@solana/web3.js';
+import { findUserNftAddress } from '../pda';
+import { Layout } from 'buffer-layout';
 
 const getRawUserNfts = async (
   program: anchor.Program<MetaBlocks>,
-  layout: BufferLayout.Structure
-): Promise<Array<any>> => {
-  return await getAllAccountInfo<UserNftLayout>('UserNft', program, layout);
+  layouts: Layout[]
+): Promise<Array<UserNftAccount | null>> => {
+  return await getAllAccountInfo('UserNft', program, layouts);
 };
 
 /**
@@ -65,70 +68,25 @@ const getUserNfts = async (
 ): Promise<Array<UserNft>> => {
   let userNftAccounts = null;
 
-  try {
-    userNftAccounts = await getRawUserNfts(
-      program,
-      USER_NFT_ACCOUNT_DATA_LAYOUT_V2
-    );
-  } catch (err) {
-    userNftAccounts = await getRawUserNfts(
-      program,
-      USER_NFT_ACCOUNT_DATA_LAYOUT_V1
-    );
-  }
+  const layouts: Layout[] = [
+    USER_NFT_ACCOUNT_DATA_LAYOUT_V1,
+    USER_NFT_ACCOUNT_DATA_LAYOUT_V2,
+  ];
 
-  if (userNftAccounts.length > 0) {
+  userNftAccounts = await getRawUserNfts(program, layouts);
+
+  userNftAccounts = userNftAccounts.filter(
+    (userNftAccount) => userNftAccount !== null
+  ) as Array<UserNftAccount>;
+
+  if (userNftAccounts.length > 0 && userNftAccounts != null) {
     if (isFilterNotEmpty(filters)) {
       userNftAccounts = applyFilter(userNftAccounts, filters);
     }
 
     const userNfts = await Promise.all(
       userNftAccounts.map(async (userNftAccount: UserNftAccount) => {
-        const metadata = await setBlockMetadata(
-          userNftAccount.publicKey,
-          program
-        );
-        return {
-          publicKey: userNftAccount.publicKey.toString(),
-          userNftBump: userNftAccount.account.userNftBump,
-          vaultBump: userNftAccount.account.vaultBump,
-          associatedVaultBump: userNftAccount.account.vaultBump,
-          nftAuthority: getPubkeyFromUnit8Array(
-            userNftAccount.account.nftAuthority
-          ),
-          universe: getPubkeyFromUnit8Array(userNftAccount.account.universe),
-          vaultAuthority: getPubkeyFromUnit8Array(
-            userNftAccount.account.vaultAuthority
-          ),
-          receiptMintBump: userNftAccount.account.receiptMintBump,
-          userReceiptAtaBump: userNftAccount.account.userReceiptAtaBump,
-          receiptMint: userNftAccount.account.receiptMint
-            ? getPubkeyFromUnit8Array(userNftAccount.account.receiptMint)
-            : null,
-          userReceiptAta: userNftAccount.account.userReceiptAta
-            ? getPubkeyFromUnit8Array(userNftAccount.account.userReceiptAta)
-            : null,
-          vaultReceiptAta: userNftAccount.account.vaultReceiptAta
-            ? getPubkeyFromUnit8Array(userNftAccount.account.vaultReceiptAta)
-            : null,
-          tokenMint: userNftAccount.account.tokenMint
-            ? getPubkeyFromUnit8Array(userNftAccount.account.tokenMint)
-            : null,
-          receiptMasterEdition: userNftAccount.account.receiptMasterEdition
-            ? getPubkeyFromUnit8Array(
-                userNftAccount.account.receiptMasterEdition
-              )
-            : null,
-          isReceiptMasterEdition: userNftAccount.account
-            .isReceiptMasterEdition as boolean,
-          isUserNftVerified: userNftAccount.account
-            .isUserNftVerified as boolean,
-          isUserNftMetaplex: userNftAccount.account
-            .isUserNftMetaplex as boolean,
-          slot: metadata.slot,
-          signature: metadata.signature,
-          blockTime: metadata.blockTime,
-        };
+        return getModifiedUserNftAccount(userNftAccount, program);
       })
     );
 
@@ -146,23 +104,104 @@ const isFilterNotEmpty = (filters: UserNftFilterArgs) => {
   );
 };
 
+const getModifiedUserNftAccount = async (
+  userNftAccount: UserNftAccount,
+  program: anchor.Program<MetaBlocks>
+) => {
+  const metadata = await setBlockMetadata(userNftAccount.publicKey, program);
+  return {
+    publicKey: userNftAccount.publicKey.toString(),
+    userNftBump: userNftAccount.account.userNftBump,
+    index: userNftAccount.account.index.toString(),
+    vaultBump: userNftAccount.account.vaultBump,
+    associatedVaultBump: userNftAccount.account.vaultBump,
+    nftAuthority: userNftAccount.account.nftAuthority.toString(),
+    universe: userNftAccount.account.universe.toString(),
+    vaultAuthority: userNftAccount.account.vaultAuthority.toString(),
+    receiptMintBump: userNftAccount.account.receiptMintBump,
+    userReceiptAtaBump: userNftAccount.account.userReceiptAtaBump,
+    receiptMint: userNftAccount.account.receiptMint
+      ? userNftAccount.account.receiptMint.toString()
+      : null,
+    userReceiptAta: userNftAccount.account.userReceiptAta
+      ? userNftAccount.account.userReceiptAta.toString()
+      : null,
+    vaultReceiptAta: userNftAccount.account.vaultReceiptAta
+      ? userNftAccount.account.vaultReceiptAta.toString()
+      : null,
+    tokenMint: userNftAccount.account.tokenMint
+      ? userNftAccount.account.tokenMint.toString()
+      : null,
+    receiptMasterEdition: userNftAccount.account.receiptMasterEdition
+      ? userNftAccount.account.receiptMasterEdition.toString()
+      : null,
+    isReceiptMasterEdition: userNftAccount.account
+      .isReceiptMasterEdition as boolean,
+    isUserNftVerified: userNftAccount.account.isUserNftVerified as boolean,
+    isUserNftMetaplex: userNftAccount.account.isUserNftMetaplex as boolean,
+    slot: metadata.slot,
+    signature: metadata.signature,
+    blockTime: metadata.blockTime,
+  };
+};
+
 const applyFilter = (
   userNftAccounts: Array<UserNftAccount>,
   filters: UserNftFilterArgs
 ) => {
   return userNftAccounts.filter((element: UserNftAccount) => {
     return (
-      filters.universes.indexOf(
-        getPubkeyFromUnit8Array(element.account.universe)
-      ) >= 0 ||
-      filters.vaultAuthorities.indexOf(
-        getPubkeyFromUnit8Array(element.account.vaultAuthority)
-      ) >= 0 ||
-      filters.authorities.indexOf(
-        getPubkeyFromUnit8Array(element.account.nftAuthority)
-      ) >= 0
+      filters.universes.includes(element.account.universe) ||
+      filters.vaultAuthorities.includes(element.account.vaultAuthority) ||
+      filters.authorities.includes(element.account.nftAuthority)
     );
   });
 };
 
-export { getUserNfts };
+const getUserNft = async (
+  program: anchor.Program<MetaBlocks>,
+  receiptMintAddress: PublicKey,
+  authority: PublicKey
+): Promise<any | null> => {
+  try {
+    const [userNftAddress, _] = await findUserNftAddress(
+      authority,
+      receiptMintAddress
+    );
+
+    const rawAccountBuffer = await getNullableAccountInfoBuffer(
+      userNftAddress,
+      program.provider.connection
+    );
+
+    if (rawAccountBuffer == null) {
+      return null;
+    }
+
+    try {
+      const userNftAccount: UserNftAccount = {
+        account: getDeserializedAccount(
+          rawAccountBuffer,
+          USER_NFT_ACCOUNT_DATA_LAYOUT_V2,
+          'UserNft'
+        ),
+        publicKey: userNftAddress,
+      };
+      return await getModifiedUserNftAccount(userNftAccount, program);
+    } catch (err) {
+      const userNftAccount: UserNftAccount = {
+        account: getDeserializedAccount(
+          rawAccountBuffer,
+          USER_NFT_ACCOUNT_DATA_LAYOUT_V1,
+          'UserNft'
+        ),
+        publicKey: userNftAddress,
+      };
+      return await getModifiedUserNftAccount(userNftAccount, program);
+    }
+  } catch (err) {
+    throw err;
+  }
+};
+
+export { getUserNfts, getUserNft };
