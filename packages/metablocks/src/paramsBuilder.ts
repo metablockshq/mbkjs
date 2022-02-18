@@ -563,7 +563,7 @@ const computeWithdrawNftParams = async ({
 
   const withdrawNftArgs = {
     userNftBump: userNftBump,
-    vaultAuthorityBump: vaultAuthorityBump,
+    vaultBump: vaultAuthorityBump,
   };
   const withdrawNftAccounts = {
     userNft: userNftKey,
