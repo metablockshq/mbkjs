@@ -23,6 +23,7 @@ import { Metadata } from '@metaplex-foundation/mpl-token-metadata';
 import { KyraaError } from './error';
 import { Program } from '@project-serum/anchor';
 import { MetaBlocks } from './types/meta_blocks';
+import { LangErrorCode, LangErrorMessage } from '.';
 
 const createUniverse = async (args: UniverseApiArgs) => {
   const program = getMetaBlocksProgram(args.connection, args.wallet);
@@ -172,8 +173,10 @@ const withdrawNftWithReceipt = async (args: WithdrawNftWithReceiptApiArgs) => {
       userNftAccount.tokenMint === undefined ||
       userNftAccount.universe === undefined
     ) {
-      throw new Error(
-        'userNftAccount failure, either token mint or universe is undefined'
+      throw new KyraaError(
+        undefined,
+        LangErrorCode.KyraaUserNftAccount,
+        LangErrorMessage.get(LangErrorCode.KyraaUserNftAccount)
       );
     }
 

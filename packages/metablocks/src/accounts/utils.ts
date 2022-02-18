@@ -127,7 +127,7 @@ const getNullableAccountInfoBuffer = async (
     publicKey,
     connection.commitment
   );
-  if (accountInfo == null) {
+  if (accountInfo === null) {
     return null;
   }
   return accountInfo.data;
