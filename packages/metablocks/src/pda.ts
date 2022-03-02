@@ -19,7 +19,7 @@ const findUserNftAddress = async (
 ) => {
   return await PublicKey.findProgramAddress(
     [
-      Buffer.from(utils.bytes.utf8.encode('UserNft')),
+      Buffer.from(utils.bytes.utf8.encode('WrappedUserNft')),
       userAuthority.toBuffer(),
       mintKey.toBuffer(),
     ],

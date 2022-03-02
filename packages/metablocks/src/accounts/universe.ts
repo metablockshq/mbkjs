@@ -14,7 +14,7 @@ const getAllUniverses = async (
       const metadata = await setBlockMetadata(element.publicKey, program);
       return {
         publicKey: element.publicKey.toString(),
-        authority: universeAccount.universeAuthority.toString(),
+        authority: universeAccount.authority.toString(),
         name: universeAccount.config.name as string,
         websiteUrl: universeAccount.config.websiteUrl as string,
         description: universeAccount.config.description as string,
