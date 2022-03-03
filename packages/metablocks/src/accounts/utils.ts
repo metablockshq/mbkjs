@@ -58,7 +58,7 @@ const setBlockMetadata = async (
 
 const getAllAccountInfo = async (
   idlAccountName: string,
-  program: Program,
+  program: anchor.Program<MetaBlocks>,
   layouts: Layout[]
 ) => {
   const discriminator = accountDiscriminator(idlAccountName);

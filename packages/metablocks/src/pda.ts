@@ -5,10 +5,7 @@ import { programIds } from './factory';
 
 const findUniverseAddress = async (universeAuthority: PublicKey) => {
   return await PublicKey.findProgramAddress(
-    [
-      Buffer.from(utils.bytes.utf8.encode('Universe')),
-      universeAuthority.toBytes(),
-    ],
+    [Buffer.from('Universe'), universeAuthority.toBytes()],
     new PublicKey(programIds.metaBlocks)
   );
 };
