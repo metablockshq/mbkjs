@@ -130,11 +130,6 @@ export type MetaBlocks = {
           isSigner: false;
         },
         {
-          name: 'receiptToken';
-          isMut: true;
-          isSigner: false;
-        },
-        {
           name: 'vaultReceiptAta';
           isMut: true;
           isSigner: false;
@@ -151,7 +146,7 @@ export type MetaBlocks = {
         },
         {
           name: 'vault';
-          isMut: true;
+          isMut: false;
           isSigner: false;
         },
         {
@@ -404,11 +399,6 @@ export type MetaBlocks = {
           isSigner: false;
         },
         {
-          name: 'receiptToken';
-          isMut: true;
-          isSigner: false;
-        },
-        {
           name: 'tokenMint';
           isMut: false;
           isSigner: false;
@@ -546,10 +536,6 @@ export type MetaBlocks = {
           },
           {
             name: 'receiptMintBump';
-            type: 'u8';
-          },
-          {
-            name: 'receiptTokenBump';
             type: 'u8';
           }
         ];
@@ -901,11 +887,6 @@ export const IDL: MetaBlocks = {
           isSigner: false,
         },
         {
-          name: 'receiptToken',
-          isMut: true,
-          isSigner: false,
-        },
-        {
           name: 'vaultReceiptAta',
           isMut: true,
           isSigner: false,
@@ -922,7 +903,7 @@ export const IDL: MetaBlocks = {
         },
         {
           name: 'vault',
-          isMut: true,
+          isMut: false,
           isSigner: false,
         },
         {
@@ -1175,11 +1156,6 @@ export const IDL: MetaBlocks = {
           isSigner: false,
         },
         {
-          name: 'receiptToken',
-          isMut: true,
-          isSigner: false,
-        },
-        {
           name: 'tokenMint',
           isMut: false,
           isSigner: false,
@@ -1317,10 +1293,6 @@ export const IDL: MetaBlocks = {
           },
           {
             name: 'receiptMintBump',
-            type: 'u8',
-          },
-          {
-            name: 'receiptTokenBump',
             type: 'u8',
           },
         ],

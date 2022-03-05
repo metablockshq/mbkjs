@@ -130,11 +130,6 @@ const idl = {
           isSigner: false,
         },
         {
-          name: 'receiptToken',
-          isMut: true,
-          isSigner: false,
-        },
-        {
           name: 'vaultReceiptAta',
           isMut: true,
           isSigner: false,
@@ -151,7 +146,7 @@ const idl = {
         },
         {
           name: 'vault',
-          isMut: true,
+          isMut: false,
           isSigner: false,
         },
         {
@@ -404,11 +399,6 @@ const idl = {
           isSigner: false,
         },
         {
-          name: 'receiptToken',
-          isMut: true,
-          isSigner: false,
-        },
-        {
           name: 'tokenMint',
           isMut: false,
           isSigner: false,
@@ -546,10 +536,6 @@ const idl = {
           },
           {
             name: 'receiptMintBump',
-            type: 'u8',
-          },
-          {
-            name: 'receiptTokenBump',
             type: 'u8',
           },
         ],

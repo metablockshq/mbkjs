@@ -16,7 +16,7 @@ import {
 } from './utils';
 import { Program } from '@project-serum/anchor';
 import { PublicKey } from '@solana/web3.js';
-import { findUserNftAddress } from '../pda';
+import { findWrappedUserNftAddress } from '../pda';
 import { Layout } from 'buffer-layout';
 
 const getRawUserNfts = async (
@@ -164,7 +164,7 @@ const getUserNft = async (
   authority: PublicKey
 ): Promise<any | null> => {
   try {
-    const [userNftAddress, _] = await findUserNftAddress(
+    const [userNftAddress, _] = await findWrappedUserNftAddress(
       authority,
       receiptMintAddress
     );
