@@ -19,6 +19,10 @@ import { PublicKey } from '@solana/web3.js';
 import { findWrappedUserNftAddress } from '../pda';
 import { Layout } from 'buffer-layout';
 
+/**
+ *
+ * @deprecated
+ */
 const getRawUserNfts = async (
   program: anchor.Program<MetaBlocks>,
   layouts: Layout[]
@@ -62,6 +66,10 @@ const getRawUserNfts = async (
  * 
  */
 
+/**
+ *
+ * @deprecated
+ */
 const getUserNfts = async (
   program: anchor.Program<MetaBlocks>,
   filters: UserNftFilterArgs
@@ -104,6 +112,10 @@ const isFilterNotEmpty = (filters: UserNftFilterArgs) => {
   );
 };
 
+/**
+ *
+ * @deprecated
+ */
 const getModifiedUserNftAccount = async (
   userNftAccount: UserNftAccount,
   program: anchor.Program<MetaBlocks>
@@ -158,6 +170,10 @@ const applyFilter = (
   });
 };
 
+/**
+ *
+ * @deprecated
+ */
 const getUserNft = async (
   program: anchor.Program<MetaBlocks>,
   receiptMintAddress: PublicKey,

@@ -1,12 +1,11 @@
 import { assert } from 'chai';
 import * as anchor from '@project-serum/anchor';
-import { PublicKey } from '@solana/web3.js';
 import { createUniverse, updateUniverse } from '../src/api';
 import NodeWallet, { addSols } from './utils/sdk';
 import { getMetaBlocksProgram } from '../src/factory';
 import { findUniverseAddress } from '../src/pda';
 
-describe('API Test Cases', () => {
+describe('Universe Test Cases', () => {
   const dummyKeypair = anchor.web3.Keypair.generate();
   const dummyWallet = new NodeWallet(dummyKeypair);
 
