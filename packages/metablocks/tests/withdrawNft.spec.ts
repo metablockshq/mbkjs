@@ -2,7 +2,7 @@ import { assert } from 'chai';
 import * as anchor from '@project-serum/anchor';
 import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { createUniverse, depositNft, withdrawNft } from '../src/api';
-import NodeWallet, { addSols, mintNFT } from './utils/sdk';
+import NodeWallet, { addSols, CLUSTER_URL, mintNFT } from './utils/sdk';
 import { getMetaBlocksProgram } from '../src/factory';
 import { findUniverseAddress, getPdaKeys, PdaKeys } from '../src/pda';
 import { GroupedDepositNftApiArgs, WithdrawNftApiArgs } from '../src';
@@ -15,10 +15,7 @@ describe('Withdraw Test cases', () => {
   const dummyWallet = new NodeWallet(dummyKeypair);
   const fakeUniverseAuthorityWallet = new NodeWallet(fakeUniverseAuthority);
 
-  const connection = new anchor.web3.Connection(
-    'http://localhost:8899',
-    'confirmed'
-  );
+  const connection = new anchor.web3.Connection(CLUSTER_URL, 'confirmed');
   const program = getMetaBlocksProgram(connection, dummyWallet);
 
   let userNftMint: anchor.web3.PublicKey = dummyKeypair.publicKey;

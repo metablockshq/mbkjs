@@ -1,7 +1,7 @@
 import { assert } from 'chai';
 import * as anchor from '@project-serum/anchor';
 import { createUniverse, updateUniverse } from '../src/api';
-import NodeWallet, { addSols } from './utils/sdk';
+import NodeWallet, { addSols, CLUSTER_URL } from './utils/sdk';
 import { getMetaBlocksProgram } from '../src/factory';
 import { findUniverseAddress } from '../src/pda';
 
@@ -9,10 +9,7 @@ describe('Universe Test Cases', () => {
   const dummyKeypair = anchor.web3.Keypair.generate();
   const dummyWallet = new NodeWallet(dummyKeypair);
 
-  const connection = new anchor.web3.Connection(
-    'http://localhost:8899',
-    'confirmed'
-  );
+  const connection = new anchor.web3.Connection(CLUSTER_URL, 'confirmed');
   const program = getMetaBlocksProgram(connection, dummyWallet);
   //let universePda: [PublicKey, number] = [dummyKeypair.publicKey, 0];
 
@@ -36,6 +33,7 @@ describe('Universe Test Cases', () => {
     const tx = await createUniverse(args);
 
     const [universeKey, _] = await findUniverseAddress(dummyWallet.publicKey);
+    console.log(universeKey.toString());
 
     const universeData = await program.account.universe.fetch(universeKey);
 

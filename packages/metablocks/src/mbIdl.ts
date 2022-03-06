@@ -754,7 +754,7 @@ const idl = {
     },
   ],
   metadata: {
-    address: '7AXe9KFM3mVw7UcocVRqtJnunc6L3opkicJVc59YxSr5',
+    address: '4rmX7a9hb5YTbbPNZzku3yomDaTzb9TaXLrXkk5pAzRD',
   },
 };
 export default idl;
