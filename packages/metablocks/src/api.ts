@@ -161,16 +161,16 @@ const withdrawNftWithReceipt = async (args: WithdrawNftWithReceiptApiArgs) => {
     const program = getMetaBlocksProgram(args.connection, args.wallet);
     const usersKey = args.wallet.publicKey;
 
-    const userNftAccount: any = await accountApi.getUserNft(
+    const wrappedUserNft = await accountApi.getWrappedUserNftForReceiptMint(
       program,
       args.receiptMint,
       usersKey
     );
 
     if (
-      userNftAccount == null ||
-      userNftAccount.tokenMint === undefined ||
-      userNftAccount.universe === undefined
+      wrappedUserNft == null ||
+      wrappedUserNft.tokenMint === undefined ||
+      wrappedUserNft.universe === undefined
     ) {
       throw new KyraaError(
         undefined,
@@ -179,8 +179,8 @@ const withdrawNftWithReceipt = async (args: WithdrawNftWithReceiptApiArgs) => {
       );
     }
 
-    const tokenMint = new PublicKey(userNftAccount.tokenMint);
-    const universeKey = new PublicKey(userNftAccount.universe);
+    const tokenMint = new PublicKey(wrappedUserNft.tokenMint);
+    const universeKey = new PublicKey(wrappedUserNft.universe);
 
     return await callWithdrawNft(program, usersKey, tokenMint, universeKey);
   } catch (e) {
@@ -217,7 +217,7 @@ const getWrappedUserNftAccounts = async (
   filterArgs: UserNftFilterArgs
 ) => {
   const program = getMetaBlocksProgram(args.connection, args.wallet);
-  return await accountApi.getUserNfts(program, filterArgs);
+  return await accountApi.getFilteredWrappedUserNfts(program, filterArgs);
 };
 
 // Get Metadata for Mint
@@ -234,7 +234,7 @@ const getWrappedUserNftAccount = async (args: WrappedUserNftArgs) => {
   try {
     const program = getMetaBlocksProgram(args.connection, args.wallet);
 
-    return await accountApi.getUserNft(
+    return await accountApi.getWrappedUserNftForReceiptMint(
       program,
       args.receiptMint,
       args.authority

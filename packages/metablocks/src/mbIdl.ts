@@ -11,13 +11,8 @@ const idl = {
           isSigner: false,
         },
         {
-          name: 'payer',
+          name: 'authority',
           isMut: true,
-          isSigner: true,
-        },
-        {
-          name: 'universeAuthority',
-          isMut: false,
           isSigner: true,
         },
         {
@@ -44,13 +39,8 @@ const idl = {
           isSigner: false,
         },
         {
-          name: 'payer',
+          name: 'authority',
           isMut: true,
-          isSigner: true,
-        },
-        {
-          name: 'universeAuthority',
-          isMut: false,
           isSigner: true,
         },
         {
@@ -87,8 +77,8 @@ const idl = {
           isSigner: false,
         },
         {
-          name: 'vaultAuthority',
-          isMut: false,
+          name: 'vault',
+          isMut: true,
           isSigner: false,
         },
         {
@@ -130,18 +120,13 @@ const idl = {
           isSigner: true,
         },
         {
-          name: 'userNft',
+          name: 'wrappedUserNft',
           isMut: true,
           isSigner: false,
         },
         {
           name: 'receiptMint',
           isMut: false,
-          isSigner: false,
-        },
-        {
-          name: 'receiptToken',
-          isMut: true,
           isSigner: false,
         },
         {
@@ -160,7 +145,7 @@ const idl = {
           isSigner: false,
         },
         {
-          name: 'vaultAuthority',
+          name: 'vault',
           isMut: false,
           isSigner: false,
         },
@@ -208,12 +193,12 @@ const idl = {
           isSigner: true,
         },
         {
-          name: 'userNft',
+          name: 'wrappedUserNft',
           isMut: true,
           isSigner: false,
         },
         {
-          name: 'vaultAuthority',
+          name: 'vault',
           isMut: false,
           isSigner: false,
         },
@@ -286,7 +271,7 @@ const idl = {
           isSigner: true,
         },
         {
-          name: 'vaultAuthority',
+          name: 'vault',
           isMut: false,
           isSigner: false,
         },
@@ -296,7 +281,7 @@ const idl = {
           isSigner: false,
         },
         {
-          name: 'userNft',
+          name: 'wrappedUserNft',
           isMut: true,
           isSigner: false,
         },
@@ -317,7 +302,7 @@ const idl = {
         },
         {
           name: 'receiptMint',
-          isMut: true,
+          isMut: false,
           isSigner: false,
         },
         {
@@ -374,13 +359,13 @@ const idl = {
           isSigner: true,
         },
         {
-          name: 'userNft',
-          isMut: false,
+          name: 'wrappedUserNft',
+          isMut: true,
           isSigner: false,
         },
         {
-          name: 'vaultAuthority',
-          isMut: false,
+          name: 'vault',
+          isMut: true,
           isSigner: false,
         },
         {
@@ -410,7 +395,7 @@ const idl = {
         },
         {
           name: 'receiptMint',
-          isMut: false,
+          isMut: true,
           isSigner: false,
         },
         {
@@ -464,7 +449,7 @@ const idl = {
             type: 'i64',
           },
           {
-            name: 'universeAuthority',
+            name: 'authority',
             type: 'publicKey',
           },
           {
@@ -481,24 +466,12 @@ const idl = {
       },
     },
     {
-      name: 'UserNft',
+      name: 'WrappedUserNft',
       type: {
         kind: 'struct',
         fields: [
           {
             name: 'userNftBump',
-            type: 'u8',
-          },
-          {
-            name: 'index',
-            type: 'u64',
-          },
-          {
-            name: 'vaultBump',
-            type: 'u8',
-          },
-          {
-            name: 'associatedVaultBump',
             type: 'u8',
           },
           {
@@ -512,10 +485,6 @@ const idl = {
           {
             name: 'vaultAuthority',
             type: 'publicKey',
-          },
-          {
-            name: 'receiptMintBump',
-            type: 'u8',
           },
           {
             name: 'userReceiptAtaBump',
@@ -557,55 +526,33 @@ const idl = {
       },
     },
     {
-      name: 'InitDepositNftArgs',
+      name: 'Vault',
       type: {
         kind: 'struct',
         fields: [
-          {
-            name: 'receiptMintBump',
-            type: 'u8',
-          },
           {
             name: 'vaultBump',
             type: 'u8',
           },
           {
-            name: 'receiptTokenBump',
-            type: 'u8',
-          },
-          {
-            name: 'vaultReceiptAtaBump',
-            type: 'u8',
-          },
-          {
-            name: 'userNftBump',
-            type: 'u8',
-          },
-          {
-            name: 'associatedVaultBump',
-            type: 'u8',
-          },
-          {
-            name: 'userReceiptAtaBump',
+            name: 'receiptMintBump',
             type: 'u8',
           },
         ],
       },
     },
     {
+      name: 'InitDepositNftArgs',
+      type: {
+        kind: 'struct',
+        fields: [],
+      },
+    },
+    {
       name: 'InitReceiptMintArgs',
       type: {
         kind: 'struct',
-        fields: [
-          {
-            name: 'receiptMintBump',
-            type: 'u8',
-          },
-          {
-            name: 'vaultBump',
-            type: 'u8',
-          },
-        ],
+        fields: [],
       },
     },
     {
@@ -613,10 +560,6 @@ const idl = {
       type: {
         kind: 'struct',
         fields: [
-          {
-            name: 'bump',
-            type: 'u8',
-          },
           {
             name: 'name',
             type: 'string',
@@ -649,10 +592,6 @@ const idl = {
             name: 'description',
             type: 'string',
           },
-          {
-            name: 'bump',
-            type: 'u8',
-          },
         ],
       },
     },
@@ -660,32 +599,7 @@ const idl = {
       name: 'DepositNftArgs',
       type: {
         kind: 'struct',
-        fields: [
-          {
-            name: 'userNftBump',
-            type: 'u8',
-          },
-          {
-            name: 'vaultBump',
-            type: 'u8',
-          },
-          {
-            name: 'associatedBump',
-            type: 'u8',
-          },
-          {
-            name: 'receiptMintBump',
-            type: 'u8',
-          },
-          {
-            name: 'receiptAtaBump',
-            type: 'u8',
-          },
-          {
-            name: 'receiptTokenBump',
-            type: 'u8',
-          },
-        ],
+        fields: [],
       },
     },
     {
@@ -693,18 +607,6 @@ const idl = {
       type: {
         kind: 'struct',
         fields: [
-          {
-            name: 'userNftBump',
-            type: 'u8',
-          },
-          {
-            name: 'receiptMintBump',
-            type: 'u8',
-          },
-          {
-            name: 'vaultBump',
-            type: 'u8',
-          },
           {
             name: 'uri',
             type: 'string',
@@ -746,16 +648,7 @@ const idl = {
       name: 'WithdrawNftArgs',
       type: {
         kind: 'struct',
-        fields: [
-          {
-            name: 'userNftBump',
-            type: 'u8',
-          },
-          {
-            name: 'vaultBump',
-            type: 'u8',
-          },
-        ],
+        fields: [],
       },
     },
   ],
@@ -861,7 +754,7 @@ const idl = {
     },
   ],
   metadata: {
-    address: '9pNcm4DmZJgHYynuvhSbZ3m4bqBSKeuXqZ2cCZKbcLJc',
+    address: '4rmX7a9hb5YTbbPNZzku3yomDaTzb9TaXLrXkk5pAzRD',
   },
 };
 export default idl;

@@ -13,15 +13,15 @@ const findUniverseAddress = async (universeAuthority: PublicKey) => {
   );
 };
 
-const findUserNftAddress = async (
+const findWrappedUserNftAddress = async (
   userAuthority: PublicKey,
-  mintKey: PublicKey
+  receiptMintKey: PublicKey
 ) => {
   return await PublicKey.findProgramAddress(
     [
-      Buffer.from(utils.bytes.utf8.encode('UserNft')),
+      Buffer.from(utils.bytes.utf8.encode('WrappedUserNft')),
       userAuthority.toBuffer(),
-      mintKey.toBuffer(),
+      receiptMintKey.toBuffer(),
     ],
     new PublicKey(programIds.metaBlocks)
   );
@@ -43,7 +43,7 @@ const findAssociatedAddress = async (
   );
 };
 
-const findVaultAuthorityAddress = async (
+const findVaultAddress = async (
   universeKey: PublicKey,
   usersKey: PublicKey,
   mintKey: PublicKey
@@ -75,13 +75,6 @@ const findReceiptMintAddress = async (
   );
 };
 
-const findReceiptTokenAddress = async (receiptMint: PublicKey) => {
-  return await PublicKey.findProgramAddress(
-    [Buffer.from('ReceiptNftToken'), receiptMint.toBuffer()],
-    new PublicKey(programIds.metaBlocks)
-  );
-};
-
 const findMetadataAddress = async (mint: PublicKey) => {
   const tokenMetadataProgram = new PublicKey(programIds.metadata);
 
@@ -104,11 +97,88 @@ const findMasterEditionAddress = async (mint: PublicKey) => {
 
 export {
   findUniverseAddress,
-  findUserNftAddress,
+  findWrappedUserNftAddress,
   findAssociatedAddress,
-  findVaultAuthorityAddress,
+  findVaultAddress,
   findReceiptMintAddress,
-  findReceiptTokenAddress,
   findMetadataAddress,
   findMasterEditionAddress,
+};
+
+export interface PdaKeys {
+  universeKey: PublicKey;
+  vaultKey: PublicKey;
+  vaultNftAta: PublicKey;
+  mint: PublicKey;
+  userNftAta: PublicKey;
+  receiptMint: PublicKey;
+  userReceiptAta: PublicKey;
+  receiptMetadataKey: PublicKey;
+  receiptMasterEditionKey: PublicKey;
+  userNftMetadataKey: PublicKey;
+  wrappedUserNft: PublicKey;
+  vaultReceiptAta: PublicKey;
+}
+
+export const getPdaKeys = async (
+  universeKey: PublicKey,
+  usersKey: PublicKey,
+  mintKey: PublicKey
+): Promise<PdaKeys> => {
+  const [receiptMint, _receiptMintBump] = await findReceiptMintAddress(
+    universeKey,
+    usersKey,
+    mintKey
+  );
+
+  const [userNftAta, _u] = await findAssociatedAddress(usersKey, mintKey);
+
+  const [vaultKey, _vaultAuthorityBump] = await findVaultAddress(
+    universeKey,
+    usersKey,
+    receiptMint
+  );
+
+  const [vaultReceiptAta, _vaultReceiptAtaBump] = await findAssociatedAddress(
+    vaultKey,
+    receiptMint
+  );
+
+  const [vaultNftAta, _vaultAtaBump] = await findAssociatedAddress(
+    vaultKey,
+    mintKey
+  );
+
+  const [wrappedUserNftKey, _userNftBump] = await findWrappedUserNftAddress(
+    usersKey,
+    receiptMint
+  );
+
+  const [userReceiptAta, _userReceiptAtaBump] = await findAssociatedAddress(
+    usersKey,
+    receiptMint
+  );
+
+  const [userNftMetadata, _] = await findMetadataAddress(mintKey);
+
+  const [receiptMetadataAddress, _receiptMetadataBump] =
+    await findMetadataAddress(receiptMint);
+
+  const [receiptMasterEditionAddress, _receiptMasterEditionBump] =
+    await findMasterEditionAddress(receiptMint);
+
+  return {
+    universeKey: universeKey,
+    vaultKey: vaultKey,
+    vaultNftAta: vaultNftAta,
+    mint: mintKey,
+    userNftAta: userNftAta,
+    receiptMint: receiptMint,
+    userReceiptAta: userReceiptAta,
+    receiptMetadataKey: receiptMetadataAddress,
+    receiptMasterEditionKey: receiptMasterEditionAddress,
+    userNftMetadataKey: userNftMetadata,
+    wrappedUserNft: wrappedUserNftKey,
+    vaultReceiptAta: vaultReceiptAta,
+  };
 };

@@ -236,3 +236,23 @@ export interface Creator {
   verified: boolean;
   address: string;
 }
+
+export interface WrappedUserNft {
+  publicKey: string;
+  userNftBump: number;
+  nftAuthority: PublicKey;
+  universe: PublicKey;
+  vaultAuthority: PublicKey;
+  userReceiptAtaBump: number;
+  receiptMint: PublicKey;
+  userReceiptAta: PublicKey;
+  vaultReceiptAta: PublicKey;
+  tokenMint: PublicKey;
+  receiptMasterEdition: PublicKey;
+  isReceiptMasterEdition: boolean | null;
+  isUserNftVerified: boolean;
+  isUserNftMetaplex: boolean;
+  slot: number | undefined | null;
+  signature: string | undefined | null;
+  blockTime: number | undefined | null;
+}
