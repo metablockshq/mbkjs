@@ -73,7 +73,11 @@ describe('Deposit Test cases', () => {
     const args: GroupedDepositNftApiArgs = {
       connection: connection,
       isReceiptMasterEdition: false,
-      url: 'http://localhost:8090',
+      receiptUrl: 'http://localhost:8090',
+      receiptName: 'receiptName',
+      metaNftName: 'metaNftName',
+      metaNftUrl: 'http://localhost_meta_api.url',
+      isMetaNftMasterEdition: false,
       wallet: dummyWallet,
       mintKey: userNftMint,
       universeKey: universeKey,

@@ -2,6 +2,7 @@ import { Program } from '@project-serum/anchor';
 import { Connection, PublicKey, Signer, Transaction } from '@solana/web3.js';
 import { MetaBlocks } from './meta_blocks';
 import * as borsh from '@project-serum/borsh';
+import { PdaKeys } from '../pda';
 
 export interface UniverseApiArgs {
   connection: Connection;
@@ -29,8 +30,12 @@ export interface TransferReceiptNftApiArgs extends ApiInputArgs {
 }
 
 export interface GroupedDepositNftApiArgs extends ApiInputArgs {
-  url: string;
+  receiptUrl: string;
+  receiptName: string;
   isReceiptMasterEdition: boolean;
+  metaNftUrl: string;
+  metaNftName: string;
+  isMetaNftMasterEdition: boolean;
 }
 
 export interface WithdrawNftApiArgs extends ApiInputArgs {}
@@ -49,40 +54,16 @@ export interface WrappedUserNftArgs {
   authority: PublicKey;
 }
 
-//paramBuilder.ts arguments
+// instructions.ts file
 
-export interface UniverseParamArgs {
+export interface UniverseArgs {
   usersKey: PublicKey;
   name: string;
   description: string;
   websiteUrl: string;
+  program: Program<MetaBlocks>;
 }
 
-interface BasicInputParamArgs {
-  usersKey: PublicKey;
-  mintKey: PublicKey;
-  universeKey: PublicKey;
-}
-
-export interface InitReceiptMintParamArgs extends BasicInputParamArgs {}
-
-export interface InitDepositNftParamsArgs extends BasicInputParamArgs {}
-
-export interface DepositNftParamsArgs extends BasicInputParamArgs {}
-
-export interface TransferReceiptNftParamArgs extends BasicInputParamArgs {
-  url: string;
-  isReceiptMasterEdition: boolean;
-}
-
-export interface GroupedDepositNftParamsArgs extends BasicInputParamArgs {
-  url: string;
-  isReceiptMasterEdition: boolean;
-}
-
-export interface WithdrawNftParamsArgs extends BasicInputParamArgs {}
-
-// instructions.ts file
 interface BasicInstructionArgs {
   program: Program<MetaBlocks>;
   usersKey: PublicKey;
@@ -256,3 +237,31 @@ export interface WrappedUserNft {
   signature: string | undefined | null;
   blockTime: number | undefined | null;
 }
+
+interface BasicInstructionsArgs {
+  pdaKeys: PdaKeys;
+  usersKey: PublicKey;
+  program: Program<MetaBlocks>;
+}
+
+export interface TransferReceiptNftArgs extends BasicInstructionsArgs {}
+
+export interface UpdateReceiptMetadataArgs extends BasicInstructionsArgs {
+  uri: string;
+  name: string;
+  isReceiptMasterEdition: boolean;
+}
+export interface DepositArgs extends BasicInstructionsArgs {}
+
+export interface InitDepositNftArgs extends BasicInstructionsArgs {}
+
+export interface InitReceiptMintArgs extends BasicInstructionsArgs {}
+
+export interface CreateMetaNftArgs extends BasicInstructionsArgs {
+  uri: string;
+  name: string;
+}
+
+export interface InitMetaNftArgs extends BasicInstructionsArgs {}
+
+export interface WithdrawNftArgs extends BasicInstructionsArgs {}

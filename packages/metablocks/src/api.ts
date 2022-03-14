@@ -1,16 +1,15 @@
 import { getMetaBlocksProgram } from './factory';
-import {
-  computeCreateUniverseParams,
-  computeGroupedDepositNftParams,
-  computeUpdateUniverseParams,
-} from './paramsBuilder';
 import { Connection, PublicKey, Transaction } from '@solana/web3.js';
-import { getWithdrawNftInstruction } from './instructions';
+import {
+  getCreateUniverseInstruction,
+  getUpdateUniverseInstruction,
+} from './instructions/universeInstructions';
 import {
   FetchAccountArgs,
   GroupedDepositNftApiArgs,
   SendTxRequest,
   UniverseApiArgs,
+  UniverseArgs,
   UserNftFilterArgs,
   WithdrawNftApiArgs,
   WithdrawNftWithReceiptApiArgs,
@@ -23,22 +22,38 @@ import { KyraaError } from './error';
 import { Program } from '@project-serum/anchor';
 import { MetaBlocks } from './types/meta_blocks';
 import { LangErrorCode, LangErrorMessage } from './error';
+import { getPdaKeys, PdaKeys } from './pda';
+import {
+  getCreateCpiMetaNftInstruction,
+  getDepositNftInstruction,
+  getInitCpiMetaNftInstruction,
+  getInitDepositInstruction,
+  getInitReceiptInstruction,
+  getTransferReceiptNftInstruction,
+  getUpdateReceiptMetadataInstruction,
+} from './instructions/depositInstructions';
+import { getWithdrawNftInstruction } from './instructions/withdrawInstructions';
 
 const createUniverse = async (args: UniverseApiArgs) => {
-  const program = getMetaBlocksProgram(args.connection, args.wallet);
-  const usersKey = args.wallet.publicKey;
-  const { createUniverseArgs, accounts } = await computeCreateUniverseParams({
-    usersKey: usersKey,
-    name: args.name,
-    description: args.description,
-    websiteUrl: args.websiteUrl,
-  });
-
   try {
-    const tx = await program.rpc.createUniverseV1(createUniverseArgs, {
-      accounts,
-      signers: [],
-    });
+    const program = getMetaBlocksProgram(args.connection, args.wallet);
+    const usersKey = args.wallet.publicKey;
+
+    const argument: UniverseArgs = {
+      usersKey: usersKey,
+      name: args.name,
+      description: args.description,
+      websiteUrl: args.websiteUrl,
+      program: program,
+    };
+
+    const createUniverseInstruction = await getCreateUniverseInstruction(
+      argument
+    );
+    const tx = new Transaction();
+    tx.add(createUniverseInstruction);
+    await program.provider.send(tx, []);
+
     return tx;
   } catch (e) {
     throw new KyraaError(e);
@@ -46,20 +61,25 @@ const createUniverse = async (args: UniverseApiArgs) => {
 };
 
 const updateUniverse = async (args: UniverseApiArgs) => {
-  const program = getMetaBlocksProgram(args.connection, args.wallet);
-  const usersKey = args.wallet.publicKey;
-  const { accounts, updateUniverseArgs } = await computeUpdateUniverseParams({
-    usersKey: usersKey,
-    name: args.name,
-    description: args.description,
-    websiteUrl: args.websiteUrl,
-  });
-
   try {
-    const tx = await program.rpc.updateUniverseV1(updateUniverseArgs, {
-      accounts,
-      signers: [],
-    });
+    const program = getMetaBlocksProgram(args.connection, args.wallet);
+    const usersKey = args.wallet.publicKey;
+
+    const argument: UniverseArgs = {
+      usersKey: usersKey,
+      name: args.name,
+      description: args.description,
+      websiteUrl: args.websiteUrl,
+      program: program,
+    };
+
+    const updateUniverseInstruction = await getUpdateUniverseInstruction(
+      argument
+    );
+    const tx = new Transaction();
+    tx.add(updateUniverseInstruction);
+    await program.provider.send(tx, []);
+
     return tx;
   } catch (e) {
     throw new KyraaError(e);
@@ -73,39 +93,64 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
     const program = getMetaBlocksProgram(args.connection, args.wallet);
     const usersKey = args.wallet.publicKey;
 
-    const {
-      initReceiptMint: { initReceiptMintArgs, initReceiptMintAccounts },
-      initDepositNft: { initDepositNftArgs, initDepositNftAccounts },
-      depositNft: { depositNftArgs, depositNftAccounts },
-      transferReceiptNft: {
-        transferReceiptNftArgs,
-        transferReceiptNftAccounts,
-      },
-    } = await computeGroupedDepositNftParams({
+    const pdaKeys: PdaKeys = await getPdaKeys(
+      args.universeKey,
+      usersKey,
+      args.mintKey
+    );
+
+    const transferReceiptNftInstruction =
+      await getTransferReceiptNftInstruction({
+        pdaKeys: pdaKeys,
+        usersKey: usersKey,
+        program: program,
+      });
+
+    const updateReceiptMetadataInstruction =
+      await getUpdateReceiptMetadataInstruction({
+        uri: args.receiptUrl,
+        name: args.receiptUrl,
+        pdaKeys: pdaKeys,
+        usersKey: usersKey,
+        program: program,
+        isReceiptMasterEdition: args.isReceiptMasterEdition,
+      });
+
+    const depositNftInstruction = getDepositNftInstruction({
+      pdaKeys: pdaKeys,
       usersKey: usersKey,
-      mintKey: args.mintKey,
-      universeKey: args.universeKey,
-      url: args.url,
-      isReceiptMasterEdition: args.isReceiptMasterEdition,
+      program: program,
     });
 
-    const initReceiptMintInstruction = program.instruction.initReceiptMintV1(
-      initReceiptMintArgs,
-      {
-        accounts: initReceiptMintAccounts,
-      }
-    );
+    const initDepositInstruction = getInitDepositInstruction({
+      pdaKeys: pdaKeys,
+      usersKey: usersKey,
+      program: program,
+    });
 
-    const initDepositNftInstruction = program.instruction.initDepositNftV1(
-      initDepositNftArgs,
-      {
-        accounts: initDepositNftAccounts,
-      }
-    );
+    const initReceiptInstruction = getInitReceiptInstruction({
+      pdaKeys: pdaKeys,
+      usersKey: usersKey,
+      program: program,
+    });
+
+    const createCpiMetaNftInstruction = await getCreateCpiMetaNftInstruction({
+      pdaKeys: pdaKeys,
+      usersKey: usersKey,
+      program: program,
+      name: args.metaNftName,
+      uri: args.metaNftUrl,
+    });
+
+    const initMetaNftInstruction = getInitCpiMetaNftInstruction({
+      pdaKeys: pdaKeys,
+      usersKey: usersKey,
+      program: program,
+    });
 
     const transaction1 = new Transaction();
-    transaction1.add(initReceiptMintInstruction);
-    transaction1.add(initDepositNftInstruction);
+    transaction1.add(initMetaNftInstruction);
+    transaction1.add(createCpiMetaNftInstruction);
 
     // transaction 1
     sendTxRequests.push({
@@ -113,29 +158,38 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
       signers: [],
     });
 
-    const depositNftInstruction = program.instruction.depositNftV1(
-      depositNftArgs,
-      {
-        accounts: depositNftAccounts,
-      }
-    );
-    const transferReceiptNftToUserInstruction =
-      program.instruction.transferReceiptNftToUserV1(transferReceiptNftArgs, {
-        accounts: transferReceiptNftAccounts,
-      });
-
     const transaction2 = new Transaction();
+    transaction2.add(initReceiptInstruction);
+    transaction2.add(initDepositInstruction);
     transaction2.add(depositNftInstruction);
-    transaction2.add(transferReceiptNftToUserInstruction);
 
+    // transaction 2
     sendTxRequests.push({
       tx: transaction2,
       signers: [],
     });
 
-    const [tx1, tx2] = await program.provider.sendAll(sendTxRequests);
+    const transaction3 = new Transaction();
+    transaction3.add(updateReceiptMetadataInstruction);
 
-    return { tx1, tx2 };
+    // transaction 3
+    sendTxRequests.push({
+      tx: transaction3,
+      signers: [],
+    });
+
+    const transaction4 = new Transaction();
+    transaction4.add(transferReceiptNftInstruction);
+
+    // transaction 4
+    sendTxRequests.push({
+      tx: transaction4,
+      signers: [],
+    });
+
+    const [tx1, tx2, tx3, tx4] = await program.provider.sendAll(sendTxRequests);
+
+    return { tx1, tx2, tx3, tx4 };
   } catch (e) {
     throw new KyraaError(e);
   }
@@ -145,6 +199,7 @@ const withdrawNft = async (args: WithdrawNftApiArgs) => {
   try {
     const program = getMetaBlocksProgram(args.connection, args.wallet);
     const usersKey = args.wallet.publicKey;
+
     return await callWithdrawNft(
       program,
       usersKey,
@@ -194,11 +249,12 @@ const callWithdrawNft = async (
   mintKey: PublicKey,
   universeKey: PublicKey
 ) => {
-  const withdrawNftInstruction = await getWithdrawNftInstruction({
+  const pdaKeys: PdaKeys = await getPdaKeys(universeKey, usersKey, mintKey);
+
+  const withdrawNftInstruction = getWithdrawNftInstruction({
     program: program,
     usersKey: usersKey,
-    mintKey: mintKey,
-    universeKey: universeKey,
+    pdaKeys: pdaKeys,
   });
   const transaction = new Transaction();
   transaction.add(withdrawNftInstruction);
