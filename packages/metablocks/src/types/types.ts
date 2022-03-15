@@ -64,27 +64,6 @@ export interface UniverseArgs {
   program: Program<MetaBlocks>;
 }
 
-interface BasicInstructionArgs {
-  program: Program<MetaBlocks>;
-  usersKey: PublicKey;
-  mintKey: PublicKey;
-  universeKey: PublicKey;
-}
-
-export interface InitReceiptMintInstructionArgs extends BasicInstructionArgs {}
-
-export interface InitDepositNftInstructionArgs extends BasicInstructionArgs {}
-
-export interface DepositNftInstructionArgs extends BasicInstructionArgs {}
-
-export interface TransferReceiptNftInstructionArgs
-  extends BasicInstructionArgs {
-  url: string;
-  isReceiptMasterEdition: boolean;
-}
-
-export interface WithdrawNftInstructionArgs extends BasicInstructionArgs {}
-
 export type SendTxRequest = {
   tx: Transaction;
   signers: Array<Signer | undefined>;
@@ -238,30 +217,32 @@ export interface WrappedUserNft {
   blockTime: number | undefined | null;
 }
 
-interface BasicInstructionsArgs {
+interface BasicInstructionArgs {
   pdaKeys: PdaKeys;
   usersKey: PublicKey;
   program: Program<MetaBlocks>;
 }
 
-export interface TransferReceiptNftArgs extends BasicInstructionsArgs {}
+export interface TransferReceiptNftArgs extends BasicInstructionArgs {}
 
-export interface UpdateReceiptMetadataArgs extends BasicInstructionsArgs {
+export interface UpdateReceiptMetadataArgs extends BasicInstructionArgs {
   uri: string;
   name: string;
   isReceiptMasterEdition: boolean;
 }
-export interface DepositArgs extends BasicInstructionsArgs {}
+export interface DepositArgs extends BasicInstructionArgs {}
 
-export interface InitDepositNftArgs extends BasicInstructionsArgs {}
+export interface InitDepositNftArgs extends BasicInstructionArgs {}
 
-export interface InitReceiptMintArgs extends BasicInstructionsArgs {}
+export interface InitReceiptMintArgs extends BasicInstructionArgs {}
 
-export interface CreateMetaNftArgs extends BasicInstructionsArgs {
+export interface CreateMetaNftArgs extends BasicInstructionArgs {
   uri: string;
   name: string;
 }
 
-export interface InitMetaNftArgs extends BasicInstructionsArgs {}
+export interface InitMetaNftArgs extends BasicInstructionArgs {}
 
-export interface WithdrawNftArgs extends BasicInstructionsArgs {}
+export interface InitMetaBlocksAuthorityArgs extends BasicInstructionArgs {}
+
+export interface WithdrawNftArgs extends BasicInstructionArgs {}

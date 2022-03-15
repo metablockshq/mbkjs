@@ -134,7 +134,7 @@ export type MetaNft = {
       ]
     },
     {
-      "name": "addMetaNftCount",
+      "name": "addMetaNftCountV1",
       "accounts": [
         {
           "name": "metaNft",
@@ -172,7 +172,7 @@ export type MetaNft = {
       ]
     },
     {
-      "name": "subMetaNftCount",
+      "name": "subMetaNftCountV1",
       "accounts": [
         {
           "name": "metaNft",
@@ -210,7 +210,7 @@ export type MetaNft = {
       ]
     },
     {
-      "name": "closeMetaNft",
+      "name": "closeMetaNftV1",
       "accounts": [
         {
           "name": "metaNft",
@@ -511,7 +511,7 @@ export const IDL: MetaNft = {
       ]
     },
     {
-      "name": "addMetaNftCount",
+      "name": "addMetaNftCountV1",
       "accounts": [
         {
           "name": "metaNft",
@@ -549,7 +549,7 @@ export const IDL: MetaNft = {
       ]
     },
     {
-      "name": "subMetaNftCount",
+      "name": "subMetaNftCountV1",
       "accounts": [
         {
           "name": "metaNft",
@@ -587,7 +587,7 @@ export const IDL: MetaNft = {
       ]
     },
     {
-      "name": "closeMetaNft",
+      "name": "closeMetaNftV1",
       "accounts": [
         {
           "name": "metaNft",

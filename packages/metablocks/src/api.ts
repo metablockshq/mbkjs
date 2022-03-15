@@ -1,4 +1,4 @@
-import { getMetaBlocksProgram } from './factory';
+import { getMetaBlocksProgram, getMetaNftProgram } from './factory';
 import { Connection, PublicKey, Transaction } from '@solana/web3.js';
 import {
   getCreateUniverseInstruction,
@@ -28,11 +28,13 @@ import {
   getDepositNftInstruction,
   getInitCpiMetaNftInstruction,
   getInitDepositInstruction,
+  getInitMetaBlocksAuthorityInstruction,
   getInitReceiptInstruction,
   getTransferReceiptNftInstruction,
   getUpdateReceiptMetadataInstruction,
 } from './instructions/depositInstructions';
 import { getWithdrawNftInstruction } from './instructions/withdrawInstructions';
+import { getTokenAccount } from '@project-serum/common';
 
 const createUniverse = async (args: UniverseApiArgs) => {
   try {
@@ -91,6 +93,7 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
     const sendTxRequests: Array<SendTxRequest> = [];
 
     const program = getMetaBlocksProgram(args.connection, args.wallet);
+    const metaNftProgram = getMetaNftProgram(args.connection, args.wallet);
     const usersKey = args.wallet.publicKey;
 
     const pdaKeys: PdaKeys = await getPdaKeys(
@@ -148,20 +151,46 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
       program: program,
     });
 
-    const transaction1 = new Transaction();
-    transaction1.add(initMetaNftInstruction);
-    transaction1.add(createCpiMetaNftInstruction);
+    const initMetaBlocksAuthorityInstruction =
+      getInitMetaBlocksAuthorityInstruction({
+        pdaKeys: pdaKeys,
+        usersKey: usersKey,
+        program: program,
+      });
 
-    // transaction 1
-    sendTxRequests.push({
-      tx: transaction1,
-      signers: [],
-    });
+    const transaction1 = new Transaction();
+
+    try {
+      await program.account.metaBlocksAuthority.fetch(
+        pdaKeys.metaBlocksAuthority
+      );
+    } catch (err) {
+      transaction1.add(initMetaBlocksAuthorityInstruction);
+    }
+
+    try {
+      await metaNftProgram.account.metaNft.fetch(pdaKeys.metaNft);
+    } catch (err) {
+      transaction1.add(initMetaNftInstruction);
+    }
+
+    try {
+      await getTokenAccount(program.provider, pdaKeys.metaNftMintAta);
+    } catch (err) {
+      transaction1.add(createCpiMetaNftInstruction);
+    }
+
+    if (transaction1.instructions.length > 0) {
+      // transaction 1
+      sendTxRequests.push({
+        tx: transaction1,
+        signers: [],
+      });
+    }
 
     const transaction2 = new Transaction();
     transaction2.add(initReceiptInstruction);
     transaction2.add(initDepositInstruction);
-    transaction2.add(depositNftInstruction);
 
     // transaction 2
     sendTxRequests.push({
@@ -170,7 +199,7 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
     });
 
     const transaction3 = new Transaction();
-    transaction3.add(updateReceiptMetadataInstruction);
+    transaction3.add(depositNftInstruction);
 
     // transaction 3
     sendTxRequests.push({
@@ -179,17 +208,27 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
     });
 
     const transaction4 = new Transaction();
-    transaction4.add(transferReceiptNftInstruction);
-
+    transaction4.add(updateReceiptMetadataInstruction);
     // transaction 4
     sendTxRequests.push({
       tx: transaction4,
       signers: [],
     });
 
-    const [tx1, tx2, tx3, tx4] = await program.provider.sendAll(sendTxRequests);
+    const transaction5 = new Transaction();
+    transaction5.add(transferReceiptNftInstruction);
 
-    return { tx1, tx2, tx3, tx4 };
+    // transaction 4
+    sendTxRequests.push({
+      tx: transaction5,
+      signers: [],
+    });
+
+    const [tx1, tx2, tx3, tx4, tx5] = await program.provider.sendAll(
+      sendTxRequests
+    );
+
+    return { tx1, tx2, tx3, tx4, tx5 };
   } catch (e) {
     throw new KyraaError(e);
   }

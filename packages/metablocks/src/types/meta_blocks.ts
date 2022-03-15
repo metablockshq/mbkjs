@@ -537,11 +537,44 @@ export type MetaBlocks = {
       ]
     },
     {
-      "name": "initCpiMetaNftV1",
+      "name": "initMetaBlocksAuthority",
       "accounts": [
         {
           "name": "metaBlocksAuthority",
           "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "universe",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": "InitMetaBlocksAuthorityArgs"
+          }
+        }
+      ]
+    },
+    {
+      "name": "initCpiMetaNftV1",
+      "accounts": [
+        {
+          "name": "metaBlocksAuthority",
+          "isMut": false,
           "isSigner": false
         },
         {
@@ -793,6 +826,10 @@ export type MetaBlocks = {
           {
             "name": "bump",
             "type": "u8"
+          },
+          {
+            "name": "payer",
+            "type": "publicKey"
           }
         ]
       }
@@ -969,6 +1006,13 @@ export type MetaBlocks = {
             "type": "bool"
           }
         ]
+      }
+    },
+    {
+      "name": "initMetaBlocksAuthorityArgs",
+      "type": {
+        "kind": "struct",
+        "fields": []
       }
     }
   ],
@@ -1614,11 +1658,44 @@ export const IDL: MetaBlocks = {
       ]
     },
     {
-      "name": "initCpiMetaNftV1",
+      "name": "initMetaBlocksAuthority",
       "accounts": [
         {
           "name": "metaBlocksAuthority",
           "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "universe",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": "InitMetaBlocksAuthorityArgs"
+          }
+        }
+      ]
+    },
+    {
+      "name": "initCpiMetaNftV1",
+      "accounts": [
+        {
+          "name": "metaBlocksAuthority",
+          "isMut": false,
           "isSigner": false
         },
         {
@@ -1870,6 +1947,10 @@ export const IDL: MetaBlocks = {
           {
             "name": "bump",
             "type": "u8"
+          },
+          {
+            "name": "payer",
+            "type": "publicKey"
           }
         ]
       }
@@ -2046,6 +2127,13 @@ export const IDL: MetaBlocks = {
             "type": "bool"
           }
         ]
+      }
+    },
+    {
+      "name": "initMetaBlocksAuthorityArgs",
+      "type": {
+        "kind": "struct",
+        "fields": []
       }
     }
   ],

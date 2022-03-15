@@ -4,6 +4,7 @@ import {
   CreateMetaNftArgs,
   DepositArgs,
   InitDepositNftArgs,
+  InitMetaBlocksAuthorityArgs,
   InitMetaNftArgs,
   InitReceiptMintArgs,
   TransferReceiptNftArgs,
@@ -276,4 +277,20 @@ export const getInitCpiMetaNftInstruction = (args: InitMetaNftArgs) => {
       rent: anchor.web3.SYSVAR_RENT_PUBKEY,
     },
   });
+};
+
+export const getInitMetaBlocksAuthorityInstruction = (
+  args: InitMetaBlocksAuthorityArgs
+) => {
+  return args.program.instruction.initMetaBlocksAuthority(
+    {},
+    {
+      accounts: {
+        metaBlocksAuthority: args.pdaKeys.metaBlocksAuthority,
+        payer: args.usersKey,
+        universe: args.pdaKeys.universeKey,
+        systemProgram: anchor.web3.SystemProgram.programId,
+      },
+    }
+  );
 };

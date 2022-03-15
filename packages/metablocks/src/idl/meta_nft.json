@@ -134,7 +134,7 @@
       ]
     },
     {
-      "name": "addMetaNftCount",
+      "name": "addMetaNftCountV1",
       "accounts": [
         {
           "name": "metaNft",
@@ -172,7 +172,7 @@
       ]
     },
     {
-      "name": "subMetaNftCount",
+      "name": "subMetaNftCountV1",
       "accounts": [
         {
           "name": "metaNft",
@@ -210,7 +210,7 @@
       ]
     },
     {
-      "name": "closeMetaNft",
+      "name": "closeMetaNftV1",
       "accounts": [
         {
           "name": "metaNft",
