@@ -158,6 +158,7 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
         program: program,
       });
 
+    // transaction 1
     const transaction1 = new Transaction();
 
     try {
@@ -174,61 +175,66 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
       transaction1.add(initMetaNftInstruction);
     }
 
-    try {
-      await getTokenAccount(program.provider, pdaKeys.metaNftMintAta);
-    } catch (err) {
-      transaction1.add(createCpiMetaNftInstruction);
-    }
-
     if (transaction1.instructions.length > 0) {
-      // transaction 1
       sendTxRequests.push({
         tx: transaction1,
         signers: [],
       });
     }
-
-    const transaction2 = new Transaction();
-    transaction2.add(initReceiptInstruction);
-    transaction2.add(initDepositInstruction);
-
     // transaction 2
-    sendTxRequests.push({
-      tx: transaction2,
-      signers: [],
-    });
-
-    const transaction3 = new Transaction();
-    transaction3.add(depositNftInstruction);
+    const transaction2 = new Transaction();
+    try {
+      await getTokenAccount(program.provider, pdaKeys.metaNftMintAta);
+    } catch (err) {
+      transaction2.add(createCpiMetaNftInstruction);
+      if (transaction2.instructions.length > 0) {
+        sendTxRequests.push({
+          tx: transaction2,
+          signers: [],
+        });
+      }
+    }
 
     // transaction 3
+    const transaction3 = new Transaction();
+    transaction3.add(initReceiptInstruction);
+    transaction3.add(initDepositInstruction);
+
     sendTxRequests.push({
       tx: transaction3,
       signers: [],
     });
 
-    const transaction4 = new Transaction();
-    transaction4.add(updateReceiptMetadataInstruction);
     // transaction 4
+    const transaction4 = new Transaction();
+    transaction4.add(depositNftInstruction);
+
     sendTxRequests.push({
       tx: transaction4,
       signers: [],
     });
 
+    // transaction 5
     const transaction5 = new Transaction();
-    transaction5.add(transferReceiptNftInstruction);
-
-    // transaction 4
+    transaction5.add(updateReceiptMetadataInstruction);
     sendTxRequests.push({
       tx: transaction5,
       signers: [],
     });
 
-    const [tx1, tx2, tx3, tx4, tx5] = await program.provider.sendAll(
+    // transaction 6
+    const transaction6 = new Transaction();
+    transaction6.add(transferReceiptNftInstruction);
+    sendTxRequests.push({
+      tx: transaction6,
+      signers: [],
+    });
+
+    const [tx1, tx2, tx3, tx4, tx5, tx6] = await program.provider.sendAll(
       sendTxRequests
     );
 
-    return { tx1, tx2, tx3, tx4, tx5 };
+    return { tx1, tx2, tx3, tx4, tx5, tx6 };
   } catch (e) {
     throw new KyraaError(e);
   }
