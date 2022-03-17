@@ -1,16 +1,15 @@
-import { getMetaBlocksProgram } from './factory';
-import {
-  computeCreateUniverseParams,
-  computeGroupedDepositNftParams,
-  computeUpdateUniverseParams,
-} from './paramsBuilder';
+import { getMetaBlocksProgram, getMetaNftProgram } from './factory';
 import { Connection, PublicKey, Transaction } from '@solana/web3.js';
-import { getWithdrawNftInstruction } from './instructions';
+import {
+  getCreateUniverseInstruction,
+  getUpdateUniverseInstruction,
+} from './instructions/universeInstructions';
 import {
   FetchAccountArgs,
   GroupedDepositNftApiArgs,
   SendTxRequest,
   UniverseApiArgs,
+  UniverseArgs,
   UserNftFilterArgs,
   WithdrawNftApiArgs,
   WithdrawNftWithReceiptApiArgs,
@@ -23,22 +22,40 @@ import { KyraaError } from './error';
 import { Program } from '@project-serum/anchor';
 import { MetaBlocks } from './types/meta_blocks';
 import { LangErrorCode, LangErrorMessage } from './error';
+import { getPdaKeys, PdaKeys } from './pda';
+import {
+  getCreateCpiMetaNftInstruction,
+  getDepositNftInstruction,
+  getInitCpiMetaNftInstruction,
+  getInitDepositInstruction,
+  getInitMetaBlocksAuthorityInstruction,
+  getInitReceiptInstruction,
+  getTransferReceiptNftInstruction,
+  getUpdateReceiptMetadataInstruction,
+} from './instructions/depositInstructions';
+import { getWithdrawNftInstruction } from './instructions/withdrawInstructions';
+import { getTokenAccount } from '@project-serum/common';
 
 const createUniverse = async (args: UniverseApiArgs) => {
-  const program = getMetaBlocksProgram(args.connection, args.wallet);
-  const usersKey = args.wallet.publicKey;
-  const { createUniverseArgs, accounts } = await computeCreateUniverseParams({
-    usersKey: usersKey,
-    name: args.name,
-    description: args.description,
-    websiteUrl: args.websiteUrl,
-  });
-
   try {
-    const tx = await program.rpc.createUniverseV1(createUniverseArgs, {
-      accounts,
-      signers: [],
-    });
+    const program = getMetaBlocksProgram(args.connection, args.wallet);
+    const usersKey = args.wallet.publicKey;
+
+    const argument: UniverseArgs = {
+      usersKey: usersKey,
+      name: args.name,
+      description: args.description,
+      websiteUrl: args.websiteUrl,
+      program: program,
+    };
+
+    const createUniverseInstruction = await getCreateUniverseInstruction(
+      argument
+    );
+    const tx = new Transaction();
+    tx.add(createUniverseInstruction);
+    await program.provider.send(tx, []);
+
     return tx;
   } catch (e) {
     throw new KyraaError(e);
@@ -46,20 +63,25 @@ const createUniverse = async (args: UniverseApiArgs) => {
 };
 
 const updateUniverse = async (args: UniverseApiArgs) => {
-  const program = getMetaBlocksProgram(args.connection, args.wallet);
-  const usersKey = args.wallet.publicKey;
-  const { accounts, updateUniverseArgs } = await computeUpdateUniverseParams({
-    usersKey: usersKey,
-    name: args.name,
-    description: args.description,
-    websiteUrl: args.websiteUrl,
-  });
-
   try {
-    const tx = await program.rpc.updateUniverseV1(updateUniverseArgs, {
-      accounts,
-      signers: [],
-    });
+    const program = getMetaBlocksProgram(args.connection, args.wallet);
+    const usersKey = args.wallet.publicKey;
+
+    const argument: UniverseArgs = {
+      usersKey: usersKey,
+      name: args.name,
+      description: args.description,
+      websiteUrl: args.websiteUrl,
+      program: program,
+    };
+
+    const updateUniverseInstruction = await getUpdateUniverseInstruction(
+      argument
+    );
+    const tx = new Transaction();
+    tx.add(updateUniverseInstruction);
+    await program.provider.send(tx, []);
+
     return tx;
   } catch (e) {
     throw new KyraaError(e);
@@ -71,71 +93,148 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
     const sendTxRequests: Array<SendTxRequest> = [];
 
     const program = getMetaBlocksProgram(args.connection, args.wallet);
+    const metaNftProgram = getMetaNftProgram(args.connection, args.wallet);
     const usersKey = args.wallet.publicKey;
 
-    const {
-      initReceiptMint: { initReceiptMintArgs, initReceiptMintAccounts },
-      initDepositNft: { initDepositNftArgs, initDepositNftAccounts },
-      depositNft: { depositNftArgs, depositNftAccounts },
-      transferReceiptNft: {
-        transferReceiptNftArgs,
-        transferReceiptNftAccounts,
-      },
-    } = await computeGroupedDepositNftParams({
-      usersKey: usersKey,
-      mintKey: args.mintKey,
-      universeKey: args.universeKey,
-      url: args.url,
-      isReceiptMasterEdition: args.isReceiptMasterEdition,
-    });
-
-    const initReceiptMintInstruction = program.instruction.initReceiptMintV1(
-      initReceiptMintArgs,
-      {
-        accounts: initReceiptMintAccounts,
-      }
+    const pdaKeys: PdaKeys = await getPdaKeys(
+      args.universeKey,
+      usersKey,
+      args.mintKey
     );
 
-    const initDepositNftInstruction = program.instruction.initDepositNftV1(
-      initDepositNftArgs,
-      {
-        accounts: initDepositNftAccounts,
-      }
-    );
-
-    const transaction1 = new Transaction();
-    transaction1.add(initReceiptMintInstruction);
-    transaction1.add(initDepositNftInstruction);
-
-    // transaction 1
-    sendTxRequests.push({
-      tx: transaction1,
-      signers: [],
-    });
-
-    const depositNftInstruction = program.instruction.depositNftV1(
-      depositNftArgs,
-      {
-        accounts: depositNftAccounts,
-      }
-    );
-    const transferReceiptNftToUserInstruction =
-      program.instruction.transferReceiptNftToUserV1(transferReceiptNftArgs, {
-        accounts: transferReceiptNftAccounts,
+    const transferReceiptNftInstruction =
+      await getTransferReceiptNftInstruction({
+        pdaKeys: pdaKeys,
+        usersKey: usersKey,
+        program: program,
       });
 
+    const updateReceiptMetadataInstruction =
+      await getUpdateReceiptMetadataInstruction({
+        uri: args.receiptUrl,
+        name: args.receiptUrl,
+        pdaKeys: pdaKeys,
+        usersKey: usersKey,
+        program: program,
+        isReceiptMasterEdition: args.isReceiptMasterEdition,
+      });
+
+    const depositNftInstruction = getDepositNftInstruction({
+      pdaKeys: pdaKeys,
+      usersKey: usersKey,
+      program: program,
+    });
+
+    const initDepositInstruction = getInitDepositInstruction({
+      pdaKeys: pdaKeys,
+      usersKey: usersKey,
+      program: program,
+    });
+
+    const initReceiptInstruction = getInitReceiptInstruction({
+      pdaKeys: pdaKeys,
+      usersKey: usersKey,
+      program: program,
+    });
+
+    const createCpiMetaNftInstruction = await getCreateCpiMetaNftInstruction({
+      pdaKeys: pdaKeys,
+      usersKey: usersKey,
+      program: program,
+      name: args.metaNftName,
+      uri: args.metaNftUrl,
+    });
+
+    const initMetaNftInstruction = getInitCpiMetaNftInstruction({
+      pdaKeys: pdaKeys,
+      usersKey: usersKey,
+      program: program,
+    });
+
+    const initMetaBlocksAuthorityInstruction =
+      getInitMetaBlocksAuthorityInstruction({
+        pdaKeys: pdaKeys,
+        usersKey: usersKey,
+        program: program,
+      });
+
+    // transaction 1
+    const transaction1 = new Transaction();
+
+    try {
+      await program.account.metaBlocksAuthority.fetch(
+        pdaKeys.metaBlocksAuthority
+      );
+    } catch (err) {
+      transaction1.add(initMetaBlocksAuthorityInstruction);
+    }
+
+    try {
+      await metaNftProgram.account.metaNft.fetch(pdaKeys.metaNft);
+    } catch (err) {
+      transaction1.add(initMetaNftInstruction);
+    }
+
+    if (transaction1.instructions.length > 0) {
+      sendTxRequests.push({
+        tx: transaction1,
+        signers: [],
+      });
+    }
+    // transaction 2
     const transaction2 = new Transaction();
-    transaction2.add(depositNftInstruction);
-    transaction2.add(transferReceiptNftToUserInstruction);
+    try {
+      await getTokenAccount(program.provider, pdaKeys.metaNftMintAta);
+    } catch (err) {
+      transaction2.add(createCpiMetaNftInstruction);
+      if (transaction2.instructions.length > 0) {
+        sendTxRequests.push({
+          tx: transaction2,
+          signers: [],
+        });
+      }
+    }
+
+    // transaction 3
+    const transaction3 = new Transaction();
+    transaction3.add(initReceiptInstruction);
+    transaction3.add(initDepositInstruction);
 
     sendTxRequests.push({
-      tx: transaction2,
+      tx: transaction3,
       signers: [],
     });
 
-    const [tx1, tx2] = await program.provider.sendAll(sendTxRequests);
+    // transaction 4
+    const transaction4 = new Transaction();
+    transaction4.add(depositNftInstruction);
 
-    return { tx1, tx2 };
+    sendTxRequests.push({
+      tx: transaction4,
+      signers: [],
+    });
+
+    // transaction 5
+    const transaction5 = new Transaction();
+    transaction5.add(updateReceiptMetadataInstruction);
+    sendTxRequests.push({
+      tx: transaction5,
+      signers: [],
+    });
+
+    // transaction 6
+    const transaction6 = new Transaction();
+    transaction6.add(transferReceiptNftInstruction);
+    sendTxRequests.push({
+      tx: transaction6,
+      signers: [],
+    });
+
+    const [tx1, tx2, tx3, tx4, tx5, tx6] = await program.provider.sendAll(
+      sendTxRequests
+    );
+
+    return { tx1, tx2, tx3, tx4, tx5, tx6 };
   } catch (e) {
     throw new KyraaError(e);
   }
@@ -145,6 +244,7 @@ const withdrawNft = async (args: WithdrawNftApiArgs) => {
   try {
     const program = getMetaBlocksProgram(args.connection, args.wallet);
     const usersKey = args.wallet.publicKey;
+
     return await callWithdrawNft(
       program,
       usersKey,
@@ -194,11 +294,12 @@ const callWithdrawNft = async (
   mintKey: PublicKey,
   universeKey: PublicKey
 ) => {
-  const withdrawNftInstruction = await getWithdrawNftInstruction({
+  const pdaKeys: PdaKeys = await getPdaKeys(universeKey, usersKey, mintKey);
+
+  const withdrawNftInstruction = getWithdrawNftInstruction({
     program: program,
     usersKey: usersKey,
-    mintKey: mintKey,
-    universeKey: universeKey,
+    pdaKeys: pdaKeys,
   });
   const transaction = new Transaction();
   transaction.add(withdrawNftInstruction);
