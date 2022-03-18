@@ -137,6 +137,13 @@ const findMetaBlocksAuthority = async (
   );
 };
 
+const findTreasuryAddress = async () => {
+  return await PublicKey.findProgramAddress(
+    [Buffer.from(utils.bytes.utf8.encode('Treasury'))],
+    programIds.META_BLOCKS_PROGRAM_ID
+  );
+};
+
 export {
   findUniverseAddress,
   findWrappedUserNftAddress,
@@ -148,6 +155,7 @@ export {
   findMetaNftAddress,
   findMetaNftMintAddress,
   findMetaBlocksAuthority,
+  findTreasuryAddress,
 };
 
 export interface PdaKeys {
@@ -165,10 +173,11 @@ export interface PdaKeys {
   vaultReceiptAta: PublicKey;
   metaNft: PublicKey;
   metaNftMint: PublicKey;
-  metaNftMintAta: PublicKey;
+  userMetaNftAta: PublicKey;
   metaBlocksAuthority: PublicKey;
   metaNftMetadataAddress: PublicKey;
   metaNftMasterEditionAddress: PublicKey;
+  treasuryAddress: PublicKey;
 }
 
 export const getPdaKeys = async (
@@ -230,8 +239,8 @@ export const getPdaKeys = async (
     usersKey
   );
 
-  const [metaNftMintAta, _mfma] = await findAssociatedAddress(
-    metaNft,
+  const [userMetaNftAta, _mfma] = await findAssociatedAddress(
+    usersKey,
     metaNftMint
   );
 
@@ -240,6 +249,8 @@ export const getPdaKeys = async (
 
   const [metaNftMasterEditionAddress, _metaNftMasterEditionBump] =
     await findMasterEditionAddress(metaNftMint);
+
+  const [treasuryAddress, _tab] = await findTreasuryAddress();
 
   return {
     universeKey: universeKey,
@@ -256,9 +267,10 @@ export const getPdaKeys = async (
     vaultReceiptAta: vaultReceiptAta,
     metaNft: metaNft,
     metaNftMint: metaNftMint,
-    metaNftMintAta: metaNftMintAta,
+    userMetaNftAta: userMetaNftAta,
     metaBlocksAuthority: metaBlocksAuthority,
     metaNftMetadataAddress: metaNftMetadataAddress,
     metaNftMasterEditionAddress: metaNftMasterEditionAddress,
+    treasuryAddress: treasuryAddress,
   };
 };

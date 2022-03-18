@@ -3,6 +3,34 @@ export type MetaBlocks = {
   "name": "meta_blocks",
   "instructions": [
     {
+      "name": "initTreasuryV1",
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "treasury",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": "InitializeTreasuryArgs"
+          }
+        }
+      ]
+    },
+    {
       "name": "createUniverseV1",
       "accounts": [
         {
@@ -266,6 +294,16 @@ export type MetaBlocks = {
           "name": "metaNft",
           "isMut": true,
           "isSigner": false
+        },
+        {
+          "name": "treasury",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "treasuryAuthority",
+          "isMut": true,
+          "isSigner": false
         }
       ],
       "args": [
@@ -503,7 +541,7 @@ export type MetaBlocks = {
         },
         {
           "name": "metaBlocksAuthority",
-          "isMut": false,
+          "isMut": true,
           "isSigner": false
         },
         {
@@ -522,7 +560,17 @@ export type MetaBlocks = {
           "isSigner": false
         },
         {
-          "name": "metaNftMintAta",
+          "name": "userMetaNftAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "treasury",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "treasuryAuthority",
           "isMut": true,
           "isSigner": false
         }
@@ -537,7 +585,7 @@ export type MetaBlocks = {
       ]
     },
     {
-      "name": "initMetaBlocksAuthority",
+      "name": "initMetaBlocksAuthorityV1",
       "accounts": [
         {
           "name": "metaBlocksAuthority",
@@ -616,13 +664,23 @@ export type MetaBlocks = {
           "name": "tokenProgram",
           "isMut": false,
           "isSigner": false
+        },
+        {
+          "name": "treasury",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "treasuryAuthority",
+          "isMut": true,
+          "isSigner": false
         }
       ],
       "args": [
         {
           "name": "args",
           "type": {
-            "defined": "InitMetaNftArgs"
+            "defined": "InitMetaNftCpiArgs"
           }
         }
       ]
@@ -646,7 +704,7 @@ export type MetaBlocks = {
           "isSigner": false
         },
         {
-          "name": "metaNftMintAta",
+          "name": "userMetaNftAta",
           "isMut": true,
           "isSigner": false
         },
@@ -667,11 +725,6 @@ export type MetaBlocks = {
         },
         {
           "name": "rent",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "universe",
           "isMut": false,
           "isSigner": false
         },
@@ -705,7 +758,7 @@ export type MetaBlocks = {
         {
           "name": "args",
           "type": {
-            "defined": "CreateCpiMetaNftArgs"
+            "defined": "CreateMetaNftCpiArgs"
           }
         }
       ]
@@ -803,6 +856,22 @@ export type MetaBlocks = {
       }
     },
     {
+      "name": "treasury",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "authority",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
       "name": "vault",
       "type": {
         "kind": "struct",
@@ -830,8 +899,19 @@ export type MetaBlocks = {
           {
             "name": "payer",
             "type": "publicKey"
+          },
+          {
+            "name": "universe",
+            "type": "publicKey"
           }
         ]
+      }
+    },
+    {
+      "name": "initializeTreasuryArgs",
+      "type": {
+        "kind": "struct",
+        "fields": []
       }
     },
     {
@@ -896,7 +976,7 @@ export type MetaBlocks = {
       }
     },
     {
-      "name": "initMetaNftArgs",
+      "name": "initMetaNftCpiArgs",
       "type": {
         "kind": "struct",
         "fields": []
@@ -963,7 +1043,7 @@ export type MetaBlocks = {
       }
     },
     {
-      "name": "createCpiMetaNftArgs",
+      "name": "createMetaNftCpiArgs",
       "type": {
         "kind": "struct",
         "fields": [
@@ -1115,6 +1195,11 @@ export type MetaBlocks = {
       "code": 6004,
       "name": "NoMetadata",
       "msg": "No Metadata provided for the nft"
+    },
+    {
+      "code": 6005,
+      "name": "InvalidTreasury",
+      "msg": "Invalid treasury account"
     }
   ]
 };
@@ -1124,6 +1209,34 @@ export const IDL: MetaBlocks = {
   "name": "meta_blocks",
   "instructions": [
     {
+      "name": "initTreasuryV1",
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "treasury",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": "InitializeTreasuryArgs"
+          }
+        }
+      ]
+    },
+    {
       "name": "createUniverseV1",
       "accounts": [
         {
@@ -1387,6 +1500,16 @@ export const IDL: MetaBlocks = {
           "name": "metaNft",
           "isMut": true,
           "isSigner": false
+        },
+        {
+          "name": "treasury",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "treasuryAuthority",
+          "isMut": true,
+          "isSigner": false
         }
       ],
       "args": [
@@ -1624,7 +1747,7 @@ export const IDL: MetaBlocks = {
         },
         {
           "name": "metaBlocksAuthority",
-          "isMut": false,
+          "isMut": true,
           "isSigner": false
         },
         {
@@ -1643,7 +1766,17 @@ export const IDL: MetaBlocks = {
           "isSigner": false
         },
         {
-          "name": "metaNftMintAta",
+          "name": "userMetaNftAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "treasury",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "treasuryAuthority",
           "isMut": true,
           "isSigner": false
         }
@@ -1658,7 +1791,7 @@ export const IDL: MetaBlocks = {
       ]
     },
     {
-      "name": "initMetaBlocksAuthority",
+      "name": "initMetaBlocksAuthorityV1",
       "accounts": [
         {
           "name": "metaBlocksAuthority",
@@ -1737,13 +1870,23 @@ export const IDL: MetaBlocks = {
           "name": "tokenProgram",
           "isMut": false,
           "isSigner": false
+        },
+        {
+          "name": "treasury",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "treasuryAuthority",
+          "isMut": true,
+          "isSigner": false
         }
       ],
       "args": [
         {
           "name": "args",
           "type": {
-            "defined": "InitMetaNftArgs"
+            "defined": "InitMetaNftCpiArgs"
           }
         }
       ]
@@ -1767,7 +1910,7 @@ export const IDL: MetaBlocks = {
           "isSigner": false
         },
         {
-          "name": "metaNftMintAta",
+          "name": "userMetaNftAta",
           "isMut": true,
           "isSigner": false
         },
@@ -1788,11 +1931,6 @@ export const IDL: MetaBlocks = {
         },
         {
           "name": "rent",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "universe",
           "isMut": false,
           "isSigner": false
         },
@@ -1826,7 +1964,7 @@ export const IDL: MetaBlocks = {
         {
           "name": "args",
           "type": {
-            "defined": "CreateCpiMetaNftArgs"
+            "defined": "CreateMetaNftCpiArgs"
           }
         }
       ]
@@ -1924,6 +2062,22 @@ export const IDL: MetaBlocks = {
       }
     },
     {
+      "name": "treasury",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "authority",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
       "name": "vault",
       "type": {
         "kind": "struct",
@@ -1951,8 +2105,19 @@ export const IDL: MetaBlocks = {
           {
             "name": "payer",
             "type": "publicKey"
+          },
+          {
+            "name": "universe",
+            "type": "publicKey"
           }
         ]
+      }
+    },
+    {
+      "name": "initializeTreasuryArgs",
+      "type": {
+        "kind": "struct",
+        "fields": []
       }
     },
     {
@@ -2017,7 +2182,7 @@ export const IDL: MetaBlocks = {
       }
     },
     {
-      "name": "initMetaNftArgs",
+      "name": "initMetaNftCpiArgs",
       "type": {
         "kind": "struct",
         "fields": []
@@ -2084,7 +2249,7 @@ export const IDL: MetaBlocks = {
       }
     },
     {
-      "name": "createCpiMetaNftArgs",
+      "name": "createMetaNftCpiArgs",
       "type": {
         "kind": "struct",
         "fields": [
@@ -2236,6 +2401,11 @@ export const IDL: MetaBlocks = {
       "code": 6004,
       "name": "NoMetadata",
       "msg": "No Metadata provided for the nft"
+    },
+    {
+      "code": 6005,
+      "name": "InvalidTreasury",
+      "msg": "Invalid treasury account"
     }
   ]
 };

@@ -20,13 +20,15 @@ export const getWithdrawNftInstruction = (args: WithdrawNftArgs) => {
       vaultReceiptAta: args.pdaKeys.vaultReceiptAta,
       metaNft: args.pdaKeys.metaNft,
       metaNftMint: args.pdaKeys.metaNftMint,
-      metaNftMintAta: args.pdaKeys.metaNftMintAta,
+      userMetaNftAta: args.pdaKeys.userMetaNftAta,
       metaBlocksAuthority: args.pdaKeys.metaBlocksAuthority,
       tokenProgram: programIds.TOKEN_PROGRAM_ID,
       associatedTokenProgram: programIds.ASSOCIATED_TOKEN_PROGRAM_ID,
       systemProgram: SystemProgram.programId,
       rent: SYSVAR_RENT_PUBKEY,
       metaNftProgram: programIds.META_NFT_PROGRAM_ID,
+      treasury: args.pdaKeys.treasuryAddress,
+      treasuryAuthority: programIds.TREASURY_AUTHORITY,
     },
   });
 };

@@ -184,7 +184,7 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
     // transaction 2
     const transaction2 = new Transaction();
     try {
-      await getTokenAccount(program.provider, pdaKeys.metaNftMintAta);
+      await getTokenAccount(program.provider, pdaKeys.userMetaNftAta);
     } catch (err) {
       transaction2.add(createCpiMetaNftInstruction);
       if (transaction2.instructions.length > 0) {
