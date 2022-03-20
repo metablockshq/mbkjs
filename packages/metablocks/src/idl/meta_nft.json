@@ -26,6 +26,11 @@
           "isSigner": true
         },
         {
+          "name": "treasuryAuthority",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
           "name": "universe",
           "isMut": false,
           "isSigner": false
@@ -69,7 +74,7 @@
           "isSigner": false
         },
         {
-          "name": "metaNftMintAta",
+          "name": "userMetaNftAta",
           "isMut": true,
           "isSigner": false
         },
@@ -82,11 +87,6 @@
           "name": "authority",
           "isMut": false,
           "isSigner": true
-        },
-        {
-          "name": "universe",
-          "isMut": false,
-          "isSigner": false
         },
         {
           "name": "systemProgram",
@@ -152,11 +152,6 @@
           "isSigner": true
         },
         {
-          "name": "universe",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
           "name": "systemProgram",
           "isMut": false,
           "isSigner": false
@@ -188,11 +183,6 @@
           "name": "authority",
           "isMut": false,
           "isSigner": true
-        },
-        {
-          "name": "universe",
-          "isMut": false,
-          "isSigner": false
         },
         {
           "name": "systemProgram",
@@ -233,13 +223,13 @@
           "isSigner": false
         },
         {
-          "name": "metaNftMintAta",
+          "name": "userMetaNftAta",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "universe",
-          "isMut": false,
+          "name": "treasuryAuthority",
+          "isMut": true,
           "isSigner": false
         },
         {
@@ -285,6 +275,14 @@
           },
           {
             "name": "payer",
+            "type": "publicKey"
+          },
+          {
+            "name": "universe",
+            "type": "publicKey"
+          },
+          {
+            "name": "treasuryAuthority",
             "type": "publicKey"
           }
         ]
@@ -371,6 +369,38 @@
           }
         ]
       }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "AddCountError",
+      "msg": "Could not add the nft count"
+    },
+    {
+      "code": 6001,
+      "name": "SubCountError",
+      "msg": "Could not sub the nft count"
+    },
+    {
+      "code": 6002,
+      "name": "InvalidSigner",
+      "msg": "Invalid Signer"
+    },
+    {
+      "code": 6003,
+      "name": "Unauthorized",
+      "msg": "Unauthorized to access this instruction"
+    },
+    {
+      "code": 6004,
+      "name": "NoMetadata",
+      "msg": "No Metadata provided for the nft"
+    },
+    {
+      "code": 6005,
+      "name": "InvalidTreasury",
+      "msg": "Invalid treasury account"
     }
   ],
   "metadata": {

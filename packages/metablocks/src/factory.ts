@@ -20,6 +20,9 @@ const programIds = {
   TOKEN_METADATA_PROGRAM_ID: new PublicKey(
     'metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s'
   ),
+  TREASURY_AUTHORITY: new PublicKey(
+    'HmywQA8MbUcYTGGk6E8x6xBmRduvt3UV4HVyCAczimNb'
+  ),
 };
 
 const getProvider = (conn: Connection, wallet: any) => {

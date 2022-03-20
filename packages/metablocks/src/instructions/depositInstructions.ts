@@ -1,4 +1,5 @@
 import * as anchor from '@project-serum/anchor';
+import { PublicKey } from '@solana/web3.js';
 import { programIds } from '../factory';
 import {
   CreateMetaNftArgs,
@@ -138,6 +139,8 @@ export const getDepositNftInstruction = (args: DepositArgs) => {
       systemProgram: anchor.web3.SystemProgram.programId,
       rent: anchor.web3.SYSVAR_RENT_PUBKEY,
       metaNftProgram: programIds.META_NFT_PROGRAM_ID,
+      treasury: args.pdaKeys.treasuryAddress,
+      treasuryAuthority: programIds.TREASURY_AUTHORITY,
     },
   });
 };
@@ -240,10 +243,9 @@ export const getCreateCpiMetaNftInstruction = async (
     accounts: {
       metaBlocksAuthority: args.pdaKeys.metaBlocksAuthority,
       metaNft: args.pdaKeys.metaNft,
-      metaNftMintAta: args.pdaKeys.metaNftMintAta,
+      userMetaNftAta: args.pdaKeys.userMetaNftAta,
       metaNftMint: args.pdaKeys.metaNftMint,
       payer: args.usersKey,
-      universe: args.pdaKeys.universeKey,
       metaNftMetadata: args.pdaKeys.metaNftMetadataAddress,
       metaNftMasterEdition: args.pdaKeys.metaNftMasterEditionAddress,
       metaNftProgram: programIds.META_NFT_PROGRAM_ID,
@@ -275,6 +277,8 @@ export const getInitCpiMetaNftInstruction = (args: InitMetaNftArgs) => {
       tokenProgram: programIds.TOKEN_PROGRAM_ID,
       systemProgram: anchor.web3.SystemProgram.programId,
       rent: anchor.web3.SYSVAR_RENT_PUBKEY,
+      treasury: args.pdaKeys.treasuryAddress,
+      treasuryAuthority: programIds.TREASURY_AUTHORITY,
     },
   });
 };
@@ -282,7 +286,7 @@ export const getInitCpiMetaNftInstruction = (args: InitMetaNftArgs) => {
 export const getInitMetaBlocksAuthorityInstruction = (
   args: InitMetaBlocksAuthorityArgs
 ) => {
-  return args.program.instruction.initMetaBlocksAuthority(
+  return args.program.instruction.initMetaBlocksAuthorityV1(
     {},
     {
       accounts: {

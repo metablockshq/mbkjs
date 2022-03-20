@@ -26,6 +26,11 @@ export type MetaNft = {
           "isSigner": true
         },
         {
+          "name": "treasuryAuthority",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
           "name": "universe",
           "isMut": false,
           "isSigner": false
@@ -69,7 +74,7 @@ export type MetaNft = {
           "isSigner": false
         },
         {
-          "name": "metaNftMintAta",
+          "name": "userMetaNftAta",
           "isMut": true,
           "isSigner": false
         },
@@ -82,11 +87,6 @@ export type MetaNft = {
           "name": "authority",
           "isMut": false,
           "isSigner": true
-        },
-        {
-          "name": "universe",
-          "isMut": false,
-          "isSigner": false
         },
         {
           "name": "systemProgram",
@@ -152,11 +152,6 @@ export type MetaNft = {
           "isSigner": true
         },
         {
-          "name": "universe",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
           "name": "systemProgram",
           "isMut": false,
           "isSigner": false
@@ -188,11 +183,6 @@ export type MetaNft = {
           "name": "authority",
           "isMut": false,
           "isSigner": true
-        },
-        {
-          "name": "universe",
-          "isMut": false,
-          "isSigner": false
         },
         {
           "name": "systemProgram",
@@ -233,13 +223,13 @@ export type MetaNft = {
           "isSigner": false
         },
         {
-          "name": "metaNftMintAta",
+          "name": "userMetaNftAta",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "universe",
-          "isMut": false,
+          "name": "treasuryAuthority",
+          "isMut": true,
           "isSigner": false
         },
         {
@@ -285,6 +275,14 @@ export type MetaNft = {
           },
           {
             "name": "payer",
+            "type": "publicKey"
+          },
+          {
+            "name": "universe",
+            "type": "publicKey"
+          },
+          {
+            "name": "treasuryAuthority",
             "type": "publicKey"
           }
         ]
@@ -371,6 +369,38 @@ export type MetaNft = {
           }
         ]
       }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "AddCountError",
+      "msg": "Could not add the nft count"
+    },
+    {
+      "code": 6001,
+      "name": "SubCountError",
+      "msg": "Could not sub the nft count"
+    },
+    {
+      "code": 6002,
+      "name": "InvalidSigner",
+      "msg": "Invalid Signer"
+    },
+    {
+      "code": 6003,
+      "name": "Unauthorized",
+      "msg": "Unauthorized to access this instruction"
+    },
+    {
+      "code": 6004,
+      "name": "NoMetadata",
+      "msg": "No Metadata provided for the nft"
+    },
+    {
+      "code": 6005,
+      "name": "InvalidTreasury",
+      "msg": "Invalid treasury account"
     }
   ]
 };
@@ -403,6 +433,11 @@ export const IDL: MetaNft = {
           "isSigner": true
         },
         {
+          "name": "treasuryAuthority",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
           "name": "universe",
           "isMut": false,
           "isSigner": false
@@ -446,7 +481,7 @@ export const IDL: MetaNft = {
           "isSigner": false
         },
         {
-          "name": "metaNftMintAta",
+          "name": "userMetaNftAta",
           "isMut": true,
           "isSigner": false
         },
@@ -459,11 +494,6 @@ export const IDL: MetaNft = {
           "name": "authority",
           "isMut": false,
           "isSigner": true
-        },
-        {
-          "name": "universe",
-          "isMut": false,
-          "isSigner": false
         },
         {
           "name": "systemProgram",
@@ -529,11 +559,6 @@ export const IDL: MetaNft = {
           "isSigner": true
         },
         {
-          "name": "universe",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
           "name": "systemProgram",
           "isMut": false,
           "isSigner": false
@@ -565,11 +590,6 @@ export const IDL: MetaNft = {
           "name": "authority",
           "isMut": false,
           "isSigner": true
-        },
-        {
-          "name": "universe",
-          "isMut": false,
-          "isSigner": false
         },
         {
           "name": "systemProgram",
@@ -610,13 +630,13 @@ export const IDL: MetaNft = {
           "isSigner": false
         },
         {
-          "name": "metaNftMintAta",
+          "name": "userMetaNftAta",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "universe",
-          "isMut": false,
+          "name": "treasuryAuthority",
+          "isMut": true,
           "isSigner": false
         },
         {
@@ -662,6 +682,14 @@ export const IDL: MetaNft = {
           },
           {
             "name": "payer",
+            "type": "publicKey"
+          },
+          {
+            "name": "universe",
+            "type": "publicKey"
+          },
+          {
+            "name": "treasuryAuthority",
             "type": "publicKey"
           }
         ]
@@ -748,6 +776,38 @@ export const IDL: MetaNft = {
           }
         ]
       }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "AddCountError",
+      "msg": "Could not add the nft count"
+    },
+    {
+      "code": 6001,
+      "name": "SubCountError",
+      "msg": "Could not sub the nft count"
+    },
+    {
+      "code": 6002,
+      "name": "InvalidSigner",
+      "msg": "Invalid Signer"
+    },
+    {
+      "code": 6003,
+      "name": "Unauthorized",
+      "msg": "Unauthorized to access this instruction"
+    },
+    {
+      "code": 6004,
+      "name": "NoMetadata",
+      "msg": "No Metadata provided for the nft"
+    },
+    {
+      "code": 6005,
+      "name": "InvalidTreasury",
+      "msg": "Invalid treasury account"
     }
   ]
 };
