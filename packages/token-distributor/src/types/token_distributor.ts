@@ -3,7 +3,7 @@ export type TokenDistributor = {
   "name": "token_distributor",
   "instructions": [
     {
-      "name": "initDistributor",
+      "name": "initDistributorV1",
       "accounts": [
         {
           "name": "distributor",
@@ -61,7 +61,7 @@ export type TokenDistributor = {
       ]
     },
     {
-      "name": "claim",
+      "name": "claimV1",
       "accounts": [
         {
           "name": "distributor",
@@ -134,7 +134,7 @@ export type TokenDistributor = {
       ]
     },
     {
-      "name": "transferWlTokens",
+      "name": "transferWlTokensV1",
       "accounts": [
         {
           "name": "authority",
@@ -197,7 +197,7 @@ export type TokenDistributor = {
       ]
     },
     {
-      "name": "delegateWlTokens",
+      "name": "delegateWlTokensV1",
       "accounts": [
         {
           "name": "authority",
@@ -255,7 +255,7 @@ export type TokenDistributor = {
       ]
     },
     {
-      "name": "updateDistributor",
+      "name": "updateDistributorV1",
       "accounts": [
         {
           "name": "distributor",
@@ -539,7 +539,7 @@ export const IDL: TokenDistributor = {
   "name": "token_distributor",
   "instructions": [
     {
-      "name": "initDistributor",
+      "name": "initDistributorV1",
       "accounts": [
         {
           "name": "distributor",
@@ -597,7 +597,7 @@ export const IDL: TokenDistributor = {
       ]
     },
     {
-      "name": "claim",
+      "name": "claimV1",
       "accounts": [
         {
           "name": "distributor",
@@ -670,7 +670,7 @@ export const IDL: TokenDistributor = {
       ]
     },
     {
-      "name": "transferWlTokens",
+      "name": "transferWlTokensV1",
       "accounts": [
         {
           "name": "authority",
@@ -733,7 +733,7 @@ export const IDL: TokenDistributor = {
       ]
     },
     {
-      "name": "delegateWlTokens",
+      "name": "delegateWlTokensV1",
       "accounts": [
         {
           "name": "authority",
@@ -791,7 +791,7 @@ export const IDL: TokenDistributor = {
       ]
     },
     {
-      "name": "updateDistributor",
+      "name": "updateDistributorV1",
       "accounts": [
         {
           "name": "distributor",

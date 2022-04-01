@@ -3,7 +3,7 @@
   "name": "token_distributor",
   "instructions": [
     {
-      "name": "initDistributor",
+      "name": "initDistributorV1",
       "accounts": [
         {
           "name": "distributor",
@@ -61,7 +61,7 @@
       ]
     },
     {
-      "name": "claim",
+      "name": "claimV1",
       "accounts": [
         {
           "name": "distributor",
@@ -134,7 +134,7 @@
       ]
     },
     {
-      "name": "transferWlTokens",
+      "name": "transferWlTokensV1",
       "accounts": [
         {
           "name": "authority",
@@ -197,7 +197,7 @@
       ]
     },
     {
-      "name": "delegateWlTokens",
+      "name": "delegateWlTokensV1",
       "accounts": [
         {
           "name": "authority",
@@ -255,7 +255,7 @@
       ]
     },
     {
-      "name": "updateDistributor",
+      "name": "updateDistributorV1",
       "accounts": [
         {
           "name": "distributor",

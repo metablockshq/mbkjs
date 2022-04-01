@@ -22,7 +22,7 @@ export const getInitTokenDistributorInstruction = async (
   authority: PublicKey
 ) => {
   return await program.methods
-    .initDistributor(args)
+    .initDistributorV1(args)
     .accounts({
       distributor: pdaKeys.distributorAddress,
       tokenWhitelistMint: pdaKeys.tokenWhiteListMintAddress,
@@ -58,7 +58,7 @@ export const getClaimInstruction = async (
   };
 
   return await program.methods
-    .claim(args)
+    .claimV1(args)
     .accounts({
       distributor: pdaKeys.distributorAddress,
       payer: claimPayer,
@@ -89,7 +89,7 @@ export const getTransferTokensInstruction = async (
   );
 
   return await program.methods
-    .transferWlTokens(args)
+    .transferWlTokensV1(args)
     .accounts({
       authority: authority,
       distributor: pdaKeys.distributorAddress,
@@ -113,7 +113,7 @@ export const getDelegateTokensInstruction = async (
   authority: PublicKey
 ) => {
   return await program.methods
-    .delegateWlTokens(args)
+    .delegateWlTokensV1(args)
     .accounts({
       authority: authority,
       distributor: pdaKeys.distributorAddress,
@@ -135,7 +135,7 @@ export const getUpdateDistributorInstruction = async (
   authority: PublicKey
 ) => {
   return await program.methods
-    .updateDistributor(args)
+    .updateDistributorV1(args)
     .accounts({
       distributor: pdaKeys.distributorAddress,
       tokenWhitelistMint: pdaKeys.tokenWhiteListMintAddress,
