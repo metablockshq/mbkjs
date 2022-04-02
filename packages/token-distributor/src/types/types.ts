@@ -9,9 +9,9 @@ export interface InitTokenDistributorArgs {
 }
 
 export interface ClaimArgs {
-  signature: Uint8Array;
-  message: Uint8Array;
-  claimCountBump: number;
+  signature: any;
+  message: any;
+  claimBump: number;
 }
 
 export interface TransferTokensArgs {
@@ -43,7 +43,8 @@ export interface InitTokenDistributorApiArgs extends BasicInputApiArgs {
 }
 
 export interface ClaimApiArgs extends BasicInputApiArgs {
-  signature: Uint8Array;
+  signature: any;
+  message: any;
 }
 
 export interface TransferTokensApiArgs extends BasicInputApiArgs {

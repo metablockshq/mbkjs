@@ -38,23 +38,23 @@ export const getInitTokenDistributorInstruction = async (
 };
 
 export const getClaimInstruction = async (
-  signature: Uint8Array,
-  message: Uint8Array,
+  signature: any,
+  message: any,
   program: Program<any>,
   pdaKeys: PdaKeys,
   claimPayer: PublicKey
 ) => {
-  const [claimantWhitelistAta, _pata] = await findAssociatedAddress(
+  const [claimantWhitelistAta, _] = await findAssociatedAddress(
     claimPayer,
     pdaKeys.tokenWhiteListMintAddress
   );
 
-  const [claimCountAddress, claimCountBump] = await findClaimCount(claimPayer);
+  const [claimCountAddress, claimBump] = await findClaimCount(claimPayer);
 
   const args: ClaimArgs = {
     signature: signature,
     message: message,
-    claimCountBump: claimCountBump,
+    claimBump: claimBump,
   };
 
   return await program.methods

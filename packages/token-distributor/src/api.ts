@@ -62,7 +62,7 @@ const claimV1 = async (args: ClaimApiArgs) => {
 
     const instruction = await getClaimInstruction(
       args.signature,
-      message,
+      args.message,
       program,
       pdaKeys,
       usersKey
