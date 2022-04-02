@@ -60,15 +60,23 @@ const claimV1 = async (args: ClaimApiArgs) => {
 
     const pdaKeys: PdaKeys = await getPdaKeys(usersKey);
 
+    const edInstruction =
+      anchor.web3.Ed25519Program.createInstructionWithPublicKey({
+        message: message,
+        publicKey: args.authority.toBytes(),
+        signature: args.signature,
+      });
+
     const instruction = await getClaimInstruction(
       args.signature,
-      args.message,
+      message,
       program,
       pdaKeys,
       usersKey
     );
 
     const tx = new Transaction();
+    tx.add(edInstruction);
     tx.add(instruction);
     return await program.provider.send(tx, []);
   } catch (err) {

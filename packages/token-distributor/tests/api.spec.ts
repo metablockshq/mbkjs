@@ -55,7 +55,7 @@ describe('Deposit Test cases', () => {
 
     await addSols(program.provider, claimant.publicKey);
 
-    const testMessage = claimantWallet.publicKey.toBytes();
+    const testMessage = claimant.publicKey.toBytes();
 
     const signature = nacl.sign.detached(testMessage, dummyKeypair.secretKey);
 
@@ -63,7 +63,7 @@ describe('Deposit Test cases', () => {
       signature: signature,
       connection: connection,
       wallet: claimantWallet,
-      message: testMessage,
+      authority: dummyKeypair.publicKey,
     };
 
     const tx = await api.claimV1(args);

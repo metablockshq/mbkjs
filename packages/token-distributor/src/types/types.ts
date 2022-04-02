@@ -43,8 +43,8 @@ export interface InitTokenDistributorApiArgs extends BasicInputApiArgs {
 }
 
 export interface ClaimApiArgs extends BasicInputApiArgs {
-  signature: any;
-  message: any;
+  signature: Uint8Array;
+  authority: PublicKey;
 }
 
 export interface TransferTokensApiArgs extends BasicInputApiArgs {

@@ -38,8 +38,8 @@ export const getInitTokenDistributorInstruction = async (
 };
 
 export const getClaimInstruction = async (
-  signature: any,
-  message: any,
+  signature: Uint8Array,
+  message: Uint8Array,
   program: Program<any>,
   pdaKeys: PdaKeys,
   claimPayer: PublicKey
