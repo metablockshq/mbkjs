@@ -1,6 +1,10 @@
 import * as anchor from '@project-serum/anchor';
 import { MintLayout, Token, TOKEN_PROGRAM_ID } from '@solana/spl-token';
-import { SystemProgram, SYSVAR_SLOT_HASHES_PUBKEY } from '@solana/web3.js';
+import {
+  SystemProgram,
+  SYSVAR_SLOT_HASHES_PUBKEY,
+  Transaction,
+} from '@solana/web3.js';
 import {
   createAssociatedTokenAccountInstruction,
   getAtaForMint,
@@ -12,18 +16,19 @@ import {
   getNetworkExpire,
   getNetworkToken,
 } from './accounts';
+import { sendTransactions } from './connection';
 import { CIVIC, TOKEN_METADATA_PROGRAM_ID } from './constants';
-import { CandyMachineAccount, CollectionData } from './types';
+import { CandyMachineAccount, CollectionData, SequenceType } from './types';
 
 import log from 'loglevel';
 
-export const getMintNftInstructionAndSigners = async (
+export const mintOneNft = async (
   candyMachine: CandyMachineAccount,
   payer: anchor.web3.PublicKey
-): Promise<{
-  instructionsMatrix: anchor.web3.TransactionInstruction[][];
-  signersMatrix: anchor.web3.Keypair[][];
-}> => {
+): Promise<(string | undefined)[]> => {
+  const beforeTransactions: Transaction[] = [];
+  const afterTransactions: Transaction[] = [];
+
   const mint = anchor.web3.Keypair.generate();
 
   const userTokenAccountAddress = (
@@ -308,8 +313,25 @@ export const getMintNftInstructionAndSigners = async (
     signersMatrix.push([]);
   }
 
-  return {
-    instructionsMatrix,
-    signersMatrix,
-  };
+  try {
+    return (
+      await sendTransactions(
+        candyMachine.program.provider.connection,
+        candyMachine.program.provider.wallet,
+        instructionsMatrix,
+        signersMatrix,
+        SequenceType.StopOnFailure,
+        'singleGossip',
+        () => {},
+        () => false,
+        undefined,
+        beforeTransactions,
+        afterTransactions
+      )
+    ).txs.map((t: any) => t.txid);
+  } catch (e) {
+    log.info(e);
+  }
+
+  return [];
 };
