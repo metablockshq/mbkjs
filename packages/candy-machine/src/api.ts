@@ -17,7 +17,7 @@ import {
   SequenceType,
 } from './types';
 
-export const getCandyMachineState = async ({
+const getCandyMachineV2State = async ({
   wallet,
   candyMachineId,
   connection,
@@ -54,7 +54,7 @@ export const getCandyMachineState = async ({
   };
 };
 
-export const createCandyMachineV2 = async ({
+const createCandyMachineV2 = async ({
   connection,
   wallet,
   treasuryWallet,
@@ -127,7 +127,7 @@ export const createCandyMachineV2 = async ({
   };
 };
 
-export const mintOneNft = async ({
+const mintOneCandyMachineV2Nft = async ({
   connection,
   wallet,
   candyMachine,
@@ -157,4 +157,10 @@ export const mintOneNft = async ({
   } catch (err) {
     throw err;
   }
+};
+
+export {
+  mintOneCandyMachineV2Nft,
+  createCandyMachineV2,
+  getCandyMachineV2State,
 };
