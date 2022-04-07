@@ -8,6 +8,11 @@ export const CANDY_MACHINE = 'candy_machine';
 export const CANDY_MACHINE_PROGRAM_V2_ID = new PublicKey(
   'cndy3Z4yapfJBmL3ShUp5exZKqR3z33thTzeNMm2gRZ'
 );
+
+// export const CANDY_MACHINE_PROGRAM_V2_ID = new PublicKey(
+//   '7fKpPb1knYxkpKmFFWauVosDyGAuGdXC2tLnM1qB3zLh'
+// );
+
 export const TOKEN_METADATA_PROGRAM_ID = new PublicKey(
   'metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s'
 );

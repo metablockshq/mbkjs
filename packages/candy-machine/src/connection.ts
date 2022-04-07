@@ -34,7 +34,7 @@ export const sendTransactions = async (
   const unsignedTxns: Transaction[] = beforeTransactions;
 
   if (!block) {
-    block = await connection.getLatestBlockhash(commitment);
+    block = await connection.getRecentBlockhash(commitment);
   }
 
   for (let i = 0; i < instructionSet.length; i++) {
@@ -162,13 +162,13 @@ export async function sendSignedTransaction({
       throw new Error('Timed out awaiting confirmation on transaction');
 
     if (confirmation.err) {
-      console.error(confirmation.err);
+      log.error(confirmation.err);
       throw new Error('Transaction failed: Custom instruction error');
     }
 
     slot = confirmation?.slot || 0;
   } catch (err) {
-    console.error('Timeout Error caught', err);
+    log.error('Timeout Error caught', err);
     let errs: any = err;
     if (errs.timeout) {
       throw new Error('Timed out awaiting confirmation on transaction');
@@ -280,7 +280,7 @@ async function awaitTransactionSignatureConfirmation(
       );
     } catch (e) {
       done = true;
-      console.error('WS error in setup', txid, e);
+      log.error('WS error in setup', txid, e);
     }
     while (!done && queryStatus) {
       // eslint-disable-next-line no-loop-func

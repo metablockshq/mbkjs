@@ -1,5 +1,11 @@
 import * as anchor from '@project-serum/anchor';
-import { AccountInfo, Connection, PublicKey } from '@solana/web3.js';
+import {
+  AccountInfo,
+  Blockhash,
+  Connection,
+  FeeCalculator,
+  PublicKey,
+} from '@solana/web3.js';
 
 export interface WhitelistMintMode {
   neverBurn: undefined | boolean;
@@ -109,8 +115,8 @@ export enum SequenceType {
 }
 
 export interface BlockhashAndFeeCalculator {
-  blockhash: string;
-  lastValidBlockHeight: number;
+  blockhash: Blockhash;
+  feeCalculator: FeeCalculator;
 }
 
 // api args
@@ -131,5 +137,5 @@ export interface CreateCandyMachineApiArgs extends BasicApiArgs {
 }
 
 export interface MintNftApiArgs extends BasicApiArgs {
-  candyMachine: CandyMachineAccount;
+  candyMachineId: anchor.web3.PublicKey;
 }
