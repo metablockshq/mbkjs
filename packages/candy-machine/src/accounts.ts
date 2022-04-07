@@ -10,14 +10,16 @@ import * as anchor from '@project-serum/anchor';
 import fs from 'fs';
 import { Program, web3 } from '@project-serum/anchor';
 import log from 'loglevel';
-import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
+import {
+  ASSOCIATED_TOKEN_PROGRAM_ID,
+  TOKEN_PROGRAM_ID,
+} from '@solana/spl-token';
 import {
   CANDY_MACHINE,
   CANDY_MACHINE_PROGRAM_V2_ID,
   CIVIC,
   CONFIG_ARRAY_START_V2,
   CONFIG_LINE_SIZE_V2,
-  SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID,
   TOKEN_METADATA_PROGRAM_ID,
   WRAPPED_SOL_MINT,
 } from './constants';
@@ -34,7 +36,7 @@ export const getTokenWallet = async function (
   return (
     await PublicKey.findProgramAddress(
       [wallet.toBuffer(), TOKEN_PROGRAM_ID.toBuffer(), mint.toBuffer()],
-      SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID
+      ASSOCIATED_TOKEN_PROGRAM_ID
     )
   )[0];
 };
@@ -63,7 +65,7 @@ export const getAtaForMint = async (
 ): Promise<[anchor.web3.PublicKey, number]> => {
   return await anchor.web3.PublicKey.findProgramAddress(
     [buyer.toBuffer(), TOKEN_PROGRAM_ID.toBuffer(), mint.toBuffer()],
-    SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID
+    ASSOCIATED_TOKEN_PROGRAM_ID
   );
 };
 
@@ -298,7 +300,7 @@ export function createAssociatedTokenAccountInstruction(
   ];
   return new TransactionInstruction({
     keys,
-    programId: SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID,
+    programId: ASSOCIATED_TOKEN_PROGRAM_ID,
     data: Buffer.from([]),
   });
 }
