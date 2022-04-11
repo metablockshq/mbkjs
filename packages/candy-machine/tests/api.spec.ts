@@ -103,5 +103,7 @@ describe('Candy Machine Test cases', () => {
     };
 
     const tx = await api.mintOneCandyMachineV2Nft(args);
+
+    console.log(tx);
   });
 });
