@@ -89,17 +89,17 @@ describe('Candy Machine Test cases', () => {
 
     const result = await api.getCandyMachineV2State(args);
 
-    // console.log(result);
+    console.log(result);
   });
 
   it('should mint one token', async () => {
     const args: MintNftApiArgs = {
-      wallet: dummyWallet,
+      wallet: dummyWallet, //payer wallet
       connection: connection,
       candyMachineId:
         candyMachineID != null
           ? new PublicKey(candyMachineID)
-          : dummyKeypair.publicKey,
+          : dummyKeypair.publicKey, // admin public key
     };
 
     const tx = await api.mintOneCandyMachineV2Nft(args);
