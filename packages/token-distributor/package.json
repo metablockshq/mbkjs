@@ -1,6 +1,6 @@
 {
   "name": "@kyraa/token-distributor",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Token whitelist distributor",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
