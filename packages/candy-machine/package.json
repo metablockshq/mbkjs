@@ -1,5 +1,5 @@
 {
-  "name": "candy-machine",
+  "name": "@kyraa/candy-machine",
   "version": "1.0.0",
   "description": "Candy machine bindings",
   "main": "dist/index.js",
