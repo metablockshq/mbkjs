@@ -72,9 +72,9 @@ describe('Candy Machine Test cases', () => {
       splToken: null,
     };
 
-    const { candyMachine, uuid, txId } = await api.createCandyMachineV2(args);
+    const { candyMachineId, uuid, txId } = await api.createCandyMachineV2(args);
     // console.log('CandyMacchine ID', candyMachine.toString());
-    candyMachineID = candyMachine.toString();
+    candyMachineID = candyMachineId.toString();
   });
 
   it('should get candy machine state', async () => {

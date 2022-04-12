@@ -74,7 +74,7 @@ const createCandyMachineV2 = async ({
   splToken,
   candyData,
 }: CreateCandyMachineApiArgs): Promise<{
-  candyMachine: PublicKey;
+  candyMachineId: PublicKey;
   uuid: string;
   txId: string;
 }> => {
@@ -135,7 +135,7 @@ const createCandyMachineV2 = async ({
     }
 
     return {
-      candyMachine: candyAccount.publicKey,
+      candyMachineId: candyAccount.publicKey,
       uuid: candyData.uuid,
       txId: await buildInitializeCandyMachine.rpc(),
     };
