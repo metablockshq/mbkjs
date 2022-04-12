@@ -100,9 +100,9 @@ To mint an NFT you could use the following API. This API is using the whitelist 
 
 2. Now mint the NFT like below
 
-```typescript
-const tx = await api.mintOneCandyMachineV2Nft(args);
-```
+   ```typescript
+   const tx = await api.mintOneCandyMachineV2Nft(args);
+   ```
 
 ## Further Details
 
