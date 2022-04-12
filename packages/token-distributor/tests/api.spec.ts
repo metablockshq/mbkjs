@@ -7,8 +7,6 @@ import NodeWallet, {
   getTestKeypair,
   getTestWallet,
 } from './utils/sdk';
-import { getPdaKeys, PdaKeys } from '../src/pda';
-import { getTokenAccount } from '@project-serum/common';
 import { getTokenDistributorProgram } from '../src/factory';
 import {
   api,
