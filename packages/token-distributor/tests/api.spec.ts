@@ -41,6 +41,7 @@ describe('Deposit Test cases', () => {
       totalTokenAmount: 20000,
       initialAuthorityTokens: 5000,
       userClaimAmount: 1,
+      overallTokenClaimLimit: 500,
     };
     const tx = await api.initTokenDistributorV1(args);
 
@@ -103,6 +104,8 @@ describe('Deposit Test cases', () => {
       totalTokenAmount: 20000,
       userClaimAmount: 1,
       tokenExpiryDate: 1775078246,
+      overallTokenClaimLimit: 200,
+      resetUsersTokensClaimed: true,
     };
 
     const tx = await api.updateDistributorV1(args);

@@ -32,6 +32,7 @@ const initTokenDistributorV1 = async (args: InitTokenDistributorApiArgs) => {
       initialAuthorityTokens: new anchor.BN(args.initialAuthorityTokens),
       userClaimAmount: args.userClaimAmount,
       tokenExpiryDate: new anchor.BN(args.tokenExpiryDate),
+      overallTokenClaimLimit: new anchor.BN(args.overallTokenClaimLimit),
     };
 
     const pdaKeys: PdaKeys = await getPdaKeys(usersKey);
@@ -45,7 +46,7 @@ const initTokenDistributorV1 = async (args: InitTokenDistributorApiArgs) => {
 
     const tx = new Transaction();
     tx.add(instruction);
-    return await program.provider.send(tx, []);
+    return await program.provider.send!(tx, []);
   } catch (err) {
     throw err;
   }
@@ -78,7 +79,7 @@ const claimV1 = async (args: ClaimApiArgs) => {
     const tx = new Transaction();
     tx.add(edInstruction);
     tx.add(instruction);
-    return await program.provider.send(tx, []);
+    return await program.provider.send!(tx, []);
   } catch (err) {
     throw err;
   }
@@ -109,7 +110,7 @@ const transferTokensV1 = async (transferArgs: TransferTokensApiArgs) => {
 
     const tx = new Transaction();
     tx.add(instruction);
-    return await program.provider.send(tx, []);
+    return await program.provider.send!(tx, []);
   } catch (err) {
     throw err;
   }
@@ -137,7 +138,7 @@ const delegateTokensV1 = async (args: DelegateTokensApiArgs) => {
 
     const tx = new Transaction();
     tx.add(instruction);
-    return await program.provider.send(tx, []);
+    return await program.provider.send!(tx, []);
   } catch (err) {
     throw err;
   }
@@ -161,6 +162,14 @@ const updateDistributorV1 = async (args: UpdateDistributorApiArgs) => {
         args.tokenExpiryDate == null
           ? null
           : new anchor.BN(args.tokenExpiryDate),
+      overallTokenClaimLimit:
+        args.overallTokenClaimLimit == null
+          ? null
+          : new anchor.BN(args.overallTokenClaimLimit),
+      resetUsersTokensClaimed:
+        args.resetUsersTokensClaimed == null
+          ? null
+          : args.resetUsersTokensClaimed,
     };
 
     const instruction = await getUpdateDistributorInstruction(
@@ -172,7 +181,7 @@ const updateDistributorV1 = async (args: UpdateDistributorApiArgs) => {
 
     const tx = new Transaction();
     tx.add(instruction);
-    return await program.provider.send(tx, []);
+    return await program.provider.send!(tx, []);
   } catch (err) {
     throw err;
   }
