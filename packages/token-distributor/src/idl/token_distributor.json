@@ -65,7 +65,7 @@
       "accounts": [
         {
           "name": "distributor",
-          "isMut": false,
+          "isMut": true,
           "isSigner": false
         },
         {
@@ -317,48 +317,18 @@
           {
             "name": "signature",
             "type": {
-              "array": [
-                "u8",
-                64
-              ]
+              "array": ["u8", 64]
             }
           },
           {
             "name": "message",
             "type": {
-              "array": [
-                "u8",
-                32
-              ]
+              "array": ["u8", 32]
             }
           },
           {
             "name": "claimBump",
             "type": "u8"
-          }
-        ]
-      }
-    },
-    {
-      "name": "ClaimCount",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "count",
-            "type": "u8"
-          },
-          {
-            "name": "bump",
-            "type": "u8"
-          },
-          {
-            "name": "claimant",
-            "type": "publicKey"
-          },
-          {
-            "name": "tokenWhitelistMint",
-            "type": "publicKey"
           }
         ]
       }
@@ -371,36 +341,6 @@
           {
             "name": "amount",
             "type": "u64"
-          }
-        ]
-      }
-    },
-    {
-      "name": "Distributor",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "distributorBump",
-            "type": "u8"
-          },
-          {
-            "name": "tokenWhitelistMintBump",
-            "type": "u8"
-          },
-          {
-            "name": "tokenWhitelistMint",
-            "type": "publicKey"
-          },
-          {
-            "name": "config",
-            "type": {
-              "defined": "Config"
-            }
-          },
-          {
-            "name": "authority",
-            "type": "publicKey"
           }
         ]
       }
@@ -428,6 +368,12 @@
             "name": "tokenExpiryDate",
             "type": {
               "option": "i64"
+            }
+          },
+          {
+            "name": "overallTokenClaimLimit",
+            "type": {
+              "option": "u64"
             }
           }
         ]
@@ -467,6 +413,72 @@
             "type": {
               "option": "u64"
             }
+          },
+          {
+            "name": "overallTokenClaimLimit",
+            "type": {
+              "option": "u64"
+            }
+          },
+          {
+            "name": "resetUsersTokensClaimed",
+            "type": {
+              "option": "bool"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "ClaimCount",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "count",
+            "type": "u8"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "claimant",
+            "type": "publicKey"
+          },
+          {
+            "name": "tokenWhitelistMint",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Distributor",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "distributorBump",
+            "type": "u8"
+          },
+          {
+            "name": "tokenWhitelistMintBump",
+            "type": "u8"
+          },
+          {
+            "name": "tokenWhitelistMint",
+            "type": "publicKey"
+          },
+          {
+            "name": "config",
+            "type": {
+              "defined": "Config"
+            }
+          },
+          {
+            "name": "authority",
+            "type": "publicKey"
           }
         ]
       }
@@ -485,6 +497,14 @@
           {
             "name": "tokenExpiryDate",
             "type": "i64"
+          },
+          {
+            "name": "overallTokenClaimLimit",
+            "type": "u64"
+          },
+          {
+            "name": "usersTokensClaimed",
+            "type": "u64"
           }
         ]
       }
@@ -530,6 +550,21 @@
       "code": 6007,
       "name": "ClaimExpiryError",
       "msg": "Token whitelist claim time expired"
+    },
+    {
+      "code": 6008,
+      "name": "InstructionsAddressMismatch",
+      "msg": "The sysvar instruction keys must be equal"
+    },
+    {
+      "code": 6009,
+      "name": "InstructionsOwnerMismatch",
+      "msg": "The sysvar instruction owners must be equal"
+    },
+    {
+      "code": 6010,
+      "name": "ClaimLimitReached",
+      "msg": "Total whitelist token claim limit reached"
     }
   ],
   "metadata": {

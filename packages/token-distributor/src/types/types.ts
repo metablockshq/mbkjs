@@ -6,6 +6,7 @@ export interface InitTokenDistributorArgs {
   initialAuthorityTokens: anchor.BN;
   userClaimAmount: number;
   tokenExpiryDate: anchor.BN;
+  overallTokenClaimLimit: anchor.BN;
 }
 
 export interface ClaimArgs {
@@ -26,6 +27,8 @@ export interface UpdateDistributorArgs {
   totalTokenAmount: anchor.BN | null;
   userClaimAmount: number | null;
   tokenExpiryDate: anchor.BN | null;
+  overallTokenClaimLimit: anchor.BN | null;
+  resetUsersTokensClaimed: boolean | null;
 }
 
 // api args
@@ -40,6 +43,7 @@ export interface InitTokenDistributorApiArgs extends BasicInputApiArgs {
   initialAuthorityTokens: number;
   userClaimAmount: number;
   tokenExpiryDate: number;
+  overallTokenClaimLimit: number;
 }
 
 export interface ClaimApiArgs extends BasicInputApiArgs {
@@ -61,4 +65,6 @@ export interface UpdateDistributorApiArgs extends BasicInputApiArgs {
   totalTokenAmount: number | null;
   userClaimAmount: number | null;
   tokenExpiryDate: number | null;
+  overallTokenClaimLimit: number | null;
+  resetUsersTokensClaimed: boolean | null;
 }

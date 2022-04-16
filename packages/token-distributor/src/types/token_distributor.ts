@@ -65,7 +65,7 @@ export type TokenDistributor = {
       "accounts": [
         {
           "name": "distributor",
-          "isMut": false,
+          "isMut": true,
           "isSigner": false
         },
         {
@@ -340,30 +340,6 @@ export type TokenDistributor = {
       }
     },
     {
-      "name": "claimCount",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "count",
-            "type": "u8"
-          },
-          {
-            "name": "bump",
-            "type": "u8"
-          },
-          {
-            "name": "claimant",
-            "type": "publicKey"
-          },
-          {
-            "name": "tokenWhitelistMint",
-            "type": "publicKey"
-          }
-        ]
-      }
-    },
-    {
       "name": "delegateTokensArgs",
       "type": {
         "kind": "struct",
@@ -371,36 +347,6 @@ export type TokenDistributor = {
           {
             "name": "amount",
             "type": "u64"
-          }
-        ]
-      }
-    },
-    {
-      "name": "distributor",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "distributorBump",
-            "type": "u8"
-          },
-          {
-            "name": "tokenWhitelistMintBump",
-            "type": "u8"
-          },
-          {
-            "name": "tokenWhitelistMint",
-            "type": "publicKey"
-          },
-          {
-            "name": "config",
-            "type": {
-              "defined": "Config"
-            }
-          },
-          {
-            "name": "authority",
-            "type": "publicKey"
           }
         ]
       }
@@ -428,6 +374,12 @@ export type TokenDistributor = {
             "name": "tokenExpiryDate",
             "type": {
               "option": "i64"
+            }
+          },
+          {
+            "name": "overallTokenClaimLimit",
+            "type": {
+              "option": "u64"
             }
           }
         ]
@@ -467,6 +419,72 @@ export type TokenDistributor = {
             "type": {
               "option": "u64"
             }
+          },
+          {
+            "name": "overallTokenClaimLimit",
+            "type": {
+              "option": "u64"
+            }
+          },
+          {
+            "name": "resetUsersTokensClaimed",
+            "type": {
+              "option": "bool"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "claimCount",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "count",
+            "type": "u8"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "claimant",
+            "type": "publicKey"
+          },
+          {
+            "name": "tokenWhitelistMint",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "distributor",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "distributorBump",
+            "type": "u8"
+          },
+          {
+            "name": "tokenWhitelistMintBump",
+            "type": "u8"
+          },
+          {
+            "name": "tokenWhitelistMint",
+            "type": "publicKey"
+          },
+          {
+            "name": "config",
+            "type": {
+              "defined": "Config"
+            }
+          },
+          {
+            "name": "authority",
+            "type": "publicKey"
           }
         ]
       }
@@ -485,6 +503,14 @@ export type TokenDistributor = {
           {
             "name": "tokenExpiryDate",
             "type": "i64"
+          },
+          {
+            "name": "overallTokenClaimLimit",
+            "type": "u64"
+          },
+          {
+            "name": "usersTokensClaimed",
+            "type": "u64"
           }
         ]
       }
@@ -530,6 +556,21 @@ export type TokenDistributor = {
       "code": 6007,
       "name": "ClaimExpiryError",
       "msg": "Token whitelist claim time expired"
+    },
+    {
+      "code": 6008,
+      "name": "InstructionsAddressMismatch",
+      "msg": "The sysvar instruction keys must be equal"
+    },
+    {
+      "code": 6009,
+      "name": "InstructionsOwnerMismatch",
+      "msg": "The sysvar instruction owners must be equal"
+    },
+    {
+      "code": 6010,
+      "name": "ClaimLimitReached",
+      "msg": "Total whitelist token claim limit reached"
     }
   ]
 };
@@ -601,7 +642,7 @@ export const IDL: TokenDistributor = {
       "accounts": [
         {
           "name": "distributor",
-          "isMut": false,
+          "isMut": true,
           "isSigner": false
         },
         {
@@ -876,30 +917,6 @@ export const IDL: TokenDistributor = {
       }
     },
     {
-      "name": "claimCount",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "count",
-            "type": "u8"
-          },
-          {
-            "name": "bump",
-            "type": "u8"
-          },
-          {
-            "name": "claimant",
-            "type": "publicKey"
-          },
-          {
-            "name": "tokenWhitelistMint",
-            "type": "publicKey"
-          }
-        ]
-      }
-    },
-    {
       "name": "delegateTokensArgs",
       "type": {
         "kind": "struct",
@@ -907,36 +924,6 @@ export const IDL: TokenDistributor = {
           {
             "name": "amount",
             "type": "u64"
-          }
-        ]
-      }
-    },
-    {
-      "name": "distributor",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "distributorBump",
-            "type": "u8"
-          },
-          {
-            "name": "tokenWhitelistMintBump",
-            "type": "u8"
-          },
-          {
-            "name": "tokenWhitelistMint",
-            "type": "publicKey"
-          },
-          {
-            "name": "config",
-            "type": {
-              "defined": "Config"
-            }
-          },
-          {
-            "name": "authority",
-            "type": "publicKey"
           }
         ]
       }
@@ -964,6 +951,12 @@ export const IDL: TokenDistributor = {
             "name": "tokenExpiryDate",
             "type": {
               "option": "i64"
+            }
+          },
+          {
+            "name": "overallTokenClaimLimit",
+            "type": {
+              "option": "u64"
             }
           }
         ]
@@ -1003,6 +996,72 @@ export const IDL: TokenDistributor = {
             "type": {
               "option": "u64"
             }
+          },
+          {
+            "name": "overallTokenClaimLimit",
+            "type": {
+              "option": "u64"
+            }
+          },
+          {
+            "name": "resetUsersTokensClaimed",
+            "type": {
+              "option": "bool"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "claimCount",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "count",
+            "type": "u8"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "claimant",
+            "type": "publicKey"
+          },
+          {
+            "name": "tokenWhitelistMint",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "distributor",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "distributorBump",
+            "type": "u8"
+          },
+          {
+            "name": "tokenWhitelistMintBump",
+            "type": "u8"
+          },
+          {
+            "name": "tokenWhitelistMint",
+            "type": "publicKey"
+          },
+          {
+            "name": "config",
+            "type": {
+              "defined": "Config"
+            }
+          },
+          {
+            "name": "authority",
+            "type": "publicKey"
           }
         ]
       }
@@ -1021,6 +1080,14 @@ export const IDL: TokenDistributor = {
           {
             "name": "tokenExpiryDate",
             "type": "i64"
+          },
+          {
+            "name": "overallTokenClaimLimit",
+            "type": "u64"
+          },
+          {
+            "name": "usersTokensClaimed",
+            "type": "u64"
           }
         ]
       }
@@ -1066,6 +1133,21 @@ export const IDL: TokenDistributor = {
       "code": 6007,
       "name": "ClaimExpiryError",
       "msg": "Token whitelist claim time expired"
+    },
+    {
+      "code": 6008,
+      "name": "InstructionsAddressMismatch",
+      "msg": "The sysvar instruction keys must be equal"
+    },
+    {
+      "code": 6009,
+      "name": "InstructionsOwnerMismatch",
+      "msg": "The sysvar instruction owners must be equal"
+    },
+    {
+      "code": 6010,
+      "name": "ClaimLimitReached",
+      "msg": "Total whitelist token claim limit reached"
     }
   ]
 };
