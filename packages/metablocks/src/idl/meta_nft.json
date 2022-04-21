@@ -253,43 +253,7 @@
   ],
   "accounts": [
     {
-      "name": "MetaNft",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "nftCounts",
-            "type": "u8"
-          },
-          {
-            "name": "metaNftBump",
-            "type": "u8"
-          },
-          {
-            "name": "metaNftMintBump",
-            "type": "u8"
-          },
-          {
-            "name": "authority",
-            "type": "publicKey"
-          },
-          {
-            "name": "payer",
-            "type": "publicKey"
-          },
-          {
-            "name": "universe",
-            "type": "publicKey"
-          },
-          {
-            "name": "treasuryAuthority",
-            "type": "publicKey"
-          }
-        ]
-      }
-    },
-    {
-      "name": "InitMetaNftArgs",
+      "name": "MetaNftCountArgs",
       "type": {
         "kind": "struct",
         "fields": []
@@ -342,10 +306,46 @@
       }
     },
     {
-      "name": "MetaNftCountArgs",
+      "name": "InitMetaNftArgs",
       "type": {
         "kind": "struct",
         "fields": []
+      }
+    },
+    {
+      "name": "MetaNft",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "nftCounts",
+            "type": "u8"
+          },
+          {
+            "name": "metaNftBump",
+            "type": "u8"
+          },
+          {
+            "name": "metaNftMintBump",
+            "type": "u8"
+          },
+          {
+            "name": "authority",
+            "type": "publicKey"
+          },
+          {
+            "name": "payer",
+            "type": "publicKey"
+          },
+          {
+            "name": "universe",
+            "type": "publicKey"
+          },
+          {
+            "name": "treasuryAuthority",
+            "type": "publicKey"
+          }
+        ]
       }
     }
   ],

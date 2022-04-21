@@ -18,6 +18,15 @@ import {
   createMint,
 } from './accounts';
 
+import * as serumCmn from '@project-serum/common';
+
+export const getTokenAccount = async (
+  provider: any,
+  addr: anchor.web3.PublicKey
+) => {
+  return await serumCmn.getTokenAccount(provider, addr);
+};
+
 export default class NodeWallet implements Wallet {
   constructor(readonly payer: Keypair) {}
 
@@ -126,7 +135,7 @@ export const mintNFT = async (
 
   signers.push(payer);
 
-  await provider.send(transaction, signers);
+  await provider.sendAndConfirm!(transaction, signers);
 
   return {
     mintKey: mintKey,

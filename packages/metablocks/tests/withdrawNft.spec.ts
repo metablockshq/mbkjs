@@ -2,11 +2,15 @@ import { assert } from 'chai';
 import * as anchor from '@project-serum/anchor';
 import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { createUniverse, depositNft, withdrawNft } from '../src/api';
-import NodeWallet, { addSols, CLUSTER_URL, mintNFT } from './utils/sdk';
+import NodeWallet, {
+  addSols,
+  CLUSTER_URL,
+  getTokenAccount,
+  mintNFT,
+} from './utils/sdk';
 import { getMetaBlocksProgram } from '../src/factory';
 import { findUniverseAddress, getPdaKeys, PdaKeys } from '../src/pda';
 import { GroupedDepositNftApiArgs, WithdrawNftApiArgs } from '../src';
-import { getTokenAccount } from '@project-serum/common';
 
 describe('Withdraw Test cases', () => {
   const dummyKeypair = anchor.web3.Keypair.generate();

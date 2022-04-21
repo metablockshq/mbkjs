@@ -34,7 +34,11 @@ import {
   getUpdateReceiptMetadataInstruction,
 } from './instructions/depositInstructions';
 import { getWithdrawNftInstruction } from './instructions/withdrawInstructions';
-import { getTokenAccount } from '@project-serum/common';
+import * as serumCmn from '@project-serum/common';
+
+const getTokenAccount = async (provider: any, addr: PublicKey) => {
+  return await serumCmn.getTokenAccount(provider, addr);
+};
 
 const createUniverse = async (args: UniverseApiArgs) => {
   try {
@@ -54,7 +58,7 @@ const createUniverse = async (args: UniverseApiArgs) => {
     );
     const tx = new Transaction();
     tx.add(createUniverseInstruction);
-    await program.provider.send(tx, []);
+    await program.provider.sendAndConfirm!(tx, []);
 
     return tx;
   } catch (e) {
@@ -80,7 +84,7 @@ const updateUniverse = async (args: UniverseApiArgs) => {
     );
     const tx = new Transaction();
     tx.add(updateUniverseInstruction);
-    await program.provider.send(tx, []);
+    await program.provider.sendAndConfirm!(tx, []);
 
     return tx;
   } catch (e) {
@@ -230,7 +234,7 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
       signers: [],
     });
 
-    const [tx1, tx2, tx3, tx4, tx5, tx6] = await program.provider.sendAll(
+    const [tx1, tx2, tx3, tx4, tx5, tx6] = await program.provider.sendAll!(
       sendTxRequests
     );
 
@@ -304,7 +308,7 @@ const callWithdrawNft = async (
   const transaction = new Transaction();
   transaction.add(withdrawNftInstruction);
 
-  return await program.provider.send(transaction, []);
+  return await program.provider.sendAndConfirm!(transaction, []);
 };
 
 // Get all Universes
