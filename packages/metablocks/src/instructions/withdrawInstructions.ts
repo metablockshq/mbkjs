@@ -2,12 +2,13 @@ import { SystemProgram, SYSVAR_RENT_PUBKEY } from '@solana/web3.js';
 import { programIds } from '../factory';
 import { WithdrawNftArgs } from '../types';
 
-export const getWithdrawNftInstruction = (args: WithdrawNftArgs) => {
+export const getWithdrawNftInstruction = async (args: WithdrawNftArgs) => {
   const withdrawArgs = {};
 
   // withdraw nft
-  return args.program.instruction.withdrawNftV1(withdrawArgs, {
-    accounts: {
+  return await args.program.methods
+    .withdrawNftV1(withdrawArgs)
+    .accounts({
       wrappedUserNft: args.pdaKeys.wrappedUserNft,
       vault: args.pdaKeys.vaultKey,
       authority: args.usersKey,
@@ -29,6 +30,6 @@ export const getWithdrawNftInstruction = (args: WithdrawNftArgs) => {
       metaNftProgram: programIds.META_NFT_PROGRAM_ID,
       treasury: args.pdaKeys.treasuryAddress,
       treasuryAuthority: programIds.TREASURY_AUTHORITY,
-    },
-  });
+    })
+    .instruction();
 };

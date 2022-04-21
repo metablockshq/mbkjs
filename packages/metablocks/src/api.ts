@@ -119,19 +119,19 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
         isReceiptMasterEdition: args.isReceiptMasterEdition,
       });
 
-    const depositNftInstruction = getDepositNftInstruction({
+    const depositNftInstruction = await getDepositNftInstruction({
       pdaKeys: pdaKeys,
       usersKey: usersKey,
       program: program,
     });
 
-    const initDepositInstruction = getInitDepositInstruction({
+    const initDepositInstruction = await getInitDepositInstruction({
       pdaKeys: pdaKeys,
       usersKey: usersKey,
       program: program,
     });
 
-    const initReceiptInstruction = getInitReceiptInstruction({
+    const initReceiptInstruction = await getInitReceiptInstruction({
       pdaKeys: pdaKeys,
       usersKey: usersKey,
       program: program,
@@ -145,14 +145,14 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
       uri: args.metaNftUrl,
     });
 
-    const initMetaNftInstruction = getInitCpiMetaNftInstruction({
+    const initMetaNftInstruction = await getInitCpiMetaNftInstruction({
       pdaKeys: pdaKeys,
       usersKey: usersKey,
       program: program,
     });
 
     const initMetaBlocksAuthorityInstruction =
-      getInitMetaBlocksAuthorityInstruction({
+      await getInitMetaBlocksAuthorityInstruction({
         pdaKeys: pdaKeys,
         usersKey: usersKey,
         program: program,
@@ -296,7 +296,7 @@ const callWithdrawNft = async (
 ) => {
   const pdaKeys: PdaKeys = await getPdaKeys(universeKey, usersKey, mintKey);
 
-  const withdrawNftInstruction = getWithdrawNftInstruction({
+  const withdrawNftInstruction = await getWithdrawNftInstruction({
     program: program,
     usersKey: usersKey,
     pdaKeys: pdaKeys,
