@@ -66,7 +66,7 @@ export interface UniverseArgs {
 
 export type SendTxRequest = {
   tx: Transaction;
-  signers: Array<Signer | undefined>;
+  signers: Signer[];
 };
 
 // Account API interfaces

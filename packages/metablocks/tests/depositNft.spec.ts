@@ -2,7 +2,12 @@ import { assert } from 'chai';
 import * as anchor from '@project-serum/anchor';
 import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { createUniverse, depositNft } from '../src/api';
-import NodeWallet, { addSols, CLUSTER_URL, mintNFT } from './utils/sdk';
+import NodeWallet, {
+  addSols,
+  CLUSTER_URL,
+  getTokenAccount,
+  mintNFT,
+} from './utils/sdk';
 import { getMetaBlocksProgram } from '../src/factory';
 import {
   findReceiptMintAddress,
@@ -12,7 +17,6 @@ import {
   PdaKeys,
 } from '../src/pda';
 import { GroupedDepositNftApiArgs } from '../src';
-import { getTokenAccount } from '@project-serum/common';
 
 describe('Deposit Test cases', () => {
   const dummyKeypair = anchor.web3.Keypair.generate();

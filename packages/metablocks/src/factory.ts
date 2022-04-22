@@ -1,4 +1,4 @@
-import { Program, Provider } from '@project-serum/anchor';
+import { Program, AnchorProvider } from '@project-serum/anchor';
 import { Connection, PublicKey } from '@solana/web3.js';
 import metaBlocksIdl from './idl/meta_blocks.json';
 import metaNftIdl from './idl/meta_nft.json';
@@ -25,15 +25,15 @@ const programIds = {
   ),
 };
 
-const getProvider = (conn: Connection, wallet: any) => {
-  return new Provider(conn, wallet, {
+const getAnchorProvider = (conn: Connection, wallet: any) => {
+  return new AnchorProvider(conn, wallet, {
     preflightCommitment: 'processed',
     skipPreflight: false,
   });
 };
 
 const getMetaBlocksProgram = (conn: Connection, wallet: any) => {
-  const provider = getProvider(conn, wallet);
+  const provider = getAnchorProvider(conn, wallet);
   const program = new Program<any>(
     metaBlocksIdl,
     programIds.META_BLOCKS_PROGRAM_ID,
@@ -43,7 +43,7 @@ const getMetaBlocksProgram = (conn: Connection, wallet: any) => {
 };
 
 const getMetaNftProgram = (conn: Connection, wallet: any) => {
-  const provider = getProvider(conn, wallet);
+  const provider = getAnchorProvider(conn, wallet);
   const program = new Program<any>(
     metaNftIdl,
     programIds.META_NFT_PROGRAM_ID,
@@ -52,4 +52,9 @@ const getMetaNftProgram = (conn: Connection, wallet: any) => {
   return program;
 };
 
-export { getMetaNftProgram, getMetaBlocksProgram, getProvider, programIds };
+export {
+  getMetaNftProgram,
+  getMetaBlocksProgram,
+  getAnchorProvider,
+  programIds,
+};

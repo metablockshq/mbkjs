@@ -17,13 +17,14 @@ const getCreateUniverseInstruction = async (args: UniverseArgs) => {
     websiteUrl: args.websiteUrl,
   };
 
-  return args.program.instruction.createUniverseV1(createUniverseArgs, {
-    accounts: {
+  return await args.program.methods
+    .createUniverseV1(createUniverseArgs)
+    .accounts({
       universe: universeKey,
       authority: args.usersKey,
       systemProgram: SystemProgram.programId,
-    },
-  });
+    })
+    .instruction();
 };
 
 /**
@@ -40,13 +41,14 @@ const getUpdateUniverseInstruction = async (args: UniverseArgs) => {
     websiteUrl: args.websiteUrl,
   };
 
-  return args.program.instruction.updateUniverseV1(updateUniverseArgs, {
-    accounts: {
+  return await args.program.methods
+    .updateUniverseV1(updateUniverseArgs)
+    .accounts({
       universe: universeKey,
       authority: args.usersKey,
       systemProgram: SystemProgram.programId,
-    },
-  });
+    })
+    .instruction();
 };
 
 export { getCreateUniverseInstruction, getUpdateUniverseInstruction };
