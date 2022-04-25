@@ -25,7 +25,7 @@ Below is a how you initialize/update an universe in your code.
 Import Dependencies
 
 ```typescript
-import { createUniverse } from '../src/api';
+import { createUniverse } from '@kyraa/metablocks';
 ```
 
 To create an universe, all you need is below argument to be passed to the `createUniverse` method
@@ -47,7 +47,7 @@ const tx = await createUniverse(args);
 Import dependencies
 
 ```typescript
-import { updateUniverse } from '../src/api';
+import { updateUniverse } from '@kyraa/metablock';
 ```
 
 Similar to the above create universe, update universe is as simple as below `updateUniverse` call
@@ -69,7 +69,7 @@ const tx = await updateUniverse(args);
 Import dependencies
 
 ```typescript
-import { depositNft } from '../src/api';
+import { depositNft } from '@kyraa/metablock';
 ```
 
 Users can deposit their NFTs for upgrading their NFTs, it could be done with `depositNft`.
@@ -100,7 +100,7 @@ await depositNft(args);
 Import the API
 
 ```typescript
-import { depositNft } from '../src/api';
+import { depositNft } from '@kyraa/metablock';
 ```
 
 User could withdraw NFT anytime. The API to withdraw NFT is as simple as the following sample code.
@@ -121,7 +121,7 @@ await withdrawNft(args);
 Import the API
 
 ```typescript
-import { depositNft } from '../src/api';
+import { depositNft } from '@kyraa/metablock';
 ```
 
 NFTs could also be withdraw from MetaBlocks Program using `receiptMint` Publickey
