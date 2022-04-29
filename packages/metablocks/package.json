@@ -33,7 +33,7 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@metaplex-foundation/mpl-token-metadata": "^1.2.4",
     "@project-serum/common": "^0.0.1-beta.3",
     "@project-serum/anchor": "^0.24.2",
