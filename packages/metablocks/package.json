@@ -1,6 +1,6 @@
 {
   "name": "@kyraa/metablocks",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -33,11 +33,12 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "dependencies": {},
-  "devDependencies": {
+  "dependencies": {
     "@metaplex-foundation/mpl-token-metadata": "^1.2.4",
     "@project-serum/anchor": "^0.24.2",
-    "@solana/web3.js": "^1.39.1",
+    "@solana/web3.js": "^1.39.1"
+  },
+  "devDependencies": {
     "@size-limit/preset-small-lib": "^7.0.8",
     "@types/bs58": "^4.0.1",
     "@types/chai": "^4.3.0",
