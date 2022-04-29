@@ -33,13 +33,11 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "@metaplex-foundation/mpl-token-metadata": "^1.2.4",
     "@project-serum/anchor": "^0.24.2",
     "@solana/web3.js": "^1.39.1",
-    "@project-serum/common": "^0.0.1-beta.3"
-  },
-  "devDependencies": {
     "@size-limit/preset-small-lib": "^7.0.8",
     "@types/bs58": "^4.0.1",
     "@types/chai": "^4.3.0",
