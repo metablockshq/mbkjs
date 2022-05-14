@@ -339,10 +339,12 @@ const getWrappedUserNftAccount = async (args: WrappedUserNftArgs) => {
   try {
     const program = getMetaBlocksProgram(args.connection, args.wallet);
 
+    const authority = args.wallet.publicKey;
+
     return await accountApi.getWrappedUserNftForReceiptMint(
       program,
       args.receiptMint,
-      args.authority
+      authority
     );
   } catch (err) {
     throw err;
