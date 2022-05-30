@@ -35,12 +35,12 @@
     ]
   },
   "dependencies": {
-    "@metaplex-foundation/mpl-token-metadata": "^1.2.4",
-    "@project-serum/common": "^0.0.1-beta.3",
-    "@project-serum/anchor": "^0.24.2",
-    "@solana/web3.js": "^1.39.1",
     "@kyraa/metablocks": "0.1.4",
+    "@metaplex-foundation/mpl-token-metadata": "^1.2.4",
+    "@project-serum/anchor": "^0.24.2",
+    "@project-serum/common": "^0.0.1-beta.3",
     "@solana/spl-token": "^0.2.0",
+    "@solana/web3.js": "^1.39.1",
     "cli-progress": "^3.10.0",
     "commander": "^9.1.0",
     "lodash": "^4.17.21",
@@ -56,5 +56,6 @@
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "jest": "^27.5.1",
     "typescript": "^4.6.3"
-  }
+  },
+  "gitHead": "9dd085ac62b832fdae1ea70bad4bb25353d94db5"
 }
