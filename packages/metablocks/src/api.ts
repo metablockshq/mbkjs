@@ -23,6 +23,7 @@ import { Program } from '@project-serum/anchor';
 import { MetaBlocks } from './types/meta_blocks';
 import { LangErrorCode, LangErrorMessage } from './error';
 import { getPdaKeys, PdaKeys } from './pda';
+
 import {
   getCreateCpiMetaNftInstruction,
   getDepositNftInstruction,
@@ -34,10 +35,9 @@ import {
   getUpdateReceiptMetadataInstruction,
 } from './instructions/depositInstructions';
 import { getWithdrawNftInstruction } from './instructions/withdrawInstructions';
-import * as serumCmn from '@project-serum/common';
 
 const getTokenAccount = async (provider: any, addr: PublicKey) => {
-  return await serumCmn.getTokenAccount(provider, addr);
+  return await accountApi.getTokenAccount(provider, addr);
 };
 
 const createUniverse = async (args: UniverseApiArgs) => {
