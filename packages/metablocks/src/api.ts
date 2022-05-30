@@ -116,7 +116,7 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
     const updateReceiptMetadataInstruction =
       await getUpdateReceiptMetadataInstruction({
         uri: args.receiptUrl,
-        name: args.receiptUrl,
+        name: args.receiptName,
         pdaKeys: pdaKeys,
         usersKey: usersKey,
         program: program,
