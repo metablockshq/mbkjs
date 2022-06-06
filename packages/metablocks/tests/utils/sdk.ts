@@ -17,14 +17,13 @@ import {
   createAssociatedTokenAccountInstruction,
   createMint,
 } from './accounts';
-
-import * as serumCmn from '@project-serum/common';
+import { accountsApi } from '../../src';
 
 export const getTokenAccount = async (
   provider: any,
   addr: anchor.web3.PublicKey
 ) => {
-  return await serumCmn.getTokenAccount(provider, addr);
+  return await accountsApi.getTokenAccount(provider, addr);
 };
 
 export default class NodeWallet implements Wallet {
