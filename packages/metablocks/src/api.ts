@@ -35,6 +35,10 @@ import {
   getUpdateReceiptMetadataInstruction,
 } from './instructions/depositInstructions';
 import { getWithdrawNftInstruction } from './instructions/withdrawInstructions';
+import axios from 'axios';
+
+const RECEIPT_URL =
+  'https://ctvymyaq3e.execute-api.ap-south-1.amazonaws.com/Prod/receipt-shortener/';
 
 const getTokenAccount = async (provider: any, addr: PublicKey) => {
   return await accountApi.getTokenAccount(provider, addr);
@@ -351,6 +355,56 @@ const getWrappedUserNftAccount = async (args: WrappedUserNftArgs) => {
   }
 };
 
+const getShortenedReceiptUrl = async (
+  arweaveUrl: string,
+  universeAddress: string,
+  walletAddress: string
+) => {
+  try {
+    const data = {
+      universeAddress: universeAddress,
+      walletAddress: walletAddress,
+      arweaveUrl: arweaveUrl,
+    };
+
+    const result = await axios.post(RECEIPT_URL, data, {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: '*/*',
+      },
+    });
+
+    return result.data;
+  } catch (err) {
+    throw err;
+  }
+};
+
+const getMetaNftShortId = async (
+  arweaveUrl: string,
+  universeAddress: string,
+  walletAddress: string
+) => {
+  try {
+    const data = {
+      universeAddress: universeAddress,
+      walletAddress: walletAddress,
+      metaNftUrl: arweaveUrl,
+    };
+
+    const result = await axios.post(RECEIPT_URL, data, {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: '*/*',
+      },
+    });
+
+    return result.data;
+  } catch (err) {
+    throw err;
+  }
+};
+
 export {
   createUniverse,
   updateUniverse,
@@ -361,4 +415,6 @@ export {
   getMetadataForMint,
   getWrappedUserNftAccount,
   withdrawNftWithReceipt,
+  getShortenedReceiptUrl,
+  getMetaNftShortId,
 };
