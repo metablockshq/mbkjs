@@ -38,7 +38,7 @@ import { getWithdrawNftInstruction } from './instructions/withdrawInstructions';
 import axios from 'axios';
 
 const RECEIPT_URL =
-  'https://ctvymyaq3e.execute-api.ap-south-1.amazonaws.com/Prod/receipt-shortener/';
+  'https://ctvymyaq3e.execute-api.ap-south-1.amazonaws.com/Prod/receipt-shortener';
 
 const getTokenAccount = async (provider: any, addr: PublicKey) => {
   return await accountApi.getTokenAccount(provider, addr);
@@ -355,22 +355,22 @@ const getWrappedUserNftAccount = async (args: WrappedUserNftArgs) => {
   }
 };
 
-const getShortenedReceiptUrl = async (
-  arweaveUrl: string,
-  universeAddress: string,
-  walletAddress: string
-) => {
+const getShortenedReceiptUrl = async (args: {
+  arweaveUrl: string;
+  universeAddress: string;
+  walletAddress: string;
+}) => {
   try {
     const data = {
-      universeAddress: universeAddress,
-      walletAddress: walletAddress,
-      arweaveUrl: arweaveUrl,
+      universeAddress: args.universeAddress,
+      walletAddress: args.walletAddress,
+      arweaveUrl: args.arweaveUrl,
     };
 
     const result = await axios.post(RECEIPT_URL, data, {
       headers: {
         'Content-Type': 'application/json',
-        Accept: '*/*',
+        Accept: 'application/json',
       },
     });
 
@@ -380,22 +380,22 @@ const getShortenedReceiptUrl = async (
   }
 };
 
-const getMetaNftShortId = async (
-  arweaveUrl: string,
-  universeAddress: string,
-  walletAddress: string
-) => {
+const getMetaNftShortId = async (args: {
+  arweaveUrl: string;
+  universeAddress: string;
+  walletAddress: string;
+}) => {
   try {
     const data = {
-      universeAddress: universeAddress,
-      walletAddress: walletAddress,
-      metaNftUrl: arweaveUrl,
+      universeAddress: args.universeAddress,
+      walletAddress: args.walletAddress,
+      metaNftUrl: args.arweaveUrl,
     };
 
     const result = await axios.post(RECEIPT_URL, data, {
       headers: {
         'Content-Type': 'application/json',
-        Accept: '*/*',
+        Accept: 'application/json',
       },
     });
 
