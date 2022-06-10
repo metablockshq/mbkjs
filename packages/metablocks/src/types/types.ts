@@ -246,3 +246,39 @@ export interface InitMetaNftArgs extends BasicInstructionArgs {}
 export interface InitMetaBlocksAuthorityArgs extends BasicInstructionArgs {}
 
 export interface WithdrawNftArgs extends BasicInstructionArgs {}
+
+export interface SupabaseWrappedUserNft {
+  account: string;
+  userNftBump: number;
+  nftAuthority: string;
+  universe: string;
+  vaultAuthority: string;
+  userReceiptAtaBump: number;
+  receiptMint: string;
+  userReceiptAta: string;
+  vaultReceiptAta: string;
+  tokenMint: string;
+  receiptMasterEdition: string;
+  isReceiptMasterEdition: boolean | null;
+  isUserNftVerified: boolean;
+  isUserNftMetaplex: boolean;
+  slot: number | undefined | null;
+  signature: string | undefined | null;
+  blockTime: number | undefined | null;
+  mark?: boolean;
+  sweep?: boolean;
+}
+
+export interface SupabaseUniverse {
+  account: string;
+  bump: number;
+  lastUpdateTs: number;
+  authority: string;
+  name: string;
+  description: string;
+  websiteUrl: string;
+  totalNfts: number;
+  slot: number | undefined | null;
+  signature: string | undefined | null;
+  blockTime: number | undefined | null;
+}
