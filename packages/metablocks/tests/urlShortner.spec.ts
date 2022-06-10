@@ -28,9 +28,14 @@ describe('Test URL shortners', () => {
       });
       //console.log(result.meta_blocks.short_id);
 
-      assert.isOk(result.meta_blocks.short_id.length > 0);
-    } catch (err) {
-      console.log(err);
+      assert.isOk(result.meta_blocks.shortId.length > 0);
+    } catch (err: any) {
+      if (err.response) {
+        console.log(err.response.data);
+        expect(err.response.data.error).toBe(
+          'shortId already exists for this universeAddress + walletAddress pair'
+        );
+      }
     }
   });
 });

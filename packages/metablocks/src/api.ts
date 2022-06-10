@@ -365,6 +365,7 @@ const getShortenedReceiptUrl = async (args: {
       universeAddress: args.universeAddress,
       walletAddress: args.walletAddress,
       arweaveUrl: args.arweaveUrl,
+      type: 'receipt',
     };
 
     const result = await axios.post(RECEIPT_URL, data, {
@@ -389,7 +390,7 @@ const getMetaNftShortId = async (args: {
     const data = {
       universeAddress: args.universeAddress,
       walletAddress: args.walletAddress,
-      metaNftUrl: args.arweaveUrl,
+      type: 'metanft',
     };
 
     const result = await axios.post(RECEIPT_URL, data, {
