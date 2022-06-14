@@ -64,7 +64,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "84c8ae647abbf943c8920229e55a62c725024c5f",
+  "gitHead": "b772b330cdba3ef07df96ba3117eb243faf9d827",
   "dependencies": {
     "@supabase/supabase-js": "^1.35.3"
   }

@@ -11,5 +11,8 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "changed": "lerna changed"
+  },
+  "dependencies": {
+    "tsdx": "^0.14.1"
   }
 }
