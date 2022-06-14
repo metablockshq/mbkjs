@@ -157,9 +157,7 @@ export async function getTokenAccount(
   addr: anchor.web3.PublicKey
 ): Promise<AccountInfo> {
   let depositorAccInfo = await provider.connection.getAccountInfo(addr);
-  if (depositorAccInfo === null) {
-    throw new Error('Failed to find token account');
-  }
+  //@ts-ignore
   return parseTokenAccount(depositorAccInfo.data);
 }
 
