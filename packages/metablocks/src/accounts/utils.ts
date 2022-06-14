@@ -151,7 +151,7 @@ const getDeserializedAccount = (
     throw new Error('Could not deserialize the account');
   }
 };
-
+//get token account
 export async function getTokenAccount(
   provider: anchor.Provider,
   addr: anchor.web3.PublicKey
