@@ -36,6 +36,7 @@ import {
 } from './instructions/depositInstructions';
 import { getWithdrawNftInstruction } from './instructions/withdrawInstructions';
 import axios from 'axios';
+import { supabaseClient } from './supabase-client';
 
 const RECEIPT_URL =
   'https://ctvymyaq3e.execute-api.ap-south-1.amazonaws.com/Prod/receipt-shortener';
@@ -406,6 +407,62 @@ const getMetaNftShortId = async (args: {
   }
 };
 
+/**
+ *
+ * @param wallet - user's wallet address in string
+ * @returns all wrapped user nfts of an user from supabase
+ */
+const getStoredWrappedUserNftAccounts = async (args: {
+  wallet: string;
+  universe: string;
+}) => {
+  try {
+    return (await supabaseClient.getWrappedUserNfts(
+      args.wallet,
+      args.universe
+    ))!;
+  } catch (err) {
+    throw err;
+  }
+};
+
+/**
+ *
+ * @param wallet - user's wallet address in string
+ * @returns universes created by user(any wallet) from supabase
+ */
+const getStoredUniverseAccounts = async (args: { wallet: string }) => {
+  try {
+    return (await supabaseClient.getUniverses(args.wallet))!;
+  } catch (err) {
+    throw err;
+  }
+};
+
+/**
+ *
+ * @returns all supabase stored wrapped user nfts
+ */
+const getAllStoredWrappedUserNftAccounts = async () => {
+  try {
+    return (await supabaseClient.getAllWrappedUserNfts())!;
+  } catch (err) {
+    throw err;
+  }
+};
+
+/**
+ *
+ * @returns all universes stored in supabase
+ */
+const getAllStoredUniverseAccounts = async () => {
+  try {
+    return (await supabaseClient.getAllUniverses())!;
+  } catch (err) {
+    throw err;
+  }
+};
+
 export {
   createUniverse,
   updateUniverse,
@@ -418,4 +475,8 @@ export {
   withdrawNftWithReceipt,
   getShortenedReceiptUrl,
   getMetaNftShortId,
+  getStoredWrappedUserNftAccounts,
+  getStoredUniverseAccounts,
+  getAllStoredWrappedUserNftAccounts,
+  getAllStoredUniverseAccounts,
 };
