@@ -161,6 +161,13 @@ export async function getTokenAccount(
   return parseTokenAccount(depositorAccInfo.data);
 }
 
+export async function getRawTokenAccount(
+  provider: anchor.Provider,
+  addr: anchor.web3.PublicKey
+): Promise<anchor.web3.AccountInfo<Buffer> | null> {
+  return await provider.connection.getAccountInfo(addr);
+}
+
 export function parseTokenAccount(data: Buffer): AccountInfo {
   const accountInfo = AccountLayout.decode(data);
   accountInfo.mint = new anchor.web3.PublicKey(accountInfo.mint);
