@@ -1,6 +1,6 @@
 {
   "name": "@kyraa/metablocks",
-  "version": "0.1.18",
+  "version": "0.1.22",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -64,7 +64,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "b772b330cdba3ef07df96ba3117eb243faf9d827",
+  "gitHead": "303d7cd33ef0a5b90262bd7a5cf9590f31a6d2c4",
   "dependencies": {
     "@supabase/supabase-js": "^1.35.3"
   }

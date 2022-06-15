@@ -151,7 +151,7 @@ const getDeserializedAccount = (
     throw new Error('Could not deserialize the account');
   }
 };
-
+//get token account
 export async function getTokenAccount(
   provider: anchor.Provider,
   addr: anchor.web3.PublicKey
@@ -159,6 +159,13 @@ export async function getTokenAccount(
   let depositorAccInfo = await provider.connection.getAccountInfo(addr);
   //@ts-ignore
   return parseTokenAccount(depositorAccInfo.data);
+}
+//get raw token
+export async function getRawTokenAccount(
+  provider: anchor.Provider,
+  addr: anchor.web3.PublicKey
+): Promise<anchor.web3.AccountInfo<Buffer> | null> {
+  return await provider.connection.getAccountInfo(addr);
 }
 
 export function parseTokenAccount(data: Buffer): AccountInfo {

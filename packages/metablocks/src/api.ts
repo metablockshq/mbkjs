@@ -37,6 +37,7 @@ import {
 import { getWithdrawNftInstruction } from './instructions/withdrawInstructions';
 import axios from 'axios';
 import { supabaseClient } from './supabase-client';
+import { getRawTokenAccount } from './accounts';
 
 const RECEIPT_URL =
   'https://ctvymyaq3e.execute-api.ap-south-1.amazonaws.com/Prod/receipt-shortener';
@@ -192,16 +193,16 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
     }
     // transaction 2
     const transaction2 = new Transaction();
-    try {
-      await getTokenAccount(program.provider, pdaKeys.userMetaNftAta);
-    } catch (err) {
+    const accountInfo = await getRawTokenAccount(
+      program.provider,
+      pdaKeys.userMetaNftAta
+    );
+    if (accountInfo === null) {
       transaction2.add(createCpiMetaNftInstruction);
-      if (transaction2.instructions.length > 0) {
-        sendTxRequests.push({
-          tx: transaction2,
-          signers: [],
-        });
-      }
+      sendTxRequests.push({
+        tx: transaction2,
+        signers: [],
+      });
     }
 
     // transaction 3
