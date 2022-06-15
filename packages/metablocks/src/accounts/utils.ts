@@ -160,7 +160,7 @@ export async function getTokenAccount(
   //@ts-ignore
   return parseTokenAccount(depositorAccInfo.data);
 }
-
+//get raw token
 export async function getRawTokenAccount(
   provider: anchor.Provider,
   addr: anchor.web3.PublicKey
