@@ -82,6 +82,13 @@ export const sendTransactions = async (
     'vs handed in length',
     instructionSet.length
   );
+
+  console.info(
+    'Signed txns length',
+    signedTxns.length,
+    'vs handed in length',
+    instructionSet.length
+  );
   for (let i = 0; i < signedTxns.length; i++) {
     const signedTxnPromise = sendSignedTransaction({
       connection,
@@ -95,6 +102,9 @@ export const sendTransactions = async (
       } catch (e) {
         log.info('Failed at txn index:', i);
         log.info('Caught failure:', e);
+
+        console.info('Failed at txn index:', i);
+        console.info('Caught failure:', e);
 
         failCallback(signedTxns[i], i);
         if (sequenceType === SequenceType.StopOnFailure) {
@@ -167,6 +177,7 @@ export async function sendSignedTransaction({
 
     if (confirmation.err) {
       log.error(confirmation.err);
+      console.error(confirmation.err);
       throw new Error('Transaction failed: Custom instruction error');
     }
 
@@ -262,6 +273,7 @@ async function awaitTransactionSignatureConfirmation(
       }
       done = true;
       log.info('Rejecting for timeout...');
+      console.info('Rejecting for timeout...');
       reject({ timeout: true });
     }, timeout);
     try {
@@ -276,9 +288,11 @@ async function awaitTransactionSignatureConfirmation(
           };
           if (result.err) {
             log.info('Rejected via websocket', result.err);
+            console.info('Rejected via websocket', result.err);
             reject(status);
           } else {
             log.info('Resolved via websocket', result);
+            console.info('Resolved via websocket', result);
             resolve(status);
           }
         },
@@ -287,6 +301,7 @@ async function awaitTransactionSignatureConfirmation(
     } catch (e) {
       done = true;
       log.error('WS error in setup', txid, e);
+      console.error('WS error in setup', txid, e);
     }
     while (!done && queryStatus) {
       // eslint-disable-next-line no-loop-func
@@ -299,14 +314,18 @@ async function awaitTransactionSignatureConfirmation(
           if (!done) {
             if (!status) {
               log.info('REST null result for', txid, status);
+              console.info('REST null result for', txid, status);
             } else if (status.err) {
               log.info('REST error for', txid, status);
+              console.info('REST error for', txid, status);
               done = true;
               reject(status.err);
             } else if (!status.confirmations) {
               log.info('REST no confirmations for', txid, status);
+              console.info('REST no confirmations for', txid, status);
             } else {
               log.info('REST confirmation for', txid, status);
+              console.info('REST confirmation for', txid, status);
               done = true;
               resolve(status);
             }
@@ -314,6 +333,7 @@ async function awaitTransactionSignatureConfirmation(
         } catch (e) {
           if (!done) {
             log.info('REST connection error: txid', txid, e);
+            console.info('REST connection error: txid', txid, e);
           }
         }
       })();
@@ -326,5 +346,6 @@ async function awaitTransactionSignatureConfirmation(
     connection.removeSignatureListener(subId);
   done = true;
   log.info('Returning status', status);
+  console.info('Returning status', status);
   return status;
 }
