@@ -24,7 +24,8 @@ import {
 import { getRawTokenAccount } from './accounts';
 import { sendTransactions } from './accounts/transaction';
 
-const depositNft = async (args: GroupedDepositNftApiArgs) => {
+const depositNftV1 = async (args: GroupedDepositNftApiArgs) => {
+  console.log('New Deposit api');
   try {
     const program = getMetaBlocksProgram(args.connection, args.wallet);
     const metaNftProgram = getMetaNftProgram(args.connection, args.wallet);
@@ -178,4 +179,4 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
   }
 };
 
-export { depositNft };
+export { depositNftV1 };

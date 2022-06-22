@@ -38,7 +38,7 @@ import { getWithdrawNftInstruction } from './instructions/withdrawInstructions';
 import axios from 'axios';
 import { supabaseClient } from './supabase-client';
 import { getRawTokenAccount } from './accounts';
-import { depositNft } from './deposit-nft';
+import { depositNftV1 } from './deposit-nft';
 
 const RECEIPT_URL =
   'https://ctvymyaq3e.execute-api.ap-south-1.amazonaws.com/Prod/receipt-shortener';
@@ -99,7 +99,7 @@ const updateUniverse = async (args: UniverseApiArgs) => {
   }
 };
 
-const depositNftOld = async (args: GroupedDepositNftApiArgs) => {
+const depositNft = async (args: GroupedDepositNftApiArgs) => {
   try {
     const sendTxRequests: Array<SendTxRequest> = [];
 
@@ -481,4 +481,5 @@ export {
   getStoredUniverseAccounts,
   getAllStoredWrappedUserNftAccounts,
   getAllStoredUniverseAccounts,
+  depositNftV1,
 };
