@@ -50,10 +50,17 @@ export const sendTransactions = async (
     let transaction = new Transaction();
     instructions.forEach((instruction) => transaction.add(instruction));
     transaction.recentBlockhash = block.blockhash;
+
+    const transactionSigners = [];
+
+    if (signers.length > 0) {
+      transactionSigners.push(...signers?.map((s) => s.publicKey));
+    }
+    transactionSigners.push(wallet.publicKey);
+
     transaction.setSigners(
       // fee payed by the wallet owner
-      wallet.publicKey,
-      ...signers?.map((s) => s.publicKey)
+      ...transactionSigners
     );
 
     if (signers.length > 0) {
