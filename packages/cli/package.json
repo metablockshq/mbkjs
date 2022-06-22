@@ -58,7 +58,5 @@
     "typescript": "^4.6.3"
   },
   "gitHead": "462db7bc4304460657d4c10f1c6acff182a1928f",
-  "publishConfig": {
-    "access": "public"
-  }
+  "private": true
 }
