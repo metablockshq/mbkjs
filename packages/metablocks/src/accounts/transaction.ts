@@ -53,7 +53,7 @@ export const sendTransactions = async (
 
     const transactionSigners = [];
 
-    if (signers && signers.length > 0) {
+    if ((signers !== undefined || signers !== null) && signers.length > 0) {
       transactionSigners.push(...signers?.map((s) => s.publicKey));
     }
     transactionSigners.push(wallet.publicKey);
