@@ -113,62 +113,6 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
       args.mintKey
     );
 
-    const transferReceiptNftInstruction =
-      await getTransferReceiptNftInstruction({
-        pdaKeys: pdaKeys,
-        usersKey: usersKey,
-        program: program,
-      });
-
-    const updateReceiptMetadataInstruction =
-      await getUpdateReceiptMetadataInstruction({
-        uri: args.receiptUrl,
-        name: args.receiptName,
-        pdaKeys: pdaKeys,
-        usersKey: usersKey,
-        program: program,
-        isReceiptMasterEdition: args.isReceiptMasterEdition,
-      });
-
-    const depositNftInstruction = await getDepositNftInstruction({
-      pdaKeys: pdaKeys,
-      usersKey: usersKey,
-      program: program,
-    });
-
-    const initDepositInstruction = await getInitDepositInstruction({
-      pdaKeys: pdaKeys,
-      usersKey: usersKey,
-      program: program,
-    });
-
-    const initReceiptInstruction = await getInitReceiptInstruction({
-      pdaKeys: pdaKeys,
-      usersKey: usersKey,
-      program: program,
-    });
-
-    const createCpiMetaNftInstruction = await getCreateCpiMetaNftInstruction({
-      pdaKeys: pdaKeys,
-      usersKey: usersKey,
-      program: program,
-      name: args.metaNftName,
-      uri: args.metaNftUrl,
-    });
-
-    const initMetaNftInstruction = await getInitCpiMetaNftInstruction({
-      pdaKeys: pdaKeys,
-      usersKey: usersKey,
-      program: program,
-    });
-
-    const initMetaBlocksAuthorityInstruction =
-      await getInitMetaBlocksAuthorityInstruction({
-        pdaKeys: pdaKeys,
-        usersKey: usersKey,
-        program: program,
-      });
-
     // transaction 1
     const transaction1 = new Transaction();
 
@@ -177,33 +121,39 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
         pdaKeys.metaBlocksAuthority
       );
     } catch (err) {
+      const initMetaBlocksAuthorityInstruction =
+        await getInitMetaBlocksAuthorityInstruction({
+          pdaKeys: pdaKeys,
+          usersKey: usersKey,
+          program: program,
+        });
       transaction1.add(initMetaBlocksAuthorityInstruction);
     }
 
     try {
       await metaNftProgram.account.metaNft.fetch(pdaKeys.metaNft);
     } catch (err) {
+      const initMetaNftInstruction = await getInitCpiMetaNftInstruction({
+        pdaKeys: pdaKeys,
+        usersKey: usersKey,
+        program: program,
+      });
       transaction1.add(initMetaNftInstruction);
     }
 
-    // if (transaction1.instructions.length > 0) {
-    //   sendTxRequests.push({
-    //     tx: transaction1,
-    //     signers: [],
-    //   });
-    // }
-    // transaction 2
-    // const transaction2 = new Transaction();
     const accountInfo = await getRawTokenAccount(
       program.provider,
       pdaKeys.userMetaNftAta
     );
     if (accountInfo === null) {
+      const createCpiMetaNftInstruction = await getCreateCpiMetaNftInstruction({
+        pdaKeys: pdaKeys,
+        usersKey: usersKey,
+        program: program,
+        name: args.metaNftName,
+        uri: args.metaNftUrl,
+      });
       transaction1.add(createCpiMetaNftInstruction);
-      // sendTxRequests.push({
-      //   tx: transaction2,
-      //   signers: [],
-      // });
     }
 
     if (transaction1.instructions.length > 0) {
@@ -213,44 +163,57 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
       });
     }
 
-    // transaction 3
-    const transaction3 = new Transaction();
-    transaction3.add(initReceiptInstruction);
-    transaction3.add(initDepositInstruction);
-    transaction3.add(depositNftInstruction);
-    transaction3.add(updateReceiptMetadataInstruction);
-    transaction3.add(transferReceiptNftInstruction);
+    // transaction 2
+    const transaction2 = new Transaction();
+    // initReceiptInstruction
+    const initReceiptInstruction = await getInitReceiptInstruction({
+      pdaKeys: pdaKeys,
+      usersKey: usersKey,
+      program: program,
+    });
+    transaction2.add(initReceiptInstruction);
+
+    //initDepositInstruction
+    const initDepositInstruction = await getInitDepositInstruction({
+      pdaKeys: pdaKeys,
+      usersKey: usersKey,
+      program: program,
+    });
+    transaction2.add(initDepositInstruction);
+
+    //depositNftInstruction
+    const depositNftInstruction = await getDepositNftInstruction({
+      pdaKeys: pdaKeys,
+      usersKey: usersKey,
+      program: program,
+    });
+    transaction2.add(depositNftInstruction);
+
+    //updateReceiptMetadataInstruction
+    const updateReceiptMetadataInstruction =
+      await getUpdateReceiptMetadataInstruction({
+        uri: args.receiptUrl,
+        name: args.receiptName,
+        pdaKeys: pdaKeys,
+        usersKey: usersKey,
+        program: program,
+        isReceiptMasterEdition: args.isReceiptMasterEdition,
+      });
+    transaction2.add(updateReceiptMetadataInstruction);
+
+    // transferReceiptNftInstruction
+    const transferReceiptNftInstruction =
+      await getTransferReceiptNftInstruction({
+        pdaKeys: pdaKeys,
+        usersKey: usersKey,
+        program: program,
+      });
+    transaction2.add(transferReceiptNftInstruction);
+
     sendTxRequests.push({
-      tx: transaction3,
+      tx: transaction2,
       signers: [],
     });
-
-    // transaction 4
-    //const transaction4 = new Transaction();
-    // transaction4.add(depositNftInstruction);
-    // transaction4.add(updateReceiptMetadataInstruction);
-    // transaction4.add(transferReceiptNftInstruction);
-    // sendTxRequests.push({
-    //   tx: transaction4,
-    //   signers: [],
-    // });
-
-    // transaction 5
-    //const transaction5 = new Transaction();
-    // transaction5.add(updateReceiptMetadataInstruction);
-    // transaction5.add(transferReceiptNftInstruction);
-    // sendTxRequests.push({
-    //   tx: transaction5,
-    //   signers: [],
-    // });
-
-    // transaction 6
-    // const transaction6 = new Transaction();
-    // transaction6.add(transferReceiptNftInstruction);
-    // sendTxRequests.push({
-    //   tx: transaction6,
-    //   signers: [],
-    // });
 
     console.log('Sending transactions ::', Date.now());
     const [tx1, tx2] = await program.provider.sendAll!(sendTxRequests);
