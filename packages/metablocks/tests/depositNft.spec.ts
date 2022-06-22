@@ -35,13 +35,13 @@ describe('Deposit Test cases', () => {
     await addSols(
       program.provider,
       dummyKeypair.publicKey,
-      2 * LAMPORTS_PER_SOL
+      1 * LAMPORTS_PER_SOL
     );
 
     await addSols(
       program.provider,
       fakeUniverseAuthority.publicKey,
-      2 * LAMPORTS_PER_SOL
+      1 * LAMPORTS_PER_SOL
     );
 
     const { mintKey, nftAta } = await mintNFT(

@@ -1,5 +1,12 @@
 import { Program } from '@project-serum/anchor';
-import { Connection, PublicKey, Signer, Transaction } from '@solana/web3.js';
+import {
+  Blockhash,
+  Connection,
+  FeeCalculator,
+  PublicKey,
+  Signer,
+  Transaction,
+} from '@solana/web3.js';
 import { MetaBlocks } from './meta_blocks';
 import * as borsh from '@project-serum/borsh';
 import { PdaKeys } from '../pda';
@@ -281,4 +288,15 @@ export interface SupabaseUniverse {
   slot: number | undefined | null;
   signature: string | undefined | null;
   blockTime: number | undefined | null;
+}
+
+export enum SequenceType {
+  Sequential,
+  Parallel,
+  StopOnFailure,
+}
+
+export interface BlockhashAndFeeCalculator {
+  blockhash: Blockhash;
+  feeCalculator: FeeCalculator;
 }

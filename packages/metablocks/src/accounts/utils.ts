@@ -206,6 +206,14 @@ export function parseTokenAccount(data: Buffer): AccountInfo {
   return accountInfo;
 }
 
+const getUnixTs = () => {
+  return new Date().getTime() / 1000;
+};
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export {
   camelToSnakeCase,
   camelToSnakeCaseArrayObject,
@@ -215,4 +223,6 @@ export {
   getPubkeyFromUnit8Array,
   getNullableAccountInfoBuffer,
   getDeserializedAccount,
+  getUnixTs,
+  sleep,
 };

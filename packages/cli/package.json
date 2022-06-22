@@ -57,5 +57,6 @@
     "jest": "^27.5.1",
     "typescript": "^4.6.3"
   },
-  "gitHead": "303d7cd33ef0a5b90262bd7a5cf9590f31a6d2c4"
+  "gitHead": "462db7bc4304460657d4c10f1c6acff182a1928f",
+  "private": true
 }
