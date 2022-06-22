@@ -41,7 +41,7 @@ export const sendTransactions = async (
 
   for (let i = 0; i < instructionSet.length; i++) {
     const instructions = instructionSet[i];
-    //const signers = signersSet[i];
+    const signers = signersSet[i];
 
     if (instructions.length === 0) {
       continue;
@@ -52,8 +52,8 @@ export const sendTransactions = async (
     transaction.recentBlockhash = block.blockhash;
     transaction.setSigners(
       // fee payed by the wallet owner
-      wallet.publicKey
-      // ...signers.map((s) => s.publicKey)
+      wallet.publicKey,
+      ...signers?.map((s) => s.publicKey)
     );
 
     // if (signers.length > 0) {
