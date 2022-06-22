@@ -1,4 +1,4 @@
-import { getMetaBlocksProgram, getMetaNftProgram } from './factory';
+import { getMetaBlocksProgram } from './factory';
 import { Connection, PublicKey, Transaction } from '@solana/web3.js';
 import {
   getCreateUniverseInstruction,
@@ -6,8 +6,6 @@ import {
 } from './instructions/universeInstructions';
 import {
   FetchAccountArgs,
-  GroupedDepositNftApiArgs,
-  SendTxRequest,
   UniverseApiArgs,
   UniverseArgs,
   UserNftFilterArgs,
@@ -38,7 +36,7 @@ import { getWithdrawNftInstruction } from './instructions/withdrawInstructions';
 import axios from 'axios';
 import { supabaseClient } from './supabase-client';
 import { getRawTokenAccount } from './accounts';
-import { depositNftV1 } from './deposit-nft';
+import { depositNft, depositNftV1 } from './deposit-nft';
 
 const RECEIPT_URL =
   'https://ctvymyaq3e.execute-api.ap-south-1.amazonaws.com/Prod/receipt-shortener';
@@ -94,132 +92,6 @@ const updateUniverse = async (args: UniverseApiArgs) => {
     await program.provider.sendAndConfirm!(tx, []);
 
     return tx;
-  } catch (e) {
-    throw new KyraaError(e);
-  }
-};
-
-const depositNft = async (args: GroupedDepositNftApiArgs) => {
-  try {
-    const sendTxRequests: Array<SendTxRequest> = [];
-
-    const program = getMetaBlocksProgram(args.connection, args.wallet);
-    const metaNftProgram = getMetaNftProgram(args.connection, args.wallet);
-    const usersKey = args.wallet.publicKey;
-
-    const pdaKeys: PdaKeys = await getPdaKeys(
-      args.universeKey,
-      usersKey,
-      args.mintKey
-    );
-
-    // transaction 1
-    const transaction1 = new Transaction();
-
-    try {
-      await program.account.metaBlocksAuthority.fetch(
-        pdaKeys.metaBlocksAuthority
-      );
-    } catch (err) {
-      const initMetaBlocksAuthorityInstruction =
-        await getInitMetaBlocksAuthorityInstruction({
-          pdaKeys: pdaKeys,
-          usersKey: usersKey,
-          program: program,
-        });
-      transaction1.add(initMetaBlocksAuthorityInstruction);
-    }
-
-    try {
-      await metaNftProgram.account.metaNft.fetch(pdaKeys.metaNft);
-    } catch (err) {
-      const initMetaNftInstruction = await getInitCpiMetaNftInstruction({
-        pdaKeys: pdaKeys,
-        usersKey: usersKey,
-        program: program,
-      });
-      transaction1.add(initMetaNftInstruction);
-    }
-
-    const accountInfo = await getRawTokenAccount(
-      program.provider,
-      pdaKeys.userMetaNftAta
-    );
-    if (accountInfo === null) {
-      const createCpiMetaNftInstruction = await getCreateCpiMetaNftInstruction({
-        pdaKeys: pdaKeys,
-        usersKey: usersKey,
-        program: program,
-        name: args.metaNftName,
-        uri: args.metaNftUrl,
-      });
-      transaction1.add(createCpiMetaNftInstruction);
-    }
-
-    if (transaction1.instructions.length > 0) {
-      sendTxRequests.push({
-        tx: transaction1,
-        signers: [],
-      });
-    }
-
-    // transaction 2
-    const transaction2 = new Transaction();
-    // initReceiptInstruction
-    const initReceiptInstruction = await getInitReceiptInstruction({
-      pdaKeys: pdaKeys,
-      usersKey: usersKey,
-      program: program,
-    });
-    transaction2.add(initReceiptInstruction);
-
-    //initDepositInstruction
-    const initDepositInstruction = await getInitDepositInstruction({
-      pdaKeys: pdaKeys,
-      usersKey: usersKey,
-      program: program,
-    });
-    transaction2.add(initDepositInstruction);
-
-    //depositNftInstruction
-    const depositNftInstruction = await getDepositNftInstruction({
-      pdaKeys: pdaKeys,
-      usersKey: usersKey,
-      program: program,
-    });
-    transaction2.add(depositNftInstruction);
-
-    //updateReceiptMetadataInstruction
-    const updateReceiptMetadataInstruction =
-      await getUpdateReceiptMetadataInstruction({
-        uri: args.receiptUrl,
-        name: args.receiptName,
-        pdaKeys: pdaKeys,
-        usersKey: usersKey,
-        program: program,
-        isReceiptMasterEdition: args.isReceiptMasterEdition,
-      });
-    transaction2.add(updateReceiptMetadataInstruction);
-
-    // transferReceiptNftInstruction
-    const transferReceiptNftInstruction =
-      await getTransferReceiptNftInstruction({
-        pdaKeys: pdaKeys,
-        usersKey: usersKey,
-        program: program,
-      });
-    transaction2.add(transferReceiptNftInstruction);
-
-    sendTxRequests.push({
-      tx: transaction2,
-      signers: [],
-    });
-
-    console.log('Sending transactions ::', Date.now());
-    const [tx1, tx2] = await program.provider.sendAll!(sendTxRequests);
-    console.log('Done sending transactions :: ', Date.now());
-
-    return { tx1, tx2 };
   } catch (e) {
     throw new KyraaError(e);
   }
