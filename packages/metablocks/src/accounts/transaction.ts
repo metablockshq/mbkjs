@@ -56,9 +56,9 @@ export const sendTransactions = async (
       ...signers?.map((s) => s.publicKey)
     );
 
-    // if (signers.length > 0) {
-    //   transaction.partialSign(...signers);
-    // }
+    if (signers.length > 0) {
+      transaction.partialSign(...signers);
+    }
 
     unsignedTxns.push(transaction);
   }
@@ -173,6 +173,7 @@ export async function sendSignedTransaction({
     slot = confirmation?.slot || 0;
   } catch (err) {
     log.error('Timeout Error caught', err);
+    console.error('Timeout Error caught', err);
     let errs: any = err;
     if (errs.timeout) {
       throw new Error('Timed out awaiting confirmation on transaction');
@@ -220,6 +221,7 @@ async function simulateTransaction(
     connection._disableBlockhashCaching
   );
 
+  console.log('IN simulateTransaction');
   const signData = transaction.serializeMessage();
   // @ts-ignore
   const wireTransaction = transaction._serialize(signData);
