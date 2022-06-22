@@ -64,12 +64,19 @@ export const sendTransactions = async (
   }
   unsignedTxns.push(...afterTransactions);
 
+  console.log('UNSIGNED ', unsignedTxns);
+
   const partiallySignedTransactions = unsignedTxns.filter((t) =>
     t.signatures.find((sig) => sig.publicKey.equals(wallet.publicKey))
   );
+
+  console.log('PARTIAL', partiallySignedTransactions);
   const fullySignedTransactions = unsignedTxns.filter(
     (t) => !t.signatures.find((sig) => sig.publicKey.equals(wallet.publicKey))
   );
+
+  console.log('FULLY', fullySignedTransactions);
+
   let signedTxns = await wallet.signAllTransactions(
     partiallySignedTransactions
   );
