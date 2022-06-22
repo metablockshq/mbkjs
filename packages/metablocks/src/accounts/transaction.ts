@@ -29,7 +29,7 @@ export const sendTransactions = async (
   beforeTransactions: Transaction[] = [],
   afterTransactions: Transaction[] = []
 ): Promise<{ number: number; txs: { txid: string; slot: number }[] }> => {
-  console.log('Sending transactions ::', Date.now());
+  //console.log('Sending transactions ::', Date.now());
 
   if (!wallet.publicKey) throw new Error('Wallet not connected');
 
@@ -71,18 +71,18 @@ export const sendTransactions = async (
   }
   unsignedTxns.push(...afterTransactions);
 
-  console.log('UNSIGNED ', unsignedTxns);
+  //console.log('UNSIGNED ', unsignedTxns);
 
   const partiallySignedTransactions = unsignedTxns.filter((t) =>
     t.signatures.find((sig) => sig.publicKey.equals(wallet.publicKey))
   );
 
-  console.log('PARTIAL', partiallySignedTransactions);
+  //console.log('PARTIAL', partiallySignedTransactions);
   const fullySignedTransactions = unsignedTxns.filter(
     (t) => !t.signatures.find((sig) => sig.publicKey.equals(wallet.publicKey))
   );
 
-  console.log('FULLY', fullySignedTransactions);
+  //console.log('FULLY', fullySignedTransactions);
 
   let signedTxns = await wallet.signAllTransactions(
     partiallySignedTransactions
@@ -135,11 +135,11 @@ export const sendTransactions = async (
 
   if (sequenceType !== SequenceType.Parallel) {
     const result = await Promise.all(pendingTxns);
-    console.log('Done sending transactions :: ', Date.now());
+    //console.log('Done sending transactions :: ', Date.now());
     return { number: signedTxns.length, txs: result };
   }
 
-  console.log('Done sending transactions :: ', Date.now());
+  //console.log('Done sending transactions :: ', Date.now());
   return { number: signedTxns.length, txs: await Promise.all(pendingTxns) };
 };
 
@@ -246,7 +246,7 @@ async function simulateTransaction(
     connection._disableBlockhashCaching
   );
 
-  console.log('IN simulateTransaction');
+  //console.log('IN simulateTransaction');
   const signData = transaction.serializeMessage();
   // @ts-ignore
   const wireTransaction = transaction._serialize(signData);
