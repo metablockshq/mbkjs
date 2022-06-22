@@ -126,7 +126,7 @@ const depositNftV1 = async (args: GroupedDepositNftApiArgs) => {
     console.log('Continuing New Deposit api v1');
     const instructionsMatrix: anchor.web3.TransactionInstruction[][] = [];
     const signersMatrix: anchor.web3.Keypair[][] = [];
-    signersMatrix.push([args.wallet]);
+    signersMatrix.push([]);
 
     if (initInstructions.length > 0) {
       instructionsMatrix.push(initInstructions);
