@@ -29,6 +29,8 @@ export const sendTransactions = async (
   beforeTransactions: Transaction[] = [],
   afterTransactions: Transaction[] = []
 ): Promise<{ number: number; txs: { txid: string; slot: number }[] }> => {
+  console.log('Sending transactions ::', Date.now());
+
   if (!wallet.publicKey) throw new Error('Wallet not connected');
 
   const unsignedTxns: Transaction[] = beforeTransactions;
@@ -109,9 +111,11 @@ export const sendTransactions = async (
 
   if (sequenceType !== SequenceType.Parallel) {
     const result = await Promise.all(pendingTxns);
+    console.log('Done sending transactions :: ', Date.now());
     return { number: signedTxns.length, txs: result };
   }
 
+  console.log('Done sending transactions :: ', Date.now());
   return { number: signedTxns.length, txs: await Promise.all(pendingTxns) };
 };
 

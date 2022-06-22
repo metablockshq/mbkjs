@@ -241,10 +241,12 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
       signers: [],
     });
 
+    console.log('Sending transactions ::', Date.now());
+
     const [tx1, tx2, tx3, tx4, tx5, tx6] = await program.provider.sendAll!(
       sendTxRequests
     );
-
+    console.log('Done sending transactions :: ', Date.now());
     return { tx1, tx2, tx3, tx4, tx5, tx6 };
   } catch (e) {
     throw new KyraaError(e);
