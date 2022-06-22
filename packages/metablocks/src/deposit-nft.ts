@@ -162,7 +162,7 @@ const depositNftV1 = async (args: GroupedDepositNftApiArgs) => {
         args.connection,
         args.wallet,
         instructionsMatrix,
-        signersMatrix,
+        //signersMatrix,
         SequenceType.StopOnFailure,
         'singleGossip',
         () => {},

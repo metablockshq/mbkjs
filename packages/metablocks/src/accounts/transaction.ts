@@ -19,7 +19,7 @@ export const sendTransactions = async (
   connection: Connection,
   wallet: any,
   instructionSet: TransactionInstruction[][],
-  signersSet: Keypair[][],
+  //signersSet: Keypair[][],
   sequenceType: SequenceType = SequenceType.Parallel,
   commitment: Commitment = 'singleGossip',
   successCallback: (txid: string, ind: number) => void = (_txid, _ind) => {},
@@ -41,7 +41,7 @@ export const sendTransactions = async (
 
   for (let i = 0; i < instructionSet.length; i++) {
     const instructions = instructionSet[i];
-    const signers = signersSet[i];
+    //const signers = signersSet[i];
 
     if (instructions.length === 0) {
       continue;
@@ -53,9 +53,9 @@ export const sendTransactions = async (
 
     const transactionSigners = [];
 
-    if ((signers !== undefined || signers !== null) && signers.length > 0) {
-      transactionSigners.push(...signers?.map((s) => s.publicKey));
-    }
+    // if ((signers !== undefined || signers !== null) && signers.length > 0) {
+    //   transactionSigners.push(...signers?.map((s) => s.publicKey));
+    // }
     transactionSigners.push(wallet.publicKey);
 
     transaction.setSigners(
@@ -63,9 +63,9 @@ export const sendTransactions = async (
       ...transactionSigners
     );
 
-    if (signers.length > 0) {
-      transaction.partialSign(...signers);
-    }
+    // if (signers.length > 0) {
+    //   transaction.partialSign(...signers);
+    // }
 
     unsignedTxns.push(transaction);
   }
