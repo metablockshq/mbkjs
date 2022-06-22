@@ -206,22 +206,25 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
       // });
     }
 
-    // transaction 3
-    //const transaction3 = new Transaction();
-    transaction1.add(initReceiptInstruction);
-    transaction1.add(initDepositInstruction);
-    transaction1.add(depositNftInstruction);
-    transaction1.add(updateReceiptMetadataInstruction);
-    transaction1.add(transferReceiptNftInstruction);
-    // sendTxRequests.push({
-    //   tx: transaction3,
-    //   signers: [],
-    // });
+    if (transaction1.instructions.length > 0) {
+      sendTxRequests.push({
+        tx: transaction1,
+        signers: [],
+      });
+    }
 
+    // transaction 3
+    const transaction3 = new Transaction();
+    transaction3.add(initReceiptInstruction);
+    transaction3.add(initDepositInstruction);
+    transaction3.add(depositNftInstruction);
+    transaction3.add(updateReceiptMetadataInstruction);
+    transaction3.add(transferReceiptNftInstruction);
     sendTxRequests.push({
-      tx: transaction1,
+      tx: transaction3,
       signers: [],
     });
+
     // transaction 4
     //const transaction4 = new Transaction();
     // transaction4.add(depositNftInstruction);
@@ -250,10 +253,10 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
     // });
 
     console.log('Sending transactions ::', Date.now());
-    const [tx1] = await program.provider.sendAll!(sendTxRequests);
+    const [tx1, tx2] = await program.provider.sendAll!(sendTxRequests);
     console.log('Done sending transactions :: ', Date.now());
 
-    return { tx1 };
+    return { tx1, tx2 };
   } catch (e) {
     throw new KyraaError(e);
   }
