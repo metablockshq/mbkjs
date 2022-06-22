@@ -22,24 +22,17 @@ import { sendTransactions } from './accounts/transaction';
 
 const depositNftV1 = async (args: GroupedDepositNftApiArgs) => {
   console.log('New Deposit api v1');
-  console.log('New Deposit api v1');
   try {
-    console.log('v1');
-
     const program = getMetaBlocksProgram(args.connection, args.wallet);
-    console.log('v2');
     const metaNftProgram = getMetaNftProgram(args.connection, args.wallet);
-    console.log('v3');
     const usersKey = args.wallet.publicKey;
 
-    console.log('v4');
     const pdaKeys: PdaKeys = await getPdaKeys(
       args.universeKey,
       usersKey,
       args.mintKey
     );
 
-    console.log('Continuing New Deposit api v1');
     // init instructions
     const initInstructions = [];
     try {
@@ -55,8 +48,6 @@ const depositNftV1 = async (args: GroupedDepositNftApiArgs) => {
         });
       initInstructions.push(initMetaBlocksAuthorityInstruction);
     }
-
-    console.log('Continuing New Deposit api v1');
 
     try {
       await metaNftProgram.account.metaNft.fetch(pdaKeys.metaNft);
