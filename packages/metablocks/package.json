@@ -55,18 +55,18 @@
     "chai": "^4.3.6",
     "husky": "^7.0.4",
     "js-sha256": "^0.9.0",
+    "loglevel": "^1.8.0",
     "mocha": "^9.2.0",
     "prettier": "^2.5.1",
     "size-limit": "^7.0.8",
     "tsdx": "^0.14.1",
     "tslib": "^2.3.1",
-    "typescript": "^4.5.5",
-    "loglevel": "^1.8.0"
+    "typescript": "^4.5.5"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "303d7cd33ef0a5b90262bd7a5cf9590f31a6d2c4",
+  "gitHead": "509e51b10bd8c550328b50b4b82684305597f9cd",
   "dependencies": {
     "@supabase/supabase-js": "^1.35.3"
   }
