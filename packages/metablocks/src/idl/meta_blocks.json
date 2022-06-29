@@ -201,89 +201,6 @@
           "name": "rent",
           "isMut": false,
           "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "args",
-          "type": {
-            "defined": "InitDepositNftArgs"
-          }
-        }
-      ]
-    },
-    {
-      "name": "depositNftV1",
-      "accounts": [
-        {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "wrappedUserNft",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "vault",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "universe",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "userNftAta",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "userNftMetadata",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "vaultNftAta",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "receiptMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "associatedTokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "rent",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "metaBlocksAuthority",
-          "isMut": false,
-          "isSigner": false
         },
         {
           "name": "metaNftProgram",
@@ -304,53 +221,25 @@
           "name": "treasuryAuthority",
           "isMut": true,
           "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "args",
-          "type": {
-            "defined": "DepositNftArgs"
-          }
-        }
-      ]
-    },
-    {
-      "name": "updateReceiptMetadataV1",
-      "accounts": [
-        {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
         },
         {
-          "name": "vault",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "universe",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "receiptMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "wrappedUserNft",
+          "name": "userNftAta",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "tokenMint",
+          "name": "vaultNftAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "metaBlocksAuthority",
           "isMut": false,
           "isSigner": false
         },
         {
-          "name": "receiptMetadata",
-          "isMut": true,
+          "name": "userNftMetadata",
+          "isMut": false,
           "isSigner": false
         },
         {
@@ -364,23 +253,8 @@
           "isSigner": false
         },
         {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "associatedTokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "rent",
-          "isMut": false,
+          "name": "receiptMetadata",
+          "isMut": true,
           "isSigner": false
         }
       ],
@@ -388,80 +262,7 @@
         {
           "name": "args",
           "type": {
-            "defined": "UpdateReceiptMetadataArgs"
-          }
-        }
-      ]
-    },
-    {
-      "name": "transferReceiptNftToUserV1",
-      "accounts": [
-        {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "vault",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "universe",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "wrappedUserNft",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "userReceiptAta",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "vaultReceiptAta",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "receiptMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "associatedTokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "rent",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "args",
-          "type": {
-            "defined": "TransferReceiptNftArgs"
+            "defined": "InitDepositNftArgs"
           }
         }
       ]
@@ -829,34 +630,6 @@
       "name": "InitDepositNftArgs",
       "type": {
         "kind": "struct",
-        "fields": []
-      }
-    },
-    {
-      "name": "InitMetaBlocksAuthorityArgs",
-      "type": {
-        "kind": "struct",
-        "fields": []
-      }
-    },
-    {
-      "name": "InitReceiptMintArgs",
-      "type": {
-        "kind": "struct",
-        "fields": []
-      }
-    },
-    {
-      "name": "TransferReceiptNftArgs",
-      "type": {
-        "kind": "struct",
-        "fields": []
-      }
-    },
-    {
-      "name": "UpdateReceiptMetadataArgs",
-      "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "uri",
@@ -897,6 +670,20 @@
             "type": "bool"
           }
         ]
+      }
+    },
+    {
+      "name": "InitMetaBlocksAuthorityArgs",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
+      "name": "InitReceiptMintArgs",
+      "type": {
+        "kind": "struct",
+        "fields": []
       }
     },
     {
@@ -1203,6 +990,6 @@
     }
   ],
   "metadata": {
-    "address": "4rmX7a9hb5YTbbPNZzku3yomDaTzb9TaXLrXkk5pAzRD"
+    "address": "L4ukhpYASituieFY1cPrVy9gAihvAisKhafSU6XrzLQ"
   }
 }
