@@ -9,13 +9,10 @@ import { getPdaKeys, PdaKeys } from './pda';
 
 import {
   getCreateCpiMetaNftInstruction,
-  getDepositNftInstruction,
   getInitCpiMetaNftInstruction,
-  getInitDepositInstruction,
+  getDepositNftInstruction,
   getInitMetaBlocksAuthorityInstruction,
   getInitReceiptInstruction,
-  getTransferReceiptNftInstruction,
-  getUpdateReceiptMetadataInstruction,
 } from './instructions/depositInstructions';
 import { getRawTokenAccount } from './accounts';
 import { sendTransactions } from './accounts/transaction';
@@ -94,42 +91,16 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
     });
     transaction2.add(initReceiptInstruction);
 
-    //initDepositInstruction
-    const initDepositInstruction = await getInitDepositInstruction({
+    //depositInstruction
+    const depositInstruction = await getDepositNftInstruction({
+      uri: args.receiptUrl,
+      name: args.receiptName,
       pdaKeys: pdaKeys,
       usersKey: usersKey,
       program: program,
+      isReceiptMasterEdition: args.isReceiptMasterEdition,
     });
-    transaction2.add(initDepositInstruction);
-
-    //depositNftInstruction
-    const depositNftInstruction = await getDepositNftInstruction({
-      pdaKeys: pdaKeys,
-      usersKey: usersKey,
-      program: program,
-    });
-    transaction2.add(depositNftInstruction);
-
-    //updateReceiptMetadataInstruction
-    const updateReceiptMetadataInstruction =
-      await getUpdateReceiptMetadataInstruction({
-        uri: args.receiptUrl,
-        name: args.receiptName,
-        pdaKeys: pdaKeys,
-        usersKey: usersKey,
-        program: program,
-        isReceiptMasterEdition: args.isReceiptMasterEdition,
-      });
-    transaction2.add(updateReceiptMetadataInstruction);
-
-    // transferReceiptNftInstruction
-    const transferReceiptNftInstruction =
-      await getTransferReceiptNftInstruction({
-        pdaKeys: pdaKeys,
-        usersKey: usersKey,
-        program: program,
-      });
-    transaction2.add(transferReceiptNftInstruction);
+    transaction2.add(depositInstruction);
 
     sendTxRequests.push({
       tx: transaction2,
@@ -204,53 +175,27 @@ const depositNftV1 = async (args: GroupedDepositNftApiArgs) => {
       initInstructions.push(createCpiMetaNftInstruction);
     }
 
-    // pre deposit instructions
+    //  deposit instructions
     const depositInstructions = [];
+
     const initReceiptInstruction = await getInitReceiptInstruction({
       pdaKeys: pdaKeys,
       usersKey: usersKey,
       program: program,
     });
     depositInstructions.push(initReceiptInstruction);
-    const initDepositInstruction = await getInitDepositInstruction({
+
+    const depositInstruction = await getDepositNftInstruction({
+      uri: args.receiptUrl,
+      name: args.receiptName,
       pdaKeys: pdaKeys,
       usersKey: usersKey,
       program: program,
+      isReceiptMasterEdition: args.isReceiptMasterEdition,
     });
-    depositInstructions.push(initDepositInstruction);
+    depositInstructions.push(depositInstruction);
 
-    //deposit instructions
-    //const depositInstructions = [];
-    const depositNftInstruction = await getDepositNftInstruction({
-      pdaKeys: pdaKeys,
-      usersKey: usersKey,
-      program: program,
-    });
-    depositInstructions.push(depositNftInstruction);
-
-    //update receipt instructions
-    //const updateReceiptInstructions = [];
-    const updateReceiptMetadataInstruction =
-      await getUpdateReceiptMetadataInstruction({
-        uri: args.receiptUrl,
-        name: args.receiptName,
-        pdaKeys: pdaKeys,
-        usersKey: usersKey,
-        program: program,
-        isReceiptMasterEdition: args.isReceiptMasterEdition,
-      });
-    depositInstructions.push(updateReceiptMetadataInstruction);
-
-    //transferReceiptNftInstructions
-    //const transferReceiptNftInstructions = [];
-    const transferReceiptNftInstruction =
-      await getTransferReceiptNftInstruction({
-        pdaKeys: pdaKeys,
-        usersKey: usersKey,
-        program: program,
-      });
-    depositInstructions.push(transferReceiptNftInstruction);
-    console.log('Continuing New Deposit api v1');
+    //console.log('Continuing New Deposit api v1');
     const instructionsMatrix: anchor.web3.TransactionInstruction[][] = [];
     const signersMatrix: anchor.web3.Keypair[][] = [];
     signersMatrix.push([]);
@@ -266,7 +211,7 @@ const depositNftV1 = async (args: GroupedDepositNftApiArgs) => {
     const beforeTransactions: Transaction[] = [];
     const afterTransactions: Transaction[] = [];
 
-    console.log('Sending transactions....');
+    //console.log('Sending transactions....');
 
     return (
       await sendTransactions(

@@ -1,54 +1,19 @@
 import * as anchor from '@project-serum/anchor';
-import { PublicKey } from '@solana/web3.js';
 import { programIds } from '../factory';
 import {
   CreateMetaNftArgs,
-  DepositArgs,
-  InitDepositNftArgs,
+  DepositNftArgs,
   InitMetaBlocksAuthorityArgs,
   InitMetaNftArgs,
   InitReceiptMintArgs,
-  TransferReceiptNftArgs,
-  UpdateReceiptMetadataArgs,
 } from '../types';
 
 /**
- * Here receipt nft is transferred to user , a part of deposit Instruction
- * @param args Transfer Receipt Args
- * @returns Transfer Receipt Instruction
+ * This is where accounts are initialized
+ * @param args  deposit args
+ * @returns  deposit instruction
  */
-export const getTransferReceiptNftInstruction = async (
-  args: TransferReceiptNftArgs
-) => {
-  //transfer nft to user instruction
-  const transferReceiptNftArgs = {};
-
-  return await args.program.methods
-    .transferReceiptNftToUserV1(transferReceiptNftArgs)
-    .accounts({
-      wrappedUserNft: args.pdaKeys.wrappedUserNft,
-      universe: args.pdaKeys.universeKey,
-      authority: args.usersKey,
-      vault: args.pdaKeys.vaultKey,
-      receiptMint: args.pdaKeys.receiptMint,
-      tokenMint: args.pdaKeys.mint,
-      userReceiptAta: args.pdaKeys.userReceiptAta,
-      vaultReceiptAta: args.pdaKeys.vaultReceiptAta,
-      tokenProgram: programIds.TOKEN_PROGRAM_ID,
-      associatedTokenProgram: programIds.ASSOCIATED_TOKEN_PROGRAM_ID,
-      systemProgram: anchor.web3.SystemProgram.programId,
-      rent: anchor.web3.SYSVAR_RENT_PUBKEY,
-    })
-    .instruction();
-};
-/**
- *  Here Receipt nft Metadata is updated. this is a part of deposit instruction
- * @param args Update Metadata
- * @returns instruction
- */
-export const getUpdateReceiptMetadataInstruction = async (
-  args: UpdateReceiptMetadataArgs
-) => {
+export const getDepositNftInstruction = async (args: DepositNftArgs) => {
   const vaultCreator = {
     address: args.pdaKeys.vaultKey,
     verified: true,
@@ -78,7 +43,7 @@ export const getUpdateReceiptMetadataInstruction = async (
   }
 
   //transfer nft to user instruction
-  const updateReceiptMetadataArgs = {
+  const depositNftArgs = {
     uri: args.uri,
     creators: creators,
     name: args.name,
@@ -90,67 +55,7 @@ export const getUpdateReceiptMetadataInstruction = async (
   };
 
   return await args.program.methods
-    .updateReceiptMetadataV1(updateReceiptMetadataArgs)
-    .accounts({
-      wrappedUserNft: args.pdaKeys.wrappedUserNft,
-      universe: args.pdaKeys.universeKey,
-      authority: args.usersKey,
-      vault: args.pdaKeys.vaultKey,
-      receiptMint: args.pdaKeys.receiptMint,
-      tokenMint: args.pdaKeys.mint,
-      receiptMetadata: args.pdaKeys.receiptMetadataKey,
-      receiptMasterEdition: args.pdaKeys.receiptMasterEditionKey,
-      tokenMetadataProgram: programIds.TOKEN_METADATA_PROGRAM_ID,
-      tokenProgram: programIds.TOKEN_PROGRAM_ID,
-      associatedTokenProgram: programIds.ASSOCIATED_TOKEN_PROGRAM_ID,
-      systemProgram: anchor.web3.SystemProgram.programId,
-      rent: anchor.web3.SYSVAR_RENT_PUBKEY,
-    })
-    .instruction();
-};
-/**
- * This is where user nfts are transferred to meta blocks program.
- * This is a part of deposit functionality
- * @param args Deposit Args
- * @returns Deposit Instruction
- */
-export const getDepositNftInstruction = async (args: DepositArgs) => {
-  const argument = {};
-
-  return await args.program.methods
-    .depositNftV1(argument)
-    .accounts({
-      wrappedUserNft: args.pdaKeys.wrappedUserNft,
-      vault: args.pdaKeys.vaultKey,
-      authority: args.usersKey,
-      universe: args.pdaKeys.universeKey,
-      userNftAta: args.pdaKeys.userNftAta,
-      userNftMetadata: args.pdaKeys.userNftMetadataKey,
-      vaultNftAta: args.pdaKeys.vaultNftAta,
-      tokenMint: args.pdaKeys.mint,
-      receiptMint: args.pdaKeys.receiptMint,
-      metaBlocksAuthority: args.pdaKeys.metaBlocksAuthority,
-      metaNft: args.pdaKeys.metaNft,
-      tokenProgram: programIds.TOKEN_PROGRAM_ID,
-      associatedTokenProgram: programIds.ASSOCIATED_TOKEN_PROGRAM_ID,
-      systemProgram: anchor.web3.SystemProgram.programId,
-      rent: anchor.web3.SYSVAR_RENT_PUBKEY,
-      metaNftProgram: programIds.META_NFT_PROGRAM_ID,
-      treasury: args.pdaKeys.treasuryAddress,
-      treasuryAuthority: programIds.TREASURY_AUTHORITY,
-    })
-    .instruction();
-};
-/**
- * This is where accounts are initialized
- * @param args Init deposit args
- * @returns init deposit instruction
- */
-export const getInitDepositInstruction = async (args: InitDepositNftArgs) => {
-  const initDepositNftArgs = {};
-
-  return await args.program.methods
-    .initDepositNftV1(initDepositNftArgs)
+    .depositNftV1(depositNftArgs)
     .accounts({
       wrappedUserNft: args.pdaKeys.wrappedUserNft,
       universe: args.pdaKeys.universeKey,
@@ -164,6 +69,17 @@ export const getInitDepositInstruction = async (args: InitDepositNftArgs) => {
       associatedTokenProgram: programIds.ASSOCIATED_TOKEN_PROGRAM_ID,
       systemProgram: anchor.web3.SystemProgram.programId,
       rent: anchor.web3.SYSVAR_RENT_PUBKEY,
+      metaBlocksAuthority: args.pdaKeys.metaBlocksAuthority,
+      metaNftProgram: programIds.META_NFT_PROGRAM_ID,
+      metaNft: args.pdaKeys.metaNft,
+      vaultNftAta: args.pdaKeys.vaultNftAta,
+      userNftAta: args.pdaKeys.userNftAta,
+      userNftMetadata: args.pdaKeys.userNftMetadataKey,
+      treasury: args.pdaKeys.treasuryAddress,
+      treasuryAuthority: programIds.TREASURY_AUTHORITY,
+      receiptMetadata: args.pdaKeys.receiptMetadataKey,
+      receiptMasterEdition: args.pdaKeys.receiptMasterEditionKey,
+      tokenMetadataProgram: programIds.TOKEN_METADATA_PROGRAM_ID,
     })
     .instruction();
 };

@@ -27,8 +27,6 @@ interface ApiInputArgs {
 }
 export interface InitReceiptMintApiArgs extends ApiInputArgs {}
 
-export interface InitDepositNftApiArgs extends ApiInputArgs {}
-
 export interface DepositNftApiArgs extends ApiInputArgs {}
 
 export interface TransferReceiptNftApiArgs extends ApiInputArgs {
@@ -232,14 +230,11 @@ interface BasicInstructionArgs {
 
 export interface TransferReceiptNftArgs extends BasicInstructionArgs {}
 
-export interface UpdateReceiptMetadataArgs extends BasicInstructionArgs {
+export interface DepositNftArgs extends BasicInstructionArgs {
   uri: string;
   name: string;
   isReceiptMasterEdition: boolean;
 }
-export interface DepositArgs extends BasicInstructionArgs {}
-
-export interface InitDepositNftArgs extends BasicInstructionArgs {}
 
 export interface InitReceiptMintArgs extends BasicInstructionArgs {}
 

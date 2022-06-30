@@ -22,16 +22,6 @@ import { MetaBlocks } from './types/meta_blocks';
 import { LangErrorCode, LangErrorMessage } from './error';
 import { getPdaKeys, PdaKeys } from './pda';
 
-import {
-  getCreateCpiMetaNftInstruction,
-  getDepositNftInstruction,
-  getInitCpiMetaNftInstruction,
-  getInitDepositInstruction,
-  getInitMetaBlocksAuthorityInstruction,
-  getInitReceiptInstruction,
-  getTransferReceiptNftInstruction,
-  getUpdateReceiptMetadataInstruction,
-} from './instructions/depositInstructions';
 import { getWithdrawNftInstruction } from './instructions/withdrawInstructions';
 import axios from 'axios';
 import { supabaseClient } from './supabase-client';

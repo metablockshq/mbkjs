@@ -31,6 +31,39 @@ export type MetaBlocks = {
       ]
     },
     {
+      "name": "updateTreasuryV1",
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "newAuthority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "treasury",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": "UpdateTreasuryArgs"
+          }
+        }
+      ]
+    },
+    {
       "name": "createUniverseV1",
       "accounts": [
         {
@@ -140,7 +173,7 @@ export type MetaBlocks = {
       ]
     },
     {
-      "name": "initDepositNftV1",
+      "name": "depositNftV1",
       "accounts": [
         {
           "name": "authority",
@@ -199,89 +232,6 @@ export type MetaBlocks = {
         },
         {
           "name": "rent",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "args",
-          "type": {
-            "defined": "InitDepositNftArgs"
-          }
-        }
-      ]
-    },
-    {
-      "name": "depositNftV1",
-      "accounts": [
-        {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "wrappedUserNft",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "vault",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "universe",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "userNftAta",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "userNftMetadata",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "vaultNftAta",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "receiptMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "associatedTokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "rent",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "metaBlocksAuthority",
           "isMut": false,
           "isSigner": false
         },
@@ -304,53 +254,25 @@ export type MetaBlocks = {
           "name": "treasuryAuthority",
           "isMut": true,
           "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "args",
-          "type": {
-            "defined": "DepositNftArgs"
-          }
-        }
-      ]
-    },
-    {
-      "name": "updateReceiptMetadataV1",
-      "accounts": [
-        {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
         },
         {
-          "name": "vault",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "universe",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "receiptMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "wrappedUserNft",
+          "name": "userNftAta",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "tokenMint",
+          "name": "vaultNftAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "metaBlocksAuthority",
           "isMut": false,
           "isSigner": false
         },
         {
-          "name": "receiptMetadata",
-          "isMut": true,
+          "name": "userNftMetadata",
+          "isMut": false,
           "isSigner": false
         },
         {
@@ -364,23 +286,8 @@ export type MetaBlocks = {
           "isSigner": false
         },
         {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "associatedTokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "rent",
-          "isMut": false,
+          "name": "receiptMetadata",
+          "isMut": true,
           "isSigner": false
         }
       ],
@@ -388,80 +295,7 @@ export type MetaBlocks = {
         {
           "name": "args",
           "type": {
-            "defined": "UpdateReceiptMetadataArgs"
-          }
-        }
-      ]
-    },
-    {
-      "name": "transferReceiptNftToUserV1",
-      "accounts": [
-        {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "vault",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "universe",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "wrappedUserNft",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "userReceiptAta",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "vaultReceiptAta",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "receiptMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "associatedTokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "rent",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "args",
-          "type": {
-            "defined": "TransferReceiptNftArgs"
+            "defined": "DepositNftArgs"
           }
         }
       ]
@@ -766,6 +600,216 @@ export type MetaBlocks = {
   ],
   "accounts": [
     {
+      "name": "createMetaNftCpiArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "uri",
+            "type": "string"
+          },
+          {
+            "name": "creators",
+            "type": {
+              "vec": {
+                "defined": "Creator"
+              }
+            }
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "name": "sellerFeeBasisPoints",
+            "type": "u16"
+          },
+          {
+            "name": "isMutable",
+            "type": "bool"
+          },
+          {
+            "name": "isMetaNftMasterEdition",
+            "type": {
+              "option": "bool"
+            }
+          },
+          {
+            "name": "isMetaDataInitialized",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "depositNftArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "uri",
+            "type": "string"
+          },
+          {
+            "name": "creators",
+            "type": {
+              "vec": {
+                "defined": "Creator"
+              }
+            }
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "name": "sellerFeeBasisPoints",
+            "type": "u16"
+          },
+          {
+            "name": "isMutable",
+            "type": "bool"
+          },
+          {
+            "name": "isReceiptMasterEdition",
+            "type": {
+              "option": "bool"
+            }
+          },
+          {
+            "name": "isMetaDataInitialized",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "initMetaNftCpiArgs",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
+      "name": "initMetaBlocksAuthorityArgs",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
+      "name": "initReceiptMintArgs",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
+      "name": "initializeTreasuryArgs",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
+      "name": "updateTreasuryArgs",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
+      "name": "createUniverseArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "websiteUrl",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "updateUniverseArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "websiteUrl",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "withdrawNftArgs",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
+      "name": "metaBlocksAuthority",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "payer",
+            "type": "publicKey"
+          },
+          {
+            "name": "universe",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "treasury",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "authority",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
       "name": "universe",
       "type": {
         "kind": "struct",
@@ -791,6 +835,22 @@ export type MetaBlocks = {
           {
             "name": "totalNfts",
             "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "vault",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "vaultBump",
+            "type": "u8"
+          },
+          {
+            "name": "receiptMintBump",
+            "type": "u8"
           }
         ]
       }
@@ -854,269 +914,9 @@ export type MetaBlocks = {
           }
         ]
       }
-    },
-    {
-      "name": "treasury",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "bump",
-            "type": "u8"
-          },
-          {
-            "name": "authority",
-            "type": "publicKey"
-          }
-        ]
-      }
-    },
-    {
-      "name": "vault",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "vaultBump",
-            "type": "u8"
-          },
-          {
-            "name": "receiptMintBump",
-            "type": "u8"
-          }
-        ]
-      }
-    },
-    {
-      "name": "metaBlocksAuthority",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "bump",
-            "type": "u8"
-          },
-          {
-            "name": "payer",
-            "type": "publicKey"
-          },
-          {
-            "name": "universe",
-            "type": "publicKey"
-          }
-        ]
-      }
-    },
-    {
-      "name": "initializeTreasuryArgs",
-      "type": {
-        "kind": "struct",
-        "fields": []
-      }
-    },
-    {
-      "name": "initDepositNftArgs",
-      "type": {
-        "kind": "struct",
-        "fields": []
-      }
-    },
-    {
-      "name": "initReceiptMintArgs",
-      "type": {
-        "kind": "struct",
-        "fields": []
-      }
-    },
-    {
-      "name": "createUniverseArgs",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "name",
-            "type": "string"
-          },
-          {
-            "name": "description",
-            "type": "string"
-          },
-          {
-            "name": "websiteUrl",
-            "type": "string"
-          }
-        ]
-      }
-    },
-    {
-      "name": "updateUniverseArgs",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "name",
-            "type": "string"
-          },
-          {
-            "name": "websiteUrl",
-            "type": "string"
-          },
-          {
-            "name": "description",
-            "type": "string"
-          }
-        ]
-      }
-    },
-    {
-      "name": "depositNftArgs",
-      "type": {
-        "kind": "struct",
-        "fields": []
-      }
-    },
-    {
-      "name": "initMetaNftCpiArgs",
-      "type": {
-        "kind": "struct",
-        "fields": []
-      }
-    },
-    {
-      "name": "transferReceiptNftArgs",
-      "type": {
-        "kind": "struct",
-        "fields": []
-      }
-    },
-    {
-      "name": "updateReceiptMetadataArgs",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "uri",
-            "type": "string"
-          },
-          {
-            "name": "creators",
-            "type": {
-              "vec": {
-                "defined": "Creator"
-              }
-            }
-          },
-          {
-            "name": "name",
-            "type": "string"
-          },
-          {
-            "name": "symbol",
-            "type": "string"
-          },
-          {
-            "name": "sellerFeeBasisPoints",
-            "type": "u16"
-          },
-          {
-            "name": "isMutable",
-            "type": "bool"
-          },
-          {
-            "name": "isReceiptMasterEdition",
-            "type": {
-              "option": "bool"
-            }
-          },
-          {
-            "name": "isMetaDataInitialized",
-            "type": "bool"
-          }
-        ]
-      }
-    },
-    {
-      "name": "withdrawNftArgs",
-      "type": {
-        "kind": "struct",
-        "fields": []
-      }
-    },
-    {
-      "name": "createMetaNftCpiArgs",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "uri",
-            "type": "string"
-          },
-          {
-            "name": "creators",
-            "type": {
-              "vec": {
-                "defined": "Creator"
-              }
-            }
-          },
-          {
-            "name": "name",
-            "type": "string"
-          },
-          {
-            "name": "symbol",
-            "type": "string"
-          },
-          {
-            "name": "sellerFeeBasisPoints",
-            "type": "u16"
-          },
-          {
-            "name": "isMutable",
-            "type": "bool"
-          },
-          {
-            "name": "isMetaNftMasterEdition",
-            "type": {
-              "option": "bool"
-            }
-          },
-          {
-            "name": "isMetaDataInitialized",
-            "type": "bool"
-          }
-        ]
-      }
-    },
-    {
-      "name": "initMetaBlocksAuthorityArgs",
-      "type": {
-        "kind": "struct",
-        "fields": []
-      }
     }
   ],
   "types": [
-    {
-      "name": "Config",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "name",
-            "type": "string"
-          },
-          {
-            "name": "description",
-            "type": "string"
-          },
-          {
-            "name": "websiteUrl",
-            "type": "string"
-          }
-        ]
-      }
-    },
     {
       "name": "Creator",
       "type": {
@@ -1133,6 +933,26 @@ export type MetaBlocks = {
           {
             "name": "share",
             "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Config",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "websiteUrl",
+            "type": "string"
           }
         ]
       }
@@ -1237,6 +1057,39 @@ export const IDL: MetaBlocks = {
       ]
     },
     {
+      "name": "updateTreasuryV1",
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "newAuthority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "treasury",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": "UpdateTreasuryArgs"
+          }
+        }
+      ]
+    },
+    {
       "name": "createUniverseV1",
       "accounts": [
         {
@@ -1346,7 +1199,7 @@ export const IDL: MetaBlocks = {
       ]
     },
     {
-      "name": "initDepositNftV1",
+      "name": "depositNftV1",
       "accounts": [
         {
           "name": "authority",
@@ -1405,89 +1258,6 @@ export const IDL: MetaBlocks = {
         },
         {
           "name": "rent",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "args",
-          "type": {
-            "defined": "InitDepositNftArgs"
-          }
-        }
-      ]
-    },
-    {
-      "name": "depositNftV1",
-      "accounts": [
-        {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "wrappedUserNft",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "vault",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "universe",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "userNftAta",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "userNftMetadata",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "vaultNftAta",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "receiptMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "associatedTokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "rent",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "metaBlocksAuthority",
           "isMut": false,
           "isSigner": false
         },
@@ -1510,53 +1280,25 @@ export const IDL: MetaBlocks = {
           "name": "treasuryAuthority",
           "isMut": true,
           "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "args",
-          "type": {
-            "defined": "DepositNftArgs"
-          }
-        }
-      ]
-    },
-    {
-      "name": "updateReceiptMetadataV1",
-      "accounts": [
-        {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
         },
         {
-          "name": "vault",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "universe",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "receiptMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "wrappedUserNft",
+          "name": "userNftAta",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "tokenMint",
+          "name": "vaultNftAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "metaBlocksAuthority",
           "isMut": false,
           "isSigner": false
         },
         {
-          "name": "receiptMetadata",
-          "isMut": true,
+          "name": "userNftMetadata",
+          "isMut": false,
           "isSigner": false
         },
         {
@@ -1570,23 +1312,8 @@ export const IDL: MetaBlocks = {
           "isSigner": false
         },
         {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "associatedTokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "rent",
-          "isMut": false,
+          "name": "receiptMetadata",
+          "isMut": true,
           "isSigner": false
         }
       ],
@@ -1594,80 +1321,7 @@ export const IDL: MetaBlocks = {
         {
           "name": "args",
           "type": {
-            "defined": "UpdateReceiptMetadataArgs"
-          }
-        }
-      ]
-    },
-    {
-      "name": "transferReceiptNftToUserV1",
-      "accounts": [
-        {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "vault",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "universe",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "wrappedUserNft",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "userReceiptAta",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "vaultReceiptAta",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "receiptMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "associatedTokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "rent",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "args",
-          "type": {
-            "defined": "TransferReceiptNftArgs"
+            "defined": "DepositNftArgs"
           }
         }
       ]
@@ -1972,6 +1626,216 @@ export const IDL: MetaBlocks = {
   ],
   "accounts": [
     {
+      "name": "createMetaNftCpiArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "uri",
+            "type": "string"
+          },
+          {
+            "name": "creators",
+            "type": {
+              "vec": {
+                "defined": "Creator"
+              }
+            }
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "name": "sellerFeeBasisPoints",
+            "type": "u16"
+          },
+          {
+            "name": "isMutable",
+            "type": "bool"
+          },
+          {
+            "name": "isMetaNftMasterEdition",
+            "type": {
+              "option": "bool"
+            }
+          },
+          {
+            "name": "isMetaDataInitialized",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "depositNftArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "uri",
+            "type": "string"
+          },
+          {
+            "name": "creators",
+            "type": {
+              "vec": {
+                "defined": "Creator"
+              }
+            }
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "name": "sellerFeeBasisPoints",
+            "type": "u16"
+          },
+          {
+            "name": "isMutable",
+            "type": "bool"
+          },
+          {
+            "name": "isReceiptMasterEdition",
+            "type": {
+              "option": "bool"
+            }
+          },
+          {
+            "name": "isMetaDataInitialized",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "initMetaNftCpiArgs",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
+      "name": "initMetaBlocksAuthorityArgs",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
+      "name": "initReceiptMintArgs",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
+      "name": "initializeTreasuryArgs",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
+      "name": "updateTreasuryArgs",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
+      "name": "createUniverseArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "websiteUrl",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "updateUniverseArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "websiteUrl",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "withdrawNftArgs",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
+      "name": "metaBlocksAuthority",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "payer",
+            "type": "publicKey"
+          },
+          {
+            "name": "universe",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "treasury",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "authority",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
       "name": "universe",
       "type": {
         "kind": "struct",
@@ -1997,6 +1861,22 @@ export const IDL: MetaBlocks = {
           {
             "name": "totalNfts",
             "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "vault",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "vaultBump",
+            "type": "u8"
+          },
+          {
+            "name": "receiptMintBump",
+            "type": "u8"
           }
         ]
       }
@@ -2060,269 +1940,9 @@ export const IDL: MetaBlocks = {
           }
         ]
       }
-    },
-    {
-      "name": "treasury",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "bump",
-            "type": "u8"
-          },
-          {
-            "name": "authority",
-            "type": "publicKey"
-          }
-        ]
-      }
-    },
-    {
-      "name": "vault",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "vaultBump",
-            "type": "u8"
-          },
-          {
-            "name": "receiptMintBump",
-            "type": "u8"
-          }
-        ]
-      }
-    },
-    {
-      "name": "metaBlocksAuthority",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "bump",
-            "type": "u8"
-          },
-          {
-            "name": "payer",
-            "type": "publicKey"
-          },
-          {
-            "name": "universe",
-            "type": "publicKey"
-          }
-        ]
-      }
-    },
-    {
-      "name": "initializeTreasuryArgs",
-      "type": {
-        "kind": "struct",
-        "fields": []
-      }
-    },
-    {
-      "name": "initDepositNftArgs",
-      "type": {
-        "kind": "struct",
-        "fields": []
-      }
-    },
-    {
-      "name": "initReceiptMintArgs",
-      "type": {
-        "kind": "struct",
-        "fields": []
-      }
-    },
-    {
-      "name": "createUniverseArgs",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "name",
-            "type": "string"
-          },
-          {
-            "name": "description",
-            "type": "string"
-          },
-          {
-            "name": "websiteUrl",
-            "type": "string"
-          }
-        ]
-      }
-    },
-    {
-      "name": "updateUniverseArgs",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "name",
-            "type": "string"
-          },
-          {
-            "name": "websiteUrl",
-            "type": "string"
-          },
-          {
-            "name": "description",
-            "type": "string"
-          }
-        ]
-      }
-    },
-    {
-      "name": "depositNftArgs",
-      "type": {
-        "kind": "struct",
-        "fields": []
-      }
-    },
-    {
-      "name": "initMetaNftCpiArgs",
-      "type": {
-        "kind": "struct",
-        "fields": []
-      }
-    },
-    {
-      "name": "transferReceiptNftArgs",
-      "type": {
-        "kind": "struct",
-        "fields": []
-      }
-    },
-    {
-      "name": "updateReceiptMetadataArgs",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "uri",
-            "type": "string"
-          },
-          {
-            "name": "creators",
-            "type": {
-              "vec": {
-                "defined": "Creator"
-              }
-            }
-          },
-          {
-            "name": "name",
-            "type": "string"
-          },
-          {
-            "name": "symbol",
-            "type": "string"
-          },
-          {
-            "name": "sellerFeeBasisPoints",
-            "type": "u16"
-          },
-          {
-            "name": "isMutable",
-            "type": "bool"
-          },
-          {
-            "name": "isReceiptMasterEdition",
-            "type": {
-              "option": "bool"
-            }
-          },
-          {
-            "name": "isMetaDataInitialized",
-            "type": "bool"
-          }
-        ]
-      }
-    },
-    {
-      "name": "withdrawNftArgs",
-      "type": {
-        "kind": "struct",
-        "fields": []
-      }
-    },
-    {
-      "name": "createMetaNftCpiArgs",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "uri",
-            "type": "string"
-          },
-          {
-            "name": "creators",
-            "type": {
-              "vec": {
-                "defined": "Creator"
-              }
-            }
-          },
-          {
-            "name": "name",
-            "type": "string"
-          },
-          {
-            "name": "symbol",
-            "type": "string"
-          },
-          {
-            "name": "sellerFeeBasisPoints",
-            "type": "u16"
-          },
-          {
-            "name": "isMutable",
-            "type": "bool"
-          },
-          {
-            "name": "isMetaNftMasterEdition",
-            "type": {
-              "option": "bool"
-            }
-          },
-          {
-            "name": "isMetaDataInitialized",
-            "type": "bool"
-          }
-        ]
-      }
-    },
-    {
-      "name": "initMetaBlocksAuthorityArgs",
-      "type": {
-        "kind": "struct",
-        "fields": []
-      }
     }
   ],
   "types": [
-    {
-      "name": "Config",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "name",
-            "type": "string"
-          },
-          {
-            "name": "description",
-            "type": "string"
-          },
-          {
-            "name": "websiteUrl",
-            "type": "string"
-          }
-        ]
-      }
-    },
     {
       "name": "Creator",
       "type": {
@@ -2339,6 +1959,26 @@ export const IDL: MetaBlocks = {
           {
             "name": "share",
             "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Config",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "websiteUrl",
+            "type": "string"
           }
         ]
       }
