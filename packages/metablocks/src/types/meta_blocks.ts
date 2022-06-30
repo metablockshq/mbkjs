@@ -31,6 +31,39 @@ export type MetaBlocks = {
       ]
     },
     {
+      "name": "updateTreasuryV1",
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "newAuthority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "treasury",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": "UpdateTreasuryArgs"
+          }
+        }
+      ]
+    },
+    {
       "name": "createUniverseV1",
       "accounts": [
         {
@@ -140,7 +173,7 @@ export type MetaBlocks = {
       ]
     },
     {
-      "name": "initDepositNftV1",
+      "name": "depositNftV1",
       "accounts": [
         {
           "name": "authority",
@@ -262,7 +295,7 @@ export type MetaBlocks = {
         {
           "name": "args",
           "type": {
-            "defined": "InitDepositNftArgs"
+            "defined": "DepositNftArgs"
           }
         }
       ]
@@ -616,20 +649,6 @@ export type MetaBlocks = {
       "name": "depositNftArgs",
       "type": {
         "kind": "struct",
-        "fields": []
-      }
-    },
-    {
-      "name": "initMetaNftCpiArgs",
-      "type": {
-        "kind": "struct",
-        "fields": []
-      }
-    },
-    {
-      "name": "initDepositNftArgs",
-      "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "uri",
@@ -673,6 +692,13 @@ export type MetaBlocks = {
       }
     },
     {
+      "name": "initMetaNftCpiArgs",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
       "name": "initMetaBlocksAuthorityArgs",
       "type": {
         "kind": "struct",
@@ -688,6 +714,13 @@ export type MetaBlocks = {
     },
     {
       "name": "initializeTreasuryArgs",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
+      "name": "updateTreasuryArgs",
       "type": {
         "kind": "struct",
         "fields": []
@@ -1024,6 +1057,39 @@ export const IDL: MetaBlocks = {
       ]
     },
     {
+      "name": "updateTreasuryV1",
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "newAuthority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "treasury",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": "UpdateTreasuryArgs"
+          }
+        }
+      ]
+    },
+    {
       "name": "createUniverseV1",
       "accounts": [
         {
@@ -1133,7 +1199,7 @@ export const IDL: MetaBlocks = {
       ]
     },
     {
-      "name": "initDepositNftV1",
+      "name": "depositNftV1",
       "accounts": [
         {
           "name": "authority",
@@ -1255,7 +1321,7 @@ export const IDL: MetaBlocks = {
         {
           "name": "args",
           "type": {
-            "defined": "InitDepositNftArgs"
+            "defined": "DepositNftArgs"
           }
         }
       ]
@@ -1609,20 +1675,6 @@ export const IDL: MetaBlocks = {
       "name": "depositNftArgs",
       "type": {
         "kind": "struct",
-        "fields": []
-      }
-    },
-    {
-      "name": "initMetaNftCpiArgs",
-      "type": {
-        "kind": "struct",
-        "fields": []
-      }
-    },
-    {
-      "name": "initDepositNftArgs",
-      "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "uri",
@@ -1666,6 +1718,13 @@ export const IDL: MetaBlocks = {
       }
     },
     {
+      "name": "initMetaNftCpiArgs",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
       "name": "initMetaBlocksAuthorityArgs",
       "type": {
         "kind": "struct",
@@ -1681,6 +1740,13 @@ export const IDL: MetaBlocks = {
     },
     {
       "name": "initializeTreasuryArgs",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
+      "name": "updateTreasuryArgs",
       "type": {
         "kind": "struct",
         "fields": []

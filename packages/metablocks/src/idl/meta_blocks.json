@@ -31,6 +31,39 @@
       ]
     },
     {
+      "name": "updateTreasuryV1",
+      "accounts": [
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "newAuthority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "treasury",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": "UpdateTreasuryArgs"
+          }
+        }
+      ]
+    },
+    {
       "name": "createUniverseV1",
       "accounts": [
         {
@@ -140,7 +173,7 @@
       ]
     },
     {
-      "name": "initDepositNftV1",
+      "name": "depositNftV1",
       "accounts": [
         {
           "name": "authority",
@@ -262,7 +295,7 @@
         {
           "name": "args",
           "type": {
-            "defined": "InitDepositNftArgs"
+            "defined": "DepositNftArgs"
           }
         }
       ]
@@ -616,20 +649,6 @@
       "name": "DepositNftArgs",
       "type": {
         "kind": "struct",
-        "fields": []
-      }
-    },
-    {
-      "name": "InitMetaNftCpiArgs",
-      "type": {
-        "kind": "struct",
-        "fields": []
-      }
-    },
-    {
-      "name": "InitDepositNftArgs",
-      "type": {
-        "kind": "struct",
         "fields": [
           {
             "name": "uri",
@@ -673,6 +692,13 @@
       }
     },
     {
+      "name": "InitMetaNftCpiArgs",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
       "name": "InitMetaBlocksAuthorityArgs",
       "type": {
         "kind": "struct",
@@ -688,6 +714,13 @@
     },
     {
       "name": "InitializeTreasuryArgs",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
+      "name": "UpdateTreasuryArgs",
       "type": {
         "kind": "struct",
         "fields": []
