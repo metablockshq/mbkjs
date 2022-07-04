@@ -1,5 +1,5 @@
 export type MetaNft = {
-  "version": "0.2.0",
+  "version": "0.3.0",
   "name": "meta_nft",
   "instructions": [
     {
@@ -406,7 +406,7 @@ export type MetaNft = {
 };
 
 export const IDL: MetaNft = {
-  "version": "0.2.0",
+  "version": "0.3.0",
   "name": "meta_nft",
   "instructions": [
     {
