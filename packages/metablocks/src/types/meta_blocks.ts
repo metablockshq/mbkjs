@@ -1,5 +1,5 @@
 export type MetaBlocks = {
-  "version": "0.1.0",
+  "version": "0.3.0",
   "name": "meta_blocks",
   "instructions": [
     {
@@ -1025,7 +1025,7 @@ export type MetaBlocks = {
 };
 
 export const IDL: MetaBlocks = {
-  "version": "0.1.0",
+  "version": "0.3.0",
   "name": "meta_blocks",
   "instructions": [
     {

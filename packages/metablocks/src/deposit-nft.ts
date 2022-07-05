@@ -213,7 +213,7 @@ const depositNftV1 = async (args: GroupedDepositNftApiArgs) => {
 
     //console.log('Sending transactions....');
 
-    return (
+    const result = (
       await sendTransactions(
         args.connection,
         args.wallet,
@@ -228,6 +228,7 @@ const depositNftV1 = async (args: GroupedDepositNftApiArgs) => {
         afterTransactions
       )
     ).txs.map((t: any) => t.txid);
+    return result;
   } catch (e) {
     console.log('Something went wrong');
     throw new KyraaError(e);
