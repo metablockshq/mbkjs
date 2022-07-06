@@ -117,6 +117,7 @@ const LangErrorCode = {
 
   //Kyraa
   KyraaUserNftAccount: 6000,
+  // Metablocks errors
 };
 
 const LangErrorMessage = new Map([
