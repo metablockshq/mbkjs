@@ -124,6 +124,8 @@ const LangErrorCode = {
   Unauthorized: 6004,
   NoMetadata: 6005,
   InvalidTreasury: 6006,
+  AddCountError: 6007,
+  SubCountError: 6008,
 };
 
 const LangErrorMessage = new Map([
