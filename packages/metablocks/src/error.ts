@@ -126,6 +126,12 @@ const LangErrorCode = {
   InvalidTreasury: 6006,
   AddCountError: 6007,
   SubCountError: 6008,
+  WalletError: 6009,
+  IndexError: 6010,
+  TimedOutError: 6011,
+  SimulationError: 6012,
+  WebSocketError: 6013,
+  InsufficientLamports: 6014,
 };
 
 const LangErrorMessage = new Map([
@@ -247,6 +253,26 @@ const LangErrorMessage = new Map([
     LangErrorCode.KyraaUserNftAccount,
     'User Nft Account failure, either token mint or universe is undefined',
   ],
+
+  [LangErrorCode.InvalidUniverseAuthority, 'Universe authority does not match'],
+
+  [LangErrorCode.InvalidSigner, 'Account is not a signer'],
+
+  [LangErrorCode.Unauthorized, 'Unauthorized to access this instruction'],
+
+  [LangErrorCode.NoMetadata, 'No Metadata provided for the nft'],
+  [LangErrorCode.InvalidTreasury, 'Invalid treasury account'],
+  [LangErrorCode.AddCountError, 'Could not add the nft count'],
+  [LangErrorCode.SubCountError, 'Could not sub the nft count'],
+  [LangErrorCode.WalletError, 'Wallet not connected'],
+  [LangErrorCode.IndexError, 'Failed at txn index'],
+  [
+    LangErrorCode.TimedOutError,
+    'Timed out awaiting confirmation on transaction',
+  ],
+  [LangErrorCode.SimulationError, 'failed to simulate transaction'],
+  [LangErrorCode.WebSocketError, 'Web Socket error in setup'],
+  [LangErrorCode.InsufficientLamports, 'Not enough sols in the wallet'],
 ]);
 
 const hexToDecimal = (str: string) => {
