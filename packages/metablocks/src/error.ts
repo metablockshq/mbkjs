@@ -118,6 +118,12 @@ const LangErrorCode = {
   //Kyraa
   KyraaUserNftAccount: 6000,
   // Metablocks errors
+  IndexAdditionError: 6001,
+  InvalidUniverseAuthority: 6002,
+  InvalidSigner: 6003,
+  Unauthorized: 6004,
+  NoMetadata: 6005,
+  InvalidTreasury: 6006,
 };
 
 const LangErrorMessage = new Map([
