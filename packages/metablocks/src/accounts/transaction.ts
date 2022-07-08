@@ -11,6 +11,7 @@ import {
 } from '@solana/web3.js';
 
 import log from 'loglevel';
+import { KyraaError, LangErrorCode } from '../error';
 import { BlockhashAndFeeCalculator, SequenceType } from '../types';
 
 const DEFAULT_TIMEOUT = 15000;
@@ -23,8 +24,8 @@ export const sendTransactions = async (
   sequenceType: SequenceType = SequenceType.Parallel,
   commitment: Commitment = 'singleGossip',
   successCallback: (txid: string, ind: number) => void = (_txid, _ind) => {},
-  failCallback: (reason: string, ind: number) => boolean = (_txid, _ind) =>
-    false,
+  //failCallback: (reason: string, ind: number) => boolean = (_txid, _ind) =>
+  //false,
   block?: BlockhashAndFeeCalculator,
   beforeTransactions: Transaction[] = [],
   afterTransactions: Transaction[] = []
@@ -117,16 +118,18 @@ export const sendTransactions = async (
         log.info('Failed at txn index:', i);
         log.info('Caught failure:', e);
 
-        console.info('Failed at txn index:', i);
-        console.info('Caught failure:', e);
+        throw new KyraaError(e);
 
-        failCallback(signedTxns[i], i);
-        if (sequenceType === SequenceType.StopOnFailure) {
-          return {
-            number: i,
-            txs: await Promise.all(pendingTxns),
-          };
-        }
+        //console.info('Failed at txn index:', i);
+        //console.info('Caught failure:', e);
+
+        // failCallback(signedTxns[i], i);
+        // if (sequenceType === SequenceType.StopOnFailure) {
+        //   return {
+        //     number: i,
+        //     txs: await Promise.all(pendingTxns),
+        //   };
+        // }
       }
     } else {
       pendingTxns.push(signedTxnPromise);
@@ -187,12 +190,16 @@ export async function sendSignedTransaction({
     );
 
     if (!confirmation)
-      throw new Error('Timed out awaiting confirmation on transaction');
+      throw new KyraaError({
+        errorCode: 6011,
+        message: LangErrorCode.TimedOutError,
+      });
 
     if (confirmation.err) {
       log.error(confirmation.err);
-      console.error(confirmation.err);
-      throw new Error('Transaction failed: Custom instruction error');
+      //console.error(confirmation.err);
+      //throw new Error('Transaction failed: Custom instruction error');
+      throw new KyraaError(confirmation.err);
     }
 
     slot = confirmation?.slot || 0;
@@ -201,7 +208,10 @@ export async function sendSignedTransaction({
     console.error('Timeout Error caught', err);
     let errs: any = err;
     if (errs.timeout) {
-      throw new Error('Timed out awaiting confirmation on transaction');
+      throw new KyraaError({
+        errorCode: 6011,
+        message: LangErrorCode.TimedOutError,
+      });
     }
     let simulateResult: SimulatedTransactionResponse | null = null;
     try {
@@ -214,13 +224,15 @@ export async function sendSignedTransaction({
         for (let i = simulateResult.logs.length - 1; i >= 0; --i) {
           const line = simulateResult.logs[i];
           if (line.startsWith('Program log: ')) {
-            throw new Error(
-              'Transaction failed: ' + line.slice('Program log: '.length)
-            );
+            throw new KyraaError(simulateResult.err);
+            // throw new Error(
+            //   'Transaction failed: ' + line.slice('Program log: '.length)
+            // );
           }
         }
       }
-      throw new Error(JSON.stringify(simulateResult.err));
+      //throw new Error(JSON.stringify(simulateResult.err));
+      throw new KyraaError(simulateResult.err);
     }
     // throw new Error('Transaction failed');
   } finally {
@@ -257,7 +269,8 @@ async function simulateTransaction(
   // @ts-ignore
   const res = await connection._rpcRequest('simulateTransaction', args);
   if (res.error) {
-    throw new Error('failed to simulate transaction: ' + res.error.message);
+    //throw new Error('failed to simulate transaction: ' + res.error.message);
+    throw new KyraaError({ err: res.error, message: res.error.message });
   }
   return res.result;
 }
@@ -315,7 +328,7 @@ async function awaitTransactionSignatureConfirmation(
     } catch (e) {
       done = true;
       log.error('WS error in setup', txid, e);
-      console.error('WS error in setup', txid, e);
+      //console.error('WS error in setup', txid, e);
     }
     while (!done && queryStatus) {
       // eslint-disable-next-line no-loop-func
