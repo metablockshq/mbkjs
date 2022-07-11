@@ -31,10 +31,6 @@ import { depositNft, depositNftV1 } from './deposit-nft';
 const RECEIPT_URL =
   'https://ctvymyaq3e.execute-api.ap-south-1.amazonaws.com/Prod/receipt-shortener';
 
-const getTokenAccount = async (provider: any, addr: PublicKey) => {
-  return await accountApi.getTokenAccount(provider, addr);
-};
-
 const createUniverse = async (args: UniverseApiArgs) => {
   try {
     const program = getMetaBlocksProgram(args.connection, args.wallet);
