@@ -24,8 +24,8 @@ export const sendTransactions = async (
   sequenceType: SequenceType = SequenceType.Parallel,
   commitment: Commitment = 'singleGossip',
   successCallback: (txid: string, ind: number) => void = (_txid, _ind) => {},
-  //failCallback: (reason: string, ind: number) => boolean = (_txid, _ind) =>
-  //false,
+  failCallback: (reason: string, ind: number) => boolean = (_txid, _ind) =>
+    false,
   block?: BlockhashAndFeeCalculator,
   beforeTransactions: Transaction[] = [],
   afterTransactions: Transaction[] = []
@@ -118,18 +118,18 @@ export const sendTransactions = async (
         log.info('Failed at txn index:', i);
         log.info('Caught failure:', e);
 
-        throw new KyraaError(e);
+        //throw new KyraaError(e);
 
-        //console.info('Failed at txn index:', i);
-        //console.info('Caught failure:', e);
+        console.info('Failed at txn index:', i);
+        console.info('Caught failure:', e);
 
-        // failCallback(signedTxns[i], i);
-        // if (sequenceType === SequenceType.StopOnFailure) {
-        //   return {
-        //     number: i,
-        //     txs: await Promise.all(pendingTxns),
-        //   };
-        // }
+        failCallback(signedTxns[i], i);
+        if (sequenceType === SequenceType.StopOnFailure) {
+          return {
+            number: i,
+            txs: await Promise.all(pendingTxns),
+          };
+        }
       }
     } else {
       pendingTxns.push(signedTxnPromise);

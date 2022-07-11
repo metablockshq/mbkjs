@@ -222,7 +222,7 @@ const depositNftV1 = async (args: GroupedDepositNftApiArgs) => {
         SequenceType.StopOnFailure,
         'singleGossip',
         () => {},
-        //() => false,
+        () => false,
         undefined,
         beforeTransactions,
         afterTransactions
