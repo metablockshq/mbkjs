@@ -1,4 +1,8 @@
-import { getMetaBlocksProgram, getMetaNftProgram } from './factory';
+import {
+  getMetaBlocksProgram,
+  getMetaNftProgram,
+  getMetaTreasuryProgram,
+} from './factory';
 import { Transaction } from '@solana/web3.js';
 import * as anchor from '@project-serum/anchor';
 import { GroupedDepositNftApiArgs, SendTxRequest, SequenceType } from './types';
@@ -16,6 +20,7 @@ import {
 } from './instructions/depositInstructions';
 import { getRawTokenAccount } from './accounts';
 import { sendTransactions } from './accounts/transaction';
+import * as configApi from './config-api';
 
 const depositNft = async (args: GroupedDepositNftApiArgs) => {
   try {
@@ -23,6 +28,14 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
 
     const program = getMetaBlocksProgram(args.connection, args.wallet);
     const metaNftProgram = getMetaNftProgram(args.connection, args.wallet);
+
+    const metaTreasuryProgram = getMetaTreasuryProgram(
+      args.connection,
+      args.wallet
+    );
+    const treasuryData = await configApi.fetchTreasuryData(metaTreasuryProgram);
+    const treasuryAuthority = treasuryData.authority;
+
     const usersKey = args.wallet.publicKey;
 
     const pdaKeys: PdaKeys = await getPdaKeys(
@@ -55,6 +68,7 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
         pdaKeys: pdaKeys,
         usersKey: usersKey,
         program: program,
+        treasuryAuthority: treasuryAuthority,
       });
       transaction1.add(initMetaNftInstruction);
     }
@@ -99,6 +113,7 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
       usersKey: usersKey,
       program: program,
       isReceiptMasterEdition: args.isReceiptMasterEdition,
+      treasuryAuthority: treasuryAuthority,
     });
     transaction2.add(depositInstruction);
 
@@ -123,6 +138,13 @@ const depositNftV1 = async (args: GroupedDepositNftApiArgs) => {
     const program = getMetaBlocksProgram(args.connection, args.wallet);
     const metaNftProgram = getMetaNftProgram(args.connection, args.wallet);
     const usersKey = args.wallet.publicKey;
+
+    const metaTreasuryProgram = getMetaTreasuryProgram(
+      args.connection,
+      args.wallet
+    );
+    const treasuryData = await configApi.fetchTreasuryData(metaTreasuryProgram);
+    const treasuryAuthority = treasuryData.authority;
 
     const pdaKeys: PdaKeys = await getPdaKeys(
       args.universeKey,
@@ -153,6 +175,7 @@ const depositNftV1 = async (args: GroupedDepositNftApiArgs) => {
         pdaKeys: pdaKeys,
         usersKey: usersKey,
         program: program,
+        treasuryAuthority: treasuryAuthority,
       });
       initInstructions.push(initMetaNftInstruction);
     }
@@ -192,6 +215,7 @@ const depositNftV1 = async (args: GroupedDepositNftApiArgs) => {
       usersKey: usersKey,
       program: program,
       isReceiptMasterEdition: args.isReceiptMasterEdition,
+      treasuryAuthority: treasuryAuthority,
     });
     depositInstructions.push(depositInstruction);
 

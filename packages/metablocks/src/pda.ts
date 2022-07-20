@@ -139,8 +139,8 @@ const findMetaBlocksAuthority = async (
 
 const findTreasuryAddress = async () => {
   return await PublicKey.findProgramAddress(
-    [Buffer.from(utils.bytes.utf8.encode('Treasury'))],
-    programIds.META_BLOCKS_PROGRAM_ID
+    [Buffer.from(utils.bytes.utf8.encode('MetaTreasury'))],
+    programIds.META_TREASURY_PROGRAM_ID
   );
 };
 

@@ -1,68 +1,7 @@
 export type MetaBlocks = {
-  "version": "0.3.0",
+  "version": "1.0.0",
   "name": "meta_blocks",
   "instructions": [
-    {
-      "name": "initTreasuryV1",
-      "accounts": [
-        {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "treasury",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "args",
-          "type": {
-            "defined": "InitializeTreasuryArgs"
-          }
-        }
-      ]
-    },
-    {
-      "name": "updateTreasuryV1",
-      "accounts": [
-        {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "newAuthority",
-          "isMut": false,
-          "isSigner": true
-        },
-        {
-          "name": "treasury",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "args",
-          "type": {
-            "defined": "UpdateTreasuryArgs"
-          }
-        }
-      ]
-    },
     {
       "name": "createUniverseV1",
       "accounts": [
@@ -161,6 +100,19 @@ export type MetaBlocks = {
           "name": "rent",
           "isMut": false,
           "isSigner": false
+        },
+        {
+          "name": "metaTreasuryProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "treasury",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Check: This is a PDA passed via CPI"
+          ]
         }
       ],
       "args": [
@@ -247,6 +199,14 @@ export type MetaBlocks = {
         },
         {
           "name": "treasury",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "CHECK : the pda is checked in meta fee"
+          ]
+        },
+        {
+          "name": "metaTreasuryProgram",
           "isMut": false,
           "isSigner": false
         },
@@ -401,11 +361,19 @@ export type MetaBlocks = {
         {
           "name": "treasury",
           "isMut": false,
-          "isSigner": false
+          "isSigner": false,
+          "docs": [
+            "CHECK : the pda is checked via cpi call"
+          ]
         },
         {
           "name": "treasuryAuthority",
           "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "metaTreasuryProgram",
+          "isMut": false,
           "isSigner": false
         }
       ],
@@ -501,6 +469,14 @@ export type MetaBlocks = {
         },
         {
           "name": "treasury",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "CHECK : the pda is checked in meta fee"
+          ]
+        },
+        {
+          "name": "metaTreasuryProgram",
           "isMut": false,
           "isSigner": false
         },
@@ -713,20 +689,6 @@ export type MetaBlocks = {
       }
     },
     {
-      "name": "initializeTreasuryArgs",
-      "type": {
-        "kind": "struct",
-        "fields": []
-      }
-    },
-    {
-      "name": "updateTreasuryArgs",
-      "type": {
-        "kind": "struct",
-        "fields": []
-      }
-    },
-    {
       "name": "createUniverseArgs",
       "type": {
         "kind": "struct",
@@ -788,22 +750,6 @@ export type MetaBlocks = {
           },
           {
             "name": "universe",
-            "type": "publicKey"
-          }
-        ]
-      }
-    },
-    {
-      "name": "treasury",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "bump",
-            "type": "u8"
-          },
-          {
-            "name": "authority",
             "type": "publicKey"
           }
         ]
@@ -1025,70 +971,9 @@ export type MetaBlocks = {
 };
 
 export const IDL: MetaBlocks = {
-  "version": "0.3.0",
+  "version": "1.0.0",
   "name": "meta_blocks",
   "instructions": [
-    {
-      "name": "initTreasuryV1",
-      "accounts": [
-        {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "treasury",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "args",
-          "type": {
-            "defined": "InitializeTreasuryArgs"
-          }
-        }
-      ]
-    },
-    {
-      "name": "updateTreasuryV1",
-      "accounts": [
-        {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "newAuthority",
-          "isMut": false,
-          "isSigner": true
-        },
-        {
-          "name": "treasury",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "args",
-          "type": {
-            "defined": "UpdateTreasuryArgs"
-          }
-        }
-      ]
-    },
     {
       "name": "createUniverseV1",
       "accounts": [
@@ -1187,6 +1072,19 @@ export const IDL: MetaBlocks = {
           "name": "rent",
           "isMut": false,
           "isSigner": false
+        },
+        {
+          "name": "metaTreasuryProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "treasury",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Check: This is a PDA passed via CPI"
+          ]
         }
       ],
       "args": [
@@ -1273,6 +1171,14 @@ export const IDL: MetaBlocks = {
         },
         {
           "name": "treasury",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "CHECK : the pda is checked in meta fee"
+          ]
+        },
+        {
+          "name": "metaTreasuryProgram",
           "isMut": false,
           "isSigner": false
         },
@@ -1427,11 +1333,19 @@ export const IDL: MetaBlocks = {
         {
           "name": "treasury",
           "isMut": false,
-          "isSigner": false
+          "isSigner": false,
+          "docs": [
+            "CHECK : the pda is checked via cpi call"
+          ]
         },
         {
           "name": "treasuryAuthority",
           "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "metaTreasuryProgram",
+          "isMut": false,
           "isSigner": false
         }
       ],
@@ -1527,6 +1441,14 @@ export const IDL: MetaBlocks = {
         },
         {
           "name": "treasury",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "CHECK : the pda is checked in meta fee"
+          ]
+        },
+        {
+          "name": "metaTreasuryProgram",
           "isMut": false,
           "isSigner": false
         },
@@ -1739,20 +1661,6 @@ export const IDL: MetaBlocks = {
       }
     },
     {
-      "name": "initializeTreasuryArgs",
-      "type": {
-        "kind": "struct",
-        "fields": []
-      }
-    },
-    {
-      "name": "updateTreasuryArgs",
-      "type": {
-        "kind": "struct",
-        "fields": []
-      }
-    },
-    {
       "name": "createUniverseArgs",
       "type": {
         "kind": "struct",
@@ -1814,22 +1722,6 @@ export const IDL: MetaBlocks = {
           },
           {
             "name": "universe",
-            "type": "publicKey"
-          }
-        ]
-      }
-    },
-    {
-      "name": "treasury",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "bump",
-            "type": "u8"
-          },
-          {
-            "name": "authority",
             "type": "publicKey"
           }
         ]
