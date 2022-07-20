@@ -1181,10 +1181,8 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@kyraa/metablocks@0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@kyraa/metablocks/-/metablocks-0.1.4.tgz#5e4ce4877a0752ac6a9fac65f42cb75fda099dfb"
-  integrity sha512-XhOsKLSkbdCZWPCQOrhBRv8hS/e83g5TlzU9Imcl0PHQ9amPAew3rV4c2z/rEfdadc6dGCpWtc4qDZ2LO08VdA==
+"@kyraa/metablocks@../metablocks/dist":
+  version "0.0.0"
 
 "@metaplex-foundation/mpl-core@^0.0.2":
   version "0.0.2"
