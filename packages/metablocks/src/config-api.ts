@@ -66,6 +66,7 @@ const updateFixedFeeForTreasury = async (args: UpdateFixedFeeApiArgs) => {
     transaction.add(instruction);
 
     const tx = await program.provider.sendAndConfirm!(transaction, []);
+    return tx;
   } catch (err) {
     throw new KyraaError(err);
   }

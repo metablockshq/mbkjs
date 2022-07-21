@@ -249,14 +249,16 @@ programCommand("update_fixed_fee_of_treasury")
 
   .action(async (_options, cmd) => {
     log.info("Executing the command update_universe");
-    const { env, keypair, logLevel, fixefFee } = cmd.opts();
+    const { env, keypair, logLevel, fixedFee } = cmd.opts();
 
     const connection: Connection = getConnection(env);
     const wallet = loadWallet(keypair);
 
     let argFixedFee: number = 0.0001 * LAMPORTS_PER_SOL;
-    if (isNumeric(fixefFee)) {
-      argFixedFee = fixefFee * LAMPORTS_PER_SOL;
+    //console.log(fixedFee);
+    if (isNumeric(fixedFee)) {
+      //console.log(fixefFee);
+      argFixedFee = fixedFee * LAMPORTS_PER_SOL;
     }
 
     const args: UpdateFixedFeeApiArgs = {
@@ -264,6 +266,8 @@ programCommand("update_fixed_fee_of_treasury")
       connection: connection,
       fixedFee: argFixedFee,
     };
+
+    log.info("The fixed fee in lamports ", args.fixedFee);
 
     try {
       const tx = await configApi.updateFixedFeeForTreasury(args);
