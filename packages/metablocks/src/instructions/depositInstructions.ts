@@ -105,6 +105,9 @@ export const getInitReceiptInstruction = async (args: InitReceiptMintArgs) => {
       tokenProgram: programIds.TOKEN_PROGRAM_ID,
       systemProgram: anchor.web3.SystemProgram.programId,
       rent: anchor.web3.SYSVAR_RENT_PUBKEY,
+      treasury: args.pdaKeys.treasuryAddress,
+      treasuryAuthority: args.treasuryAuthority,
+      metaTreasuryProgram: programIds.META_TREASURY_PROGRAM_ID,
     })
     .instruction();
 };

@@ -239,7 +239,9 @@ export interface DepositNftArgs extends BasicInstructionArgs {
   treasuryAuthority: PublicKey;
 }
 
-export interface InitReceiptMintArgs extends BasicInstructionArgs {}
+export interface InitReceiptMintArgs extends BasicInstructionArgs {
+  treasuryAuthority: PublicKey;
+}
 
 export interface CreateMetaNftArgs extends BasicInstructionArgs {
   uri: string;

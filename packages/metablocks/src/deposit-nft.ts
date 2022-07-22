@@ -102,6 +102,7 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
       pdaKeys: pdaKeys,
       usersKey: usersKey,
       program: program,
+      treasuryAuthority: treasuryAuthority,
     });
     transaction2.add(initReceiptInstruction);
 
@@ -205,6 +206,7 @@ const depositNftV1 = async (args: GroupedDepositNftApiArgs) => {
       pdaKeys: pdaKeys,
       usersKey: usersKey,
       program: program,
+      treasuryAuthority: treasuryAuthority,
     });
     depositInstructions.push(initReceiptInstruction);
 

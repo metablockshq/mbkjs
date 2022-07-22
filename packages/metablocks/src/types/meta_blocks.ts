@@ -109,10 +109,12 @@ export type MetaBlocks = {
         {
           "name": "treasury",
           "isMut": true,
-          "isSigner": false,
-          "docs": [
-            "Check: This is a PDA passed via CPI"
-          ]
+          "isSigner": false
+        },
+        {
+          "name": "treasuryAuthority",
+          "isMut": true,
+          "isSigner": false
         }
       ],
       "args": [
@@ -1081,10 +1083,12 @@ export const IDL: MetaBlocks = {
         {
           "name": "treasury",
           "isMut": true,
-          "isSigner": false,
-          "docs": [
-            "Check: This is a PDA passed via CPI"
-          ]
+          "isSigner": false
+        },
+        {
+          "name": "treasuryAuthority",
+          "isMut": true,
+          "isSigner": false
         }
       ],
       "args": [

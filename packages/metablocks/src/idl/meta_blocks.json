@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.1",
   "name": "meta_blocks",
   "instructions": [
     {
@@ -109,10 +109,12 @@
         {
           "name": "treasury",
           "isMut": true,
-          "isSigner": false,
-          "docs": [
-            "Check: This is a PDA passed via CPI"
-          ]
+          "isSigner": false
+        },
+        {
+          "name": "treasuryAuthority",
+          "isMut": true,
+          "isSigner": false
         }
       ],
       "args": [
