@@ -1,14 +1,17 @@
 import log from "loglevel";
 import { program } from "commander";
 
-import { Connection, PublicKey } from "@solana/web3.js";
-import { getRpcUrl, isBoolean, loadWallet } from "./utils";
+import { Connection, LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
+import { getRpcUrl, isBoolean, isNumeric, loadWallet } from "./utils";
 
 import {
   api,
+  configApi,
   FetchAccountArgs,
   GroupedDepositNftApiArgs,
+  InitializeTreasuryApiArgs,
   UniverseApiArgs,
+  UpdateFixedFeeApiArgs,
   UserNftFilterArgs,
   WithdrawNftApiArgs,
   WithdrawNftWithReceiptApiArgs,
@@ -69,8 +72,14 @@ programCommand("create_universe")
   )
   .action(async (_options, cmd) => {
     log.info("Executing the command create_universe");
-    const { env, keypair, logLevel, name, description, websiteUrl } =
-      cmd.opts();
+    const {
+      env,
+      keypair,
+      logLevel,
+      name,
+      description,
+      websiteUrl,
+    } = cmd.opts();
 
     const endpoint = getRpcUrl(env);
     const connection = new Connection(endpoint, "recent");
@@ -127,8 +136,14 @@ programCommand("update_universe")
   )
   .action(async (_options, cmd) => {
     log.info("Executing the command update_universe");
-    const { env, keypair, logLevel, name, description, websiteUrl } =
-      cmd.opts();
+    const {
+      env,
+      keypair,
+      logLevel,
+      name,
+      description,
+      websiteUrl,
+    } = cmd.opts();
 
     const connection: Connection = getConnection(env);
     const wallet = loadWallet(keypair);
@@ -188,7 +203,80 @@ programCommand("get_all_universes").action(async (_options, cmd) => {
   }
 });
 
-/***************** universe commands ******************************/
+/****************** universe Commands ******************************/
+
+/***************** Treasury commands ******************************/
+programCommand("init_treasury")
+  .option(
+    "-f --fixed-fee <string>",
+    "Treasury fixed fee -defaults to 0.0001 ",
+    "universe-name"
+  )
+
+  .action(async (_options, cmd) => {
+    log.info("Executing the command update_universe");
+    const { env, keypair, logLevel, fixefFee } = cmd.opts();
+
+    const connection: Connection = getConnection(env);
+    const wallet = loadWallet(keypair);
+
+    let argFixedFee: number = 0.0001 * LAMPORTS_PER_SOL;
+    if (isNumeric(fixefFee)) {
+      argFixedFee = fixefFee * LAMPORTS_PER_SOL;
+    }
+
+    const args: InitializeTreasuryApiArgs = {
+      wallet: wallet,
+      connection: connection,
+      fixedFee: argFixedFee,
+    };
+
+    try {
+      const tx = await configApi.initTreasury(args);
+      log.info("The transaction is ", tx);
+    } catch (err) {
+      log.error(err);
+      return;
+    }
+  });
+
+programCommand("update_fixed_fee_of_treasury")
+  .option(
+    "-f --fixed-fee <string>",
+    "Treasury fixed fee -defaults to 0.0001 ",
+    "universe-name"
+  )
+
+  .action(async (_options, cmd) => {
+    log.info("Executing the command update_universe");
+    const { env, keypair, logLevel, fixedFee } = cmd.opts();
+
+    const connection: Connection = getConnection(env);
+    const wallet = loadWallet(keypair);
+
+    let argFixedFee: number = 0.0001 * LAMPORTS_PER_SOL;
+    //console.log(fixedFee);
+    if (isNumeric(fixedFee)) {
+      //console.log(fixefFee);
+      argFixedFee = fixedFee * LAMPORTS_PER_SOL;
+    }
+
+    const args: UpdateFixedFeeApiArgs = {
+      wallet: wallet,
+      connection: connection,
+      fixedFee: argFixedFee,
+    };
+
+    log.info("The fixed fee in lamports ", args.fixedFee);
+
+    try {
+      const tx = await configApi.updateFixedFeeForTreasury(args);
+      log.info("The transaction is ", tx);
+    } catch (err) {
+      log.error(err);
+      return;
+    }
+  });
 
 /********************* Wrapped user NFTs Commands ************/
 // deposit NFT
@@ -425,8 +513,14 @@ programCommand("get_wrapped_user_nft_accounts")
 
   .action(async (_options, cmd) => {
     log.info("Executing the command get_wrapped_user_nft_accounts ");
-    const { env, keypair, logLevel, universes, vaultAuthorities, authorities } =
-      cmd.opts();
+    const {
+      env,
+      keypair,
+      logLevel,
+      universes,
+      vaultAuthorities,
+      authorities,
+    } = cmd.opts();
 
     const connection: Connection = getConnection(env);
     const wallet = loadWallet(keypair);

@@ -1,4 +1,5 @@
 import * as anchor from '@project-serum/anchor';
+import * as configApi from '../config-api';
 import { programIds } from '../factory';
 import {
   CreateMetaNftArgs,
@@ -76,10 +77,11 @@ export const getDepositNftInstruction = async (args: DepositNftArgs) => {
       userNftAta: args.pdaKeys.userNftAta,
       userNftMetadata: args.pdaKeys.userNftMetadataKey,
       treasury: args.pdaKeys.treasuryAddress,
-      treasuryAuthority: programIds.TREASURY_AUTHORITY,
+      treasuryAuthority: args.treasuryAuthority,
       receiptMetadata: args.pdaKeys.receiptMetadataKey,
       receiptMasterEdition: args.pdaKeys.receiptMasterEditionKey,
       tokenMetadataProgram: programIds.TOKEN_METADATA_PROGRAM_ID,
+      metaTreasuryProgram: programIds.META_TREASURY_PROGRAM_ID,
     })
     .instruction();
 };
@@ -195,7 +197,8 @@ export const getInitCpiMetaNftInstruction = async (args: InitMetaNftArgs) => {
       systemProgram: anchor.web3.SystemProgram.programId,
       rent: anchor.web3.SYSVAR_RENT_PUBKEY,
       treasury: args.pdaKeys.treasuryAddress,
-      treasuryAuthority: programIds.TREASURY_AUTHORITY,
+      treasuryAuthority: args.treasuryAuthority,
+      metaTreasuryProgram: programIds.META_TREASURY_PROGRAM_ID,
     })
     .instruction();
 };

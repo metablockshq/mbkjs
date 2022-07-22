@@ -1,4 +1,5 @@
 import { SystemProgram, SYSVAR_RENT_PUBKEY } from '@solana/web3.js';
+import * as configApi from '../config-api';
 import { programIds } from '../factory';
 import { WithdrawNftArgs } from '../types';
 
@@ -29,7 +30,8 @@ export const getWithdrawNftInstruction = async (args: WithdrawNftArgs) => {
       rent: SYSVAR_RENT_PUBKEY,
       metaNftProgram: programIds.META_NFT_PROGRAM_ID,
       treasury: args.pdaKeys.treasuryAddress,
-      treasuryAuthority: programIds.TREASURY_AUTHORITY,
+      treasuryAuthority: args.treasuryAuthority,
+      metaTreasuryProgram: programIds.META_TREASURY_PROGRAM_ID,
     })
     .instruction();
 };

@@ -10,6 +10,7 @@ import {
 import { MetaBlocks } from './meta_blocks';
 import * as borsh from '@project-serum/borsh';
 import { PdaKeys } from '../pda';
+import { MetaTreasury } from './meta_treasury';
 
 export interface UniverseApiArgs {
   connection: Connection;
@@ -25,6 +26,7 @@ interface ApiInputArgs {
   mintKey: PublicKey;
   universeKey: PublicKey;
 }
+
 export interface InitReceiptMintApiArgs extends ApiInputArgs {}
 
 export interface DepositNftApiArgs extends ApiInputArgs {}
@@ -234,6 +236,7 @@ export interface DepositNftArgs extends BasicInstructionArgs {
   uri: string;
   name: string;
   isReceiptMasterEdition: boolean;
+  treasuryAuthority: PublicKey;
 }
 
 export interface InitReceiptMintArgs extends BasicInstructionArgs {}
@@ -243,11 +246,15 @@ export interface CreateMetaNftArgs extends BasicInstructionArgs {
   name: string;
 }
 
-export interface InitMetaNftArgs extends BasicInstructionArgs {}
+export interface InitMetaNftArgs extends BasicInstructionArgs {
+  treasuryAuthority: PublicKey;
+}
 
 export interface InitMetaBlocksAuthorityArgs extends BasicInstructionArgs {}
 
-export interface WithdrawNftArgs extends BasicInstructionArgs {}
+export interface WithdrawNftArgs extends BasicInstructionArgs {
+  treasuryAuthority: PublicKey;
+}
 
 export interface SupabaseWrappedUserNft {
   account: string;
@@ -294,4 +301,33 @@ export enum SequenceType {
 export interface BlockhashAndFeeCalculator {
   blockhash: Blockhash;
   feeCalculator: FeeCalculator;
+}
+
+// treasury API args
+interface ConfigApiInputArgs {
+  connection: Connection;
+  wallet: any;
+}
+
+interface ConfigInstructionArgs {
+  usersKey: PublicKey;
+  program: Program<MetaTreasury>;
+}
+
+export interface GetTreasuryApiArgs extends ConfigApiInputArgs {}
+
+export interface UpdateFixedFeeApiArgs extends ConfigApiInputArgs {
+  fixedFee: number;
+}
+
+export interface InitializeTreasuryApiArgs extends ConfigApiInputArgs {
+  fixedFee: number;
+}
+
+export interface InitializeTreasuryArgs extends ConfigInstructionArgs {
+  fixedFee: number;
+}
+
+export interface UpdateFixedFeeArgs extends ConfigInstructionArgs {
+  fixedFee: number;
 }

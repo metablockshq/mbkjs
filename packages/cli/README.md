@@ -106,3 +106,21 @@ ts-node cli/src/crank-cli.ts get_wrapped_user_nft_accounts  \
 --universe-key "universeKey" \
 --nft-mint-key "nftMintKey"
 ```
+
+## Treasury Initialize
+
+```bash
+ts-node cli/src/metablocks-cli.ts init_treasury  \
+-k cli/wallet/deployer-wallet.json \
+-e "devnet" \
+--fixed-fee "0.0001"
+```
+
+## Update Fixed fee for Treasury
+
+```bash
+ts-node cli/src/metablocks-cli.ts update_fixed_fee_of_treasury  \
+-k cli/wallet/deployer-wallet.json \
+-e "devnet" \
+--fixed-fee "0.00001"
+```

@@ -306,6 +306,7 @@ async function awaitTransactionSignatureConfirmation(
     try {
       subId = connection.onSignature(
         txid,
+        //@ts-ignore
         (result, context) => {
           done = true;
           status = {

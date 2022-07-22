@@ -1,9 +1,13 @@
 import { Program, AnchorProvider } from '@project-serum/anchor';
 import { Connection, PublicKey } from '@solana/web3.js';
+
 import metaBlocksIdl from './idl/meta_blocks.json';
 import metaNftIdl from './idl/meta_nft.json';
+import metaTreasuryIdl from './idl/meta_treasury.json';
+
 import { MetaBlocks } from './types/meta_blocks';
 import { MetaNft } from './types/meta_nft';
+import { MetaTreasury } from './types/meta_treasury';
 
 const programIds = {
   TOKEN_PROGRAM_ID: new PublicKey(
@@ -17,11 +21,9 @@ const programIds = {
   ),
   META_BLOCKS_PROGRAM_ID: new PublicKey(metaBlocksIdl.metadata.address),
   META_NFT_PROGRAM_ID: new PublicKey(metaNftIdl.metadata.address),
+  META_TREASURY_PROGRAM_ID: new PublicKey(metaTreasuryIdl.metadata.address),
   TOKEN_METADATA_PROGRAM_ID: new PublicKey(
     'metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s'
-  ),
-  TREASURY_AUTHORITY: new PublicKey(
-    'HmywQA8MbUcYTGGk6E8x6xBmRduvt3UV4HVyCAczimNb'
   ),
 };
 
@@ -52,9 +54,20 @@ const getMetaNftProgram = (conn: Connection, wallet: any) => {
   return program;
 };
 
+const getMetaTreasuryProgram = (conn: Connection, wallet: any) => {
+  const provider = getAnchorProvider(conn, wallet);
+  const program = new Program<any>(
+    metaTreasuryIdl,
+    programIds.META_TREASURY_PROGRAM_ID,
+    provider
+  ) as Program<MetaTreasury>;
+  return program;
+};
+
 export {
   getMetaNftProgram,
   getMetaBlocksProgram,
   getAnchorProvider,
+  getMetaTreasuryProgram,
   programIds,
 };

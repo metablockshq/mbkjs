@@ -1,4 +1,4 @@
-import { getMetaBlocksProgram } from './factory';
+import { getMetaBlocksProgram, getMetaTreasuryProgram } from './factory';
 import { Connection, PublicKey, Transaction } from '@solana/web3.js';
 import {
   getCreateUniverseInstruction,
@@ -25,8 +25,8 @@ import { getPdaKeys, PdaKeys } from './pda';
 import { getWithdrawNftInstruction } from './instructions/withdrawInstructions';
 import axios from 'axios';
 import { supabaseClient } from './supabase-client';
-import { getRawTokenAccount } from './accounts';
 import { depositNft, depositNftV1 } from './deposit-nft';
+import * as configApi from './config-api';
 
 const RECEIPT_URL =
   'https://ctvymyaq3e.execute-api.ap-south-1.amazonaws.com/Prod/receipt-shortener';
@@ -86,13 +86,21 @@ const updateUniverse = async (args: UniverseApiArgs) => {
 const withdrawNft = async (args: WithdrawNftApiArgs) => {
   try {
     const program = getMetaBlocksProgram(args.connection, args.wallet);
+    const metaTreasuryProgram = getMetaTreasuryProgram(
+      args.connection,
+      args.wallet
+    );
+    const treasuryData = await configApi.fetchTreasuryData(metaTreasuryProgram);
+    const treasuryAuthority = treasuryData.authority;
+
     const usersKey = args.wallet.publicKey;
 
     return await callWithdrawNft(
       program,
       usersKey,
       args.mintKey,
-      args.universeKey
+      args.universeKey,
+      treasuryAuthority
     );
   } catch (e) {
     throw new KyraaError(e);
@@ -102,6 +110,13 @@ const withdrawNft = async (args: WithdrawNftApiArgs) => {
 const withdrawNftWithReceipt = async (args: WithdrawNftWithReceiptApiArgs) => {
   try {
     const program = getMetaBlocksProgram(args.connection, args.wallet);
+    const metaTreasuryProgram = getMetaTreasuryProgram(
+      args.connection,
+      args.wallet
+    );
+    const treasuryData = await configApi.fetchTreasuryData(metaTreasuryProgram);
+    const treasuryAuthority = treasuryData.authority;
+
     const usersKey = args.wallet.publicKey;
 
     const wrappedUserNft = await accountApi.getWrappedUserNftForReceiptMint(
@@ -125,7 +140,13 @@ const withdrawNftWithReceipt = async (args: WithdrawNftWithReceiptApiArgs) => {
     const tokenMint = new PublicKey(wrappedUserNft.tokenMint);
     const universeKey = new PublicKey(wrappedUserNft.universe);
 
-    return await callWithdrawNft(program, usersKey, tokenMint, universeKey);
+    return await callWithdrawNft(
+      program,
+      usersKey,
+      tokenMint,
+      universeKey,
+      treasuryAuthority
+    );
   } catch (e) {
     throw new KyraaError(e);
   }
@@ -135,7 +156,8 @@ const callWithdrawNft = async (
   program: Program<MetaBlocks>,
   usersKey: PublicKey,
   mintKey: PublicKey,
-  universeKey: PublicKey
+  universeKey: PublicKey,
+  treasuryAuthority: PublicKey
 ) => {
   const pdaKeys: PdaKeys = await getPdaKeys(universeKey, usersKey, mintKey);
 
@@ -143,6 +165,7 @@ const callWithdrawNft = async (
     program: program,
     usersKey: usersKey,
     pdaKeys: pdaKeys,
+    treasuryAuthority: treasuryAuthority,
   });
   const transaction = new Transaction();
   transaction.add(withdrawNftInstruction);
