@@ -43,10 +43,16 @@ const initMetaTreasury = async (args: InitializeMetaTreasuryApiArgs) => {
       args.wallet
     );
 
+    const metaBlocksProgram = getMetaBlocksProgram(
+      args.connection,
+      args.wallet
+    );
+
     const instruction = await getInitMetaTreasuryInstruction({
       metaTreasuryProgram: metaTreasuryProgram,
       usersKey: usersKey,
       fixedFee: new BN(args.fixedFee),
+      metaBlocksProgram: metaBlocksProgram,
     });
 
     const transaction = new Transaction();
@@ -73,10 +79,16 @@ const updateFixedFeeForMetaTreasury = async (
       args.wallet
     );
 
+    const metaBlocksProgram = getMetaBlocksProgram(
+      args.connection,
+      args.wallet
+    );
+
     const instruction = await getUpdateFixedFeeForMetaTreasuryInstruction({
       usersKey: usersKey,
       metaTreasuryProgram: metaTreasuryProgram,
       fixedFee: new BN(args.fixedFee),
+      metaBlocksProgram: metaBlocksProgram,
     });
 
     const transaction = new Transaction();
@@ -102,9 +114,14 @@ const initMetaBlocksTreasury = async (args: InitializeTreasuryApiArgs) => {
       args.wallet
     );
 
+    const metaTreasuryProgram = getMetaTreasuryProgram(
+      args.connection,
+      args.wallet
+    );
     const instruction = await getInitTreasuryInstuction({
       metaBlocksProgram: metaBlocksProgram,
       usersKey: usersKey,
+      metaTreasuryProgram: metaTreasuryProgram,
     });
 
     const transaction = new Transaction();
@@ -129,9 +146,15 @@ const updateMetaBlocksTreasury = async (args: UpdateTreasuryApiArgs) => {
       args.wallet
     );
 
+    const metaTreasuryProgram = getMetaTreasuryProgram(
+      args.connection,
+      args.wallet
+    );
+
     const instruction = await getUpdateTreasuryInstuction({
       metaBlocksProgram: metaBlocksProgram,
       usersKey: usersKey,
+      metaTreasuryProgram: metaTreasuryProgram,
     });
 
     const transaction = new Transaction();
