@@ -1182,7 +1182,7 @@
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
 "@kyraa/metablocks@../metablocks":
-  version "0.4.0"
+  version "0.4.6"
   dependencies:
     "@supabase/supabase-js" "^1.35.3"
 

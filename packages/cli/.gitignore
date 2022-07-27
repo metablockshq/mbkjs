@@ -5,3 +5,4 @@ node_modules/**
 test-ledger
 
 
+wallet/deployer-wallet.json
