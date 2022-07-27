@@ -24,14 +24,18 @@ const getTreasuryData = async (args: GetMetaTreasuryApiArgs) => {
 };
 
 const fetchTreasuryData = async (program: Program<MetaTreasury>) => {
-  const [treasuryAddress, _] = await findMetaTreasuryAddress();
+  const [treasuryMetaAddress, _] = await findMetaTreasuryAddress();
 
-  return await program.methods
-    .getTreasury()
-    .accounts({
-      treasury: treasuryAddress,
-    })
-    .view();
+  const result = await program.account.treasury.fetch(treasuryMetaAddress);
+
+  // return await program.methods
+  //   .getTreasury()
+  //   .accounts({
+  //     treasury: treasuryMetaAddress,
+  //   })
+  //   .view();
+
+  return result;
 };
 
 const initMetaTreasury = async (args: InitializeMetaTreasuryApiArgs) => {
