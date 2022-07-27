@@ -36,6 +36,8 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
     const treasuryData = await configApi.fetchTreasuryData(metaTreasuryProgram);
     const treasuryAuthority = treasuryData.authority;
 
+    // console.log('The treasury authority is ', treasuryAuthority.toString());
+
     const usersKey = args.wallet.publicKey;
 
     const pdaKeys: PdaKeys = await getPdaKeys(
@@ -146,6 +148,8 @@ const depositNftV1 = async (args: GroupedDepositNftApiArgs) => {
     );
     const treasuryData = await configApi.fetchTreasuryData(metaTreasuryProgram);
     const treasuryAuthority = treasuryData.authority;
+
+    //console.log('The treasury authority is ', treasuryAuthority.toString());
 
     const pdaKeys: PdaKeys = await getPdaKeys(
       args.universeKey,

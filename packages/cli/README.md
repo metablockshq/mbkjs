@@ -7,7 +7,7 @@
 Get all the universes deposited in the metablocks program
 
 ```bash
-ts-node cli/src/crank-cli.ts get_all_universes -k cli/wallet/test-wallet.json -e "devnet"
+ts-node cli/src/metablocks-cli.ts get_all_universes -k cli/wallet/test-wallet.json -e "devnet"
 ```
 
 ### Create universe
@@ -15,11 +15,11 @@ ts-node cli/src/crank-cli.ts get_all_universes -k cli/wallet/test-wallet.json -e
 Call this command for creating the universe
 
 ```bash
-ts-node cli/src/crank-cli.ts create_universe -k cli/wallet/test-wallet.json \
+ts-node cli/src/metablocks-cli.ts create_universe -k cli/wallet/test-wallet.json \
 -e "devnet" \
 -n "First Universe" \
--w "http://localhost:88" \
--d "Universe description"
+-w "http://3moji.app" \
+-d "Universe for 3moji"
 ```
 
 ### Update universe
@@ -27,10 +27,10 @@ ts-node cli/src/crank-cli.ts create_universe -k cli/wallet/test-wallet.json \
 Update the universe
 
 ```bash
-ts-node cli/src/crank-cli.ts update_universe -k cli/wallet/test-wallet.json \
+ts-node cli/src/metablocks-cli.ts update_universe -k cli/wallet/test-wallet.json \
 -e "devnet" \
 -n "Updated first Universe" \
--w "http://localhost:88" \
+-w "http://3moji.app" \
 -d "Updated Universe description"
 ```
 
@@ -41,7 +41,7 @@ ts-node cli/src/crank-cli.ts update_universe -k cli/wallet/test-wallet.json \
 Get all wrapped user nfts accounts of all the universes
 
 ```bash
-ts-node cli/src/crank-cli.ts get_wrapped_user_nft_accounts  \
+ts-node cli/src/metablocks-cli.ts get_wrapped_user_nft_accounts  \
 -k cli/wallet/test-wallet.json \
 -e "devnet" \
 --universes "3" "2" \
@@ -54,7 +54,7 @@ ts-node cli/src/crank-cli.ts get_wrapped_user_nft_accounts  \
 Get a wrapped user nft account with a receipt mint
 
 ```bash
-ts-node cli/src/crank-cli.ts get_wrapped_user_nft_accounts  \
+ts-node cli/src/metablocks-cli.ts get_wrapped_user_nft_accounts  \
 -k cli/wallet/test-wallet.json \
 -e "devnet" \
 --receipt-mint-key "receiptMintKey"
@@ -65,7 +65,7 @@ ts-node cli/src/crank-cli.ts get_wrapped_user_nft_accounts  \
 Get metadata for the mint (uses metaplex library)
 
 ```bash
-ts-node cli/src/crank-cli.ts get_wrapped_user_nft_accounts  \
+ts-node cli/src/metablocks-cli.ts get_wrapped_user_nft_accounts  \
 -k cli/wallet/test-wallet.json \
 -e "devnet" \
 --mint-key "mintKey"
@@ -74,7 +74,7 @@ ts-node cli/src/crank-cli.ts get_wrapped_user_nft_accounts  \
 ### Deposit NFT into an universe
 
 ```bash
-ts-node cli/src/crank-cli.ts get_wrapped_user_nft_accounts  \
+ts-node cli/src/metablocks-cli.ts get_wrapped_user_nft_accounts  \
 -k cli/wallet/test-wallet.json \
 -e "devnet" \
 --universe-key "universeKey" \
@@ -90,7 +90,7 @@ ts-node cli/src/crank-cli.ts get_wrapped_user_nft_accounts  \
 ### Withdraw nft with Receipt
 
 ```bash
-ts-node cli/src/crank-cli.ts get_wrapped_user_nft_accounts  \
+ts-node cli/src/metablocks-cli.ts get_wrapped_user_nft_accounts  \
 -k cli/wallet/test-wallet.json \
 -e "devnet" \
 --universe-key "universeKey" \
@@ -100,7 +100,7 @@ ts-node cli/src/crank-cli.ts get_wrapped_user_nft_accounts  \
 ### Withdraw Nft
 
 ```bash
-ts-node cli/src/crank-cli.ts get_wrapped_user_nft_accounts  \
+ts-node cli/src/metablocks-cli.ts get_wrapped_user_nft_accounts  \
 -k cli/wallet/test-wallet.json \
 -e "devnet" \
 --universe-key "universeKey" \

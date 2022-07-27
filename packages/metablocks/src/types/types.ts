@@ -313,8 +313,8 @@ interface ConfigApiInputArgs {
 
 interface ConfigInstructionArgs {
   usersKey: PublicKey;
-  metaTreasuryProgram?: Program<MetaTreasury>;
-  metaBlocksProgram?: Program<MetaBlocks>;
+  metaTreasuryProgram: Program<MetaTreasury>;
+  metaBlocksProgram: Program<MetaBlocks>;
 }
 
 // api args
