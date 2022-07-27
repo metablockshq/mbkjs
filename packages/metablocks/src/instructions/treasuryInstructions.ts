@@ -1,33 +1,73 @@
 import { SystemProgram } from '@solana/web3.js';
+import { programIds } from '../factory';
 import * as pda from '../pda';
-import { InitializeTreasuryArgs, UpdateFixedFeeArgs } from '../types';
+import {
+  InitializeMetaTreasuryArgs,
+  InitializeTreasuryArgs,
+  UpdateFixedFeeForMetaTreasuryArgs,
+  UpdateTreasuryArgs,
+} from '../types';
 
-export const getInitTreasuryInstruction = async (
-  args: InitializeTreasuryArgs
+export const getInitMetaTreasuryInstruction = async (
+  args: InitializeMetaTreasuryArgs
 ) => {
-  const [treasuryAddress, _] = await pda.findTreasuryAddress();
+  const [treasuryMetaAddress, _] = await pda.findMetaTreasuryAddress();
 
-  return await args.program.methods
-    .initTreasury({ fixedFee: args.fixedFee })
+  return await args
+    .metaTreasuryProgram!.methods.initTreasury({ fixedFee: args.fixedFee })
     .accounts({
       authority: args.usersKey,
-      treasury: treasuryAddress,
+      treasury: treasuryMetaAddress,
       systemProgram: SystemProgram.programId,
     })
     .instruction();
 };
 
-export const getUpdateFixedFeeForTreasuryInstruction = async (
-  args: UpdateFixedFeeArgs
+export const getUpdateFixedFeeForMetaTreasuryInstruction = async (
+  args: UpdateFixedFeeForMetaTreasuryArgs
 ) => {
-  const [treasuryAddress, _] = await pda.findTreasuryAddress();
+  const [treasuryMetaAddress, _] = await pda.findMetaTreasuryAddress();
 
-  return await args.program.methods
-    .updateFixedFee({ fixedFee: args.fixedFee })
+  return await args
+    .metaTreasuryProgram!.methods.updateFixedFee({ fixedFee: args.fixedFee })
     .accounts({
       authority: args.usersKey,
+      treasury: treasuryMetaAddress,
+      systemProgram: SystemProgram.programId,
+    })
+    .instruction();
+};
+
+export const getInitTreasuryInstuction = async (
+  args: InitializeTreasuryArgs
+) => {
+  const [treasuryAddress, _] = await pda.findTreasuryAddress();
+  const [treasuryMetaAddress, _2] = await pda.findMetaTreasuryAddress();
+
+  return await args
+    .metaBlocksProgram!.methods.initTreasuryV1()
+    .accounts({
       treasury: treasuryAddress,
       systemProgram: SystemProgram.programId,
+      metaTreasury: treasuryMetaAddress,
+      metaTreasuryProgram: programIds.META_TREASURY_PROGRAM_ID,
+      authority: args.usersKey,
+    })
+    .instruction();
+};
+
+export const getUpdateTreasuryInstuction = async (args: UpdateTreasuryArgs) => {
+  const [treasuryAddress, _] = await pda.findTreasuryAddress();
+  const [treasuryMetaAddress, _2] = await pda.findMetaTreasuryAddress();
+
+  return await args
+    .metaBlocksProgram!.methods.updateTreasuryV1()
+    .accounts({
+      treasury: treasuryAddress,
+      systemProgram: SystemProgram.programId,
+      metaTreasury: treasuryMetaAddress,
+      metaTreasuryProgram: programIds.META_TREASURY_PROGRAM_ID,
+      authority: args.usersKey,
     })
     .instruction();
 };

@@ -313,23 +313,36 @@ interface ConfigApiInputArgs {
 
 interface ConfigInstructionArgs {
   usersKey: PublicKey;
-  program: Program<MetaTreasury>;
+  metaTreasuryProgram?: Program<MetaTreasury>;
+  metaBlocksProgram?: Program<MetaBlocks>;
 }
 
-export interface GetTreasuryApiArgs extends ConfigApiInputArgs {}
+// api args
+export interface GetMetaTreasuryApiArgs extends ConfigApiInputArgs {}
 
-export interface UpdateFixedFeeApiArgs extends ConfigApiInputArgs {
+export interface InitializeMetaTreasuryApiArgs extends ConfigApiInputArgs {
   fixedFee: number;
 }
 
-export interface InitializeTreasuryApiArgs extends ConfigApiInputArgs {
+export interface UpdateFixedFeeForMetaTreasuryApiArgs
+  extends ConfigApiInputArgs {
   fixedFee: number;
 }
 
-export interface InitializeTreasuryArgs extends ConfigInstructionArgs {
+// insturctions
+export interface InitializeMetaTreasuryArgs extends ConfigInstructionArgs {
   fixedFee: number;
 }
 
-export interface UpdateFixedFeeArgs extends ConfigInstructionArgs {
+export interface UpdateFixedFeeForMetaTreasuryArgs
+  extends ConfigInstructionArgs {
   fixedFee: number;
 }
+
+// api args
+export interface InitializeTreasuryApiArgs extends ConfigApiInputArgs {}
+export interface InitializeTreasuryArgs extends ConfigInstructionArgs {}
+
+// instructions
+export interface UpdateTreasuryApiArgs extends ConfigApiInputArgs {}
+export interface UpdateTreasuryArgs extends ConfigInstructionArgs {}
