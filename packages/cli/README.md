@@ -107,20 +107,35 @@ ts-node cli/src/crank-cli.ts get_wrapped_user_nft_accounts  \
 --nft-mint-key "nftMintKey"
 ```
 
-## Treasury Initialize
+## Meta Treasury Initialize
 
 ```bash
-ts-node cli/src/metablocks-cli.ts init_treasury  \
+ts-node cli/src/metablocks-cli.ts init_meta_treasury  \
 -k cli/wallet/deployer-wallet.json \
 -e "devnet" \
 --fixed-fee "0.0001"
 ```
 
-## Update Fixed fee for Treasury
+## Update Fixed fee for Meta Treasury
 
 ```bash
-ts-node cli/src/metablocks-cli.ts update_fixed_fee_of_treasury  \
+ts-node cli/src/metablocks-cli.ts update_fixed_fee_of_meta_treasury  \
 -k cli/wallet/deployer-wallet.json \
 -e "devnet" \
 --fixed-fee "0.00001"
+```
+
+## Treasury Initialize
+
+```bash
+ts-node cli/src/metablocks-cli.ts init_treasury  \
+-k cli/wallet/deployer-wallet.json \
+-e "devnet" 
+```
+
+## Update Treasury 
+```bash
+ts-node cli/src/metablocks-cli.ts update_treasury  \
+-k cli/wallet/deployer-wallet.json \
+-e "devnet" 
 ```

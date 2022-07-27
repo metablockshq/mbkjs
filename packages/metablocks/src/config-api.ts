@@ -1,26 +1,30 @@
 import { BN, Program } from '@project-serum/anchor';
 import { Transaction } from '@solana/web3.js';
 import { KyraaError } from './error';
-import { getMetaTreasuryProgram } from './factory';
+import { getMetaBlocksProgram, getMetaTreasuryProgram } from './factory';
 import {
-  getInitTreasuryInstruction,
-  getUpdateFixedFeeForTreasuryInstruction,
+  getInitMetaTreasuryInstruction,
+  getUpdateFixedFeeForMetaTreasuryInstruction,
+  getInitTreasuryInstuction,
+  getUpdateTreasuryInstuction,
 } from './instructions/treasuryInstructions';
-import { findTreasuryAddress } from './pda';
+import { findMetaTreasuryAddress } from './pda';
 import {
-  GetTreasuryApiArgs,
+  GetMetaTreasuryApiArgs,
+  InitializeMetaTreasuryApiArgs,
   InitializeTreasuryApiArgs,
-  UpdateFixedFeeApiArgs,
+  UpdateFixedFeeForMetaTreasuryApiArgs,
+  UpdateTreasuryApiArgs,
 } from './types';
 import { MetaTreasury } from './types/meta_treasury';
 
-const getTreasuryData = async (args: GetTreasuryApiArgs) => {
+const getTreasuryData = async (args: GetMetaTreasuryApiArgs) => {
   const program = getMetaTreasuryProgram(args.connection, args.wallet);
   return fetchTreasuryData(program);
 };
 
 const fetchTreasuryData = async (program: Program<MetaTreasury>) => {
-  const [treasuryAddress, _] = await findTreasuryAddress();
+  const [treasuryAddress, _] = await findMetaTreasuryAddress();
 
   return await program.methods
     .getTreasury()
@@ -30,13 +34,17 @@ const fetchTreasuryData = async (program: Program<MetaTreasury>) => {
     .view();
 };
 
-const initTreasury = async (args: InitializeTreasuryApiArgs) => {
+const initMetaTreasury = async (args: InitializeMetaTreasuryApiArgs) => {
   try {
     const usersKey = args.wallet.publicKey;
-    const program = getMetaTreasuryProgram(args.connection, args.wallet);
 
-    const instruction = await getInitTreasuryInstruction({
-      program: program,
+    const metaTreasuryProgram = getMetaTreasuryProgram(
+      args.connection,
+      args.wallet
+    );
+
+    const instruction = await getInitMetaTreasuryInstruction({
+      metaTreasuryProgram: metaTreasuryProgram,
       usersKey: usersKey,
       fixedFee: new BN(args.fixedFee),
     });
@@ -44,28 +52,95 @@ const initTreasury = async (args: InitializeTreasuryApiArgs) => {
     const transaction = new Transaction();
     transaction.add(instruction);
 
-    const tx = await program.provider.sendAndConfirm!(transaction, []);
+    const tx = await metaTreasuryProgram.provider.sendAndConfirm!(
+      transaction,
+      []
+    );
     return tx;
   } catch (err) {
     throw new KyraaError(err);
   }
 };
 
-const updateFixedFeeForTreasury = async (args: UpdateFixedFeeApiArgs) => {
+const updateFixedFeeForMetaTreasury = async (
+  args: UpdateFixedFeeForMetaTreasuryApiArgs
+) => {
   try {
     const usersKey = args.wallet.publicKey;
-    const program = getMetaTreasuryProgram(args.connection, args.wallet);
 
-    const instruction = await getUpdateFixedFeeForTreasuryInstruction({
+    const metaTreasuryProgram = getMetaTreasuryProgram(
+      args.connection,
+      args.wallet
+    );
+
+    const instruction = await getUpdateFixedFeeForMetaTreasuryInstruction({
       usersKey: usersKey,
-      program: program,
+      metaTreasuryProgram: metaTreasuryProgram,
       fixedFee: new BN(args.fixedFee),
     });
 
     const transaction = new Transaction();
     transaction.add(instruction);
 
-    const tx = await program.provider.sendAndConfirm!(transaction, []);
+    const tx = await metaTreasuryProgram.provider.sendAndConfirm!(
+      transaction,
+      []
+    );
+    return tx;
+  } catch (err) {
+    throw new KyraaError(err);
+  }
+};
+
+//metablocks treasury
+const initMetaBlocksTreasury = async (args: InitializeTreasuryApiArgs) => {
+  try {
+    const usersKey = args.wallet.publicKey;
+
+    const metaBlocksProgram = getMetaBlocksProgram(
+      args.connection,
+      args.wallet
+    );
+
+    const instruction = await getInitTreasuryInstuction({
+      metaBlocksProgram: metaBlocksProgram,
+      usersKey: usersKey,
+    });
+
+    const transaction = new Transaction();
+    transaction.add(instruction);
+
+    const tx = await metaBlocksProgram.provider.sendAndConfirm!(
+      transaction,
+      []
+    );
+    return tx;
+  } catch (err) {
+    throw new KyraaError(err);
+  }
+};
+
+const updateMetaBlocksTreasury = async (args: UpdateTreasuryApiArgs) => {
+  try {
+    const usersKey = args.wallet.publicKey;
+
+    const metaBlocksProgram = getMetaBlocksProgram(
+      args.connection,
+      args.wallet
+    );
+
+    const instruction = await getUpdateTreasuryInstuction({
+      metaBlocksProgram: metaBlocksProgram,
+      usersKey: usersKey,
+    });
+
+    const transaction = new Transaction();
+    transaction.add(instruction);
+
+    const tx = await metaBlocksProgram.provider.sendAndConfirm!(
+      transaction,
+      []
+    );
     return tx;
   } catch (err) {
     throw new KyraaError(err);
@@ -75,6 +150,8 @@ const updateFixedFeeForTreasury = async (args: UpdateFixedFeeApiArgs) => {
 export {
   getTreasuryData,
   fetchTreasuryData,
-  initTreasury,
-  updateFixedFeeForTreasury,
+  initMetaTreasury,
+  updateFixedFeeForMetaTreasury,
+  initMetaBlocksTreasury,
+  updateMetaBlocksTreasury,
 };

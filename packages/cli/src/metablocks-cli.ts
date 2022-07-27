@@ -9,9 +9,11 @@ import {
   configApi,
   FetchAccountArgs,
   GroupedDepositNftApiArgs,
+  InitializeMetaTreasuryApiArgs,
   InitializeTreasuryApiArgs,
   UniverseApiArgs,
-  UpdateFixedFeeApiArgs,
+  UpdateFixedFeeForMetaTreasuryApiArgs,
+  UpdateTreasuryApiArgs,
   UserNftFilterArgs,
   WithdrawNftApiArgs,
   WithdrawNftWithReceiptApiArgs,
@@ -204,79 +206,6 @@ programCommand("get_all_universes").action(async (_options, cmd) => {
 });
 
 /****************** universe Commands ******************************/
-
-/***************** Treasury commands ******************************/
-programCommand("init_treasury")
-  .option(
-    "-f --fixed-fee <string>",
-    "Treasury fixed fee -defaults to 0.0001 ",
-    "universe-name"
-  )
-
-  .action(async (_options, cmd) => {
-    log.info("Executing the command update_universe");
-    const { env, keypair, logLevel, fixefFee } = cmd.opts();
-
-    const connection: Connection = getConnection(env);
-    const wallet = loadWallet(keypair);
-
-    let argFixedFee: number = 0.0001 * LAMPORTS_PER_SOL;
-    if (isNumeric(fixefFee)) {
-      argFixedFee = fixefFee * LAMPORTS_PER_SOL;
-    }
-
-    const args: InitializeTreasuryApiArgs = {
-      wallet: wallet,
-      connection: connection,
-      fixedFee: argFixedFee,
-    };
-
-    try {
-      const tx = await configApi.initTreasury(args);
-      log.info("The transaction is ", tx);
-    } catch (err) {
-      log.error(err);
-      return;
-    }
-  });
-
-programCommand("update_fixed_fee_of_treasury")
-  .option(
-    "-f --fixed-fee <string>",
-    "Treasury fixed fee -defaults to 0.0001 ",
-    "universe-name"
-  )
-
-  .action(async (_options, cmd) => {
-    log.info("Executing the command update_universe");
-    const { env, keypair, logLevel, fixedFee } = cmd.opts();
-
-    const connection: Connection = getConnection(env);
-    const wallet = loadWallet(keypair);
-
-    let argFixedFee: number = 0.0001 * LAMPORTS_PER_SOL;
-    //console.log(fixedFee);
-    if (isNumeric(fixedFee)) {
-      //console.log(fixefFee);
-      argFixedFee = fixedFee * LAMPORTS_PER_SOL;
-    }
-
-    const args: UpdateFixedFeeApiArgs = {
-      wallet: wallet,
-      connection: connection,
-      fixedFee: argFixedFee,
-    };
-
-    log.info("The fixed fee in lamports ", args.fixedFee);
-
-    try {
-      const tx = await configApi.updateFixedFeeForTreasury(args);
-      log.info("The transaction is ", tx);
-    } catch (err) {
-      log.error(err);
-      return;
-    }
-  });
 
 /********************* Wrapped user NFTs Commands ************/
 // deposit NFT
@@ -620,6 +549,116 @@ programCommand("get_wrapped_user_nft_account")
     }
   });
 /****************** wrapped user nft commands ***********************/
+
+/***************** Meta Treasury commands ******************************/
+programCommand("init_meta_treasury")
+  .option("-f --fixed-fee <string>", "Treasury fixed fee -defaults to 0.0001 ")
+
+  .action(async (_options, cmd) => {
+    log.info("Executing the command update_universe");
+    const { env, keypair, logLevel, fixefFee } = cmd.opts();
+
+    const connection: Connection = getConnection(env);
+    const wallet = loadWallet(keypair);
+
+    let argFixedFee: number = 0.0001 * LAMPORTS_PER_SOL;
+    if (isNumeric(fixefFee)) {
+      argFixedFee = fixefFee * LAMPORTS_PER_SOL;
+    }
+
+    const args: InitializeMetaTreasuryApiArgs = {
+      wallet: wallet,
+      connection: connection,
+      fixedFee: argFixedFee,
+    };
+
+    try {
+      const tx = await configApi.initMetaTreasury(args);
+      log.info("The transaction is ", tx);
+    } catch (err) {
+      log.error(err);
+      return;
+    }
+  });
+
+programCommand("update_fixed_fee_of_meta_treasury")
+  .option("-f --fixed-fee <string>", "Treasury fixed fee -defaults to 0.0001 ")
+
+  .action(async (_options, cmd) => {
+    log.info("Executing the command update_universe");
+    const { env, keypair, logLevel, fixedFee } = cmd.opts();
+
+    const connection: Connection = getConnection(env);
+    const wallet = loadWallet(keypair);
+
+    let argFixedFee: number = 0.0001 * LAMPORTS_PER_SOL;
+    //console.log(fixedFee);
+    if (isNumeric(fixedFee)) {
+      //console.log(fixefFee);
+      argFixedFee = fixedFee * LAMPORTS_PER_SOL;
+    }
+
+    const args: UpdateFixedFeeForMetaTreasuryApiArgs = {
+      wallet: wallet,
+      connection: connection,
+      fixedFee: argFixedFee,
+    };
+
+    log.info("The fixed fee in lamports ", args.fixedFee);
+
+    try {
+      const tx = await configApi.updateFixedFeeForMetaTreasury(args);
+      log.info("The transaction is ", tx);
+    } catch (err) {
+      log.error(err);
+      return;
+    }
+  });
+
+/*****************Meta Treasury commands ******************************/
+
+/***************** Treasury commands ******************************/
+programCommand("init_treasury").action(async (_options, cmd) => {
+  log.info("Executing the command update_universe");
+  const { env, keypair, logLevel } = cmd.opts();
+
+  const connection: Connection = getConnection(env);
+  const wallet = loadWallet(keypair);
+
+  const args: InitializeTreasuryApiArgs = {
+    wallet: wallet,
+    connection: connection,
+  };
+
+  try {
+    const tx = await configApi.initMetaBlocksTreasury(args);
+    log.info("The transaction is ", tx);
+  } catch (err) {
+    log.error(err);
+    return;
+  }
+});
+
+programCommand("update_treasury").action(async (_options, cmd) => {
+  log.info("Executing the command update_universe");
+  const { env, keypair, logLevel } = cmd.opts();
+
+  const connection: Connection = getConnection(env);
+  const wallet = loadWallet(keypair);
+
+  const args: UpdateTreasuryApiArgs = {
+    wallet: wallet,
+    connection: connection,
+  };
+
+  try {
+    const tx = await configApi.updateMetaBlocksTreasury(args);
+    log.info("The transaction is ", tx);
+  } catch (err) {
+    log.error(err);
+    return;
+  }
+});
 
 program
   .configureOutput({
