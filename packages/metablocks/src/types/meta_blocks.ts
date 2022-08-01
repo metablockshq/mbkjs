@@ -107,6 +107,11 @@ export type MetaBlocks = {
           "isSigner": false
         },
         {
+          "name": "metaTreasuryProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
           "name": "treasuryAuthority",
           "isMut": true,
           "isSigner": false
@@ -196,6 +201,11 @@ export type MetaBlocks = {
         },
         {
           "name": "treasury",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "metaTreasuryProgram",
           "isMut": false,
           "isSigner": false
         },
@@ -353,6 +363,11 @@ export type MetaBlocks = {
           "isSigner": false
         },
         {
+          "name": "metaTreasuryProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
           "name": "treasuryAuthority",
           "isMut": true,
           "isSigner": false
@@ -454,6 +469,11 @@ export type MetaBlocks = {
           "isSigner": false
         },
         {
+          "name": "metaTreasuryProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
           "name": "treasuryAuthority",
           "isMut": true,
           "isSigner": false
@@ -545,74 +565,6 @@ export type MetaBlocks = {
           }
         }
       ]
-    },
-    {
-      "name": "initTreasuryV1",
-      "accounts": [
-        {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "treasury",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "metaTreasury",
-          "isMut": false,
-          "isSigner": false,
-          "docs": [
-            "CHECK : the pda is checked in meta fee"
-          ]
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "metaTreasuryProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "updateTreasuryV1",
-      "accounts": [
-        {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "treasury",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "metaTreasury",
-          "isMut": false,
-          "isSigner": false,
-          "docs": [
-            "CHECK : the pda is checked in meta fee"
-          ]
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "metaTreasuryProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
     }
   ],
   "accounts": [
@@ -792,26 +744,6 @@ export type MetaBlocks = {
           {
             "name": "universe",
             "type": "publicKey"
-          }
-        ]
-      }
-    },
-    {
-      "name": "treasury",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "bump",
-            "type": "u8"
-          },
-          {
-            "name": "authority",
-            "type": "publicKey"
-          },
-          {
-            "name": "fixedFee",
-            "type": "u64"
           }
         ]
       }
@@ -1140,6 +1072,11 @@ export const IDL: MetaBlocks = {
           "isSigner": false
         },
         {
+          "name": "metaTreasuryProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
           "name": "treasuryAuthority",
           "isMut": true,
           "isSigner": false
@@ -1229,6 +1166,11 @@ export const IDL: MetaBlocks = {
         },
         {
           "name": "treasury",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "metaTreasuryProgram",
           "isMut": false,
           "isSigner": false
         },
@@ -1386,6 +1328,11 @@ export const IDL: MetaBlocks = {
           "isSigner": false
         },
         {
+          "name": "metaTreasuryProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
           "name": "treasuryAuthority",
           "isMut": true,
           "isSigner": false
@@ -1487,6 +1434,11 @@ export const IDL: MetaBlocks = {
           "isSigner": false
         },
         {
+          "name": "metaTreasuryProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
           "name": "treasuryAuthority",
           "isMut": true,
           "isSigner": false
@@ -1578,74 +1530,6 @@ export const IDL: MetaBlocks = {
           }
         }
       ]
-    },
-    {
-      "name": "initTreasuryV1",
-      "accounts": [
-        {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "treasury",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "metaTreasury",
-          "isMut": false,
-          "isSigner": false,
-          "docs": [
-            "CHECK : the pda is checked in meta fee"
-          ]
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "metaTreasuryProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "updateTreasuryV1",
-      "accounts": [
-        {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "treasury",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "metaTreasury",
-          "isMut": false,
-          "isSigner": false,
-          "docs": [
-            "CHECK : the pda is checked in meta fee"
-          ]
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "metaTreasuryProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
     }
   ],
   "accounts": [
@@ -1825,26 +1709,6 @@ export const IDL: MetaBlocks = {
           {
             "name": "universe",
             "type": "publicKey"
-          }
-        ]
-      }
-    },
-    {
-      "name": "treasury",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "bump",
-            "type": "u8"
-          },
-          {
-            "name": "authority",
-            "type": "publicKey"
-          },
-          {
-            "name": "fixedFee",
-            "type": "u64"
           }
         ]
       }

@@ -186,7 +186,7 @@ export interface PdaKeys {
   metaNftMetadataAddress: PublicKey;
   metaNftMasterEditionAddress: PublicKey;
   metaTreasuryAddress: PublicKey;
-  treasuryAddress: PublicKey;
+  //treasuryAddress: PublicKey;
 }
 
 export const getPdaKeys = async (
@@ -261,8 +261,6 @@ export const getPdaKeys = async (
 
   const [metaTreasuryAddress, _tab] = await findMetaTreasuryAddress();
 
-  const [treasuryAddress, _ta] = await findTreasuryAddress();
-
   return {
     universeKey: universeKey,
     vaultKey: vaultKey,
@@ -283,6 +281,5 @@ export const getPdaKeys = async (
     metaNftMetadataAddress: metaNftMetadataAddress,
     metaNftMasterEditionAddress: metaNftMasterEditionAddress,
     metaTreasuryAddress: metaTreasuryAddress,
-    treasuryAddress: treasuryAddress,
   };
 };

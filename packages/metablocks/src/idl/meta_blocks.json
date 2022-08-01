@@ -107,6 +107,11 @@
           "isSigner": false
         },
         {
+          "name": "metaTreasuryProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
           "name": "treasuryAuthority",
           "isMut": true,
           "isSigner": false
@@ -196,6 +201,11 @@
         },
         {
           "name": "treasury",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "metaTreasuryProgram",
           "isMut": false,
           "isSigner": false
         },
@@ -353,6 +363,11 @@
           "isSigner": false
         },
         {
+          "name": "metaTreasuryProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
           "name": "treasuryAuthority",
           "isMut": true,
           "isSigner": false
@@ -454,6 +469,11 @@
           "isSigner": false
         },
         {
+          "name": "metaTreasuryProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
           "name": "treasuryAuthority",
           "isMut": true,
           "isSigner": false
@@ -545,74 +565,6 @@
           }
         }
       ]
-    },
-    {
-      "name": "initTreasuryV1",
-      "accounts": [
-        {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "treasury",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "metaTreasury",
-          "isMut": false,
-          "isSigner": false,
-          "docs": [
-            "CHECK : the pda is checked in meta fee"
-          ]
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "metaTreasuryProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "updateTreasuryV1",
-      "accounts": [
-        {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "treasury",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "metaTreasury",
-          "isMut": false,
-          "isSigner": false,
-          "docs": [
-            "CHECK : the pda is checked in meta fee"
-          ]
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "metaTreasuryProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
     }
   ],
   "accounts": [
@@ -792,26 +744,6 @@
           {
             "name": "universe",
             "type": "publicKey"
-          }
-        ]
-      }
-    },
-    {
-      "name": "Treasury",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "bump",
-            "type": "u8"
-          },
-          {
-            "name": "authority",
-            "type": "publicKey"
-          },
-          {
-            "name": "fixedFee",
-            "type": "u64"
           }
         ]
       }
