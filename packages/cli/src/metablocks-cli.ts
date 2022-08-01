@@ -10,10 +10,8 @@ import {
   FetchAccountArgs,
   GroupedDepositNftApiArgs,
   InitializeMetaTreasuryApiArgs,
-  InitializeTreasuryApiArgs,
   UniverseApiArgs,
   UpdateFixedFeeForMetaTreasuryApiArgs,
-  UpdateTreasuryApiArgs,
   UserNftFilterArgs,
   WithdrawNftApiArgs,
   WithdrawNftWithReceiptApiArgs,
@@ -616,49 +614,6 @@ programCommand("update_fixed_fee_of_meta_treasury")
   });
 
 /*****************Meta Treasury commands ******************************/
-
-/***************** Treasury commands ******************************/
-programCommand("init_treasury").action(async (_options, cmd) => {
-  log.info("Executing the command update_universe");
-  const { env, keypair, logLevel } = cmd.opts();
-
-  const connection: Connection = getConnection(env);
-  const wallet = loadWallet(keypair);
-
-  const args: InitializeTreasuryApiArgs = {
-    wallet: wallet,
-    connection: connection,
-  };
-
-  try {
-    const tx = await configApi.initMetaBlocksTreasury(args);
-    log.info("The transaction is ", tx);
-  } catch (err) {
-    log.error(err);
-    return;
-  }
-});
-
-programCommand("update_treasury").action(async (_options, cmd) => {
-  log.info("Executing the command update_universe");
-  const { env, keypair, logLevel } = cmd.opts();
-
-  const connection: Connection = getConnection(env);
-  const wallet = loadWallet(keypair);
-
-  const args: UpdateTreasuryApiArgs = {
-    wallet: wallet,
-    connection: connection,
-  };
-
-  try {
-    const tx = await configApi.updateMetaBlocksTreasury(args);
-    log.info("The transaction is ", tx);
-  } catch (err) {
-    log.error(err);
-    return;
-  }
-});
 
 program
   .configureOutput({

@@ -75,7 +75,8 @@ export const getDepositNftInstruction = async (args: DepositNftArgs) => {
       vaultNftAta: args.pdaKeys.vaultNftAta,
       userNftAta: args.pdaKeys.userNftAta,
       userNftMetadata: args.pdaKeys.userNftMetadataKey,
-      treasury: args.pdaKeys.treasuryAddress,
+      treasury: args.pdaKeys.metaTreasuryAddress,
+      metaTreasuryProgram: programIds.META_TREASURY_PROGRAM_ID,
       treasuryAuthority: args.treasuryAuthority,
       receiptMetadata: args.pdaKeys.receiptMetadataKey,
       receiptMasterEdition: args.pdaKeys.receiptMasterEditionKey,
@@ -103,7 +104,8 @@ export const getInitReceiptInstruction = async (args: InitReceiptMintArgs) => {
       tokenProgram: programIds.TOKEN_PROGRAM_ID,
       systemProgram: anchor.web3.SystemProgram.programId,
       rent: anchor.web3.SYSVAR_RENT_PUBKEY,
-      treasury: args.pdaKeys.treasuryAddress,
+      treasury: args.pdaKeys.metaTreasuryAddress,
+      metaTreasuryProgram: programIds.META_TREASURY_PROGRAM_ID,
       treasuryAuthority: args.treasuryAuthority,
     })
     .instruction();
@@ -196,7 +198,8 @@ export const getInitCpiMetaNftInstruction = async (args: InitMetaNftArgs) => {
       tokenProgram: programIds.TOKEN_PROGRAM_ID,
       systemProgram: anchor.web3.SystemProgram.programId,
       rent: anchor.web3.SYSVAR_RENT_PUBKEY,
-      treasury: args.pdaKeys.treasuryAddress,
+      treasury: args.pdaKeys.metaTreasuryAddress,
+      metaTreasuryProgram: programIds.META_TREASURY_PROGRAM_ID,
       treasuryAuthority: args.treasuryAuthority,
     })
     .instruction();
