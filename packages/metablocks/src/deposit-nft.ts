@@ -7,7 +7,7 @@ import { Transaction } from '@solana/web3.js';
 import * as anchor from '@project-serum/anchor';
 import { GroupedDepositNftApiArgs, SendTxRequest, SequenceType } from './types';
 
-import { KyraaError } from './error';
+import { KyraaError, LangErrorMessage } from './error';
 
 import { getPdaKeys, PdaKeys } from './pda';
 
@@ -259,9 +259,14 @@ const depositNftV1 = async (args: GroupedDepositNftApiArgs) => {
       )
     ).txs.map((t: any) => t.txid);
     return result;
-  } catch (e) {
+  } catch (err) {
+    let errs: any = err;
     console.log('Something went wrong');
-    throw new KyraaError(e);
+    throw new KyraaError({
+      err: errs,
+      message: LangErrorMessage.get(errs.errorCode),
+      errorCode: errs.errorCode,
+    });
   }
 };
 
