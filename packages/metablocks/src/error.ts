@@ -16,6 +16,14 @@ class KyraaError {
   }
 
   public constructor(err?: any, errorCode?: number, message?: string) {
+    let passedMessage = message;
+    if (errorCode) {
+      this._errorCode = errorCode;
+    }
+
+    if (passedMessage) {
+      this._message = passedMessage;
+    }
     if (err) {
       try {
         let message = err.toString().split('/n');
@@ -31,13 +39,16 @@ class KyraaError {
             this._message = LangErrorMessage.get(this._errorCode);
           }
         }
+
+        if (err.errorCode) {
+          this._errorCode = err.errorCode;
+        }
+
+        if (this._message === undefined) {
+          this._message = err.message;
+        }
       } catch (err) {}
       this._originalError = err;
-    }
-
-    if (message && errorCode) {
-      this._errorCode = errorCode;
-      this._message = message;
     }
   }
 
@@ -132,6 +143,8 @@ const LangErrorCode = {
   SimulationError: 6012,
   WebSocketError: 6013,
   InsufficientLamports: 6014,
+  ConfirmationError: 6015,
+  TransactionError: 6016,
 };
 
 const LangErrorMessage = new Map([
@@ -273,6 +286,8 @@ const LangErrorMessage = new Map([
   [LangErrorCode.SimulationError, 'failed to simulate transaction'],
   [LangErrorCode.WebSocketError, 'Web Socket error in setup'],
   [LangErrorCode.InsufficientLamports, 'Not enough sols in the wallet'],
+  [LangErrorCode.ConfirmationError, 'Unable to confirm the transaction'],
+  [LangErrorCode.TransactionError, 'Failed to send transaction'],
 ]);
 
 const hexToDecimal = (str: string) => {

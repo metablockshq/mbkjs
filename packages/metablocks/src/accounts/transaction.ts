@@ -11,7 +11,7 @@ import {
 } from '@solana/web3.js';
 
 import log from 'loglevel';
-import { KyraaError, LangErrorCode } from '../error';
+import { KyraaError, LangErrorCode, LangErrorMessage } from '../error';
 import { BlockhashAndFeeCalculator, SequenceType } from '../types';
 
 const DEFAULT_TIMEOUT = 15000;
@@ -24,8 +24,12 @@ export const sendTransactions = async (
   sequenceType: SequenceType = SequenceType.Parallel,
   commitment: Commitment = 'singleGossip',
   successCallback: (txid: string, ind: number) => void = (_txid, _ind) => {},
-  failCallback: (reason: string, ind: number) => boolean = (_txid, _ind) =>
-    false,
+  failCallback: (reason: string, ind: number) => void = (txid, ind) => {
+    new KyraaError({
+      errorCode: LangErrorCode.TransactionError,
+      message: 'Failed with  txid ' + txid + ' Index at ' + ind,
+    });
+  },
   block?: BlockhashAndFeeCalculator,
   beforeTransactions: Transaction[] = [],
   afterTransactions: Transaction[] = []
@@ -191,15 +195,19 @@ export async function sendSignedTransaction({
 
     if (!confirmation)
       throw new KyraaError({
-        errorCode: 6011,
-        message: LangErrorCode.TimedOutError,
+        errorCode: LangErrorCode.ConfirmationError,
+        message: LangErrorMessage.get(LangErrorCode.ConfirmationError),
       });
 
     if (confirmation.err) {
       log.error(confirmation.err);
       //console.error(confirmation.err);
       //throw new Error('Transaction failed: Custom instruction error');
-      throw new KyraaError(confirmation.err);
+      throw new KyraaError({
+        err: confirmation.err,
+        message: LangErrorMessage.get(LangErrorCode.ConfirmationError),
+        errorCode: LangErrorCode.ConfirmationError,
+      });
     }
 
     slot = confirmation?.slot || 0;
@@ -209,8 +217,9 @@ export async function sendSignedTransaction({
     let errs: any = err;
     if (errs.timeout) {
       throw new KyraaError({
-        errorCode: 6011,
-        message: LangErrorCode.TimedOutError,
+        errorCode: LangErrorCode.TimedOutError,
+        message: LangErrorMessage.get(LangErrorCode.TimedOutError),
+        err: errs,
       });
     }
     let simulateResult: SimulatedTransactionResponse | null = null;
@@ -224,7 +233,12 @@ export async function sendSignedTransaction({
         for (let i = simulateResult.logs.length - 1; i >= 0; --i) {
           const line = simulateResult.logs[i];
           if (line.startsWith('Program log: ')) {
-            throw new KyraaError(simulateResult.err);
+            throw new KyraaError({
+              err: simulateResult.err,
+              message:
+                'Transaction failed: ' + line.slice('Program log: '.length),
+              errorCode: LangErrorCode.SimulationError,
+            });
             // throw new Error(
             //   'Transaction failed: ' + line.slice('Program log: '.length)
             // );
@@ -232,7 +246,11 @@ export async function sendSignedTransaction({
         }
       }
       //throw new Error(JSON.stringify(simulateResult.err));
-      throw new KyraaError(simulateResult.err);
+      throw new KyraaError({
+        err: simulateResult.err,
+        message: LangErrorMessage.get(LangErrorCode.SimulationError),
+        errorCode: LangErrorCode.SimulationError,
+      });
     }
     // throw new Error('Transaction failed');
   } finally {
@@ -270,7 +288,11 @@ async function simulateTransaction(
   const res = await connection._rpcRequest('simulateTransaction', args);
   if (res.error) {
     //throw new Error('failed to simulate transaction: ' + res.error.message);
-    throw new KyraaError({ err: res.error, message: res.error.message });
+    throw new KyraaError({
+      err: res.error,
+      message: res.error.message,
+      errorCode: LangErrorCode.SimulationError,
+    });
   }
   return res.result;
 }
