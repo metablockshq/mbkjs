@@ -3,6 +3,7 @@ import * as pda from '../pda';
 import {
   InitializeMetaTreasuryArgs,
   UpdateFixedFeeForMetaTreasuryArgs,
+  UpdateMeteTreasuryArgs,
 } from '../types';
 
 export const getInitMetaTreasuryInstruction = async (
@@ -30,6 +31,22 @@ export const getUpdateFixedFeeForMetaTreasuryInstruction = async (
     .accounts({
       authority: args.usersKey,
       treasury: treasuryMetaAddress,
+      systemProgram: SystemProgram.programId,
+    })
+    .instruction();
+};
+
+export const getUpdateMetaTreasuryInstruction = async (
+  args: UpdateMeteTreasuryArgs
+) => {
+  const [treasuryMetaAddress, _] = await pda.findMetaTreasuryAddress();
+
+  return await args.metaTreasuryProgram.methods
+    .updateTreasury({ fixedFee: args.fixedFee })
+    .accounts({
+      authority: args.usersKey,
+      treasury: treasuryMetaAddress,
+      newAuthority: args.usersKey2,
       systemProgram: SystemProgram.programId,
     })
     .instruction();

@@ -309,11 +309,13 @@ export interface BlockhashAndFeeCalculator {
 interface ConfigApiInputArgs {
   connection: Connection;
   wallet: any;
+  wallet2?: any;
 }
 
 interface ConfigInstructionArgs {
   usersKey: PublicKey;
   metaTreasuryProgram: Program<MetaTreasury>;
+  usersKey2?: PublicKey;
 }
 
 // api args
@@ -328,6 +330,10 @@ export interface UpdateFixedFeeForMetaTreasuryApiArgs
   fixedFee: number;
 }
 
+export interface UpdateMetaTreasuryApiArgs extends ConfigApiInputArgs {
+  fixedFee: number;
+}
+
 // insturctions
 export interface InitializeMetaTreasuryArgs extends ConfigInstructionArgs {
   fixedFee: number;
@@ -335,5 +341,9 @@ export interface InitializeMetaTreasuryArgs extends ConfigInstructionArgs {
 
 export interface UpdateFixedFeeForMetaTreasuryArgs
   extends ConfigInstructionArgs {
+  fixedFee: number;
+}
+
+export interface UpdateMeteTreasuryArgs extends ConfigInstructionArgs {
   fixedFee: number;
 }

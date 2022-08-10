@@ -125,17 +125,11 @@ ts-node cli/src/metablocks-cli.ts update_fixed_fee_of_meta_treasury  \
 --fixed-fee "0.00001"
 ```
 
-## Treasury Initialize
-
+## Update Meta Treasury
 ```bash
-ts-node cli/src/metablocks-cli.ts init_treasury  \
+ts-node cli/src/metablocks-cli.ts update_meta_treasury  \
 -k cli/wallet/deployer-wallet.json \
--e "devnet" 
-```
-
-## Update Treasury 
-```bash
-ts-node cli/src/metablocks-cli.ts update_treasury  \
--k cli/wallet/deployer-wallet.json \
--e "devnet" 
+-nk cli/wallet/deployer-wallet.json \
+-e "devnet" \
+--fixed-fee "0.00001"
 ```

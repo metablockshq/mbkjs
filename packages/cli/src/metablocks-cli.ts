@@ -12,6 +12,7 @@ import {
   InitializeMetaTreasuryApiArgs,
   UniverseApiArgs,
   UpdateFixedFeeForMetaTreasuryApiArgs,
+  UpdateMetaTreasuryApiArgs,
   UserNftFilterArgs,
   WithdrawNftApiArgs,
   WithdrawNftWithReceiptApiArgs,
@@ -606,6 +607,42 @@ programCommand("update_fixed_fee_of_meta_treasury")
 
     try {
       const tx = await configApi.updateFixedFeeForMetaTreasury(args);
+      log.info("The transaction is ", tx);
+    } catch (err) {
+      log.error(err);
+      return;
+    }
+  });
+
+programCommand("update_meta_treasury")
+  .option("-f --fixed-fee <string>", "Treasury fixed fee -defaults to 0.0001 ")
+  .requiredOption("-nk, --new-keypair <path>", `New solana wallet location`)
+  .action(async (_options, cmd) => {
+    log.info("Executing the command update_universe");
+    const { env, keypair, logLevel, fixedFee, newKeypair } = cmd.opts();
+
+    const connection: Connection = getConnection(env);
+    const wallet = loadWallet(keypair);
+    const wallet2 = loadWallet(newKeypair);
+
+    let argFixedFee: number = 0.0001 * LAMPORTS_PER_SOL;
+    //console.log(fixedFee);
+    if (isNumeric(fixedFee)) {
+      //console.log(fixefFee);
+      argFixedFee = fixedFee * LAMPORTS_PER_SOL;
+    }
+
+    const args: UpdateMetaTreasuryApiArgs = {
+      wallet: wallet,
+      wallet2: wallet2,
+      connection: connection,
+      fixedFee: argFixedFee,
+    };
+
+    log.info("The fixed fee in lamports ", args.fixedFee);
+
+    try {
+      const tx = await configApi.updateMetaTreasury(args);
       log.info("The transaction is ", tx);
     } catch (err) {
       log.error(err);

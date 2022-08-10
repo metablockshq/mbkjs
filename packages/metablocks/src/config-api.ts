@@ -5,12 +5,14 @@ import { getMetaTreasuryProgram } from './factory';
 import {
   getInitMetaTreasuryInstruction,
   getUpdateFixedFeeForMetaTreasuryInstruction,
+  getUpdateMetaTreasuryInstruction,
 } from './instructions/treasuryInstructions';
 import { findMetaTreasuryAddress } from './pda';
 import {
   GetMetaTreasuryApiArgs,
   InitializeMetaTreasuryApiArgs,
   UpdateFixedFeeForMetaTreasuryApiArgs,
+  UpdateMetaTreasuryApiArgs,
 } from './types';
 import { MetaTreasury } from './types/meta_treasury';
 
@@ -94,9 +96,45 @@ const updateFixedFeeForMetaTreasury = async (
   }
 };
 
+const updateMetaTreasury = async (args: UpdateMetaTreasuryApiArgs) => {
+  try {
+    const usersKey = args.wallet.publicKey;
+
+    if (!args.wallet2) {
+      throw new KyraaError({ message: 'Provide another wallet' });
+    }
+
+    const usersKey2 = args.wallet2.PublicKey;
+
+    const metaTreasuryProgram = getMetaTreasuryProgram(
+      args.connection,
+      args.wallet
+    );
+
+    const instruction = await getUpdateMetaTreasuryInstruction({
+      usersKey: usersKey,
+      metaTreasuryProgram: metaTreasuryProgram,
+      fixedFee: new BN(args.fixedFee),
+      usersKey2: usersKey2,
+    });
+
+    const transaction = new Transaction();
+    transaction.add(instruction);
+
+    const tx = await metaTreasuryProgram.provider.sendAndConfirm!(
+      transaction,
+      []
+    );
+    return tx;
+  } catch (err) {
+    throw new KyraaError(err);
+  }
+};
+
 export {
   getTreasuryData,
   fetchTreasuryData,
   initMetaTreasury,
   updateFixedFeeForMetaTreasury,
+  updateMetaTreasury,
 };
