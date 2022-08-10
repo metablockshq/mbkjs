@@ -19,8 +19,8 @@ import {
   getInitReceiptInstruction,
 } from './instructions/depositInstructions';
 import { getRawTokenAccount } from './accounts';
-import { sendTransactions } from './accounts/transaction';
 import * as configApi from './config-api';
+import { sendTransactions } from './utils/transaction';
 
 const depositNft = async (args: GroupedDepositNftApiArgs) => {
   try {
