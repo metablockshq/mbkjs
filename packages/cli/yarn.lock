@@ -1181,8 +1181,10 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@kyraa/metablocks@../metablocks":
-  version "0.6.1"
+"@kyraa/metablocks@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@kyraa/metablocks/-/metablocks-1.0.0.tgz#12ad53bdc07092d65678bef43823b4f320726d6e"
+  integrity sha512-dfm3D9VT4jaeQ1LYh/rLtrqiyTgT6QNRLa0uxfXkSBthxrewDe8xqcxo3GiQKw9R4hjUcF/UMHqe5CxhAhfIwQ==
   dependencies:
     "@supabase/supabase-js" "^1.35.3"
 
