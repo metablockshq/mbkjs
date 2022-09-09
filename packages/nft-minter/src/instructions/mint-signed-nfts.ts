@@ -8,8 +8,7 @@ import {
 
 import { MintCollectionNftArgs, MintRegularNftArgs } from '../types/types';
 import { programIds } from '../factory';
-import { pda } from '..';
-import nacl from 'tweetnacl';
+import * as pda from '../pda';
 
 export const getMintRegularNftInstruction = async (
   args: MintRegularNftArgs

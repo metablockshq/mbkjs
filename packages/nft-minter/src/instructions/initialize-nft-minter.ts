@@ -1,5 +1,5 @@
 import { SystemProgram, SYSVAR_RENT_PUBKEY } from '@solana/web3.js';
-import { pda } from '..';
+import * as pda from '../pda';
 import { IntializeNftMinterArgs } from '../types/types';
 
 export const getInitializeNftMinterInstruction = async (

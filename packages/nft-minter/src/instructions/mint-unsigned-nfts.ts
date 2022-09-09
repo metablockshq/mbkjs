@@ -1,5 +1,5 @@
 import { SystemProgram, SYSVAR_RENT_PUBKEY } from '@solana/web3.js';
-import { pda } from '..';
+import * as pda from '../pda';
 import { programIds } from '../factory';
 import {
   CreateMintArgs,
