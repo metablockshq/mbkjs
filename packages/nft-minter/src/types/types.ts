@@ -71,7 +71,6 @@ export interface CreateMintArgs {
 interface ApiInputArgs {
   connection: Connection;
   wallet: any;
-  mintKey: PublicKey;
 }
 
 export interface InitializeNftMinterApiArgs extends ApiInputArgs {

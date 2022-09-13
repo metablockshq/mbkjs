@@ -37,9 +37,9 @@ const initializeNftMinter = async (args: InitializeNftMinterApiArgs) => {
     };
 
     const instruction = await getInitializeNftMinterInstruction(argument);
-    const tx = new Transaction();
-    tx.add(instruction);
-    await program.provider.sendAndConfirm!(tx, []);
+    const transaction = new Transaction();
+    transaction.add(instruction);
+    const tx = await program.provider.sendAndConfirm!(transaction, []);
 
     return tx;
   } catch (e) {
@@ -73,10 +73,10 @@ const mintSignedNft = async (args: MintRegularNftApiArgs) => {
       signature: args.signature,
     });
 
-    const tx = new Transaction();
-    tx.add(edInstruction);
-    tx.add(instruction);
-    await program.provider.sendAndConfirm!(tx, []);
+    const tranasction = new Transaction();
+    tranasction.add(edInstruction);
+    tranasction.add(instruction);
+    const tx = await program.provider.sendAndConfirm!(tranasction, []);
 
     return tx;
   } catch (e) {
@@ -113,10 +113,10 @@ const mintSignedCollectionNft = async (args: MintCollectionNftApiArgs) => {
       signature: args.signature,
     });
 
-    const tx = new Transaction();
-    tx.add(edInstruction);
-    tx.add(instruction);
-    await program.provider.sendAndConfirm!(tx, []);
+    const tranasction = new Transaction();
+    tranasction.add(edInstruction);
+    tranasction.add(instruction);
+    const tx = await program.provider.sendAndConfirm!(tranasction, []);
 
     return tx;
   } catch (e) {
@@ -154,10 +154,10 @@ const mintUnsignedNft = async (args: MintUnsignedNftApiArgs) => {
 
     const mintNftInstruction = await getMintNftInstuction(argument);
 
-    const tx = new Transaction();
-    tx.add(createMintInstruction);
-    tx.add(mintNftInstruction);
-    await program.provider.sendAndConfirm!(tx, []);
+    const tranasction = new Transaction();
+    tranasction.add(createMintInstruction);
+    tranasction.add(mintNftInstruction);
+    const tx = await program.provider.sendAndConfirm!(tranasction, []);
 
     return tx;
   } catch (e) {
@@ -200,10 +200,10 @@ const mintUnsignedCollectionNft = async (
       argument
     );
 
-    const tx = new Transaction();
-    tx.add(createMintInstruction);
-    tx.add(mintNftInstruction);
-    await program.provider.sendAndConfirm!(tx, []);
+    const tranasction = new Transaction();
+    tranasction.add(createMintInstruction);
+    tranasction.add(mintNftInstruction);
+    const tx = await program.provider.sendAndConfirm!(tranasction, []);
 
     return tx;
   } catch (e) {
