@@ -78,6 +78,7 @@ export interface InitializeNftMinterApiArgs extends ApiInputArgs {
 }
 
 export interface MintSignedNftApiArgs extends ApiInputArgs {
+  authorityAddress: PublicKey;
   signature: Uint8Array;
   message: Uint8Array;
   mintName: string;
@@ -88,6 +89,7 @@ export interface MintSignedNftApiArgs extends ApiInputArgs {
 }
 
 export interface MintSignedCollectionNftApiArgs extends ApiInputArgs {
+  authorityAddress: PublicKey;
   signature: Uint8Array;
   message: Uint8Array;
   collectionMintAddress: PublicKey;

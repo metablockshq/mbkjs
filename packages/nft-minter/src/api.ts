@@ -1,4 +1,4 @@
-import { PublicKey, Transaction } from '@solana/web3.js';
+import { Transaction } from '@solana/web3.js';
 import { getNftMinterProgram } from './factory';
 import { getInitializeNftMinterInstruction } from './instructions/initialize-nft-minter';
 import {
@@ -69,7 +69,7 @@ const mintSignedNft = async (args: MintSignedNftApiArgs) => {
     const instruction = await getMintRegularNftInstruction(argument);
     const edInstruction = getEdInstruction({
       message: args.message,
-      walletAddress: args.wallet.publicKey,
+      authorityAddress: args.authorityAddress,
       signature: args.signature,
     });
 
@@ -111,7 +111,7 @@ const mintSignedCollectionNft = async (
 
     const edInstruction = getEdInstruction({
       message: args.message,
-      walletAddress: args.wallet.publicKey,
+      authorityAddress: args.authorityAddress,
       signature: args.signature,
     });
 

@@ -101,13 +101,14 @@ export const getMintCollectionNftInstruction = async (
 
 export const getEdInstruction = (args: {
   message: Uint8Array;
-  walletAddress: PublicKey;
+  authorityAddress: PublicKey;
   signature: Uint8Array;
 }) => {
   const edInstruction = Ed25519Program.createInstructionWithPublicKey({
     message: args.message,
-    publicKey: args.walletAddress.toBytes(),
+    publicKey: args.authorityAddress.toBytes(),
     signature: args.signature,
+    instructionIndex: 0,
   });
   return edInstruction;
 };

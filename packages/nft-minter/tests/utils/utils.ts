@@ -52,12 +52,13 @@ export const addSolsIfEmpty = async (
   }
 };
 
-export const getTestWallet = () => {
-  return new NodeWallet(
-    Keypair.fromSecretKey(
-      Buffer.from(
-        JSON.parse(
-          require('fs').readFileSync('./tests/wallet/test-signer.json', 'utf-8')
+export const getTestAuthority = (): Keypair => {
+  return Keypair.fromSecretKey(
+    Buffer.from(
+      JSON.parse(
+        require('fs').readFileSync(
+          './tests/utils/wallet/test-keypair.json',
+          'utf-8'
         )
       )
     )
