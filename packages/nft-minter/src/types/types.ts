@@ -17,7 +17,7 @@ export interface MintRegularNftArgs {
   mintName: string;
   mintSymbol: string;
   isMasterEdition: boolean;
-  isNftForCollection: boolean;
+  isParentForNfts: boolean;
   mintUri: string;
 }
 
@@ -31,7 +31,7 @@ export interface MintCollectionNftArgs {
   mintName: string;
   mintSymbol: string;
   isMasterEdition: boolean;
-  isNftForCollection: boolean;
+  isParentForNfts: boolean;
   mintUri: string;
 }
 
@@ -39,7 +39,7 @@ export interface MintNftArgs {
   mintName: string;
   mintSymbol: string;
   isMasterEdition: boolean;
-  isNftForCollection: boolean;
+  isParentForNfts: boolean;
   program: Program<NftMinter>;
   claimantAddress: PublicKey;
   pdaKeys: PdaKeys;
@@ -49,7 +49,7 @@ export interface MintNftWithCollectionArgs {
   mintName: string;
   mintSymbol: string;
   isMasterEdition: boolean;
-  isNftForCollection: boolean;
+  isParentForNfts: boolean;
   nftCollectionMintAddress: PublicKey;
   program: Program<NftMinter>;
   claimantAddress: PublicKey;
@@ -77,24 +77,24 @@ export interface InitializeNftMinterApiArgs extends ApiInputArgs {
   uri: string;
 }
 
-export interface MintRegularNftApiArgs extends ApiInputArgs {
+export interface MintSignedNftApiArgs extends ApiInputArgs {
   signature: Uint8Array;
   message: Uint8Array;
   mintName: string;
   mintSymbol: string;
   isMasterEdition: boolean;
-  isNftForCollection: boolean;
+  isParentForNfts: boolean;
   mintUri: string;
 }
 
-export interface MintCollectionNftApiArgs extends ApiInputArgs {
+export interface MintSignedCollectionNftApiArgs extends ApiInputArgs {
   signature: Uint8Array;
   message: Uint8Array;
   collectionMintAddress: PublicKey;
   mintName: string;
   mintSymbol: string;
   isMasterEdition: boolean;
-  isNftForCollection: boolean;
+  isParentForNfts: boolean;
   mintUri: string;
 }
 
@@ -102,7 +102,7 @@ export interface MintUnsignedNftApiArgs extends ApiInputArgs {
   mintName: string;
   mintSymbol: string;
   isMasterEdition: boolean;
-  isNftForCollection: boolean;
+  isParentForNfts: boolean;
   mintUri: string;
 }
 
@@ -110,7 +110,7 @@ export interface MintUnsignedCollectionNftApiArgs extends ApiInputArgs {
   mintName: string;
   mintSymbol: string;
   isMasterEdition: boolean;
-  isNftForCollection: boolean;
+  isParentForNfts: boolean;
   collectionMintAddress: PublicKey;
   mintUri: string;
 }

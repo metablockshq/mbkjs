@@ -6,22 +6,13 @@ import { api } from '../src';
 import { InitializeNftMinterApiArgs } from '../src/types/types';
 
 describe('Test NFT MINTER', () => {
-  const claimantKeypair = anchor.web3.Keypair.generate();
   const authority = anchor.web3.Keypair.generate();
-
-  const claimantWallet = new NodeWallet(claimantKeypair);
   const authorityWallet = new NodeWallet(authority);
 
   const connection = new anchor.web3.Connection(CLUSTER_URL, 'confirmed');
-  const program = getNftMinterProgram(connection, claimantWallet);
+  const program = getNftMinterProgram(connection, authorityWallet);
 
   beforeAll(async () => {
-    await addSols(
-      program.provider,
-      claimantKeypair.publicKey,
-      1 * LAMPORTS_PER_SOL
-    );
-
     await addSols(program.provider, authority.publicKey, 1 * LAMPORTS_PER_SOL);
   });
 

@@ -16,12 +16,12 @@ import {
   CreateMintArgs,
   InitializeNftMinterApiArgs,
   IntializeNftMinterArgs,
-  MintCollectionNftApiArgs,
   MintCollectionNftArgs,
   MintNftArgs,
   MintNftWithCollectionArgs,
-  MintRegularNftApiArgs,
   MintRegularNftArgs,
+  MintSignedCollectionNftApiArgs,
+  MintSignedNftApiArgs,
   MintUnsignedCollectionNftApiArgs,
   MintUnsignedNftApiArgs,
 } from './types/types';
@@ -47,7 +47,7 @@ const initializeNftMinter = async (args: InitializeNftMinterApiArgs) => {
   }
 };
 
-const mintSignedNft = async (args: MintRegularNftApiArgs) => {
+const mintSignedNft = async (args: MintSignedNftApiArgs) => {
   try {
     const program = getNftMinterProgram(args.connection, args.wallet);
     const usersKey = args.wallet.publicKey;
@@ -60,7 +60,7 @@ const mintSignedNft = async (args: MintRegularNftApiArgs) => {
       mintUri: args.mintUri,
       mintSymbol: args.mintSymbol,
       isMasterEdition: args.isMasterEdition,
-      isNftForCollection: args.isNftForCollection,
+      isParentForNfts: args.isParentForNfts,
       pdaKeys: pdaKeys,
       program: program,
       claimantAddress: usersKey,
@@ -84,7 +84,9 @@ const mintSignedNft = async (args: MintRegularNftApiArgs) => {
   }
 };
 
-const mintSignedCollectionNft = async (args: MintCollectionNftApiArgs) => {
+const mintSignedCollectionNft = async (
+  args: MintSignedCollectionNftApiArgs
+) => {
   try {
     const program = getNftMinterProgram(args.connection, args.wallet);
     const usersKey = args.wallet.publicKey;
@@ -98,7 +100,7 @@ const mintSignedCollectionNft = async (args: MintCollectionNftApiArgs) => {
       mintUri: args.mintUri,
       mintSymbol: args.mintSymbol,
       isMasterEdition: args.isMasterEdition,
-      isNftForCollection: args.isNftForCollection,
+      isParentForNfts: args.isParentForNfts,
       pdaKeys: pdaKeys,
       program: program,
       claimantAddress: usersKey,
@@ -146,7 +148,7 @@ const mintUnsignedNft = async (args: MintUnsignedNftApiArgs) => {
       mintName: args.mintName,
       mintSymbol: args.mintSymbol,
       isMasterEdition: args.isMasterEdition,
-      isNftForCollection: args.isNftForCollection,
+      isParentForNfts: args.isParentForNfts,
       program: program,
       claimantAddress: usersKey,
       pdaKeys: pdaKeys,
@@ -189,7 +191,7 @@ const mintUnsignedCollectionNft = async (
       mintName: args.mintName,
       mintSymbol: args.mintSymbol,
       isMasterEdition: args.isMasterEdition,
-      isNftForCollection: args.isNftForCollection,
+      isParentForNfts: args.isParentForNfts,
       program: program,
       claimantAddress: usersKey,
       pdaKeys: pdaKeys,

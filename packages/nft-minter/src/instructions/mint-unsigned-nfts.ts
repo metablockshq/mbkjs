@@ -32,7 +32,7 @@ export const getMintNftInstuction = async (args: MintNftArgs) => {
     mintName: args.mintName,
     mintSymbol: args.mintSymbol,
     isMasterEdition: args.isMasterEdition,
-    isNftForCollection: args.isNftForCollection,
+    isNftForCollection: args.isParentForNfts,
   };
 
   return await args.program.methods
@@ -70,7 +70,7 @@ export const getMintNftWithCollectionInstuction = async (
     mintName: args.mintName,
     mintSymbol: args.mintSymbol,
     isMasterEdition: args.isMasterEdition,
-    isNftForCollection: args.isNftForCollection,
+    isNftForCollection: args.isParentForNfts,
     nftCollectionMint: args.nftCollectionMintAddress,
     nftCollectionMasterEdition: nftCollectionMasterEdition,
     nftCollectionMetdata: nftCollectionMetadata,

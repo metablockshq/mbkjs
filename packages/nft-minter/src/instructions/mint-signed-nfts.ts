@@ -24,7 +24,7 @@ export const getMintRegularNftInstruction = async (
     mintName: args.mintName,
     mintSymbol: args.mintSymbol,
     isMasterEdition: args.isMasterEdition,
-    isNftForCollection: args.isNftForCollection,
+    isNftForCollection: args.isParentForNfts,
     mintUri: args.mintUri,
   };
 
@@ -69,7 +69,7 @@ export const getMintCollectionNftInstruction = async (
     mintName: args.mintName,
     mintSymbol: args.mintSymbol,
     isMasterEdition: args.isMasterEdition,
-    isNftForCollection: args.isNftForCollection,
+    isNftForCollection: args.isParentForNfts,
     mintUri: args.mintUri,
     nftCollectionMasterEditionBump: nftCollectionMasterEditionBump,
     nftCollectionMetadataBump: nftCollectionMetadataBump,
