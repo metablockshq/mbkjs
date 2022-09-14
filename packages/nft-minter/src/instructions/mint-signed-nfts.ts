@@ -6,13 +6,11 @@ import {
   SYSVAR_RENT_PUBKEY,
 } from '@solana/web3.js';
 
-import { MintCollectionNftArgs, MintRegularNftArgs } from '../types/types';
+import { MintSignedCollectionNftArgs, MintSignedNftArgs } from '../types/types';
 import { programIds } from '../factory';
 import * as pda from '../pda';
 
-export const getMintRegularNftInstruction = async (
-  args: MintRegularNftArgs
-) => {
+export const getMintSignedNftInstruction = async (args: MintSignedNftArgs) => {
   const claimArgs = {
     signature: args.signature,
     message: args.message,
@@ -49,8 +47,8 @@ export const getMintRegularNftInstruction = async (
   return mintRegularNftInstruction;
 };
 
-export const getMintCollectionNftInstruction = async (
-  args: MintCollectionNftArgs
+export const getMintSignedCollectionNftInstruction = async (
+  args: MintSignedCollectionNftArgs
 ) => {
   const claimArgs = {
     signature: args.signature,

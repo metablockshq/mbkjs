@@ -8,7 +8,7 @@ export interface ClaimArgs {
   message: Uint8Array;
 }
 
-export interface MintRegularNftArgs {
+export interface MintSignedNftArgs {
   signature: Uint8Array;
   message: Uint8Array;
   pdaKeys: PdaKeys;
@@ -21,7 +21,7 @@ export interface MintRegularNftArgs {
   mintUri: string;
 }
 
-export interface MintCollectionNftArgs {
+export interface MintSignedCollectionNftArgs {
   signature: Uint8Array;
   message: Uint8Array;
   pdaKeys: PdaKeys;
@@ -35,7 +35,7 @@ export interface MintCollectionNftArgs {
   mintUri: string;
 }
 
-export interface MintNftArgs {
+export interface MintUnsignedNftArgs {
   mintName: string;
   mintSymbol: string;
   isMasterEdition: boolean;
@@ -45,7 +45,7 @@ export interface MintNftArgs {
   pdaKeys: PdaKeys;
 }
 
-export interface MintNftWithCollectionArgs {
+export interface MintUnsignedCollectionNftArgs {
   mintName: string;
   mintSymbol: string;
   isMasterEdition: boolean;

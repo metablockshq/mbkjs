@@ -3,8 +3,8 @@ import * as pda from '../pda';
 import { programIds } from '../factory';
 import {
   CreateMintArgs,
-  MintNftArgs,
-  MintNftWithCollectionArgs,
+  MintUnsignedCollectionNftArgs,
+  MintUnsignedNftArgs,
 } from '../types/types';
 
 export const getCreateMintInstruction = async (args: CreateMintArgs) => {
@@ -25,7 +25,9 @@ export const getCreateMintInstruction = async (args: CreateMintArgs) => {
     .instruction();
 };
 
-export const getMintNftInstuction = async (args: MintNftArgs) => {
+export const getMintUnsignedNftInstuction = async (
+  args: MintUnsignedNftArgs
+) => {
   const mintArgs = {
     mintMetadataBump: args.pdaKeys.mintMetadataBump,
     mintMasterEditionBump: args.pdaKeys.mintMasterEditionBump,
@@ -55,8 +57,8 @@ export const getMintNftInstuction = async (args: MintNftArgs) => {
     .instruction();
 };
 
-export const getMintNftWithCollectionInstuction = async (
-  args: MintNftWithCollectionArgs
+export const getMintUnsignedCollectionNftInstuction = async (
+  args: MintUnsignedCollectionNftArgs
 ) => {
   const [nftCollectionMasterEdition, nftCollectionMasterEditionBump] =
     await pda.findMasterEditionAddress(args.nftCollectionMintAddress);
