@@ -1,26 +1,23 @@
-# Meta Blocks JS Monorepo
+# Meta Blocks
 
-## To install @kyraa/metablocks, you can
+Meta Blocks aims to be Solana's Standard Library.
+We make open-source smart contracts and SDKs for the Solana ecosystem.
 
-```bash
-yarn add ../kyra/packages/anchor # anchor is peer dep
-yarn add ../kyraa/packages/metablocks
-```
+`mbkjs` is the monorepo for our JavaScript SDKs.
 
-And then use Meta Blocks in your app like:
+## Packages
+- [@mbkjs/qsr](https://github.com/metablockshq/mbkjs/tree/develop/packages/qsr): Quickly integrate Solana in a React application
+- :star: [@mbkjs/nft-composer](https://github.com/metablockshq/mbkjs/tree/develop/packages/nft-composer): Make NFTs compose and grow
+- [@mbkjs/nft-composer-cli](https://github.com/metablockshq/mbkjs/tree/develop/packages/nft-composer-cli): Use `nft-composer` with a CLI
+- [@mbkjs/token-distributor](https://github.com/metablockshq/mbkjs/tree/develop/packages/token-distributor): Conditionally send tokens to any arbitary Solana address
+- [@mbkjs/nft-minter](https://github.com/metablockshq/mbkjs/tree/develop/packages/nft-minter): Mint NFTs just in time, without the hassles of a Candy Machine
 
-```javascript
-import { api } from "@kyraa/metablocks";
-```
+## Request a program
+Solana eco-system is nascent. If you are building a Solana dapp and need building blocks like `vaults` and `escrows`, please contact us.
 
-## Live reloads
+## Services
+Are you building a Solana dapp ? We can help you integrate our open-source contracts. Please contact us on Twitter :)
 
-Might not work with `yarn add`
-
-In local workflow, currently symlinking kyraa/packages to @kyraa in the project root, and then importing it as normal js code.
-
-## Another option for live reloads
-
-```bash
-yarn link
-```
+## Contact
+- Twitter: <https://twitter.com/metablockshq>
+- Website: <https://metablocks.world>
