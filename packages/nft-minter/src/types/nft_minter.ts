@@ -77,7 +77,7 @@ export type NftMinter = {
       ]
     },
     {
-      "name": "mintNft",
+      "name": "mintUnsignedNft",
       "accounts": [
         {
           "name": "claimant",
@@ -149,13 +149,13 @@ export type NftMinter = {
         {
           "name": "args",
           "type": {
-            "defined": "MintNftArgs"
+            "defined": "MintUnsignedNftArgs"
           }
         }
       ]
     },
     {
-      "name": "mintNftWithCollection",
+      "name": "mintUnsignedCollectionNft",
       "accounts": [
         {
           "name": "claimant",
@@ -237,13 +237,13 @@ export type NftMinter = {
         {
           "name": "args",
           "type": {
-            "defined": "MintNftWithCollectionArgs"
+            "defined": "MintUnsignedCollectionNftArgs"
           }
         }
       ]
     },
     {
-      "name": "mintRegularNft",
+      "name": "mintSignedNft",
       "accounts": [
         {
           "name": "claimant",
@@ -315,7 +315,7 @@ export type NftMinter = {
         {
           "name": "args",
           "type": {
-            "defined": "MintRegularNftArgs"
+            "defined": "MintSignedNftArgs"
           }
         },
         {
@@ -327,7 +327,7 @@ export type NftMinter = {
       ]
     },
     {
-      "name": "mintCollectionNft",
+      "name": "mintSignedCollectionNft",
       "accounts": [
         {
           "name": "claimant",
@@ -414,7 +414,7 @@ export type NftMinter = {
         {
           "name": "args",
           "type": {
-            "defined": "MintCollectionNftArgs"
+            "defined": "MintSignedCollectionNftArgs"
           }
         },
         {
@@ -428,7 +428,7 @@ export type NftMinter = {
   ],
   "accounts": [
     {
-      "name": "mintCollectionNftArgs",
+      "name": "mintSignedCollectionNftArgs",
       "type": {
         "kind": "struct",
         "fields": [
@@ -457,7 +457,7 @@ export type NftMinter = {
             "type": "bool"
           },
           {
-            "name": "isNftForCollection",
+            "name": "isParentNft",
             "type": "bool"
           },
           {
@@ -472,7 +472,7 @@ export type NftMinter = {
       }
     },
     {
-      "name": "mintRegularNftArgs",
+      "name": "mintSignedNftArgs",
       "type": {
         "kind": "struct",
         "fields": [
@@ -501,7 +501,7 @@ export type NftMinter = {
             "type": "bool"
           },
           {
-            "name": "isNftForCollection",
+            "name": "isParentNft",
             "type": "bool"
           }
         ]
@@ -546,7 +546,7 @@ export type NftMinter = {
       }
     },
     {
-      "name": "mintNftWithCollectionArgs",
+      "name": "mintUnsignedCollectionNftArgs",
       "type": {
         "kind": "struct",
         "fields": [
@@ -571,7 +571,7 @@ export type NftMinter = {
             "type": "bool"
           },
           {
-            "name": "isNftForCollection",
+            "name": "isParentNft",
             "type": "bool"
           },
           {
@@ -586,7 +586,7 @@ export type NftMinter = {
       }
     },
     {
-      "name": "mintNftArgs",
+      "name": "mintUnsignedNftArgs",
       "type": {
         "kind": "struct",
         "fields": [
@@ -611,7 +611,7 @@ export type NftMinter = {
             "type": "bool"
           },
           {
-            "name": "isNftForCollection",
+            "name": "isParentNft",
             "type": "bool"
           }
         ]
@@ -771,7 +771,7 @@ export const IDL: NftMinter = {
       ]
     },
     {
-      "name": "mintNft",
+      "name": "mintUnsignedNft",
       "accounts": [
         {
           "name": "claimant",
@@ -843,13 +843,13 @@ export const IDL: NftMinter = {
         {
           "name": "args",
           "type": {
-            "defined": "MintNftArgs"
+            "defined": "MintUnsignedNftArgs"
           }
         }
       ]
     },
     {
-      "name": "mintNftWithCollection",
+      "name": "mintUnsignedCollectionNft",
       "accounts": [
         {
           "name": "claimant",
@@ -931,13 +931,13 @@ export const IDL: NftMinter = {
         {
           "name": "args",
           "type": {
-            "defined": "MintNftWithCollectionArgs"
+            "defined": "MintUnsignedCollectionNftArgs"
           }
         }
       ]
     },
     {
-      "name": "mintRegularNft",
+      "name": "mintSignedNft",
       "accounts": [
         {
           "name": "claimant",
@@ -1009,7 +1009,7 @@ export const IDL: NftMinter = {
         {
           "name": "args",
           "type": {
-            "defined": "MintRegularNftArgs"
+            "defined": "MintSignedNftArgs"
           }
         },
         {
@@ -1021,7 +1021,7 @@ export const IDL: NftMinter = {
       ]
     },
     {
-      "name": "mintCollectionNft",
+      "name": "mintSignedCollectionNft",
       "accounts": [
         {
           "name": "claimant",
@@ -1108,7 +1108,7 @@ export const IDL: NftMinter = {
         {
           "name": "args",
           "type": {
-            "defined": "MintCollectionNftArgs"
+            "defined": "MintSignedCollectionNftArgs"
           }
         },
         {
@@ -1122,7 +1122,7 @@ export const IDL: NftMinter = {
   ],
   "accounts": [
     {
-      "name": "mintCollectionNftArgs",
+      "name": "mintSignedCollectionNftArgs",
       "type": {
         "kind": "struct",
         "fields": [
@@ -1151,7 +1151,7 @@ export const IDL: NftMinter = {
             "type": "bool"
           },
           {
-            "name": "isNftForCollection",
+            "name": "isParentNft",
             "type": "bool"
           },
           {
@@ -1166,7 +1166,7 @@ export const IDL: NftMinter = {
       }
     },
     {
-      "name": "mintRegularNftArgs",
+      "name": "mintSignedNftArgs",
       "type": {
         "kind": "struct",
         "fields": [
@@ -1195,7 +1195,7 @@ export const IDL: NftMinter = {
             "type": "bool"
           },
           {
-            "name": "isNftForCollection",
+            "name": "isParentNft",
             "type": "bool"
           }
         ]
@@ -1240,7 +1240,7 @@ export const IDL: NftMinter = {
       }
     },
     {
-      "name": "mintNftWithCollectionArgs",
+      "name": "mintUnsignedCollectionNftArgs",
       "type": {
         "kind": "struct",
         "fields": [
@@ -1265,7 +1265,7 @@ export const IDL: NftMinter = {
             "type": "bool"
           },
           {
-            "name": "isNftForCollection",
+            "name": "isParentNft",
             "type": "bool"
           },
           {
@@ -1280,7 +1280,7 @@ export const IDL: NftMinter = {
       }
     },
     {
-      "name": "mintNftArgs",
+      "name": "mintUnsignedNftArgs",
       "type": {
         "kind": "struct",
         "fields": [
@@ -1305,7 +1305,7 @@ export const IDL: NftMinter = {
             "type": "bool"
           },
           {
-            "name": "isNftForCollection",
+            "name": "isParentNft",
             "type": "bool"
           }
         ]

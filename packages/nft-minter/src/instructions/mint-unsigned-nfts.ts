@@ -34,11 +34,11 @@ export const getMintUnsignedNftInstuction = async (
     mintName: args.mintName,
     mintSymbol: args.mintSymbol,
     isMasterEdition: args.isMasterEdition,
-    isNftForCollection: args.isParentForNfts,
+    isParentNft: args.isParentForNfts,
   };
 
   return await args.program.methods
-    .mintNft(mintArgs)
+    .mintUnsignedNft(mintArgs)
     .accounts({
       claimant: args.claimantAddress,
       nftMinter: args.pdaKeys.nftMinterAddress,
@@ -72,7 +72,7 @@ export const getMintUnsignedCollectionNftInstuction = async (
     mintName: args.mintName,
     mintSymbol: args.mintSymbol,
     isMasterEdition: args.isMasterEdition,
-    isNftForCollection: args.isParentForNfts,
+    isParentNft: args.isParentForNfts,
     nftCollectionMint: args.nftCollectionMintAddress,
     nftCollectionMasterEdition: nftCollectionMasterEdition,
     nftCollectionMetdata: nftCollectionMetadata,
@@ -81,7 +81,7 @@ export const getMintUnsignedCollectionNftInstuction = async (
   };
 
   return await args.program.methods
-    .mintNftWithCollection(mintArgs)
+    .mintUnsignedCollectionNft(mintArgs)
     .accounts({
       claimant: args.claimantAddress,
       nftMinter: args.pdaKeys.nftMinterAddress,

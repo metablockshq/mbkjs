@@ -22,12 +22,12 @@ export const getMintSignedNftInstruction = async (args: MintSignedNftArgs) => {
     mintName: args.mintName,
     mintSymbol: args.mintSymbol,
     isMasterEdition: args.isMasterEdition,
-    isNftForCollection: args.isParentForNfts,
+    isParentNft: args.isParentForNfts,
     mintUri: args.mintUri,
   };
 
   const mintRegularNftInstruction = await args.program.methods
-    .mintRegularNft(mintArgs, claimArgs)
+    .mintSignedNft(mintArgs, claimArgs)
     .accounts({
       claimant: args.claimantAddress,
       nftMinter: args.pdaKeys.nftMinterAddress,
@@ -67,14 +67,14 @@ export const getMintSignedCollectionNftInstruction = async (
     mintName: args.mintName,
     mintSymbol: args.mintSymbol,
     isMasterEdition: args.isMasterEdition,
-    isNftForCollection: args.isParentForNfts,
+    isParentNft: args.isParentForNfts,
     mintUri: args.mintUri,
     nftCollectionMasterEditionBump: nftCollectionMasterEditionBump,
     nftCollectionMetadataBump: nftCollectionMetadataBump,
   };
 
   const mintCollectionNftInstruction = await args.program.methods
-    .mintCollectionNft(mintArgs, claimArgs)
+    .mintSignedCollectionNft(mintArgs, claimArgs)
     .accounts({
       claimant: args.claimantAddress,
       nftMinter: args.pdaKeys.nftMinterAddress,
