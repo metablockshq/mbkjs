@@ -1,5 +1,5 @@
 {
-  "name": "@metablocks/cli",
+  "name": "@metablockshq/cli",
   "version": "0.0.1",
   "main": "./build/cli.js",
   "license": "MIT",

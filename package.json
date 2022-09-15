@@ -1,14 +1,15 @@
 {
-  "name": "kyraa",
+  "name": "mbkjs",
   "version": "0.0.1",
-  "description": "Meta Blocks JS monorepo",
-  "repository": "git@github.com:metablockshq/kyraa.git",
+  "description": "Meta Blocks JS SDK",
+  "repository": "git@github.com:metablockshq/mbkjs.git",
   "author": "Shivek Khurana <khuranashivek@outlook.com>",
   "license": "MIT",
   "devDependencies": {
     "lerna": "^4.0.0"
   },
   "scripts": {
+    "publish-packages": "yarn lerna publish from-package",
     "bootstrap": "lerna bootstrap",
     "changed": "lerna changed"
   },

@@ -1,6 +1,8 @@
 {
-  "name": "@kyraa/solana",
-  "version": "0.0.9",
+  "name": "@mbkjs/qsr",
+  "version": "0.0.11",
+  "description": "Quickly integrate Solana into a React application.",
+  "repository": "git@github.com:metablockshq/mbkjs.git",
   "main": "./dist/index.js",
   "license": "MIT",
   "scripts": {
@@ -26,5 +28,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "5fdbd35f55419e3d70f0d6405bc8f8ede7fd6f96"
+  "gitHead": "a4cce849ed5ec881028e83d89336464750048fd6"
 }
