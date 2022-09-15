@@ -55,6 +55,8 @@
     "tweetnacl": "^1.0.3",
     "typescript": "^4.5.5"
   },
-"private": true,
-  "gitHead": "cdd6b074ca3a968d43a77510d6405d6b960111e2"
+  "publishConfig": {
+    "access": "public"
+  }, 
+   "gitHead": "cdd6b074ca3a968d43a77510d6405d6b960111e2"
 }
