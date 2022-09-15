@@ -2,7 +2,7 @@
   "name": "@mbkjs/nft-composer-cli",
   "version": "2.0.0",
   "main": "dist/metablocks-cli.js",
-  "typings": "dist/metablocks-cli.d.ts",  
+  "typings": "dist/metablocks-cli.d.ts",
   "license": "MIT",
   "author": "Srinivas Valekar <https://github.com/valekar>",
   "repository": "git@github.com:metablockshq/mbkjs.git",
@@ -66,7 +66,7 @@
     "tslib": "^2.3.1",
     "typescript": "^4.5.5"
   },
-  "gitHead": "fe764e5c10af52c154ec95ebcb0d3b2b0cd24086",
+  "gitHead": "d160df3cf66fc26c4408d181e97f95b5c21740e9",
   "publishConfig": {
     "access": "public"
   }
