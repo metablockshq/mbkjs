@@ -57,7 +57,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "00bba45c899b84922635f758ea0f3238b31f0d29",
+  "gitHead": "8108920f15d2c86b86f44777cf878f8994067345",
   "dependencies": {
     "loglevel": "^1.8.0"
   }
