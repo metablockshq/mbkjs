@@ -1,11 +1,11 @@
 {
-  "name": "@kyraa/token-distributor",
-  "version": "1.0.3",
+  "name": "@mbkjs/token-distributor",
+  "version": "2.0.0",
   "description": "Token whitelist distributor",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
-  "repository": "git@github.com:metablockshq/kyraa.git",
   "author": "Srinivas Valekar <https://github.com/valekar>",
+  "repository": "git@github.com:metablockshq/mbkjs.git",
   "license": "MIT",
   "files": [
     "dist",
@@ -36,13 +36,13 @@
   },
   "peerDependencies": {
     "@project-serum/anchor": "^0.23.0",
-    "@solana/web3.js": "^1.37.0",
-    "@solana/spl-token": "^0.1.8"
+    "@solana/spl-token": "^0.1.8",
+    "@solana/web3.js": "^1.37.0"
   },
   "devDependencies": {
     "@project-serum/anchor": "^0.23.0",
+    "@project-serum/common": "^0.0.1-beta.3",
     "@size-limit/preset-small-lib": "^7.0.8",
-    "tweetnacl": "^1.0.3",
     "@types/chai": "^4.3.0",
     "@types/mocha": "^9.1.0",
     "chai": "^4.3.6",
@@ -52,11 +52,11 @@
     "size-limit": "^7.0.8",
     "tsdx": "^0.14.1",
     "tslib": "^2.3.1",
-    "typescript": "^4.5.5",
-    "@project-serum/common": "^0.0.1-beta.3"
+    "tweetnacl": "^1.0.3",
+    "typescript": "^4.5.5"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "5fdbd35f55419e3d70f0d6405bc8f8ede7fd6f96"
+  "gitHead": "d160df3cf66fc26c4408d181e97f95b5c21740e9"
 }

@@ -1,11 +1,11 @@
 {
-  "name": "@kyraa/metablocks",
-  "version": "1.1.0",
+  "name": "@mbkjs/nft-composer",
+  "version": "2.0.1",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "author": "Srinivas Valekar <https://github.com/valekar>",
-  "repository": "git@github.com:metablockshq/kyraa.git",
+  "repository": "git@github.com:metablockshq/mbkjs.git",
   "files": [
     "dist",
     "src"
@@ -66,8 +66,7 @@
   "publishConfig": {
     "access": "public"
   },
-
-  "gitHead": "0d1a1fa5e5409dccf948d6aa8d8f23af3e11d623",
+  "gitHead": "6fc61e848eb822b4e66d01911060211b62fef618",
   "dependencies": {
     "@supabase/supabase-js": "^1.35.3"
   }

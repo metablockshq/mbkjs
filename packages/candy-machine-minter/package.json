@@ -1,11 +1,11 @@
 {
-  "name": "@kyraa/candy-machine",
-  "version": "1.0.0",
+  "name": "@mbkjs/candy-machine-minter",
+  "version": "2.0.1",
   "description": "Candy machine bindings",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
-  "repository": "git@github.com:metablockshq/kyraa.git",
   "author": "Srinivas Valekar <https://github.com/valekar>",
+  "repository": "git@github.com:metablockshq/mbkjs.git",
   "license": "MIT",
   "files": [
     "dist",
@@ -57,7 +57,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "5fdbd35f55419e3d70f0d6405bc8f8ede7fd6f96",
+  "gitHead": "9584c572a444e96479deede8b2bd74e5addd425b",
   "dependencies": {
     "loglevel": "^1.8.0"
   }

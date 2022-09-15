@@ -5,7 +5,7 @@ This package contains `nft-minter` program bindings. Use this to connect with `n
 
 ## Why use NFT-minter SDK ?
 
-You can mint two categories of NFTs with nft-minter SDK. T
+You can mint two categories of NFTs with nft-minter SDK. 
 
 1. Mint Unsigned NFTs
 2. Mint Signed NFTs
