@@ -48,12 +48,6 @@
     "weighted": "^1.0.0"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.16.11",
-    "@babel/preset-typescript": "^7.16.7",
-    "@types/jest": "^27.4.1",
-    "@types/webgl2": "^0.0.6",
-    "@typescript-eslint/eslint-plugin": "^5.17.0",
-    "jest": "^27.5.1",
     "@size-limit/preset-small-lib": "^7.0.8",
     "@types/bs58": "^4.0.1",
     "@types/chai": "^4.3.0",

@@ -73,14 +73,8 @@ programCommand('create_universe')
   )
   .action(async (_options, cmd) => {
     log.info('Executing the command create_universe');
-    const {
-      env,
-      keypair,
-      logLevel,
-      name,
-      description,
-      websiteUrl,
-    } = cmd.opts();
+    const { env, keypair, logLevel, name, description, websiteUrl } =
+      cmd.opts();
 
     const endpoint = getRpcUrl(env);
     const connection = new Connection(endpoint, 'recent');
@@ -137,14 +131,8 @@ programCommand('update_universe')
   )
   .action(async (_options, cmd) => {
     log.info('Executing the command update_universe');
-    const {
-      env,
-      keypair,
-      logLevel,
-      name,
-      description,
-      websiteUrl,
-    } = cmd.opts();
+    const { env, keypair, logLevel, name, description, websiteUrl } =
+      cmd.opts();
 
     const connection: Connection = getConnection(env);
     const wallet = loadWallet(keypair);
@@ -319,8 +307,8 @@ programCommand('deposit_nft')
       metaNftName: argMetaNftName,
       metaNftUrl: argMetaNftUrl,
       isMetaNftMasterEdition: argIsMetaNftMasterEdition,
-      universeKey: new PublicKey(argUniverseKey),
-      mintKey: new PublicKey(argNftMintKey),
+      universeKey: new PublicKey(argUniverseKey!),
+      mintKey: new PublicKey(argNftMintKey!),
     };
 
     try {
@@ -367,8 +355,8 @@ programCommand('withdraw_nft_with_receipt')
     const args: WithdrawNftWithReceiptApiArgs = {
       wallet: wallet,
       connection: connection,
-      universeKey: new PublicKey(argUniverseKey),
-      receiptMint: new PublicKey(argReceiptNftMintKey),
+      universeKey: new PublicKey(argUniverseKey!),
+      receiptMint: new PublicKey(argReceiptNftMintKey!),
     };
 
     try {
@@ -415,8 +403,8 @@ programCommand('withdraw_nft')
     const args: WithdrawNftApiArgs = {
       wallet: wallet,
       connection: connection,
-      universeKey: new PublicKey(argUniverseKey),
-      mintKey: new PublicKey(argNftMintKey),
+      universeKey: new PublicKey(argUniverseKey!),
+      mintKey: new PublicKey(argNftMintKey!),
     };
 
     try {
@@ -441,14 +429,8 @@ programCommand('get_wrapped_user_nft_accounts')
 
   .action(async (_options, cmd) => {
     log.info('Executing the command get_wrapped_user_nft_accounts ');
-    const {
-      env,
-      keypair,
-      logLevel,
-      universes,
-      vaultAuthorities,
-      authorities,
-    } = cmd.opts();
+    const { env, keypair, logLevel, universes, vaultAuthorities, authorities } =
+      cmd.opts();
 
     const connection: Connection = getConnection(env);
     const wallet = loadWallet(keypair);
@@ -655,8 +637,8 @@ programCommand('update_meta_treasury')
 program
   .configureOutput({
     // Visibly override write routines as example!
-    writeOut: str => process.stdout.write(`[OUT] ${str}`),
-    writeErr: str => process.stdout.write(`[ERR] ${str}`),
+    writeOut: (str) => process.stdout.write(`[OUT] ${str}`),
+    writeErr: (str) => process.stdout.write(`[ERR] ${str}`),
     // Highlight errors in color.
     outputError: (str, write) => write(errorColor(str)),
   })
