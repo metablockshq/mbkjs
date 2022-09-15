@@ -1,8 +1,8 @@
-import log from "loglevel";
-import { program } from "commander";
+import log from 'loglevel';
+import { program } from 'commander';
 
-import { Connection, LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
-import { getRpcUrl, isBoolean, isNumeric, loadWallet } from "./utils";
+import { Connection, LAMPORTS_PER_SOL, PublicKey } from '@solana/web3.js';
+import { getRpcUrl, isBoolean, isNumeric, loadWallet } from './utils';
 
 import {
   api,
@@ -17,28 +17,28 @@ import {
   WithdrawNftApiArgs,
   WithdrawNftWithReceiptApiArgs,
   WrappedUserNftArgs,
-} from "@mbkjs/nft-composer";
+} from '@kyraa/metablocks';
 
-program.version("0.0.1");
+program.version('0.0.1');
 log.setLevel(log.levels.INFO);
 
 export function programCommand(name: string) {
   return program
     .command(name)
     .option(
-      "-e, --env <string>",
-      "Solana cluster env name",
-      "devnet" //mainnet-beta, testnet, devnet
+      '-e, --env <string>',
+      'Solana cluster env name',
+      'devnet' //mainnet-beta, testnet, devnet
     )
-    .requiredOption("-k, --keypair <path>", `Solana wallet location`)
-    .option("-l, --log-level <string>", "log level", setLogLevel);
+    .requiredOption('-k, --keypair <path>', `Solana wallet location`)
+    .option('-l, --log-level <string>', 'log level', setLogLevel);
 }
 
 function setLogLevel(value: any, _prev: any) {
   if (value == null) {
     return;
   }
-  log.info("setting the log value to: " + value);
+  log.info('setting the log value to: ' + value);
   log.setLevel(value);
 }
 
@@ -49,30 +49,30 @@ function errorColor(str: string) {
 
 function getConnection(env: string) {
   const endpoint = getRpcUrl(env);
-  return new Connection(endpoint, "confirmed");
+  return new Connection(endpoint, 'confirmed');
 }
 
 /********************* universe commands **********************/
 
 // create universe
-programCommand("create_universe")
+programCommand('create_universe')
   .option(
-    "-n --name <string>",
-    "Name of the universe -defaults to universe-name ",
-    "universe-name"
+    '-n --name <string>',
+    'Name of the universe -defaults to universe-name ',
+    'universe-name'
   )
   .option(
-    "-d --description <string>",
-    "Description of the universe -defaults to universe-description ",
-    "universe-description"
+    '-d --description <string>',
+    'Description of the universe -defaults to universe-description ',
+    'universe-description'
   )
   .option(
-    "-w --website-url <string>",
-    "Description of the universe -defaults to universe-website-url ",
-    "universe-description-url"
+    '-w --website-url <string>',
+    'Description of the universe -defaults to universe-website-url ',
+    'universe-description-url'
   )
   .action(async (_options, cmd) => {
-    log.info("Executing the command create_universe");
+    log.info('Executing the command create_universe');
     const {
       env,
       keypair,
@@ -83,20 +83,20 @@ programCommand("create_universe")
     } = cmd.opts();
 
     const endpoint = getRpcUrl(env);
-    const connection = new Connection(endpoint, "recent");
+    const connection = new Connection(endpoint, 'recent');
     const wallet = loadWallet(keypair);
 
-    let argName = "name";
+    let argName = 'name';
     if (name) {
       argName = name;
     }
 
-    let argDescription = "description";
+    let argDescription = 'description';
     if (description) {
       argDescription = description;
     }
 
-    let argWebsiteUrl = "websiteUrl";
+    let argWebsiteUrl = 'websiteUrl';
     if (websiteUrl) {
       argWebsiteUrl = websiteUrl;
     }
@@ -111,7 +111,7 @@ programCommand("create_universe")
 
     try {
       const tx = await api.createUniverse(args);
-      log.info("The transaction is ", tx);
+      log.info('The transaction is ', tx);
     } catch (err) {
       log.error(err);
       return;
@@ -119,24 +119,24 @@ programCommand("create_universe")
   });
 
 //update universe command
-programCommand("update_universe")
+programCommand('update_universe')
   .option(
-    "-n --name <string>",
-    "Name of the universe -defaults to universe-name ",
-    "universe-name"
+    '-n --name <string>',
+    'Name of the universe -defaults to universe-name ',
+    'universe-name'
   )
   .option(
-    "-d --description <string>",
-    "Description of the universe -defaults to universe-description ",
-    "universe-description"
+    '-d --description <string>',
+    'Description of the universe -defaults to universe-description ',
+    'universe-description'
   )
   .option(
-    "-w --website-url <string>",
-    "Description of the universe -defaults to universe-website-url ",
-    "universe-description-url"
+    '-w --website-url <string>',
+    'Description of the universe -defaults to universe-website-url ',
+    'universe-description-url'
   )
   .action(async (_options, cmd) => {
-    log.info("Executing the command update_universe");
+    log.info('Executing the command update_universe');
     const {
       env,
       keypair,
@@ -149,17 +149,17 @@ programCommand("update_universe")
     const connection: Connection = getConnection(env);
     const wallet = loadWallet(keypair);
 
-    let argName = "name";
+    let argName = 'name';
     if (name) {
       argName = name;
     }
 
-    let argDescription = "description";
+    let argDescription = 'description';
     if (description) {
       argDescription = description;
     }
 
-    let argWebsiteUrl = "websiteUrl";
+    let argWebsiteUrl = 'websiteUrl';
     if (websiteUrl) {
       argWebsiteUrl = websiteUrl;
     }
@@ -174,7 +174,7 @@ programCommand("update_universe")
 
     try {
       const tx = await api.updateUniverse(args);
-      log.info("The transaction is ", tx);
+      log.info('The transaction is ', tx);
     } catch (err) {
       log.error(err);
       return;
@@ -182,8 +182,8 @@ programCommand("update_universe")
   });
 
 //update universe command
-programCommand("get_all_universes").action(async (_options, cmd) => {
-  log.info("Executing the command get_all_universes");
+programCommand('get_all_universes').action(async (_options, cmd) => {
+  log.info('Executing the command get_all_universes');
   const { env, keypair, logLevel } = cmd.opts();
 
   const connection: Connection = getConnection(env);
@@ -196,7 +196,7 @@ programCommand("get_all_universes").action(async (_options, cmd) => {
 
   try {
     const result = await api.getAllUniverseAccounts(args);
-    log.info("The result is - ");
+    log.info('The result is - ');
     log.info(result);
   } catch (err) {
     log.error(err);
@@ -208,49 +208,49 @@ programCommand("get_all_universes").action(async (_options, cmd) => {
 
 /********************* Wrapped user NFTs Commands ************/
 // deposit NFT
-programCommand("deposit_nft")
+programCommand('deposit_nft')
   .requiredOption(
-    "-u --universe-key <string>",
-    "Universe key where you want to deposit nft"
+    '-u --universe-key <string>',
+    'Universe key where you want to deposit nft'
   )
   .requiredOption(
-    "-n --nft-mint-key <string>",
-    "Mint key of the nft that is being deposited"
+    '-n --nft-mint-key <string>',
+    'Mint key of the nft that is being deposited'
   )
   .option(
-    "-rn --receipt-name <string>",
-    "Receipt name, -defaults to receipt-name ",
-    "receipt-name"
+    '-rn --receipt-name <string>',
+    'Receipt name, -defaults to receipt-name ',
+    'receipt-name'
   )
   .option(
-    "-r --receipt-url <string>",
-    "Receipt URL, -defaults to http://localhost ",
-    "http://localhost"
+    '-r --receipt-url <string>',
+    'Receipt URL, -defaults to http://localhost ',
+    'http://localhost'
   )
   .option(
-    "-rme --receipt-master-edition <boolean>",
-    "Is receipt master edition, -defaults to false ",
-    "false"
+    '-rme --receipt-master-edition <boolean>',
+    'Is receipt master edition, -defaults to false ',
+    'false'
   )
   .option(
-    "-mu --meta-nft-name <string>",
-    "Meta nft name, -defaults to meta-nft-name ",
-    "meta-nft-name"
+    '-mu --meta-nft-name <string>',
+    'Meta nft name, -defaults to meta-nft-name ',
+    'meta-nft-name'
   )
   .option(
-    "-mu --meta-nft-url <string>",
-    "MetaNFT URL, -defaults to http://localhost ",
-    "http://localhost"
+    '-mu --meta-nft-url <string>',
+    'MetaNFT URL, -defaults to http://localhost ',
+    'http://localhost'
   )
 
   .option(
-    "-mme --meta-nft-master-edition <boolean>",
-    "Is meta nft master edition, -defaults to false ",
-    "false"
+    '-mme --meta-nft-master-edition <boolean>',
+    'Is meta nft master edition, -defaults to false ',
+    'false'
   )
 
   .action(async (_options, cmd) => {
-    log.info("Executing the command deposit_nft");
+    log.info('Executing the command deposit_nft');
     const {
       env,
       keypair,
@@ -272,22 +272,22 @@ programCommand("deposit_nft")
     if (universeKey) {
       argUniverseKey = universeKey;
     } else {
-      throw new Error("Universe Key empty");
+      throw new Error('Universe Key empty');
     }
 
     let argNftMintKey = null;
     if (nftMintKey) {
       argNftMintKey = nftMintKey;
     } else {
-      throw new Error("Nft mint key is not provided");
+      throw new Error('Nft mint key is not provided');
     }
 
-    let argReceiptName = "receipt-name";
+    let argReceiptName = 'receipt-name';
     if (receiptName) {
       argReceiptName = receiptName;
     }
 
-    let argReceiptUrl = "http://localhost";
+    let argReceiptUrl = 'http://localhost';
     if (receiptUrl) {
       argReceiptUrl = receiptUrl;
     }
@@ -296,12 +296,12 @@ programCommand("deposit_nft")
       argIsReceiptMasterEdition = receiptMasterEdition;
     }
 
-    let argMetaNftName = "meta-nft-name";
+    let argMetaNftName = 'meta-nft-name';
     if (metaNftName) {
       argMetaNftName = metaNftName;
     }
 
-    let argMetaNftUrl = "http://localhost";
+    let argMetaNftUrl = 'http://localhost';
     if (metaNftUrl) {
       argMetaNftUrl = metaNftUrl;
     }
@@ -325,7 +325,7 @@ programCommand("deposit_nft")
 
     try {
       const tx = await api.depositNft(args);
-      log.info("The transaction is ", tx);
+      log.info('The transaction is ', tx);
     } catch (err) {
       log.error(err);
       return;
@@ -333,18 +333,18 @@ programCommand("deposit_nft")
   });
 
 //withdraw nft with receipt
-programCommand("withdraw_nft_with_receipt")
+programCommand('withdraw_nft_with_receipt')
   .requiredOption(
-    "-u --universe-key <string>",
-    "Universe key where you want to deposit nft"
+    '-u --universe-key <string>',
+    'Universe key where you want to deposit nft'
   )
   .requiredOption(
-    "-r --receipt-mint-key <string>",
-    "Mint key of the nft that is being deposited"
+    '-r --receipt-mint-key <string>',
+    'Mint key of the nft that is being deposited'
   )
 
   .action(async (_options, cmd) => {
-    log.info("Executing the command withdraw_nft_with_receipt");
+    log.info('Executing the command withdraw_nft_with_receipt');
     const { env, keypair, logLevel, universeKey, receiptMintKey } = cmd.opts();
 
     const connection: Connection = getConnection(env);
@@ -354,14 +354,14 @@ programCommand("withdraw_nft_with_receipt")
     if (universeKey) {
       argUniverseKey = universeKey;
     } else {
-      throw new Error("Universe Key empty");
+      throw new Error('Universe Key empty');
     }
 
     let argReceiptNftMintKey = null;
     if (receiptMintKey) {
       argReceiptNftMintKey = receiptMintKey;
     } else {
-      throw new Error("Nft mint key is not provided");
+      throw new Error('Nft mint key is not provided');
     }
 
     const args: WithdrawNftWithReceiptApiArgs = {
@@ -373,7 +373,7 @@ programCommand("withdraw_nft_with_receipt")
 
     try {
       const tx = await api.withdrawNftWithReceipt(args);
-      log.info("The transaction is ", tx);
+      log.info('The transaction is ', tx);
     } catch (err) {
       log.error(err);
       return;
@@ -381,18 +381,18 @@ programCommand("withdraw_nft_with_receipt")
   });
 
 // with nft
-programCommand("withdraw_nft")
+programCommand('withdraw_nft')
   .requiredOption(
-    "-u --universe-key <string>",
-    "Universe key where you want to deposit nft"
+    '-u --universe-key <string>',
+    'Universe key where you want to deposit nft'
   )
   .requiredOption(
-    "-n --nft-mint-key <string>",
-    "Mint key of the nft that is being deposited"
+    '-n --nft-mint-key <string>',
+    'Mint key of the nft that is being deposited'
   )
 
   .action(async (_options, cmd) => {
-    log.info("Executing the command withdraw_nft ");
+    log.info('Executing the command withdraw_nft ');
     const { env, keypair, logLevel, universeKey, nftMintKey } = cmd.opts();
 
     const connection: Connection = getConnection(env);
@@ -402,14 +402,14 @@ programCommand("withdraw_nft")
     if (universeKey) {
       argUniverseKey = universeKey;
     } else {
-      throw new Error("Universe Key empty");
+      throw new Error('Universe Key empty');
     }
 
     let argNftMintKey = null;
     if (nftMintKey) {
       argNftMintKey = nftMintKey;
     } else {
-      throw new Error("Nft mint key is not provided");
+      throw new Error('Nft mint key is not provided');
     }
 
     const args: WithdrawNftApiArgs = {
@@ -421,26 +421,26 @@ programCommand("withdraw_nft")
 
     try {
       const tx = await api.withdrawNft(args);
-      log.info("The transaction is ", tx);
+      log.info('The transaction is ', tx);
     } catch (err) {
       log.error(err);
       return;
     }
   });
 
-programCommand("get_wrapped_user_nft_accounts")
-  .option("-u --universes <string...>", "Universes public key strings")
+programCommand('get_wrapped_user_nft_accounts')
+  .option('-u --universes <string...>', 'Universes public key strings')
   .option(
-    "-va --vault-authorities <string...>",
-    "vault authorities public key strings"
+    '-va --vault-authorities <string...>',
+    'vault authorities public key strings'
   )
   .option(
-    "-au --authorities <string...>",
-    "authorities public key strings, this this the user wallet public keys"
+    '-au --authorities <string...>',
+    'authorities public key strings, this this the user wallet public keys'
   )
 
   .action(async (_options, cmd) => {
-    log.info("Executing the command get_wrapped_user_nft_accounts ");
+    log.info('Executing the command get_wrapped_user_nft_accounts ');
     const {
       env,
       keypair,
@@ -481,7 +481,7 @@ programCommand("get_wrapped_user_nft_accounts")
         fetchAccountArgs,
         filterArgs
       );
-      log.info("The result - ");
+      log.info('The result - ');
       log.info(result);
     } catch (err) {
       log.error(err);
@@ -489,23 +489,23 @@ programCommand("get_wrapped_user_nft_accounts")
     }
   });
 
-programCommand("get_metadata_for_mint")
-  .requiredOption("-m --mint-key <string>", "give the mint public of the nft")
+programCommand('get_metadata_for_mint')
+  .requiredOption('-m --mint-key <string>', 'give the mint public of the nft')
   .action(async (_options, cmd) => {
-    log.info("Executing the command get_metadata_for_mint ");
+    log.info('Executing the command get_metadata_for_mint ');
     const { env, keypair, logLevel, mintKey } = cmd.opts();
 
     try {
       const connection: Connection = getConnection(env);
 
       if (!mintKey) {
-        throw Error("mintkey is empty");
+        throw Error('mintkey is empty');
       }
 
       const mint: PublicKey = new PublicKey(mintKey);
 
       const result = await api.getMetadataForMint(connection, mint);
-      log.info("The Result - ");
+      log.info('The Result - ');
       log.info(result);
     } catch (err) {
       log.error(err);
@@ -513,13 +513,13 @@ programCommand("get_metadata_for_mint")
     }
   });
 
-programCommand("get_wrapped_user_nft_account")
+programCommand('get_wrapped_user_nft_account')
   .requiredOption(
-    "-m --receipt-mint-key <string>",
-    "give the mint public of the receipt mint nft"
+    '-m --receipt-mint-key <string>',
+    'give the mint public of the receipt mint nft'
   )
   .action(async (_options, cmd) => {
-    log.info("Executing the command get_metadata_for_mint ");
+    log.info('Executing the command get_metadata_for_mint ');
     const { env, keypair, logLevel, receiptMintKey } = cmd.opts();
 
     try {
@@ -527,7 +527,7 @@ programCommand("get_wrapped_user_nft_account")
       const wallet = loadWallet(keypair);
 
       if (!receiptMintKey) {
-        throw Error("Receipt mint  is empty");
+        throw Error('Receipt mint  is empty');
       }
 
       const receiptMint: PublicKey = new PublicKey(receiptMintKey);
@@ -540,7 +540,7 @@ programCommand("get_wrapped_user_nft_account")
       };
 
       const result = await api.getWrappedUserNftAccount(args);
-      log.info("The Result - ");
+      log.info('The Result - ');
       log.info(result);
     } catch (err) {
       log.error(err);
@@ -550,11 +550,11 @@ programCommand("get_wrapped_user_nft_account")
 /****************** wrapped user nft commands ***********************/
 
 /***************** Meta Treasury commands ******************************/
-programCommand("init_meta_treasury")
-  .option("-f --fixed-fee <string>", "Treasury fixed fee -defaults to 0.0001 ")
+programCommand('init_meta_treasury')
+  .option('-f --fixed-fee <string>', 'Treasury fixed fee -defaults to 0.0001 ')
 
   .action(async (_options, cmd) => {
-    log.info("Executing the command update_universe");
+    log.info('Executing the command update_universe');
     const { env, keypair, logLevel, fixefFee } = cmd.opts();
 
     const connection: Connection = getConnection(env);
@@ -573,18 +573,18 @@ programCommand("init_meta_treasury")
 
     try {
       const tx = await configApi.initMetaTreasury(args);
-      log.info("The transaction is ", tx);
+      log.info('The transaction is ', tx);
     } catch (err) {
       log.error(err);
       return;
     }
   });
 
-programCommand("update_fixed_fee_of_meta_treasury")
-  .option("-f --fixed-fee <string>", "Treasury fixed fee -defaults to 0.0001 ")
+programCommand('update_fixed_fee_of_meta_treasury')
+  .option('-f --fixed-fee <string>', 'Treasury fixed fee -defaults to 0.0001 ')
 
   .action(async (_options, cmd) => {
-    log.info("Executing the command update_universe");
+    log.info('Executing the command update_universe');
     const { env, keypair, logLevel, fixedFee } = cmd.opts();
 
     const connection: Connection = getConnection(env);
@@ -603,22 +603,22 @@ programCommand("update_fixed_fee_of_meta_treasury")
       fixedFee: argFixedFee,
     };
 
-    log.info("The fixed fee in lamports ", args.fixedFee);
+    log.info('The fixed fee in lamports ', args.fixedFee);
 
     try {
       const tx = await configApi.updateFixedFeeForMetaTreasury(args);
-      log.info("The transaction is ", tx);
+      log.info('The transaction is ', tx);
     } catch (err) {
       log.error(err);
       return;
     }
   });
 
-programCommand("update_meta_treasury")
-  .option("-f --fixed-fee <string>", "Treasury fixed fee -defaults to 0.0001 ")
-  .requiredOption("-nk, --new-keypair <path>", `New solana wallet location`)
+programCommand('update_meta_treasury')
+  .option('-f --fixed-fee <string>', 'Treasury fixed fee -defaults to 0.0001 ')
+  .requiredOption('-nk, --new-keypair <path>', `New solana wallet location`)
   .action(async (_options, cmd) => {
-    log.info("Executing the command update_universe");
+    log.info('Executing the command update_universe');
     const { env, keypair, logLevel, fixedFee, newKeypair } = cmd.opts();
 
     const connection: Connection = getConnection(env);
@@ -639,11 +639,11 @@ programCommand("update_meta_treasury")
       fixedFee: argFixedFee,
     };
 
-    log.info("The fixed fee in lamports ", args.fixedFee);
+    log.info('The fixed fee in lamports ', args.fixedFee);
 
     try {
       const tx = await configApi.updateMetaTreasury(args);
-      log.info("The transaction is ", tx);
+      log.info('The transaction is ', tx);
     } catch (err) {
       log.error(err);
       return;
@@ -655,8 +655,8 @@ programCommand("update_meta_treasury")
 program
   .configureOutput({
     // Visibly override write routines as example!
-    writeOut: (str) => process.stdout.write(`[OUT] ${str}`),
-    writeErr: (str) => process.stdout.write(`[ERR] ${str}`),
+    writeOut: str => process.stdout.write(`[OUT] ${str}`),
+    writeErr: str => process.stdout.write(`[ERR] ${str}`),
     // Highlight errors in color.
     outputError: (str, write) => write(errorColor(str)),
   })
