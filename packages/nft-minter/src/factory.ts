@@ -15,12 +15,12 @@ const programIds = {
   METAPLEX_PROGRAM_ID: new PublicKey(
     'p1exdMJcjVao65QdewkaZRUnU6VPSXhus9n2GzWfh98'
   ),
-  // TOKEN_METADATA_PROGRAM_ID: new PublicKey(
-  //   'metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s'
-  // ),
   TOKEN_METADATA_PROGRAM_ID: new PublicKey(
-    'zpHebBS4xj9gX4RYfpJYJVFiucnYBjFsAZojh4mTuS1'
+    'metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s'
   ),
+  // TOKEN_METADATA_PROGRAM_ID: new PublicKey(
+  //   'zpHebBS4xj9gX4RYfpJYJVFiucnYBjFsAZojh4mTuS1'
+  // ),
   NFT_MINTER_PROGRAM_ID: new PublicKey(nftMinterIdl.metadata.address),
 };
 
