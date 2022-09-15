@@ -35,7 +35,7 @@
     ]
   },
   "dependencies": {
-    "@kyraa/metablocks": "0.1.4",
+    "@kyraa/metablocks": "1.1.0",
     "@metaplex-foundation/mpl-token-metadata": "^1.2.4",
     "@project-serum/anchor": "^0.24.2",
     "@project-serum/common": "^0.0.1-beta.3",
@@ -57,5 +57,6 @@
     "jest": "^27.5.1",
     "typescript": "^4.6.3"
   },
-  "gitHead": "a4cce849ed5ec881028e83d89336464750048fd6"
+  "gitHead": "462db7bc4304460657d4c10f1c6acff182a1928f",
+  "private": true
 }

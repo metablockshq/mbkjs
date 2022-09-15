@@ -1,4 +1,4 @@
-import { getMetaBlocksProgram, getMetaNftProgram } from './factory';
+import { getMetaBlocksProgram, getMetaTreasuryProgram } from './factory';
 import { Connection, PublicKey, Transaction } from '@solana/web3.js';
 import {
   getCreateUniverseInstruction,
@@ -6,8 +6,6 @@ import {
 } from './instructions/universeInstructions';
 import {
   FetchAccountArgs,
-  GroupedDepositNftApiArgs,
-  SendTxRequest,
   UniverseApiArgs,
   UniverseArgs,
   UserNftFilterArgs,
@@ -24,26 +22,14 @@ import { MetaBlocks } from './types/meta_blocks';
 import { LangErrorCode, LangErrorMessage } from './error';
 import { getPdaKeys, PdaKeys } from './pda';
 
-import {
-  getCreateCpiMetaNftInstruction,
-  getDepositNftInstruction,
-  getInitCpiMetaNftInstruction,
-  getInitDepositInstruction,
-  getInitMetaBlocksAuthorityInstruction,
-  getInitReceiptInstruction,
-  getTransferReceiptNftInstruction,
-  getUpdateReceiptMetadataInstruction,
-} from './instructions/depositInstructions';
 import { getWithdrawNftInstruction } from './instructions/withdrawInstructions';
 import axios from 'axios';
 import { supabaseClient } from './supabase-client';
+import { depositNft, depositNftV1 } from './deposit-nft';
+import * as configApi from './config-api';
 
 const RECEIPT_URL =
   'https://ctvymyaq3e.execute-api.ap-south-1.amazonaws.com/Prod/receipt-shortener';
-
-const getTokenAccount = async (provider: any, addr: PublicKey) => {
-  return await accountApi.getTokenAccount(provider, addr);
-};
 
 const createUniverse = async (args: UniverseApiArgs) => {
   try {
@@ -97,168 +83,24 @@ const updateUniverse = async (args: UniverseApiArgs) => {
   }
 };
 
-const depositNft = async (args: GroupedDepositNftApiArgs) => {
-  try {
-    const sendTxRequests: Array<SendTxRequest> = [];
-
-    const program = getMetaBlocksProgram(args.connection, args.wallet);
-    const metaNftProgram = getMetaNftProgram(args.connection, args.wallet);
-    const usersKey = args.wallet.publicKey;
-
-    const pdaKeys: PdaKeys = await getPdaKeys(
-      args.universeKey,
-      usersKey,
-      args.mintKey
-    );
-
-    const transferReceiptNftInstruction =
-      await getTransferReceiptNftInstruction({
-        pdaKeys: pdaKeys,
-        usersKey: usersKey,
-        program: program,
-      });
-
-    const updateReceiptMetadataInstruction =
-      await getUpdateReceiptMetadataInstruction({
-        uri: args.receiptUrl,
-        name: args.receiptName,
-        pdaKeys: pdaKeys,
-        usersKey: usersKey,
-        program: program,
-        isReceiptMasterEdition: args.isReceiptMasterEdition,
-      });
-
-    const depositNftInstruction = await getDepositNftInstruction({
-      pdaKeys: pdaKeys,
-      usersKey: usersKey,
-      program: program,
-    });
-
-    const initDepositInstruction = await getInitDepositInstruction({
-      pdaKeys: pdaKeys,
-      usersKey: usersKey,
-      program: program,
-    });
-
-    const initReceiptInstruction = await getInitReceiptInstruction({
-      pdaKeys: pdaKeys,
-      usersKey: usersKey,
-      program: program,
-    });
-
-    const createCpiMetaNftInstruction = await getCreateCpiMetaNftInstruction({
-      pdaKeys: pdaKeys,
-      usersKey: usersKey,
-      program: program,
-      name: args.metaNftName,
-      uri: args.metaNftUrl,
-    });
-
-    const initMetaNftInstruction = await getInitCpiMetaNftInstruction({
-      pdaKeys: pdaKeys,
-      usersKey: usersKey,
-      program: program,
-    });
-
-    const initMetaBlocksAuthorityInstruction =
-      await getInitMetaBlocksAuthorityInstruction({
-        pdaKeys: pdaKeys,
-        usersKey: usersKey,
-        program: program,
-      });
-
-    // transaction 1
-    const transaction1 = new Transaction();
-
-    try {
-      await program.account.metaBlocksAuthority.fetch(
-        pdaKeys.metaBlocksAuthority
-      );
-    } catch (err) {
-      transaction1.add(initMetaBlocksAuthorityInstruction);
-    }
-
-    try {
-      await metaNftProgram.account.metaNft.fetch(pdaKeys.metaNft);
-    } catch (err) {
-      transaction1.add(initMetaNftInstruction);
-    }
-
-    if (transaction1.instructions.length > 0) {
-      sendTxRequests.push({
-        tx: transaction1,
-        signers: [],
-      });
-    }
-    // transaction 2
-    const transaction2 = new Transaction();
-    try {
-      await getTokenAccount(program.provider, pdaKeys.userMetaNftAta);
-    } catch (err) {
-      transaction2.add(createCpiMetaNftInstruction);
-      if (transaction2.instructions.length > 0) {
-        sendTxRequests.push({
-          tx: transaction2,
-          signers: [],
-        });
-      }
-    }
-
-    // transaction 3
-    const transaction3 = new Transaction();
-    transaction3.add(initReceiptInstruction);
-    transaction3.add(initDepositInstruction);
-
-    sendTxRequests.push({
-      tx: transaction3,
-      signers: [],
-    });
-
-    // transaction 4
-    const transaction4 = new Transaction();
-    transaction4.add(depositNftInstruction);
-
-    sendTxRequests.push({
-      tx: transaction4,
-      signers: [],
-    });
-
-    // transaction 5
-    const transaction5 = new Transaction();
-    transaction5.add(updateReceiptMetadataInstruction);
-    sendTxRequests.push({
-      tx: transaction5,
-      signers: [],
-    });
-
-    // transaction 6
-    const transaction6 = new Transaction();
-    transaction6.add(transferReceiptNftInstruction);
-    sendTxRequests.push({
-      tx: transaction6,
-      signers: [],
-    });
-
-    const [tx1, tx2, tx3, tx4, tx5, tx6] = await program.provider.sendAll!(
-      sendTxRequests
-    );
-
-    return { tx1, tx2, tx3, tx4, tx5, tx6 };
-  } catch (e) {
-    throw new KyraaError(e);
-  }
-};
-
 const withdrawNft = async (args: WithdrawNftApiArgs) => {
   try {
     const program = getMetaBlocksProgram(args.connection, args.wallet);
+    const metaTreasuryProgram = getMetaTreasuryProgram(
+      args.connection,
+      args.wallet
+    );
+    const treasuryData = await configApi.fetchTreasuryData(metaTreasuryProgram);
+    const treasuryAuthority = treasuryData.authority;
+
     const usersKey = args.wallet.publicKey;
 
     return await callWithdrawNft(
       program,
       usersKey,
       args.mintKey,
-      args.universeKey
+      args.universeKey,
+      treasuryAuthority
     );
   } catch (e) {
     throw new KyraaError(e);
@@ -268,6 +110,13 @@ const withdrawNft = async (args: WithdrawNftApiArgs) => {
 const withdrawNftWithReceipt = async (args: WithdrawNftWithReceiptApiArgs) => {
   try {
     const program = getMetaBlocksProgram(args.connection, args.wallet);
+    const metaTreasuryProgram = getMetaTreasuryProgram(
+      args.connection,
+      args.wallet
+    );
+    const treasuryData = await configApi.fetchTreasuryData(metaTreasuryProgram);
+    const treasuryAuthority = treasuryData.authority;
+
     const usersKey = args.wallet.publicKey;
 
     const wrappedUserNft = await accountApi.getWrappedUserNftForReceiptMint(
@@ -291,7 +140,13 @@ const withdrawNftWithReceipt = async (args: WithdrawNftWithReceiptApiArgs) => {
     const tokenMint = new PublicKey(wrappedUserNft.tokenMint);
     const universeKey = new PublicKey(wrappedUserNft.universe);
 
-    return await callWithdrawNft(program, usersKey, tokenMint, universeKey);
+    return await callWithdrawNft(
+      program,
+      usersKey,
+      tokenMint,
+      universeKey,
+      treasuryAuthority
+    );
   } catch (e) {
     throw new KyraaError(e);
   }
@@ -301,7 +156,8 @@ const callWithdrawNft = async (
   program: Program<MetaBlocks>,
   usersKey: PublicKey,
   mintKey: PublicKey,
-  universeKey: PublicKey
+  universeKey: PublicKey,
+  treasuryAuthority: PublicKey
 ) => {
   const pdaKeys: PdaKeys = await getPdaKeys(universeKey, usersKey, mintKey);
 
@@ -309,6 +165,7 @@ const callWithdrawNft = async (
     program: program,
     usersKey: usersKey,
     pdaKeys: pdaKeys,
+    treasuryAuthority: treasuryAuthority,
   });
   const transaction = new Transaction();
   transaction.add(withdrawNftInstruction);
@@ -479,4 +336,5 @@ export {
   getStoredUniverseAccounts,
   getAllStoredWrappedUserNftAccounts,
   getAllStoredUniverseAccounts,
+  depositNftV1,
 };

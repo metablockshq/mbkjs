@@ -1,5 +1,5 @@
 {
-  "name": "@kyraa/metablocks",
+  "name": "@kyraa/nft-minter",
   "version": "1.1.0",
   "license": "MIT",
   "main": "dist/index.js",
@@ -35,16 +35,19 @@
   },
   "peerDependencies": {
     "@metaplex-foundation/mpl-token-metadata": "^1.2.4",
-    "@project-serum/anchor": "^0.24.2",
-    "@solana/web3.js": "^1.39.1",
+    "@project-serum/anchor": "^0.25.0",
+    "@solana/web3.js": "^1.59.1",
     "axios": "^0.27.2",
-    "loglevel": "^1.8.0"
+    "loglevel": "^1.8.0",
+    "tweetnacl": "^1.0.3"
+
   },
   "devDependencies": {
     "@metaplex-foundation/mpl-token-metadata": "^1.2.4",
-    "@project-serum/anchor": "^0.24.2",
+    "@project-serum/anchor": "^0.25.0",
     "@size-limit/preset-small-lib": "^7.0.8",
-    "@solana/web3.js": "^1.39.1",
+    "tweetnacl": "^1.0.3",
+    "@solana/web3.js": "^1.59.1",
     "@types/bs58": "^4.0.1",
     "@types/chai": "^4.3.0",
     "@types/mocha": "^9.1.0",
@@ -65,10 +68,6 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-
-  "gitHead": "0d1a1fa5e5409dccf948d6aa8d8f23af3e11d623",
-  "dependencies": {
-    "@supabase/supabase-js": "^1.35.3"
   }
+ 
 }

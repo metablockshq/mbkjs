@@ -1,8 +1,16 @@
 import { Program } from '@project-serum/anchor';
-import { Connection, PublicKey, Signer, Transaction } from '@solana/web3.js';
+import {
+  Blockhash,
+  Connection,
+  FeeCalculator,
+  PublicKey,
+  Signer,
+  Transaction,
+} from '@solana/web3.js';
 import { MetaBlocks } from './meta_blocks';
 import * as borsh from '@project-serum/borsh';
 import { PdaKeys } from '../pda';
+import { MetaTreasury } from './meta_treasury';
 
 export interface UniverseApiArgs {
   connection: Connection;
@@ -18,9 +26,8 @@ interface ApiInputArgs {
   mintKey: PublicKey;
   universeKey: PublicKey;
 }
-export interface InitReceiptMintApiArgs extends ApiInputArgs {}
 
-export interface InitDepositNftApiArgs extends ApiInputArgs {}
+export interface InitReceiptMintApiArgs extends ApiInputArgs {}
 
 export interface DepositNftApiArgs extends ApiInputArgs {}
 
@@ -225,27 +232,31 @@ interface BasicInstructionArgs {
 
 export interface TransferReceiptNftArgs extends BasicInstructionArgs {}
 
-export interface UpdateReceiptMetadataArgs extends BasicInstructionArgs {
+export interface DepositNftArgs extends BasicInstructionArgs {
   uri: string;
   name: string;
   isReceiptMasterEdition: boolean;
+  treasuryAuthority: PublicKey;
 }
-export interface DepositArgs extends BasicInstructionArgs {}
 
-export interface InitDepositNftArgs extends BasicInstructionArgs {}
-
-export interface InitReceiptMintArgs extends BasicInstructionArgs {}
+export interface InitReceiptMintArgs extends BasicInstructionArgs {
+  treasuryAuthority: PublicKey;
+}
 
 export interface CreateMetaNftArgs extends BasicInstructionArgs {
   uri: string;
   name: string;
 }
 
-export interface InitMetaNftArgs extends BasicInstructionArgs {}
+export interface InitMetaNftArgs extends BasicInstructionArgs {
+  treasuryAuthority: PublicKey;
+}
 
 export interface InitMetaBlocksAuthorityArgs extends BasicInstructionArgs {}
 
-export interface WithdrawNftArgs extends BasicInstructionArgs {}
+export interface WithdrawNftArgs extends BasicInstructionArgs {
+  treasuryAuthority: PublicKey;
+}
 
 export interface SupabaseWrappedUserNft {
   account: string;
@@ -281,4 +292,58 @@ export interface SupabaseUniverse {
   slot: number | undefined | null;
   signature: string | undefined | null;
   blockTime: number | undefined | null;
+}
+
+export enum SequenceType {
+  Sequential,
+  Parallel,
+  StopOnFailure,
+}
+
+export interface BlockhashAndFeeCalculator {
+  blockhash: Blockhash;
+  feeCalculator: FeeCalculator;
+}
+
+// treasury API args
+interface ConfigApiInputArgs {
+  connection: Connection;
+  wallet: any;
+  wallet2?: any;
+}
+
+interface ConfigInstructionArgs {
+  usersKey: PublicKey;
+  metaTreasuryProgram: Program<MetaTreasury>;
+  usersKey2?: PublicKey;
+}
+
+// api args
+export interface GetMetaTreasuryApiArgs extends ConfigApiInputArgs {}
+
+export interface InitializeMetaTreasuryApiArgs extends ConfigApiInputArgs {
+  fixedFee: number;
+}
+
+export interface UpdateFixedFeeForMetaTreasuryApiArgs
+  extends ConfigApiInputArgs {
+  fixedFee: number;
+}
+
+export interface UpdateMetaTreasuryApiArgs extends ConfigApiInputArgs {
+  fixedFee: number;
+}
+
+// insturctions
+export interface InitializeMetaTreasuryArgs extends ConfigInstructionArgs {
+  fixedFee: number;
+}
+
+export interface UpdateFixedFeeForMetaTreasuryArgs
+  extends ConfigInstructionArgs {
+  fixedFee: number;
+}
+
+export interface UpdateMeteTreasuryArgs extends ConfigInstructionArgs {
+  fixedFee: number;
 }

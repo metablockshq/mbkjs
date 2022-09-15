@@ -28,8 +28,9 @@ export const getWithdrawNftInstruction = async (args: WithdrawNftArgs) => {
       systemProgram: SystemProgram.programId,
       rent: SYSVAR_RENT_PUBKEY,
       metaNftProgram: programIds.META_NFT_PROGRAM_ID,
-      treasury: args.pdaKeys.treasuryAddress,
-      treasuryAuthority: programIds.TREASURY_AUTHORITY,
+      treasury: args.pdaKeys.metaTreasuryAddress,
+      metaTreasuryProgram: programIds.META_TREASURY_PROGRAM_ID,
+      treasuryAuthority: args.treasuryAuthority,
     })
     .instruction();
 };

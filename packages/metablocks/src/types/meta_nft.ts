@@ -1,5 +1,5 @@
 export type MetaNft = {
-  "version": "0.1.0",
+  "version": "1.0.0",
   "name": "meta_nft",
   "instructions": [
     {
@@ -253,43 +253,7 @@ export type MetaNft = {
   ],
   "accounts": [
     {
-      "name": "metaNft",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "nftCounts",
-            "type": "u8"
-          },
-          {
-            "name": "metaNftBump",
-            "type": "u8"
-          },
-          {
-            "name": "metaNftMintBump",
-            "type": "u8"
-          },
-          {
-            "name": "authority",
-            "type": "publicKey"
-          },
-          {
-            "name": "payer",
-            "type": "publicKey"
-          },
-          {
-            "name": "universe",
-            "type": "publicKey"
-          },
-          {
-            "name": "treasuryAuthority",
-            "type": "publicKey"
-          }
-        ]
-      }
-    },
-    {
-      "name": "initMetaNftArgs",
+      "name": "metaNftCountArgs",
       "type": {
         "kind": "struct",
         "fields": []
@@ -342,10 +306,46 @@ export type MetaNft = {
       }
     },
     {
-      "name": "metaNftCountArgs",
+      "name": "initMetaNftArgs",
       "type": {
         "kind": "struct",
         "fields": []
+      }
+    },
+    {
+      "name": "metaNft",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "nftCounts",
+            "type": "u8"
+          },
+          {
+            "name": "metaNftBump",
+            "type": "u8"
+          },
+          {
+            "name": "metaNftMintBump",
+            "type": "u8"
+          },
+          {
+            "name": "authority",
+            "type": "publicKey"
+          },
+          {
+            "name": "payer",
+            "type": "publicKey"
+          },
+          {
+            "name": "universe",
+            "type": "publicKey"
+          },
+          {
+            "name": "treasuryAuthority",
+            "type": "publicKey"
+          }
+        ]
       }
     }
   ],
@@ -406,7 +406,7 @@ export type MetaNft = {
 };
 
 export const IDL: MetaNft = {
-  "version": "0.1.0",
+  "version": "1.0.0",
   "name": "meta_nft",
   "instructions": [
     {
@@ -660,43 +660,7 @@ export const IDL: MetaNft = {
   ],
   "accounts": [
     {
-      "name": "metaNft",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "nftCounts",
-            "type": "u8"
-          },
-          {
-            "name": "metaNftBump",
-            "type": "u8"
-          },
-          {
-            "name": "metaNftMintBump",
-            "type": "u8"
-          },
-          {
-            "name": "authority",
-            "type": "publicKey"
-          },
-          {
-            "name": "payer",
-            "type": "publicKey"
-          },
-          {
-            "name": "universe",
-            "type": "publicKey"
-          },
-          {
-            "name": "treasuryAuthority",
-            "type": "publicKey"
-          }
-        ]
-      }
-    },
-    {
-      "name": "initMetaNftArgs",
+      "name": "metaNftCountArgs",
       "type": {
         "kind": "struct",
         "fields": []
@@ -749,10 +713,46 @@ export const IDL: MetaNft = {
       }
     },
     {
-      "name": "metaNftCountArgs",
+      "name": "initMetaNftArgs",
       "type": {
         "kind": "struct",
         "fields": []
+      }
+    },
+    {
+      "name": "metaNft",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "nftCounts",
+            "type": "u8"
+          },
+          {
+            "name": "metaNftBump",
+            "type": "u8"
+          },
+          {
+            "name": "metaNftMintBump",
+            "type": "u8"
+          },
+          {
+            "name": "authority",
+            "type": "publicKey"
+          },
+          {
+            "name": "payer",
+            "type": "publicKey"
+          },
+          {
+            "name": "universe",
+            "type": "publicKey"
+          },
+          {
+            "name": "treasuryAuthority",
+            "type": "publicKey"
+          }
+        ]
       }
     }
   ],
