@@ -6,13 +6,11 @@ import {
   SYSVAR_RENT_PUBKEY,
 } from '@solana/web3.js';
 
-import { MintCollectionNftArgs, MintRegularNftArgs } from '../types/types';
+import { MintSignedCollectionNftArgs, MintSignedNftArgs } from '../types/types';
 import { programIds } from '../factory';
 import * as pda from '../pda';
 
-export const getMintRegularNftInstruction = async (
-  args: MintRegularNftArgs
-) => {
+export const getMintSignedNftInstruction = async (args: MintSignedNftArgs) => {
   const claimArgs = {
     signature: args.signature,
     message: args.message,
@@ -24,12 +22,12 @@ export const getMintRegularNftInstruction = async (
     mintName: args.mintName,
     mintSymbol: args.mintSymbol,
     isMasterEdition: args.isMasterEdition,
-    isNftForCollection: args.isNftForCollection,
+    isParentNft: args.isParentForNfts,
     mintUri: args.mintUri,
   };
 
   const mintRegularNftInstruction = await args.program.methods
-    .mintRegularNft(mintArgs, claimArgs)
+    .mintSignedNft(mintArgs, claimArgs)
     .accounts({
       claimant: args.claimantAddress,
       nftMinter: args.pdaKeys.nftMinterAddress,
@@ -49,8 +47,8 @@ export const getMintRegularNftInstruction = async (
   return mintRegularNftInstruction;
 };
 
-export const getMintCollectionNftInstruction = async (
-  args: MintCollectionNftArgs
+export const getMintSignedCollectionNftInstruction = async (
+  args: MintSignedCollectionNftArgs
 ) => {
   const claimArgs = {
     signature: args.signature,
@@ -69,14 +67,14 @@ export const getMintCollectionNftInstruction = async (
     mintName: args.mintName,
     mintSymbol: args.mintSymbol,
     isMasterEdition: args.isMasterEdition,
-    isNftForCollection: args.isNftForCollection,
+    isParentNft: args.isParentForNfts,
     mintUri: args.mintUri,
     nftCollectionMasterEditionBump: nftCollectionMasterEditionBump,
     nftCollectionMetadataBump: nftCollectionMetadataBump,
   };
 
   const mintCollectionNftInstruction = await args.program.methods
-    .mintCollectionNft(mintArgs, claimArgs)
+    .mintSignedCollectionNft(mintArgs, claimArgs)
     .accounts({
       claimant: args.claimantAddress,
       nftMinter: args.pdaKeys.nftMinterAddress,
@@ -101,13 +99,14 @@ export const getMintCollectionNftInstruction = async (
 
 export const getEdInstruction = (args: {
   message: Uint8Array;
-  walletAddress: PublicKey;
+  authorityAddress: PublicKey;
   signature: Uint8Array;
 }) => {
   const edInstruction = Ed25519Program.createInstructionWithPublicKey({
     message: args.message,
-    publicKey: args.walletAddress.toBytes(),
+    publicKey: args.authorityAddress.toBytes(),
     signature: args.signature,
+    instructionIndex: 0,
   });
   return edInstruction;
 };

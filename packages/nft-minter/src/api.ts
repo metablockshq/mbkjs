@@ -1,29 +1,29 @@
-import { PublicKey, Transaction } from '@solana/web3.js';
+import { Transaction } from '@solana/web3.js';
 import { getNftMinterProgram } from './factory';
 import { getInitializeNftMinterInstruction } from './instructions/initialize-nft-minter';
 import {
   getEdInstruction,
-  getMintCollectionNftInstruction,
-  getMintRegularNftInstruction,
+  getMintSignedCollectionNftInstruction,
+  getMintSignedNftInstruction,
 } from './instructions/mint-signed-nfts';
 import {
   getCreateMintInstruction,
-  getMintNftInstuction,
-  getMintNftWithCollectionInstuction,
+  getMintUnsignedNftInstuction,
+  getMintUnsignedCollectionNftInstuction,
 } from './instructions/mint-unsigned-nfts';
 import { getPdaKeys, PdaKeys } from './pda';
 import {
   CreateMintArgs,
   InitializeNftMinterApiArgs,
   IntializeNftMinterArgs,
-  MintCollectionNftApiArgs,
-  MintCollectionNftArgs,
-  MintNftArgs,
-  MintNftWithCollectionArgs,
-  MintRegularNftApiArgs,
-  MintRegularNftArgs,
+  MintSignedCollectionNftApiArgs,
+  MintSignedCollectionNftArgs,
+  MintSignedNftApiArgs,
+  MintSignedNftArgs,
   MintUnsignedCollectionNftApiArgs,
+  MintUnsignedCollectionNftArgs,
   MintUnsignedNftApiArgs,
+  MintUnsignedNftArgs,
 } from './types/types';
 
 const initializeNftMinter = async (args: InitializeNftMinterApiArgs) => {
@@ -37,9 +37,9 @@ const initializeNftMinter = async (args: InitializeNftMinterApiArgs) => {
     };
 
     const instruction = await getInitializeNftMinterInstruction(argument);
-    const tx = new Transaction();
-    tx.add(instruction);
-    await program.provider.sendAndConfirm!(tx, []);
+    const transaction = new Transaction();
+    transaction.add(instruction);
+    const tx = await program.provider.sendAndConfirm!(transaction, []);
 
     return tx;
   } catch (e) {
@@ -47,36 +47,36 @@ const initializeNftMinter = async (args: InitializeNftMinterApiArgs) => {
   }
 };
 
-const mintSignedNft = async (args: MintRegularNftApiArgs) => {
+const mintSignedNft = async (args: MintSignedNftApiArgs) => {
   try {
     const program = getNftMinterProgram(args.connection, args.wallet);
     const usersKey = args.wallet.publicKey;
     const pdaKeys: PdaKeys = await getPdaKeys(usersKey);
 
-    const argument: MintRegularNftArgs = {
+    const argument: MintSignedNftArgs = {
       signature: args.signature,
       message: args.message,
       mintName: args.mintName,
       mintUri: args.mintUri,
       mintSymbol: args.mintSymbol,
       isMasterEdition: args.isMasterEdition,
-      isNftForCollection: args.isNftForCollection,
+      isParentForNfts: args.isParentForNfts,
       pdaKeys: pdaKeys,
       program: program,
       claimantAddress: usersKey,
     };
 
-    const instruction = await getMintRegularNftInstruction(argument);
+    const instruction = await getMintSignedNftInstruction(argument);
     const edInstruction = getEdInstruction({
       message: args.message,
-      walletAddress: args.wallet.publicKey,
+      authorityAddress: args.authorityAddress,
       signature: args.signature,
     });
 
-    const tx = new Transaction();
-    tx.add(edInstruction);
-    tx.add(instruction);
-    await program.provider.sendAndConfirm!(tx, []);
+    const tranasction = new Transaction();
+    tranasction.add(edInstruction);
+    tranasction.add(instruction);
+    const tx = await program.provider.sendAndConfirm!(tranasction, []);
 
     return tx;
   } catch (e) {
@@ -84,39 +84,41 @@ const mintSignedNft = async (args: MintRegularNftApiArgs) => {
   }
 };
 
-const mintSignedCollectionNft = async (args: MintCollectionNftApiArgs) => {
+const mintSignedCollectionNft = async (
+  args: MintSignedCollectionNftApiArgs
+) => {
   try {
     const program = getNftMinterProgram(args.connection, args.wallet);
     const usersKey = args.wallet.publicKey;
 
     const pdaKeys: PdaKeys = await getPdaKeys(usersKey);
 
-    const argument: MintCollectionNftArgs = {
+    const argument: MintSignedCollectionNftArgs = {
       signature: args.signature,
       message: args.message,
       mintName: args.mintName,
       mintUri: args.mintUri,
       mintSymbol: args.mintSymbol,
       isMasterEdition: args.isMasterEdition,
-      isNftForCollection: args.isNftForCollection,
+      isParentForNfts: args.isParentForNfts,
       pdaKeys: pdaKeys,
       program: program,
       claimantAddress: usersKey,
       nftCollectionMintAddress: args.collectionMintAddress,
     };
 
-    const instruction = await getMintCollectionNftInstruction(argument);
+    const instruction = await getMintSignedCollectionNftInstruction(argument);
 
     const edInstruction = getEdInstruction({
       message: args.message,
-      walletAddress: args.wallet.publicKey,
+      authorityAddress: args.authorityAddress,
       signature: args.signature,
     });
 
-    const tx = new Transaction();
-    tx.add(edInstruction);
-    tx.add(instruction);
-    await program.provider.sendAndConfirm!(tx, []);
+    const tranasction = new Transaction();
+    tranasction.add(edInstruction);
+    tranasction.add(instruction);
+    const tx = await program.provider.sendAndConfirm!(tranasction, []);
 
     return tx;
   } catch (e) {
@@ -142,22 +144,22 @@ const mintUnsignedNft = async (args: MintUnsignedNftApiArgs) => {
       createMintArgument
     );
 
-    const argument: MintNftArgs = {
+    const argument: MintUnsignedNftArgs = {
       mintName: args.mintName,
       mintSymbol: args.mintSymbol,
       isMasterEdition: args.isMasterEdition,
-      isNftForCollection: args.isNftForCollection,
+      isParentForNfts: args.isParentForNfts,
       program: program,
       claimantAddress: usersKey,
       pdaKeys: pdaKeys,
     };
 
-    const mintNftInstruction = await getMintNftInstuction(argument);
+    const mintNftInstruction = await getMintUnsignedNftInstuction(argument);
 
-    const tx = new Transaction();
-    tx.add(createMintInstruction);
-    tx.add(mintNftInstruction);
-    await program.provider.sendAndConfirm!(tx, []);
+    const tranasction = new Transaction();
+    tranasction.add(createMintInstruction);
+    tranasction.add(mintNftInstruction);
+    const tx = await program.provider.sendAndConfirm!(tranasction, []);
 
     return tx;
   } catch (e) {
@@ -185,25 +187,25 @@ const mintUnsignedCollectionNft = async (
       createMintArgument
     );
 
-    const argument: MintNftWithCollectionArgs = {
+    const argument: MintUnsignedCollectionNftArgs = {
       mintName: args.mintName,
       mintSymbol: args.mintSymbol,
       isMasterEdition: args.isMasterEdition,
-      isNftForCollection: args.isNftForCollection,
+      isParentForNfts: args.isParentForNfts,
       program: program,
       claimantAddress: usersKey,
       pdaKeys: pdaKeys,
       nftCollectionMintAddress: args.collectionMintAddress,
     };
 
-    const mintNftInstruction = await getMintNftWithCollectionInstuction(
+    const mintNftInstruction = await getMintUnsignedCollectionNftInstuction(
       argument
     );
 
-    const tx = new Transaction();
-    tx.add(createMintInstruction);
-    tx.add(mintNftInstruction);
-    await program.provider.sendAndConfirm!(tx, []);
+    const tranasction = new Transaction();
+    tranasction.add(createMintInstruction);
+    tranasction.add(mintNftInstruction);
+    const tx = await program.provider.sendAndConfirm!(tranasction, []);
 
     return tx;
   } catch (e) {

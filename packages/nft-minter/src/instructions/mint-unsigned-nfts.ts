@@ -3,8 +3,8 @@ import * as pda from '../pda';
 import { programIds } from '../factory';
 import {
   CreateMintArgs,
-  MintNftArgs,
-  MintNftWithCollectionArgs,
+  MintUnsignedCollectionNftArgs,
+  MintUnsignedNftArgs,
 } from '../types/types';
 
 export const getCreateMintInstruction = async (args: CreateMintArgs) => {
@@ -25,18 +25,20 @@ export const getCreateMintInstruction = async (args: CreateMintArgs) => {
     .instruction();
 };
 
-export const getMintNftInstuction = async (args: MintNftArgs) => {
+export const getMintUnsignedNftInstuction = async (
+  args: MintUnsignedNftArgs
+) => {
   const mintArgs = {
     mintMetadataBump: args.pdaKeys.mintMetadataBump,
     mintMasterEditionBump: args.pdaKeys.mintMasterEditionBump,
     mintName: args.mintName,
     mintSymbol: args.mintSymbol,
     isMasterEdition: args.isMasterEdition,
-    isNftForCollection: args.isNftForCollection,
+    isParentNft: args.isParentForNfts,
   };
 
   return await args.program.methods
-    .mintNft(mintArgs)
+    .mintUnsignedNft(mintArgs)
     .accounts({
       claimant: args.claimantAddress,
       nftMinter: args.pdaKeys.nftMinterAddress,
@@ -55,8 +57,8 @@ export const getMintNftInstuction = async (args: MintNftArgs) => {
     .instruction();
 };
 
-export const getMintNftWithCollectionInstuction = async (
-  args: MintNftWithCollectionArgs
+export const getMintUnsignedCollectionNftInstuction = async (
+  args: MintUnsignedCollectionNftArgs
 ) => {
   const [nftCollectionMasterEdition, nftCollectionMasterEditionBump] =
     await pda.findMasterEditionAddress(args.nftCollectionMintAddress);
@@ -70,7 +72,7 @@ export const getMintNftWithCollectionInstuction = async (
     mintName: args.mintName,
     mintSymbol: args.mintSymbol,
     isMasterEdition: args.isMasterEdition,
-    isNftForCollection: args.isNftForCollection,
+    isParentNft: args.isParentForNfts,
     nftCollectionMint: args.nftCollectionMintAddress,
     nftCollectionMasterEdition: nftCollectionMasterEdition,
     nftCollectionMetdata: nftCollectionMetadata,
@@ -79,7 +81,7 @@ export const getMintNftWithCollectionInstuction = async (
   };
 
   return await args.program.methods
-    .mintNftWithCollection(mintArgs)
+    .mintUnsignedCollectionNft(mintArgs)
     .accounts({
       claimant: args.claimantAddress,
       nftMinter: args.pdaKeys.nftMinterAddress,

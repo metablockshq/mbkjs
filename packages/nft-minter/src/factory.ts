@@ -3,7 +3,7 @@ import { Connection, PublicKey } from '@solana/web3.js';
 
 import nftMinterIdl from './idl/nft_minter.json';
 
-import { NftMinter } from './types/nft_minter';
+//import { NftMinter } from './types/nft_minter';
 
 const programIds = {
   TOKEN_PROGRAM_ID: new PublicKey(
@@ -18,6 +18,9 @@ const programIds = {
   TOKEN_METADATA_PROGRAM_ID: new PublicKey(
     'metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s'
   ),
+  // TOKEN_METADATA_PROGRAM_ID: new PublicKey(
+  //   'zpHebBS4xj9gX4RYfpJYJVFiucnYBjFsAZojh4mTuS1'
+  // ),
   NFT_MINTER_PROGRAM_ID: new PublicKey(nftMinterIdl.metadata.address),
 };
 
