@@ -17,7 +17,7 @@ import {
   WithdrawNftApiArgs,
   WithdrawNftWithReceiptApiArgs,
   WrappedUserNftArgs,
-} from "@kyraa/metablocks";
+} from "@mbkjs/nft-composer";
 
 program.version("0.0.1");
 log.setLevel(log.levels.INFO);

@@ -1,8 +1,10 @@
 {
-  "name": "@metablockshq/cli",
-  "version": "0.0.1",
+  "name": "@mbkjs/nft-composer-cli",
+  "version": "2.0.0",
   "main": "./build/cli.js",
   "license": "MIT",
+  "author": "Srinivas Valekar <https://github.com/valekar>",
+  "repository": "git@github.com:metablockshq/mbkjs.git",
   "scripts": {
     "build": "tsc -p ./src",
     "watch": "tsc -w -p ./src",
@@ -35,7 +37,7 @@
     ]
   },
   "dependencies": {
-    "@kyraa/metablocks": "1.1.0",
+    "@mbkjs/nft-composer": "2.0.0",
     "@metaplex-foundation/mpl-token-metadata": "^1.2.4",
     "@project-serum/anchor": "^0.24.2",
     "@project-serum/common": "^0.0.1-beta.3",
@@ -58,5 +60,7 @@
     "typescript": "^4.6.3"
   },
   "gitHead": "462db7bc4304460657d4c10f1c6acff182a1928f",
-  "private": true
+  "publishConfig": {
+    "access": "public"
+  }
 }

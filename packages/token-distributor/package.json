@@ -1,11 +1,11 @@
 {
-  "name": "@kyraa/token-distributor",
-  "version": "1.0.3",
+  "name": "@mbkjs/token-distributor",
+  "version": "2.0.0",
   "description": "Token whitelist distributor",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
-  "repository": "git@github.com:metablockshq/kyraa.git",
   "author": "Srinivas Valekar <https://github.com/valekar>",
+  "repository": "git@github.com:metablockshq/mbkjs.git",
   "license": "MIT",
   "files": [
     "dist",
