@@ -1,6 +1,6 @@
 {
-  "name": "@kyraa/tailwind",
-  "version": "1.0.0",
+  "name": "@mbkjs/tailwind",
+  "version": "2.0.2",
   "main": "index.js",
   "license": "MIT",
   "publishConfig": {
