@@ -286,7 +286,6 @@ const getShortenedReceiptUrl = async (args: {
 };
 
 const getMetaNftShortId = async (args: {
-  arweaveUrl: string;
   universeAddress: string;
   walletAddress: string;
   receiptUrl: string;
@@ -328,7 +327,6 @@ const getMetaNftUrl = async (args: {
     }
 
     const metaNftShortIdResult = await getMetaNftShortId({
-      arweaveUrl: args.arweaveUrl,
       universeAddress: args.universeAddress,
       walletAddress: args.walletAddress,
       receiptUrl: receiptUrl,

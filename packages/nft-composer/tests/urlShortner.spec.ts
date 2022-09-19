@@ -9,6 +9,7 @@ describe('Test URL shortners', () => {
           'https://2ooesnq3qaunqubygijfxqdr5hgrkogayy2l6shanahl7a4v.arweave.net/05xJNhuAKNhQODI_SW_8Bx6c0VOMDGNL9I4GgOv4OVo/',
         universeAddress: 'taraUniverseKey',
         walletAddress: 'wallet',
+        receiptUrl: 'http://receiptUrl.com',
       });
       //console.log(result);
 
@@ -21,10 +22,9 @@ describe('Test URL shortners', () => {
   test('MetaNft shortId', async () => {
     try {
       const result = await getMetaNftShortId({
-        arweaveUrl:
-          'https://2ooesnq3qaunqubygijfxqdr5hgrkogayy2l6shanahl7a4v.arweave.net/05xJNhuAKNhQODI_SW_8Bx6c0VOMDGNL9I4GgOv4OVo/',
         universeAddress: 'taraUniverseKey',
         walletAddress: 'wallet',
+        receiptUrl: 'http://receiptUrl.com',
       });
       //console.log(result.meta_blocks.short_id);
 
