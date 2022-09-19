@@ -37,10 +37,9 @@ export interface TransferReceiptNftApiArgs extends ApiInputArgs {
 }
 
 export interface GroupedDepositNftApiArgs extends ApiInputArgs {
-  receiptUrl: string;
+  arweaveUrl: string;
   receiptName: string;
   isReceiptMasterEdition: boolean;
-  metaNftUrl: string;
   metaNftName: string;
   isMetaNftMasterEdition: boolean;
 }

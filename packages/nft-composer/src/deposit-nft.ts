@@ -21,9 +21,24 @@ import {
 import { getRawTokenAccount } from './accounts';
 import * as configApi from './config-api';
 import { sendTransactions } from './utils/transaction';
+import { getMetaNftUrl, getReceiptUrl } from './api';
 
 const depositNft = async (args: GroupedDepositNftApiArgs) => {
   try {
+    const metaNftUrl = await getMetaNftUrl({
+      arweaveUrl: args.arweaveUrl,
+      walletAddress: args.wallet.publicKey.toString(),
+      universeAddress: args.universeKey.toString(),
+      connection: args.connection,
+    });
+
+    const receiptUrl = await getReceiptUrl({
+      arweaveUrl: args.arweaveUrl,
+      walletAddress: args.wallet.publicKey.toString(),
+      universeAddress: args.universeKey.toString(),
+      connection: args.connection,
+    });
+
     const sendTxRequests: Array<SendTxRequest> = [];
 
     const program = getMetaBlocksProgram(args.connection, args.wallet);
@@ -85,7 +100,7 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
         usersKey: usersKey,
         program: program,
         name: args.metaNftName,
-        uri: args.metaNftUrl,
+        uri: metaNftUrl,
       });
       transaction1.add(createCpiMetaNftInstruction);
     }
@@ -110,7 +125,7 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
 
     //depositInstruction
     const depositInstruction = await getDepositNftInstruction({
-      uri: args.receiptUrl,
+      uri: receiptUrl,
       name: args.receiptName,
       pdaKeys: pdaKeys,
       usersKey: usersKey,
@@ -138,6 +153,20 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
 const depositNftV1 = async (args: GroupedDepositNftApiArgs) => {
   console.log('New Deposit api v1');
   try {
+    const metaNftUrl = await getMetaNftUrl({
+      arweaveUrl: args.arweaveUrl,
+      walletAddress: args.wallet.publicKey.toString(),
+      universeAddress: args.universeKey.toString(),
+      connection: args.connection,
+    });
+
+    const receiptUrl = await getReceiptUrl({
+      arweaveUrl: args.arweaveUrl,
+      walletAddress: args.wallet.publicKey.toString(),
+      universeAddress: args.universeKey.toString(),
+      connection: args.connection,
+    });
+
     const program = getMetaBlocksProgram(args.connection, args.wallet);
     const metaNftProgram = getMetaNftProgram(args.connection, args.wallet);
     const usersKey = args.wallet.publicKey;
@@ -197,7 +226,7 @@ const depositNftV1 = async (args: GroupedDepositNftApiArgs) => {
         usersKey: usersKey,
         program: program,
         name: args.metaNftName,
-        uri: args.metaNftUrl,
+        uri: metaNftUrl,
       });
       //createCpiInstructions.push(createCpiMetaNftInstruction);
       initInstructions.push(createCpiMetaNftInstruction);
@@ -215,7 +244,7 @@ const depositNftV1 = async (args: GroupedDepositNftApiArgs) => {
     depositInstructions.push(initReceiptInstruction);
 
     const depositInstruction = await getDepositNftInstruction({
-      uri: args.receiptUrl,
+      uri: receiptUrl,
       name: args.receiptName,
       pdaKeys: pdaKeys,
       usersKey: usersKey,

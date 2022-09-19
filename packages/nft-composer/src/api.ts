@@ -28,8 +28,16 @@ import { supabaseClient } from './supabase-client';
 import { depositNft, depositNftV1 } from './deposit-nft';
 import * as configApi from './config-api';
 
-const RECEIPT_URL =
+const DEVNET_RECEIPT_URL =
   'https://ctvymyaq3e.execute-api.ap-south-1.amazonaws.com/Prod/receipt-shortener';
+
+const MAINNET_RECEIPT_URL =
+  'https://pyxs4bdpm6.execute-api.ap-south-1.amazonaws.com/Prod/receipt-shortener';
+
+const METABLOCKS_RECEIPT_URI = 'https://metadata-dev.metablocks.world/receipt/';
+
+const METABLOCKS_META_NFT_URI =
+  'https://metadata-dev.metablocks.world/metanft/';
 
 const createUniverse = async (args: UniverseApiArgs) => {
   try {
@@ -213,76 +221,6 @@ const getWrappedUserNftAccount = async (args: WrappedUserNftArgs) => {
   }
 };
 
-const getShortenedReceiptUrl = async (args: {
-  arweaveUrl: string;
-  universeAddress: string;
-  walletAddress: string;
-}) => {
-  try {
-    const data = {
-      universeAddress: args.universeAddress,
-      walletAddress: args.walletAddress,
-      arweaveUrl: args.arweaveUrl,
-      type: 'receipt',
-    };
-
-    const result = await axios.post(RECEIPT_URL, data, {
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-    });
-
-    return result.data;
-  } catch (err) {
-    throw err;
-  }
-};
-
-const getMetaNftShortId = async (args: {
-  arweaveUrl: string;
-  universeAddress: string;
-  walletAddress: string;
-}) => {
-  try {
-    const data = {
-      universeAddress: args.universeAddress,
-      walletAddress: args.walletAddress,
-      type: 'metanft',
-    };
-
-    const result = await axios.post(RECEIPT_URL, data, {
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-    });
-
-    return result.data;
-  } catch (err) {
-    throw err;
-  }
-};
-
-/**
- *
- * @param wallet - user's wallet address in string
- * @returns all wrapped user nfts of an user from supabase
- */
-const getStoredWrappedUserNftAccounts = async (args: {
-  wallet: string;
-  universe: string;
-}) => {
-  try {
-    return (await supabaseClient.getWrappedUserNfts(
-      args.wallet,
-      args.universe
-    ))!;
-  } catch (err) {
-    throw err;
-  }
-};
-
 /**
  *
  * @param wallet - user's wallet address in string
@@ -320,6 +258,140 @@ const getAllStoredUniverseAccounts = async () => {
   }
 };
 
+const getShortenedReceiptUrl = async (args: {
+  arweaveUrl: string;
+  universeAddress: string;
+  walletAddress: string;
+  receiptUrl: string;
+}) => {
+  try {
+    const data = {
+      universeAddress: args.universeAddress,
+      walletAddress: args.walletAddress,
+      arweaveUrl: args.arweaveUrl,
+      type: 'receipt',
+    };
+
+    const result = await axios.post(args.receiptUrl, data, {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    });
+
+    return result.data;
+  } catch (err) {
+    throw err;
+  }
+};
+
+const getMetaNftShortId = async (args: {
+  arweaveUrl: string;
+  universeAddress: string;
+  walletAddress: string;
+  receiptUrl: string;
+}) => {
+  try {
+    const data = {
+      universeAddress: args.universeAddress,
+      walletAddress: args.walletAddress,
+      type: 'metanft',
+    };
+
+    const result = await axios.post(args.receiptUrl, data, {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    });
+
+    return result.data;
+  } catch (err) {
+    throw err;
+  }
+};
+
+const getMetaNftUrl = async (args: {
+  arweaveUrl: string;
+  walletAddress: string;
+  universeAddress: string;
+  connection: Connection;
+}) => {
+  const shortIdToMetaDataUrl = (shortId: string) =>
+    METABLOCKS_META_NFT_URI + shortId + '/composed-nft.json';
+
+  try {
+    let receiptUrl = DEVNET_RECEIPT_URL;
+
+    if (args.connection.rpcEndpoint === 'mainnet') {
+      receiptUrl = MAINNET_RECEIPT_URL;
+    }
+
+    const metaNftShortIdResult = await getMetaNftShortId({
+      arweaveUrl: args.arweaveUrl,
+      universeAddress: args.universeAddress,
+      walletAddress: args.walletAddress,
+      receiptUrl: receiptUrl,
+    });
+
+    return shortIdToMetaDataUrl(metaNftShortIdResult.meta_blocks.short_id);
+  } catch (err: any) {
+    if (err.response.status === 401) {
+      // Meta NFT metadata already exists, reuse
+      return shortIdToMetaDataUrl(err.response.data.shortId);
+    }
+    throw err;
+  }
+};
+
+const getReceiptUrl = async (args: {
+  arweaveUrl: string;
+  walletAddress: string;
+  universeAddress: string;
+  connection: Connection;
+}) => {
+  const shortenedReceiptUri = (shortId: string) =>
+    METABLOCKS_RECEIPT_URI + shortId + '.json';
+
+  try {
+    let receiptUrl = DEVNET_RECEIPT_URL;
+
+    if (args.connection.rpcEndpoint === 'mainnet') {
+      receiptUrl = MAINNET_RECEIPT_URL;
+    }
+
+    const receiptShortenedResult = await getShortenedReceiptUrl({
+      arweaveUrl: args.arweaveUrl,
+      universeAddress: args.universeAddress,
+      walletAddress: args.walletAddress,
+      receiptUrl: receiptUrl,
+    });
+
+    return shortenedReceiptUri(receiptShortenedResult.meta_blocks.short_id);
+  } catch (err) {
+    throw err;
+  }
+};
+
+/**
+ *
+ * @param wallet - user's wallet address in string
+ * @returns all wrapped user nfts of an user from supabase
+ */
+const getStoredWrappedUserNftAccounts = async (args: {
+  wallet: string;
+  universe: string;
+}) => {
+  try {
+    return (await supabaseClient.getWrappedUserNfts(
+      args.wallet,
+      args.universe
+    ))!;
+  } catch (err) {
+    throw err;
+  }
+};
+
 export {
   createUniverse,
   updateUniverse,
@@ -330,11 +402,13 @@ export {
   getMetadataForMint,
   getWrappedUserNftAccount,
   withdrawNftWithReceipt,
-  getShortenedReceiptUrl,
-  getMetaNftShortId,
   getStoredWrappedUserNftAccounts,
   getStoredUniverseAccounts,
   getAllStoredWrappedUserNftAccounts,
   getAllStoredUniverseAccounts,
   depositNftV1,
+  getShortenedReceiptUrl,
+  getMetaNftShortId,
+  getMetaNftUrl,
+  getReceiptUrl,
 };
