@@ -26,17 +26,16 @@ import { getMetaNftUrl, getReceiptUrl } from './api';
 const depositNft = async (args: GroupedDepositNftApiArgs) => {
   try {
     const metaNftUrl = await getMetaNftUrl({
-      arweaveUrl: args.arweaveUrl,
       walletAddress: args.wallet.publicKey.toString(),
       universeAddress: args.universeKey.toString(),
-      connection: args.connection,
+      cluster: args.cluster,
     });
 
     const receiptUrl = await getReceiptUrl({
       arweaveUrl: args.arweaveUrl,
       walletAddress: args.wallet.publicKey.toString(),
       universeAddress: args.universeKey.toString(),
-      connection: args.connection,
+      cluster: args.cluster,
     });
 
     const sendTxRequests: Array<SendTxRequest> = [];
@@ -154,17 +153,16 @@ const depositNftV1 = async (args: GroupedDepositNftApiArgs) => {
   console.log('New Deposit api v1');
   try {
     const metaNftUrl = await getMetaNftUrl({
-      arweaveUrl: args.arweaveUrl,
       walletAddress: args.wallet.publicKey.toString(),
       universeAddress: args.universeKey.toString(),
-      connection: args.connection,
+      cluster: args.cluster,
     });
 
     const receiptUrl = await getReceiptUrl({
       arweaveUrl: args.arweaveUrl,
       walletAddress: args.wallet.publicKey.toString(),
       universeAddress: args.universeKey.toString(),
-      connection: args.connection,
+      cluster: args.cluster,
     });
 
     const program = getMetaBlocksProgram(args.connection, args.wallet);

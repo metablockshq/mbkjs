@@ -6,6 +6,7 @@ import {
 } from './instructions/universeInstructions';
 import {
   FetchAccountArgs,
+  NftComposerCluster,
   UniverseApiArgs,
   UniverseArgs,
   UserNftFilterArgs,
@@ -31,8 +32,14 @@ import * as configApi from './config-api';
 const DEVNET_RECEIPT_URL =
   'https://ctvymyaq3e.execute-api.ap-south-1.amazonaws.com/Prod/receipt-shortener';
 
+// const DEVNET_RECEIPT_URL =
+//   'https://hermes-dev.metablocks.world/Prod/receipt-shortener/Prod/receipt-shortener';
+
 const MAINNET_RECEIPT_URL =
   'https://pyxs4bdpm6.execute-api.ap-south-1.amazonaws.com/Prod/receipt-shortener';
+
+// const MAINNET_RECEIPT_URL =
+//   'https://hermes.metablocks.world/Prod/receipt-shortener';
 
 const METABLOCKS_RECEIPT_URI = 'https://metadata-dev.metablocks.world/receipt/';
 
@@ -310,43 +317,11 @@ const getMetaNftShortId = async (args: {
   }
 };
 
-const getMetaNftUrl = async (args: {
-  arweaveUrl: string;
-  walletAddress: string;
-  universeAddress: string;
-  connection: Connection;
-}) => {
-  const shortIdToMetaDataUrl = (shortId: string) =>
-    METABLOCKS_META_NFT_URI + shortId + '/composed-nft.json';
-
-  try {
-    let receiptUrl = DEVNET_RECEIPT_URL;
-
-    if (args.connection.rpcEndpoint === 'mainnet') {
-      receiptUrl = MAINNET_RECEIPT_URL;
-    }
-
-    const metaNftShortIdResult = await getMetaNftShortId({
-      universeAddress: args.universeAddress,
-      walletAddress: args.walletAddress,
-      receiptUrl: receiptUrl,
-    });
-
-    return shortIdToMetaDataUrl(metaNftShortIdResult.meta_blocks.short_id);
-  } catch (err: any) {
-    if (err.response.status === 401) {
-      // Meta NFT metadata already exists, reuse
-      return shortIdToMetaDataUrl(err.response.data.shortId);
-    }
-    throw err;
-  }
-};
-
 const getReceiptUrl = async (args: {
   arweaveUrl: string;
   walletAddress: string;
   universeAddress: string;
-  connection: Connection;
+  cluster: NftComposerCluster;
 }) => {
   const shortenedReceiptUri = (shortId: string) =>
     METABLOCKS_RECEIPT_URI + shortId + '.json';
@@ -354,7 +329,7 @@ const getReceiptUrl = async (args: {
   try {
     let receiptUrl = DEVNET_RECEIPT_URL;
 
-    if (args.connection.rpcEndpoint === 'mainnet') {
+    if (args.cluster == NftComposerCluster.Mainnet) {
       receiptUrl = MAINNET_RECEIPT_URL;
     }
 
@@ -367,6 +342,38 @@ const getReceiptUrl = async (args: {
 
     return shortenedReceiptUri(receiptShortenedResult.meta_blocks.short_id);
   } catch (err) {
+    throw err;
+  }
+};
+
+const getMetaNftUrl = async (args: {
+  walletAddress: string;
+  universeAddress: string;
+  cluster: NftComposerCluster;
+}) => {
+  const shortIdToMetaDataUrl = (shortId: string) =>
+    METABLOCKS_META_NFT_URI + shortId + '/composed-nft.json';
+
+  try {
+    let receiptUrl = DEVNET_RECEIPT_URL;
+
+    if (args.cluster == NftComposerCluster.Mainnet) {
+      receiptUrl = MAINNET_RECEIPT_URL;
+    }
+
+    const metaNftShortIdResult = await getMetaNftShortId({
+      universeAddress: args.universeAddress,
+      walletAddress: args.walletAddress,
+      receiptUrl: receiptUrl,
+    });
+
+    return shortIdToMetaDataUrl(metaNftShortIdResult.meta_blocks.short_id);
+  } catch (e) {
+    let err: any = e;
+    if (err.response.status === 401) {
+      // Meta NFT metadata already exists, reuse
+      return shortIdToMetaDataUrl(err.response.data.shortId);
+    }
     throw err;
   }
 };

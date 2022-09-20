@@ -1,4 +1,4 @@
-![NPM Version](https://img.shields.io/npm/v/@kyraa/metablocks)
+![NPM Version](https://img.shields.io/npm/v/@mbkjs/nft-composer)
 
 # SDK bindings for Solana MetaBlocks Program
 
@@ -25,7 +25,7 @@ Below is a how you initialize/update an universe in your code.
 Import Dependencies
 
 ```typescript
-import { createUniverse } from '@kyraa/metablocks';
+import { createUniverse } from '@mbkjs/nft-composer';
 ```
 
 To create an universe, all you need is below argument to be passed to the `createUniverse` method
@@ -47,7 +47,7 @@ const tx = await createUniverse(args);
 Import dependencies
 
 ```typescript
-import { updateUniverse } from '@kyraa/metablocks';
+import { updateUniverse } from '@mbkjs/nft-composer';
 ```
 
 Similar to the above create universe, update universe is as simple as below `updateUniverse` call
@@ -69,7 +69,7 @@ const tx = await updateUniverse(args);
 Import dependencies
 
 ```typescript
-import { depositNft } from '@kyraa/metablocks';
+import { depositNft, NftComposerCluster } from '@mbkjs/nft-composer';
 ```
 
 Users can deposit their NFTs for upgrading their NFTs, it could be done with `depositNft`.
@@ -82,10 +82,10 @@ Users can deposit their NFTs for upgrading their NFTs, it could be done with `de
 const args: GroupedDepositNftApiArgs = {
   connection: connection,
   isReceiptMasterEdition: false, // // You can mint a master-edition of the Receipt NFT, you can keep this a default
-  receiptUrl: 'http://localhost:8090', // reciept NFT url
+  arweaveUrl: 'http://localhost:8090', // arweave url of the  NFT
   receiptName: 'receiptName', // receipt NFT name
   metaNftName: 'metaNftName', // Generated meta NFT name
-  metaNftUrl: 'http://localhost_meta_api.url', // this the url where combining of the deposited NFTs happen (Your rendering service URL)
+  cluster: NftComposerCluster.Devnet, // This is the cluster, we have chosen devnet as the cluster
   isMetaNftMasterEdition: false, // You can mint a master-edition of the Meta NFT, you can keep this a default
   wallet: dummyWallet,
   mintKey: userNftMint, // this is the token mint of the User's NFT that needs to be deposited
@@ -100,7 +100,7 @@ await depositNft(args);
 Import the API
 
 ```typescript
-import { depositNft } from '@kyraa/metablocks';
+import { depositNft } from '@mbkjs/nft-composer';
 ```
 
 User could withdraw NFT anytime. The API to withdraw NFT is as simple as the following sample code.
@@ -121,7 +121,7 @@ await withdrawNft(args);
 Import the API
 
 ```typescript
-import { depositNft } from '@kyraa/metablocks';
+import { depositNft } from '@mbkjs/nft-composer';
 ```
 
 NFTs could also be withdraw from MetaBlocks Program using `receiptMint` Publickey

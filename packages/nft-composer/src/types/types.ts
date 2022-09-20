@@ -42,6 +42,7 @@ export interface GroupedDepositNftApiArgs extends ApiInputArgs {
   isReceiptMasterEdition: boolean;
   metaNftName: string;
   isMetaNftMasterEdition: boolean;
+  cluster: NftComposerCluster;
 }
 
 export interface WithdrawNftApiArgs extends ApiInputArgs {}
@@ -345,4 +346,10 @@ export interface UpdateFixedFeeForMetaTreasuryArgs
 
 export interface UpdateMeteTreasuryArgs extends ConfigInstructionArgs {
   fixedFee: number;
+}
+
+export enum NftComposerCluster {
+  Devnet,
+  Testnet,
+  Mainnet,
 }

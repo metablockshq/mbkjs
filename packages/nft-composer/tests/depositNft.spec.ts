@@ -16,7 +16,7 @@ import {
   getPdaKeys,
   PdaKeys,
 } from '../src/pda';
-import { GroupedDepositNftApiArgs } from '../src';
+import { GroupedDepositNftApiArgs, NftComposerCluster } from '../src';
 
 describe('Deposit Test cases', () => {
   const dummyKeypair = anchor.web3.Keypair.generate();
@@ -84,6 +84,7 @@ describe('Deposit Test cases', () => {
       wallet: dummyWallet,
       mintKey: userNftMint,
       universeKey: universeKey,
+      cluster: NftComposerCluster.Devnet,
     };
 
     await depositNft(args);

@@ -1,7 +1,7 @@
 import { assert } from 'chai';
 import * as anchor from '@project-serum/anchor';
 import { LAMPORTS_PER_SOL } from '@solana/web3.js';
-import { createUniverse, depositNft, withdrawNft } from '../src/api';
+import { createUniverse, depositNft, withdrawNftWithReceipt } from '../src/api';
 import NodeWallet, {
   addSols,
   CLUSTER_URL,
@@ -10,9 +10,13 @@ import NodeWallet, {
 } from './utils/sdk';
 import { getMetaBlocksProgram } from '../src/factory';
 import { findUniverseAddress, getPdaKeys, PdaKeys } from '../src/pda';
-import { GroupedDepositNftApiArgs, WithdrawNftApiArgs } from '../src';
+import {
+  GroupedDepositNftApiArgs,
+  NftComposerCluster,
+  WithdrawNftWithReceiptApiArgs,
+} from '../src';
 
-describe('Withdraw Test cases', () => {
+describe('Withdraw With Receipt Test cases', () => {
   const dummyKeypair = anchor.web3.Keypair.generate();
   const fakeUniverseAuthority = anchor.web3.Keypair.generate();
 
@@ -69,23 +73,16 @@ describe('Withdraw Test cases', () => {
       wallet: dummyWallet,
       mintKey: userNftMint,
       universeKey: universeKey,
+      cluster: NftComposerCluster.Devnet,
     };
 
     await depositNft(args);
   });
 
-  it('Should withdraw NFT', async () => {
+  it('Should be able withdraw with Receipt', async () => {
     const [universeKey, _universeBump] = await findUniverseAddress(
       fakeUniverseAuthorityWallet.publicKey
     );
-    const args: WithdrawNftApiArgs = {
-      connection: connection,
-      wallet: dummyWallet,
-      mintKey: userNftMint,
-      universeKey: universeKey,
-    };
-
-    await withdrawNft(args);
 
     const pdaKeys: PdaKeys = await getPdaKeys(
       universeKey,
@@ -93,15 +90,14 @@ describe('Withdraw Test cases', () => {
       userNftMint
     );
 
-    const userNftAccount = await getTokenAccount(
-      program.provider,
-      pdaKeys.userNftAta
-    );
+    const args: WithdrawNftWithReceiptApiArgs = {
+      connection: connection,
+      receiptMint: pdaKeys.receiptMint,
+      wallet: dummyWallet,
+      universeKey: universeKey,
+    };
 
-    assert.isOk(
-      userNftAccount.amount.toString() === '1',
-      'User should have received back NFT'
-    );
+    await withdrawNftWithReceipt(args);
   });
 
   it('Should be able to redeposit NFT', async () => {
@@ -119,6 +115,7 @@ describe('Withdraw Test cases', () => {
       wallet: dummyWallet,
       mintKey: userNftMint,
       universeKey: universeKey,
+      cluster: NftComposerCluster.Devnet,
     };
 
     await depositNft(args);
@@ -140,17 +137,24 @@ describe('Withdraw Test cases', () => {
     );
   });
 
-  it('Should be able to reWithdraw NFT', async () => {
+  it('Should be able re-withdraw with Receipt', async () => {
     const [universeKey, _universeBump] = await findUniverseAddress(
       fakeUniverseAuthorityWallet.publicKey
     );
-    const args: WithdrawNftApiArgs = {
+
+    const pdaKeys: PdaKeys = await getPdaKeys(
+      universeKey,
+      dummyKeypair.publicKey,
+      userNftMint
+    );
+
+    const args: WithdrawNftWithReceiptApiArgs = {
       connection: connection,
+      receiptMint: pdaKeys.receiptMint,
       wallet: dummyWallet,
-      mintKey: userNftMint,
       universeKey: universeKey,
     };
 
-    await withdrawNft(args);
+    await withdrawNftWithReceipt(args);
   });
 });
