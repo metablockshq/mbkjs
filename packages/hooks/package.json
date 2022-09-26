@@ -8,9 +8,7 @@
     "build": "swc src --out-dir dist --copy-files",
     "prepare": "yarn build"
   },
-  "publishConfig": {
-    "access": "public"
-  },
+  "private":true,
   "dependencies": {
     "@mkbjs/utils": "^2.0.3",
     "@swc/cli": "^0.1.55",
@@ -19,5 +17,5 @@
     "react": "^17.0.2",
     "swr": "^1.2.1"
   },
-  "gitHead": "f92cae30923f454056c8375b5b7619d765bdb4d6"
+  "gitHead": "5b5476ea09cfba45cb66a1fbb2127eabfa78170c"
 }
