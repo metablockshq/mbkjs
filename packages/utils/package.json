@@ -1,6 +1,6 @@
 {
-  "name": "@kyraa/utils",
-  "version": "1.0.1",
+  "name": "@mbkjs/utils",
+  "version": "2.0.4",
   "main": "./dist/index.js",
   "scripts": {
     "dev": "swc src --out-dir dist --watch --copy-files",
