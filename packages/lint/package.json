@@ -1,6 +1,6 @@
 {
-  "name": "@kyraa/lint",
-  "version": "1.0.0",
+  "name": "@mkbjs/lint",
+  "version": "2.0.4",
   "main": "index.js",
   "license": "MIT",
   "publishConfig": {
