@@ -1,18 +1,20 @@
 import { assert } from 'chai';
-import { getMetaNftShortId, getShortenedReceiptUrl } from '../src/api';
+import { getMetaNftUrl, getReceiptUrl } from '../src/api';
+import { NftComposerCluster } from '../src/types';
 
-describe('Test URL shortners', () => {
-  test('Receipt URL Shortner', async () => {
+describe('Test Build URL', () => {
+  test('Get Receipt URL ', async () => {
     try {
-      const result = await getShortenedReceiptUrl({
+      const result = await getReceiptUrl({
         arweaveUrl:
           'https://2ooesnq3qaunqubygijfxqdr5hgrkogayy2l6shanahl7a4v.arweave.net/05xJNhuAKNhQODI_SW_8Bx6c0VOMDGNL9I4GgOv4OVo/',
         universeAddress: 'taraUniverseKey',
         walletAddress: 'wallet',
+        cluster: NftComposerCluster.Devnet,
       });
-      //console.log(result);
 
-      assert.equal(result.name, 'Tara Base Card', 'NFT name should be equal');
+      console.log(result);
+      assert.isOk(result);
     } catch (err) {
       console.log(err);
     }
@@ -20,15 +22,14 @@ describe('Test URL shortners', () => {
 
   test('MetaNft shortId', async () => {
     try {
-      const result = await getMetaNftShortId({
-        arweaveUrl:
-          'https://2ooesnq3qaunqubygijfxqdr5hgrkogayy2l6shanahl7a4v.arweave.net/05xJNhuAKNhQODI_SW_8Bx6c0VOMDGNL9I4GgOv4OVo/',
+      const result = await getMetaNftUrl({
         universeAddress: 'taraUniverseKey',
         walletAddress: 'wallet',
+        cluster: NftComposerCluster.Devnet,
       });
-      //console.log(result.meta_blocks.short_id);
+      console.log(result);
 
-      assert.isOk(result.meta_blocks.shortId.length > 0);
+      assert.isOk(result);
     } catch (err: any) {
       if (err.response) {
         console.log(err.response.data);

@@ -16,7 +16,7 @@ import {
   getPdaKeys,
   PdaKeys,
 } from '../src/pda';
-import { GroupedDepositNftApiArgs } from '../src';
+import { GroupedDepositNftApiArgs, NftComposerCluster } from '../src';
 
 describe('Deposit Test cases', () => {
   const dummyKeypair = anchor.web3.Keypair.generate();
@@ -77,14 +77,14 @@ describe('Deposit Test cases', () => {
     const args: GroupedDepositNftApiArgs = {
       connection: connection,
       isReceiptMasterEdition: false,
-      receiptUrl: 'http://localhost:8090',
+      arweaveUrl: 'http://localhost:8090',
       receiptName: 'receiptName',
       metaNftName: 'metaNftName',
-      metaNftUrl: 'http://localhost_meta_api.url',
       isMetaNftMasterEdition: false,
       wallet: dummyWallet,
       mintKey: userNftMint,
       universeKey: universeKey,
+      cluster: NftComposerCluster.Devnet,
     };
 
     await depositNft(args);

@@ -37,12 +37,12 @@ export interface TransferReceiptNftApiArgs extends ApiInputArgs {
 }
 
 export interface GroupedDepositNftApiArgs extends ApiInputArgs {
-  receiptUrl: string;
+  arweaveUrl: string;
   receiptName: string;
   isReceiptMasterEdition: boolean;
-  metaNftUrl: string;
   metaNftName: string;
   isMetaNftMasterEdition: boolean;
+  cluster: NftComposerCluster;
 }
 
 export interface WithdrawNftApiArgs extends ApiInputArgs {}
@@ -346,4 +346,10 @@ export interface UpdateFixedFeeForMetaTreasuryArgs
 
 export interface UpdateMeteTreasuryArgs extends ConfigInstructionArgs {
   fixedFee: number;
+}
+
+export enum NftComposerCluster {
+  Devnet,
+  Testnet,
+  Mainnet,
 }

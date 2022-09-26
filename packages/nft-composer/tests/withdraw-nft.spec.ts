@@ -10,7 +10,11 @@ import NodeWallet, {
 } from './utils/sdk';
 import { getMetaBlocksProgram } from '../src/factory';
 import { findUniverseAddress, getPdaKeys, PdaKeys } from '../src/pda';
-import { GroupedDepositNftApiArgs, WithdrawNftApiArgs } from '../src';
+import {
+  GroupedDepositNftApiArgs,
+  NftComposerCluster,
+  WithdrawNftApiArgs,
+} from '../src';
 
 describe('Withdraw Test cases', () => {
   const dummyKeypair = anchor.web3.Keypair.generate();
@@ -62,14 +66,14 @@ describe('Withdraw Test cases', () => {
     const args: GroupedDepositNftApiArgs = {
       connection: connection,
       isReceiptMasterEdition: false,
-      receiptUrl: 'http://localhost:8090',
+      arweaveUrl: 'http://localhost:8090',
       receiptName: 'receiptName',
       metaNftName: 'metaNftName',
-      metaNftUrl: 'http://localhost_meta_api.url',
       isMetaNftMasterEdition: false,
       wallet: dummyWallet,
       mintKey: userNftMint,
       universeKey: universeKey,
+      cluster: NftComposerCluster.Devnet,
     };
 
     await depositNft(args);
@@ -113,14 +117,14 @@ describe('Withdraw Test cases', () => {
     const args: GroupedDepositNftApiArgs = {
       connection: connection,
       isReceiptMasterEdition: false,
-      receiptUrl: 'http://localhost:8090',
+      arweaveUrl: 'http://localhost:8090',
       receiptName: 'receiptName',
       metaNftName: 'metaNftName',
-      metaNftUrl: 'http://localhost_meta_api.url',
       isMetaNftMasterEdition: false,
       wallet: dummyWallet,
       mintKey: userNftMint,
       universeKey: universeKey,
+      cluster: NftComposerCluster.Devnet,
     };
 
     await depositNft(args);
