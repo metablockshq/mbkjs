@@ -1,6 +1,6 @@
 {
   "name": "@mbkjs/nft-minter",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -68,5 +68,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "6fc61e848eb822b4e66d01911060211b62fef618"
+  "gitHead": "5b5476ea09cfba45cb66a1fbb2127eabfa78170c"
 }

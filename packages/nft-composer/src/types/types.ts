@@ -45,6 +45,15 @@ export interface GroupedDepositNftApiArgs extends ApiInputArgs {
   cluster: NftComposerCluster;
 }
 
+export interface GroupedDepositRawNftApiArgs extends ApiInputArgs {
+  receiptUrl: string;
+  receiptName: string;
+  isReceiptMasterEdition: boolean;
+  metaNftUrl: string;
+  metaNftName: string;
+  isMetaNftMasterEdition: boolean;
+}
+
 export interface WithdrawNftApiArgs extends ApiInputArgs {}
 
 export interface WithdrawNftWithReceiptApiArgs {

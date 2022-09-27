@@ -26,7 +26,7 @@ import { getPdaKeys, PdaKeys } from './pda';
 import { getWithdrawNftInstruction } from './instructions/withdrawInstructions';
 import axios from 'axios';
 import { supabaseClient } from './supabase-client';
-import { depositNft, depositNftV1 } from './deposit-nft';
+import { depositNft, depositNftV1, depositRawNft } from './deposit-nft';
 import * as configApi from './config-api';
 
 const DEVNET_RECEIPT_URL =
@@ -416,4 +416,5 @@ export {
   getMetaNftShortId,
   getMetaNftUrl,
   getReceiptUrl,
+  depositRawNft,
 };

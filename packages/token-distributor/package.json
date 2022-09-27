@@ -1,6 +1,6 @@
 {
   "name": "@mbkjs/token-distributor",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Token whitelist distributor",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -58,5 +58,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "68bddb652f0e8de5ced0f4329e563522a71a2c52"
+  "gitHead": "5b5476ea09cfba45cb66a1fbb2127eabfa78170c"
 }

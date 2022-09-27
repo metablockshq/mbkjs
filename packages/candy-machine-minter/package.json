@@ -1,6 +1,6 @@
 {
   "name": "@mbkjs/candy-machine-minter",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Candy machine bindings",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -57,7 +57,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "9584c572a444e96479deede8b2bd74e5addd425b",
+  "gitHead": "5b5476ea09cfba45cb66a1fbb2127eabfa78170c",
   "dependencies": {
     "loglevel": "^1.8.0"
   }

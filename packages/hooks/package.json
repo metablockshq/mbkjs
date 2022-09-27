@@ -1,6 +1,6 @@
 {
-  "name": "@kyraa/hooks",
-  "version": "1.0.2",
+  "name": "@mbkjs/hooks",
+  "version": "2.0.4",
   "main": "./dist/index.js",
   "license": "MIT",
   "scripts": {
@@ -8,16 +8,14 @@
     "build": "swc src --out-dir dist --copy-files",
     "prepare": "yarn build"
   },
-  "publishConfig": {
-    "access": "public"
-  },
+  "private":true,
   "dependencies": {
-    "@kyraa/utils": "^1.0.0",
+    "@mkbjs/utils": "^2.0.3",
     "@swc/cli": "^0.1.55",
     "@swc/core": "^1.2.138",
     "chokidar": "^3.5.3",
     "react": "^17.0.2",
     "swr": "^1.2.1"
   },
-  "gitHead": "5fdbd35f55419e3d70f0d6405bc8f8ede7fd6f96"
+  "gitHead": "5b5476ea09cfba45cb66a1fbb2127eabfa78170c"
 }

@@ -95,6 +95,37 @@ const args: GroupedDepositNftApiArgs = {
 await depositNft(args);
 ```
 
+## Deposit Raw NFT
+
+Import dependencies
+
+```typescript
+import { depositRawNft } from '@mbkjs/nft-composer';
+```
+
+Users can deposit their NFTs for upgrading their NFTs, it could be done with `depositRawNft`. The difference between the above and this nft is that the you need to pass the `receiptUrl` and the `metaNftUrl` as params. 
+
+1. Once the user deposit's the NFT, in-return the User gets a receiptNFT as an acknowledgement for depositing the NFT.
+
+2. A Meta NFT is generated. This NFT is the final combined NFT of the NFTs that you have deposited into the Metablocks program.
+
+```typescript
+const args: GroupedDepositRawNftApiArgs = {
+  connection: connection,
+  isReceiptMasterEdition: false, // // You can mint a master-edition of the Receipt NFT, you can keep this a default
+  receiptUrl: 'http://localhost:8090', // reciept NFT url
+  receiptName: 'receiptName', // receipt NFT name
+  metaNftName: 'metaNftName', // Generated meta NFT name
+  metaNftUrl: 'http://localhost_meta_api.url', // this the url where combining of the deposited NFTs happen (Your rendering service URL)
+  isMetaNftMasterEdition: false, // You can mint a master-edition of the Meta NFT, you can keep this a default
+  wallet: dummyWallet,
+  mintKey: userNftMint, // this is the token mint of the User's NFT that needs to be deposited
+  universeKey: universeKey, // this is the public key where users wants to deposit the nft
+};
+
+await depositRawNft(args);
+```
+
 ## Withdraw NFT
 
 Import the API

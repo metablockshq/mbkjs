@@ -1,6 +1,6 @@
 {
-  "name": "@kyraa/utils",
-  "version": "1.0.1",
+  "name": "@mbkjs/utils",
+  "version": "2.0.4",
   "main": "./dist/index.js",
   "scripts": {
     "dev": "swc src --out-dir dist --watch --copy-files",
@@ -8,12 +8,10 @@
     "prepare": "yarn build"
   },
   "license": "MIT",
-  "publishConfig": {
-    "access": "public"
-  },
+  "private" :true,
   "dependencies": {
     "@swc/cli": "^0.1.55",
     "@swc/core": "^1.2.138"
   },
-  "gitHead": "5fdbd35f55419e3d70f0d6405bc8f8ede7fd6f96"
+  "gitHead": "5b5476ea09cfba45cb66a1fbb2127eabfa78170c"
 }

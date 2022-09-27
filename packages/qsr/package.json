@@ -1,6 +1,6 @@
 {
   "name": "@mbkjs/qsr",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Quickly integrate Solana into a React application.",
   "repository": "git@github.com:metablockshq/mbkjs.git",
   "main": "./dist/index.js",
@@ -28,5 +28,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "201645e9ab595f3d1e8a1ecc7b2c4f1f6a62fb25"
+  "gitHead": "5b5476ea09cfba45cb66a1fbb2127eabfa78170c"
 }
