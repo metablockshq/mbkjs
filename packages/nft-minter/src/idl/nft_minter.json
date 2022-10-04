@@ -29,220 +29,6 @@
       "args": []
     },
     {
-      "name": "createMint",
-      "accounts": [
-        {
-          "name": "claimant",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "nftMinter",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "claim",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "mint",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "rent",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "args",
-          "type": {
-            "defined": "CreateMintArgs"
-          }
-        }
-      ]
-    },
-    {
-      "name": "mintUnsignedNft",
-      "accounts": [
-        {
-          "name": "claimant",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "nftMinter",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "claim",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "mint",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "claimantMintAta",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "nftMinterAta",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "associatedTokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "rent",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "mintMetadata",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "mintMasterEdition",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenMetadataProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "args",
-          "type": {
-            "defined": "MintUnsignedNftArgs"
-          }
-        }
-      ]
-    },
-    {
-      "name": "mintUnsignedCollectionNft",
-      "accounts": [
-        {
-          "name": "claimant",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "nftMinter",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "claim",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "mint",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "claimantMintAta",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "associatedTokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "rent",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "mintMetadata",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "mintMasterEdition",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "tokenMetadataProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "nftCollectionMint",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "nftCollectionMetadata",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "nftCollectionMasterEdition",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "args",
-          "type": {
-            "defined": "MintUnsignedCollectionNftArgs"
-          }
-        }
-      ]
-    },
-    {
       "name": "mintSignedNft",
       "accounts": [
         {
@@ -424,9 +210,317 @@
           }
         }
       ]
+    },
+    {
+      "name": "initNftSafe",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "nftSafe",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "mintRegularNft",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "receiver",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "CHECK : This the receiver who is receiving the NFT"
+          ]
+        },
+        {
+          "name": "nftSafe",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "mint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "payerMintAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "receiverMintAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "mintMetadata",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "mintMasterEdition",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenMetadataProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": "MintRegularNftArgs"
+          }
+        }
+      ]
+    },
+    {
+      "name": "mintCollectionNft",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "receiver",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "CHECK : This the receiver who is receiving the NFT"
+          ]
+        },
+        {
+          "name": "mint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "receiverMintAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "mintMetadata",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "mintMasterEdition",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenMetadataProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "nftCollectionAdminSafe",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "nftCollectionAdmin",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "CHECK : nft collection admin who created the mint"
+          ]
+        },
+        {
+          "name": "nftCollectionMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "nftCollectionMetadata",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "nftCollectionMasterEdition",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "instructions",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": "MintCollectionNftArgs"
+          }
+        }
+      ]
     }
   ],
   "accounts": [
+    {
+      "name": "MintCollectionNftArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mintMetadataBump",
+            "type": "u8"
+          },
+          {
+            "name": "mintMasterEditionBump",
+            "type": "u8"
+          },
+          {
+            "name": "mintName",
+            "type": "string"
+          },
+          {
+            "name": "mintSymbol",
+            "type": "string"
+          },
+          {
+            "name": "mintUri",
+            "type": "string"
+          },
+          {
+            "name": "isMasterEdition",
+            "type": "bool"
+          },
+          {
+            "name": "isParentNft",
+            "type": "bool"
+          },
+          {
+            "name": "nftCollectionMetadataBump",
+            "type": "u8"
+          },
+          {
+            "name": "nftCollectionMasterEditionBump",
+            "type": "u8"
+          },
+          {
+            "name": "signature",
+            "type": {
+              "option": {
+                "array": [
+                  "u8",
+                  64
+                ]
+              }
+            }
+          },
+          {
+            "name": "message",
+            "type": {
+              "option": {
+                "array": [
+                  "u8",
+                  32
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "MintRegularNftArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mintMetadataBump",
+            "type": "u8"
+          },
+          {
+            "name": "mintMasterEditionBump",
+            "type": "u8"
+          },
+          {
+            "name": "mintName",
+            "type": "string"
+          },
+          {
+            "name": "mintSymbol",
+            "type": "string"
+          },
+          {
+            "name": "mintUri",
+            "type": "string"
+          },
+          {
+            "name": "isMasterEdition",
+            "type": "bool"
+          },
+          {
+            "name": "isParentNft",
+            "type": "bool"
+          }
+        ]
+      }
+    },
     {
       "name": "MintSignedCollectionNftArgs",
       "type": {
@@ -656,6 +750,26 @@
           }
         ]
       }
+    },
+    {
+      "name": "NftSafe",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "publicKey"
+          },
+          {
+            "name": "nftSafeBump",
+            "type": "u8"
+          },
+          {
+            "name": "nftCount",
+            "type": "u8"
+          }
+        ]
+      }
     }
   ],
   "errors": [
@@ -688,6 +802,11 @@
       "code": 6005,
       "name": "UnauthorizedError",
       "msg": "Unauthorized minting of nft"
+    },
+    {
+      "code": 6006,
+      "name": "InvalidSignerError",
+      "msg": "Invalid Signer"
     }
   ],
   "metadata": {
