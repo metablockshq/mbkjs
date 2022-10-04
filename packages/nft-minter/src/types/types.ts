@@ -116,3 +116,5 @@ export interface MintUnsignedCollectionNftApiArgs extends ApiInputArgs {
   collectionMintAddress: PublicKey;
   mintUri: string;
 }
+
+export interface InitializeNftSafeApiArgs extends ApiInputArgs {}

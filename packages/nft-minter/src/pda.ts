@@ -1,4 +1,4 @@
-import { PublicKey } from '@solana/web3.js';
+import { Keypair, PublicKey } from '@solana/web3.js';
 import { programIds } from './factory';
 
 const findAssociatedTokenAddress = async (
@@ -58,15 +58,28 @@ const findMintAddress = async (claimant: PublicKey) => {
   );
 };
 
-export {
-  findAssociatedTokenAddress,
-  findMetadataAddress,
-  findMasterEditionAddress,
-  findClaimAddress,
-  findMintAddress,
-  findNftMinterAddress,
+export const findNftSafeAddress = async (creator: PublicKey) => {
+  return await PublicKey.findProgramAddress(
+    [Buffer.from('nft-safe'), creator.toBuffer()],
+    programIds.NFT_MINTER_PROGRAM_ID
+  );
 };
 
+export const findNftSafeMintAddress = async (
+  creator: PublicKey,
+  nftCount: number
+) => {
+  return await PublicKey.findProgramAddress(
+    [
+      Buffer.from('nft-safe'),
+      creator.toBuffer(),
+      Buffer.from(nftCount.toString()),
+    ],
+    programIds.NFT_MINTER_PROGRAM_ID
+  );
+};
+
+// mint signed nft pdakeys
 export interface PdaKeys {
   nftMinterAddress: PublicKey;
   nftMinterMintAta: PublicKey;
@@ -119,4 +132,73 @@ export const getPdaKeys = async (
     mintMasterEditionBump: mintMasterEditionBump,
     nftMinterMintAta: nftMinterMintAta,
   };
+};
+
+//mint safe pda keys
+export interface SafePdaKeys {
+  nftSafeAddress: PublicKey;
+  nftCollectionAdminSafeAddress: PublicKey;
+  mintAddress: PublicKey;
+  receiverMintAta: PublicKey;
+  payerMintAta: PublicKey;
+  mintMetadataAddress: PublicKey;
+  mintMetadataBump: number;
+  mintMasterEditionAddress: PublicKey;
+  mintMasterEditionBump: number;
+}
+
+export const getSafePdaKeys = async (
+  receiverAddress: PublicKey,
+  payerAddress: PublicKey,
+  nftCount: number,
+  nftCollectionAdminAddress: PublicKey = Keypair.generate().publicKey
+): Promise<SafePdaKeys> => {
+  const [nftSafeAddress, _1] = await findNftSafeAddress(payerAddress);
+
+  const [nftSafeMintAddress, _2] = await findNftSafeMintAddress(
+    payerAddress,
+    nftCount
+  );
+
+  const [nftCollectionAdminSafeAddress, _6] = await findNftSafeAddress(
+    nftCollectionAdminAddress
+  );
+
+  const [receiverMintAta, _4] = await findAssociatedTokenAddress(
+    receiverAddress,
+    nftSafeMintAddress
+  );
+
+  const [payerMintAta, _5] = await findAssociatedTokenAddress(
+    payerAddress,
+    nftSafeMintAddress
+  );
+
+  const [mintMetadataAddress, mintMetadataBump] = await findMetadataAddress(
+    nftSafeMintAddress
+  );
+
+  const [mintMasterEditionAddress, mintMasterEditionBump] =
+    await findMasterEditionAddress(nftSafeMintAddress);
+
+  return {
+    nftCollectionAdminSafeAddress: nftCollectionAdminSafeAddress,
+    nftSafeAddress: nftSafeAddress,
+    mintAddress: nftSafeMintAddress,
+    payerMintAta: payerMintAta,
+    receiverMintAta: receiverMintAta,
+    mintMetadataAddress: mintMetadataAddress,
+    mintMetadataBump: mintMetadataBump,
+    mintMasterEditionAddress: mintMasterEditionAddress,
+    mintMasterEditionBump: mintMasterEditionBump,
+  };
+};
+
+export {
+  findAssociatedTokenAddress,
+  findMetadataAddress,
+  findMasterEditionAddress,
+  findClaimAddress,
+  findMintAddress,
+  findNftMinterAddress,
 };

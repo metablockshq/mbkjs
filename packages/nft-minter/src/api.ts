@@ -1,5 +1,6 @@
 import { Transaction } from '@solana/web3.js';
 import { getNftMinterProgram } from './factory';
+import { getInitNftSafeInstruction } from './instructions/init-nft-safe';
 import { getInitializeNftMinterInstruction } from './instructions/initialize-nft-minter';
 import {
   getEdInstruction,
@@ -9,17 +10,13 @@ import {
 
 import { getPdaKeys, PdaKeys } from './pda';
 import {
-  CreateMintArgs,
   InitializeNftMinterApiArgs,
+  InitializeNftSafeApiArgs,
   IntializeNftMinterArgs,
   MintSignedCollectionNftApiArgs,
   MintSignedCollectionNftArgs,
   MintSignedNftApiArgs,
   MintSignedNftArgs,
-  MintUnsignedCollectionNftApiArgs,
-  MintUnsignedCollectionNftArgs,
-  MintUnsignedNftApiArgs,
-  MintUnsignedNftArgs,
 } from './types/types';
 
 const initializeNftMinter = async (args: InitializeNftMinterApiArgs) => {
@@ -111,10 +108,10 @@ const mintSignedCollectionNft = async (
       signature: args.signature,
     });
 
-    const tranasction = new Transaction();
-    tranasction.add(edInstruction);
-    tranasction.add(instruction);
-    const tx = await program.provider.sendAndConfirm!(tranasction, []);
+    const transaction = new Transaction();
+    transaction.add(edInstruction);
+    transaction.add(instruction);
+    const tx = await program.provider.sendAndConfirm!(transaction, []);
 
     return tx;
   } catch (e) {
@@ -122,4 +119,31 @@ const mintSignedCollectionNft = async (
   }
 };
 
-export { initializeNftMinter, mintSignedNft, mintSignedCollectionNft };
+// This has to be initialized for the user if not existing for minting NFTs
+const initializeNftSafe = async (args: InitializeNftSafeApiArgs) => {
+  try {
+    const program = getNftMinterProgram(args.connection, args.wallet);
+    const usersKey = args.wallet.publicKey;
+
+    const argument = {
+      payerAddress: usersKey,
+      program: program,
+    };
+
+    const instruction = await getInitNftSafeInstruction(argument);
+    const transaction = new Transaction();
+    transaction.add(instruction);
+    const tx = await program.provider.sendAndConfirm!(transaction, []);
+
+    return tx;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export {
+  initializeNftMinter,
+  mintSignedNft,
+  mintSignedCollectionNft,
+  initializeNftSafe,
+};
