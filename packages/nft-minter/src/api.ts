@@ -3,16 +3,28 @@ import { getNftMinterProgram } from './factory';
 import { getInitNftSafeInstruction } from './instructions/init-nft-safe';
 import { getInitializeNftMinterInstruction } from './instructions/initialize-nft-minter';
 import {
+  getMintCollectionNftInstruction,
+  getMintRegularNftInstruction,
+} from './instructions/mint-safe-nfts';
+import {
   getEdInstruction,
   getMintSignedCollectionNftInstruction,
   getMintSignedNftInstruction,
 } from './instructions/mint-signed-nfts';
 
-import { getPdaKeys, PdaKeys } from './pda';
+import {
+  findNftSafeAddress,
+  getPdaKeys,
+  getSafePdaKeys,
+  PdaKeys,
+  SafePdaKeys,
+} from './pda';
 import {
   InitializeNftMinterApiArgs,
   InitializeNftSafeApiArgs,
   IntializeNftMinterArgs,
+  MintCollectionNftApiArgs,
+  MintRegularNftApiArgs,
   MintSignedCollectionNftApiArgs,
   MintSignedCollectionNftArgs,
   MintSignedNftApiArgs,
@@ -141,9 +153,118 @@ const initializeNftSafe = async (args: InitializeNftSafeApiArgs) => {
   }
 };
 
+const mintRegularNft = async (args: MintRegularNftApiArgs) => {
+  try {
+    const program = getNftMinterProgram(args.connection, args.wallet);
+    const usersKey = args.wallet.publicKey;
+
+    const [nftSafeAddress, _] = await findNftSafeAddress(usersKey);
+
+    let nftSafeData = await program.account.nftSafe.fetch(nftSafeAddress);
+
+    if (nftSafeData == null) {
+      await initializeNftSafe({
+        wallet: args.wallet,
+        connection: args.connection,
+      });
+
+      nftSafeData = await program.account.nftSafe.fetch(nftSafeAddress);
+    }
+
+    const pdaKeys: SafePdaKeys = await getSafePdaKeys(
+      args.receiverAddress,
+      usersKey,
+      nftSafeData.nftCount
+    );
+
+    const argument = {
+      pdaKeys: pdaKeys,
+      program: program,
+      receiverAddress: args.receiverAddress,
+      payerAddress: usersKey,
+      isParentNft: args.isParentNft,
+      isMasterEdition: args.isMasterEdition,
+      mintUri: args.mintUri,
+      mintSymbol: args.mintSymbol,
+      mintName: args.mintName,
+    };
+
+    const mintRegularNftInstruction = await getMintRegularNftInstruction(
+      argument
+    );
+    const transaction = new Transaction();
+    transaction.add(mintRegularNftInstruction);
+    const tx = await program.provider.sendAndConfirm!(transaction, []);
+
+    return tx;
+  } catch (e) {
+    throw e;
+  }
+};
+
+const mintCollectionNft = async (args: MintCollectionNftApiArgs) => {
+  try {
+    const program = getNftMinterProgram(args.connection, args.wallet);
+    const usersKey = args.wallet.publicKey;
+
+    const [nftSafeAddress, _] = await findNftSafeAddress(
+      args.nftCollectionAdmin
+    );
+
+    const nftSafeData = await program.account.nftSafe.fetch(nftSafeAddress);
+
+    if (nftSafeData == null) {
+      throw Error('There is no Regular NFT');
+    }
+
+    const adminPdaKeys: SafePdaKeys = await getSafePdaKeys(
+      args.nftCollectionAdmin,
+      args.nftCollectionAdmin,
+      nftSafeData.nftCount
+    );
+
+    const pdaKeys: SafePdaKeys = await getSafePdaKeys(
+      usersKey,
+      usersKey,
+      nftSafeData.nftCount,
+      args.nftCollectionAdmin
+    );
+
+    const mintCollectionNftInstruction = await getMintCollectionNftInstruction({
+      pdaKeys: pdaKeys,
+      program: program,
+      receiverAddress: usersKey,
+      payerAddress: usersKey,
+      isParentNft: args.isParentNft,
+      isMasterEdition: args.isMasterEdition,
+      mintUri: args.mintUri,
+      mintSymbol: args.mintSymbol,
+      mintName: args.mintName,
+      nftCollectionMint: adminPdaKeys.mintAddress,
+      nftCollectionMasterEdition: adminPdaKeys.mintMasterEditionAddress,
+      nftCollectionMetadata: adminPdaKeys.mintMetadataAddress,
+      nftCollectionMetadataBump: adminPdaKeys.mintMetadataBump,
+      nftCollectionMasterEditionBump: adminPdaKeys.mintMasterEditionBump,
+      nftCollectionAdmin: args.nftCollectionAdmin,
+      message: args.message != null ? args.message! : null,
+      signature: args.signature != null ? args.signature! : null,
+    });
+
+    const transaction = new Transaction();
+    transaction.add(mintCollectionNftInstruction);
+    const tx = await program.provider.sendAndConfirm!(transaction, []);
+
+    return tx;
+  } catch (e) {
+    throw e;
+  }
+};
+
 export {
   initializeNftMinter,
   mintSignedNft,
   mintSignedCollectionNft,
   initializeNftSafe,
+  mintRegularNft,
+  mintCollectionNft,
 };
