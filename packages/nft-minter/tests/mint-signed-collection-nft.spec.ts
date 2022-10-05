@@ -9,9 +9,7 @@ import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { api, pda } from '../src';
 import {
   MintRegularNftApiArgs,
-  MintRegularNftArgs,
   MintSignedCollectionNftApiArgs,
-  MintUnsignedNftApiArgs,
 } from '../src/types/types';
 import nacl from 'tweetnacl';
 
@@ -41,6 +39,13 @@ describe('MINT Unsigned Collection NFT', () => {
       );
 
       try {
+        const tx = await api.initializeNftSafe({
+          wallet: authorityWallet,
+          connection: connection,
+        });
+
+        console.log('Create Init Safe', tx);
+
         const args1: MintRegularNftApiArgs = {
           connection: connection,
           wallet: authorityWallet,
