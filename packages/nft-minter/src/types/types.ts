@@ -139,8 +139,6 @@ export interface MintRegularNftArgs {
 }
 
 export interface MintCollectionNftApiArgs extends ApiInputArgs {
-  mintMetadataBump: number;
-  mintMasterEditionBump: number;
   mintName: string;
   mintSymbol: string;
   isMasterEdition: boolean;

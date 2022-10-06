@@ -225,9 +225,8 @@ const mintCollectionNft = async (args: MintCollectionNftApiArgs) => {
 
     const pdaKeys: SafePdaKeys = await getSafePdaKeys(
       usersKey,
-      usersKey,
-      nftSafeData.nftCount,
-      args.nftCollectionAdmin
+      args.nftCollectionAdmin,
+      nftSafeData.nftCount
     );
 
     const mintCollectionNftInstruction = await getMintCollectionNftInstruction({
