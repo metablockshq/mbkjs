@@ -116,3 +116,49 @@ export interface MintUnsignedCollectionNftApiArgs extends ApiInputArgs {
   collectionMintAddress: PublicKey;
   mintUri: string;
 }
+
+export interface InitializeNftSafeApiArgs extends ApiInputArgs {}
+
+export interface MintRegularNftApiArgs extends ApiInputArgs {
+  mintName: string;
+  mintSymbol: string;
+  isMasterEdition: boolean;
+  isParentNft: boolean;
+  mintUri: string;
+  receiverAddress: PublicKey;
+}
+
+export interface MintRegularNftArgs {
+  mintMetadataBump: number;
+  mintMasterEditionBump: number;
+  mintName: string;
+  mintSymbol: string;
+  isMasterEdition: boolean;
+  isParentNft: boolean;
+  mintUri: string;
+}
+
+export interface MintCollectionNftApiArgs extends ApiInputArgs {
+  mintName: string;
+  mintSymbol: string;
+  isMasterEdition: boolean;
+  isParentNft: boolean;
+  mintUri: string;
+  nftCollectionAdmin: PublicKey;
+  signature?: Uint8Array | null;
+  message?: Uint8Array | null;
+}
+
+export interface MintCollectionNftArgs {
+  mintMetadataBump: number;
+  mintMasterEditionBump: number;
+  mintName: string;
+  mintSymbol: string;
+  isMasterEdition: boolean;
+  isParentNft: boolean;
+  mintUri: string;
+  nftCollectionMetadataBump: number;
+  nftCollectionMasterEditionBump: number;
+  signature?: Uint8Array | null;
+  message?: Uint8Array | null;
+}

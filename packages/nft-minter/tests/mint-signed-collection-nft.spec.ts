@@ -8,8 +8,8 @@ import NodeWallet, {
 import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { api, pda } from '../src';
 import {
+  MintRegularNftApiArgs,
   MintSignedCollectionNftApiArgs,
-  MintUnsignedNftApiArgs,
 } from '../src/types/types';
 import nacl from 'tweetnacl';
 
@@ -39,16 +39,24 @@ describe('MINT Unsigned Collection NFT', () => {
       );
 
       try {
-        const args1: MintUnsignedNftApiArgs = {
+        const tx = await api.initializeNftSafe({
+          wallet: authorityWallet,
+          connection: connection,
+        });
+
+        console.log('Create Init Safe', tx);
+
+        const args1: MintRegularNftApiArgs = {
           connection: connection,
           wallet: authorityWallet,
           mintName: 'Test Mint',
           mintSymbol: 'TEST',
           isMasterEdition: true,
-          isParentForNfts: true, // is this nft mint a parent mint for other mints ?
+          isParentNft: true, // is this nft mint a parent mint for other mints ?
           mintUri: 'http://mint.uri.com',
+          receiverAddress: authorityWallet.publicKey,
         };
-        const tx1 = await api.mintUnsignedNft(args1);
+        const tx1 = await api.mintRegularNft(args1);
 
         console.log('The transaction is ', tx1);
       } catch (err) {
