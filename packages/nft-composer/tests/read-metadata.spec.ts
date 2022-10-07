@@ -5,47 +5,64 @@ import { assert } from 'chai';
 import { getAllWrappedUserNfts } from '../src/accounts';
 import { getMetaNftMetadata, getReceiptNftsMetadata } from '../src/api';
 
-describe('Read Metadata Test cases', () => {
+describe('Metadata Read Test cases', () => {
   const dummyKeypair = anchor.web3.Keypair.generate();
   const dummyWallet = new NodeWallet(dummyKeypair);
 
   const connection = new anchor.web3.Connection(CLUSTER_URL, 'confirmed');
   const program = getMetaBlocksProgram(connection, dummyWallet);
 
-  it('Read the Metadata for user with universe', async () => {
+  it('ReceiptNFT : Read the Metadata for user with universe', async () => {
     const wrappedUserNfts = await getAllWrappedUserNfts(program);
 
-    const wrappes = wrappedUserNfts.filter(
-      (wrappedUserNft) =>
-        wrappedUserNft.universe !== undefined &&
-        wrappedUserNft.nftAuthority !== undefined
-    );
+    if (wrappedUserNfts.length > 0) {
+      const filteredWrapped = wrappedUserNfts.filter(
+        (wrappedUserNft) =>
+          wrappedUserNft.universe !== undefined &&
+          wrappedUserNft.nftAuthority !== undefined
+      );
 
-    const result = await getReceiptNftsMetadata({
-      connection: connection,
-      universe: wrappes[0].universe,
-      userPublicAddress: wrappes[0].nftAuthority,
-      wallet: dummyWallet,
-    });
+      const result = await getReceiptNftsMetadata({
+        connection: connection,
+        universe: filteredWrapped[0].universe,
+        userPublicAddress: filteredWrapped[0].nftAuthority,
+        wallet: dummyWallet,
+      });
 
-    console.log(result);
+      console.log(result);
+    }
   });
 
-  it('Read the Metadata for user with universe', async () => {
-    const wrappedUserNfts = await getAllWrappedUserNfts(program);
+  it('MetaNFT : Read the Metadata for user with universe', async () => {
+    try {
+      const wrappedUserNfts = await getAllWrappedUserNfts(program);
 
-    const wrappes = wrappedUserNfts.filter(
-      (wrappedUserNft) =>
-        wrappedUserNft.universe !== undefined &&
-        wrappedUserNft.nftAuthority !== undefined
-    );
+      if (wrappedUserNfts.length > 0) {
+        const filteredWrapped = wrappedUserNfts.filter(
+          (wrappedUserNft) =>
+            wrappedUserNft.universe !== undefined &&
+            wrappedUserNft.nftAuthority !== undefined
+        );
 
-    const result = await getMetaNftMetadata({
-      connection: connection,
-      universe: wrappes[0].universe,
-      userPublicAddress: wrappes[0].nftAuthority,
-    });
+        await Promise.all(
+          filteredWrapped.map(async (wrappedUserNft) => {
+            try {
+              const result = await getMetaNftMetadata({
+                connection: connection,
+                universe: wrappedUserNft.universe,
+                userPublicAddress: wrappedUserNft.nftAuthority,
+                wallet: dummyWallet,
+              });
 
-    console.log(result);
+              console.log(result);
+            } catch (err) {
+              console.log(err);
+            }
+          })
+        );
+      }
+    } catch (err) {
+      console.log(err);
+    }
   });
 });

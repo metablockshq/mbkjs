@@ -238,16 +238,22 @@ const getWrappedUserNftAccount = async (args: WrappedUserNftArgs) => {
 const getMetaNftMetadata = async (args: {
   connection: Connection;
   universe: PublicKey;
-  userPublicAddress: PublicKey;
+  userPublicAddress?: PublicKey;
+  wallet: any;
 }) => {
   try {
-    const authority = args.userPublicAddress;
+    let authority = args.wallet.publicKey;
 
-    const [metaNftMintAddress, _] = await pda.findMetaNftAddress(
-      authority,
-      args.universe
+    if (args.userPublicAddress !== undefined) {
+      authority = args.userPublicAddress;
+    }
+
+    const [metaNftMintAddress, _] = await pda.findMetaNftMintAddress(
+      args.universe,
+      authority
     );
     const metadata = await getMetadata(metaNftMintAddress, args.connection);
+
     const externalMetadata =
       metadata !== null || metadata !== undefined
         ? await getExternalMetadata(metadata.data.data.uri)
@@ -260,7 +266,7 @@ const getMetaNftMetadata = async (args: {
     };
   } catch (err) {
     throw new KyraaError(
-      undefined,
+      err,
       LangErrorCode.MetaNftFetchMetadataError,
       LangErrorMessage.get(LangErrorCode.MetaNftFetchMetadataError)
     );
@@ -275,11 +281,15 @@ const getMetaNftMetadata = async (args: {
 const getReceiptNftsMetadata = async (args: {
   connection: Connection;
   universe: PublicKey;
-  userPublicAddress: PublicKey;
+  userPublicAddress?: PublicKey;
   wallet: any;
 }) => {
   try {
-    const authority = args.userPublicAddress.toString();
+    let authority = args.wallet.publicKey.toString();
+
+    if (args.userPublicAddress !== undefined) {
+      authority = args.userPublicAddress!.toString();
+    }
     const universe = args.universe.toString();
 
     const program = getMetaBlocksProgram(args.connection, args.wallet);
