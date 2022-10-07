@@ -1,5 +1,5 @@
 import { getMetaBlocksProgram, getMetaTreasuryProgram } from './factory';
-import { Connection, PublicKey, Transaction } from '@solana/web3.js';
+import { Connection, Keypair, PublicKey, Transaction } from '@solana/web3.js';
 import {
   getCreateUniverseInstruction,
   getUpdateUniverseInstruction,
@@ -28,6 +28,8 @@ import axios from 'axios';
 import { supabaseClient } from './supabase-client';
 import { depositNft, depositNftV1, depositRawNft } from './deposit-nft';
 import * as configApi from './config-api';
+import * as pda from './pda';
+import { getWrappedUserNftsForUniverseAndWallet } from './accounts';
 
 const DEVNET_RECEIPT_URL =
   'https://ctvymyaq3e.execute-api.ap-south-1.amazonaws.com/Prod/receipt-shortener';
@@ -230,6 +232,120 @@ const getWrappedUserNftAccount = async (args: WrappedUserNftArgs) => {
 
 /**
  *
+ * @param args Wallet and connection
+ * @returns Fetches Metadata for a metaNFT mint of the wallet if present
+ */
+const getMetaNftMetadata = async (args: {
+  connection: Connection;
+  universe: PublicKey;
+  userPublicAddress: PublicKey;
+}) => {
+  try {
+    const authority = args.userPublicAddress;
+
+    const [metaNftMintAddress, _] = await pda.findMetaNftAddress(
+      authority,
+      args.universe
+    );
+    const metadata = await getMetadata(metaNftMintAddress, args.connection);
+    const externalMetadata =
+      metadata !== null || metadata !== undefined
+        ? await getExternalMetadata(metadata.data.data.uri)
+        : null;
+
+    return {
+      mint: metaNftMintAddress,
+      metadata: metadata,
+      externalMetadata: externalMetadata,
+    };
+  } catch (err) {
+    throw new KyraaError(
+      undefined,
+      LangErrorCode.MetaNftFetchMetadataError,
+      LangErrorMessage.get(LangErrorCode.MetaNftFetchMetadataError)
+    );
+  }
+};
+
+/**
+ *
+ * @param args Wallet and connection
+ * @returns Fetches Metadata for a metaNFT mint of the wallet if present
+ */
+const getReceiptNftsMetadata = async (args: {
+  connection: Connection;
+  universe: PublicKey;
+  userPublicAddress: PublicKey;
+  wallet: any;
+}) => {
+  try {
+    const authority = args.userPublicAddress.toString();
+    const universe = args.universe.toString();
+
+    const program = getMetaBlocksProgram(args.connection, args.wallet);
+
+    const wrappedUserNfts = await getWrappedUserNftsForUniverseAndWallet({
+      program,
+      universe,
+      authority,
+    });
+
+    if (wrappedUserNfts.length > 0) {
+      const result = await Promise.all(
+        wrappedUserNfts.map(async (wrappedUserNft) => {
+          let metadata = null;
+          let externalMetadata = null;
+
+          try {
+            metadata = await getMetadata(
+              wrappedUserNft.receiptMint,
+              args.connection
+            );
+          } catch (err) {}
+
+          if (metadata !== null) {
+            try {
+              externalMetadata = await getExternalMetadata(
+                metadata.data.data.uri
+              );
+            } catch (err) {}
+          }
+
+          return {
+            mint: wrappedUserNft.receiptMint.toString(),
+            metadata: metadata,
+            externalMetadata: externalMetadata,
+          };
+        })
+      );
+
+      //console.log(result.length);
+
+      return result;
+    }
+
+    return [];
+  } catch (err) {
+    throw new KyraaError(
+      err,
+      LangErrorCode.ReceiptFetchMetadataError,
+      LangErrorMessage.get(LangErrorCode.ReceiptFetchMetadataError)
+    );
+  }
+};
+
+const getExternalMetadata = async (url: string) => {
+  const res = await axios.get(url);
+  return res.data;
+};
+
+const getMetadata = async (mintAddress: PublicKey, connection: Connection) => {
+  const metadataPDA = await Metadata.getPDA(mintAddress);
+  return await Metadata.load(connection, metadataPDA);
+};
+
+/**
+ *
  * @param wallet - user's wallet address in string
  * @returns universes created by user(any wallet) from supabase
  */
@@ -384,7 +500,7 @@ const getMetaNftUrl = async (args: {
  * @returns all wrapped user nfts of an user from supabase
  */
 const getStoredWrappedUserNftAccounts = async (args: {
-  wallet: string;
+  wallet: any;
   universe: string;
 }) => {
   try {
@@ -417,4 +533,8 @@ export {
   getMetaNftUrl,
   getReceiptUrl,
   depositRawNft,
+  getMetaNftMetadata,
+  getReceiptNftsMetadata,
+  getExternalMetadata,
+  getMetadata,
 };

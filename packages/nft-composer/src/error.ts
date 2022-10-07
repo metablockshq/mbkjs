@@ -145,6 +145,8 @@ const LangErrorCode = {
   InsufficientLamports: 6014,
   ConfirmationError: 6015,
   TransactionError: 6016,
+  MetaNftFetchMetadataError: 6017,
+  ReceiptFetchMetadataError: 6018,
 };
 
 const LangErrorMessage = new Map([
@@ -288,6 +290,14 @@ const LangErrorMessage = new Map([
   [LangErrorCode.InsufficientLamports, 'Not enough sols in the wallet'],
   [LangErrorCode.ConfirmationError, 'Unable to confirm the transaction'],
   [LangErrorCode.TransactionError, 'Failed to send transaction'],
+  [
+    LangErrorCode.MetaNftFetchMetadataError,
+    'No MetaNft found. Failed to fetch metadata ',
+  ],
+  [
+    LangErrorCode.ReceiptFetchMetadataError,
+    'No Receipt found. Failed to fetch metadata ',
+  ],
 ]);
 
 const hexToDecimal = (str: string) => {

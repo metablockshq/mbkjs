@@ -28,7 +28,7 @@ const getAllWrappedUserNfts = async (
 ): Promise<Array<WrappedUserNft>> => {
   const wrappedUserNfts = await program.account.wrappedUserNft.all();
   if (wrappedUserNfts.length > 0) {
-    await Promise.all(
+    return await Promise.all(
       wrappedUserNfts.map(async (wrappedUserNft) => {
         let metadata: BlockMetadata = {
           slot: null,
@@ -117,6 +117,27 @@ const getFilteredWrappedUserNfts = async (
   return [];
 };
 
+const getWrappedUserNftsForUniverseAndWallet = async (args: {
+  program: anchor.Program<MetaBlocks>;
+  universe: string;
+  authority: string;
+}): Promise<Array<WrappedUserNft>> => {
+  let wrappedUserNfts = await getAllWrappedUserNfts(args.program);
+
+  if (wrappedUserNfts.length > 0 && wrappedUserNfts != null) {
+    wrappedUserNfts = applyExclusiveFilter(
+      wrappedUserNfts,
+      args.universe,
+      args.authority
+    );
+    if (wrappedUserNfts.length > 0) {
+      return wrappedUserNfts;
+    }
+  }
+
+  return [];
+};
+
 const isFilterNotEmpty = (filters: UserNftFilterArgs) => {
   return (
     filters.authorities.length > 0 ||
@@ -138,8 +159,21 @@ const applyFilter = (
   });
 };
 
+const applyExclusiveFilter = (
+  wrappedUserNfts: Array<WrappedUserNft>,
+  universe: string,
+  authority: string
+) => {
+  return wrappedUserNfts.filter(
+    (element: any) =>
+      element.universe.toString() === universe &&
+      element.nftAuthority.toString() === authority
+  );
+};
+
 export {
   getAllWrappedUserNfts,
   getFilteredWrappedUserNfts,
   getWrappedUserNftForReceiptMint,
+  getWrappedUserNftsForUniverseAndWallet,
 };
