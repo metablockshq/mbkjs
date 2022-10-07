@@ -131,7 +131,7 @@ await depositRawNft(args);
 Import the API
 
 ```typescript
-import { depositNft } from '@mbkjs/nft-composer';
+import { withdrawNft } from '@mbkjs/nft-composer';
 ```
 
 User could withdraw NFT anytime. The API to withdraw NFT is as simple as the following sample code.
@@ -152,7 +152,7 @@ await withdrawNft(args);
 Import the API
 
 ```typescript
-import { depositNft } from '@mbkjs/nft-composer';
+import { withdrawNftWithReceipt } from '@mbkjs/nft-composer';
 ```
 
 NFTs could also be withdraw from MetaBlocks Program using `receiptMint` Publickey
@@ -167,6 +167,48 @@ const args: WithdrawNftWithReceiptApiArgs = {
 
 await withdrawNftWithReceipt(args);
 ```
+
+
+## Read Meta NFT Metadata
+
+Import the API
+
+```typescript
+import { getMetaNftMetadata } from '@mbkjs/nft-composer';
+```
+
+Receive `MetaNFT` metadata for a user and universe. If nothing is present, sends error if nothing is found
+
+```typescript
+const args = {
+  connection: connection,
+  wallet: dummyWallet,
+  universe: universeKey, // public key of the universe where user deposited NFT
+};
+
+await getMetaNftMetadata(args);
+```
+
+## Read Receipt NFTs Metadata
+
+Import the API
+
+```typescript
+import { getReceiptNftsMetadata } from '@mbkjs/nft-composer';
+```
+
+Receive all `ReceiptNFT`  metadata  for a user and universe. If nothing is present, sends error if nothing is found
+
+```typescript
+const args = {
+  connection: connection,
+  wallet: dummyWallet,
+  universe: universeKey, // public key of the universe where user deposited NFT
+};
+
+await getReceiptNftsMetadata(args);
+```
+
 
 ## For More Details
 

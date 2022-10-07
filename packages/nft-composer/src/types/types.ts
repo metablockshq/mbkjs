@@ -67,7 +67,7 @@ export interface WrappedUserNftArgs {
   connection: Connection;
   receiptMint: PublicKey;
   wallet: any;
-  authority: PublicKey;
+  //authority: PublicKey;
 }
 
 // instructions.ts file

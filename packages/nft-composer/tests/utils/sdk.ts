@@ -187,5 +187,5 @@ export const findAssociatedAddressForKey = async (
   );
 };
 
-//export const CLUSTER_URL = 'https://api.devnet.solana.com';
-export const CLUSTER_URL = 'http://localhost:8899';
+export const CLUSTER_URL = 'https://api.devnet.solana.com';
+//export const CLUSTER_URL = 'http://localhost:8899';
