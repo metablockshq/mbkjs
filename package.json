@@ -1,6 +1,6 @@
 {
   "name": "mbkjs",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Meta Blocks JS SDK",
   "repository": "git@github.com:metablockshq/mbkjs.git",
   "author": "Shivek Khurana <khuranashivek@outlook.com>",
@@ -10,7 +10,7 @@
   },
   "scripts": {
     "publish-packages": "yarn lerna publish from-package",
-    "publish" : "yarn lerna publish --force-publish",
+    "publish": "yarn lerna publish --force-publish",
     "bootstrap": "lerna bootstrap",
     "changed": "lerna changed"
   },
