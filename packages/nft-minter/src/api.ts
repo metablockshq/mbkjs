@@ -211,22 +211,37 @@ const mintCollectionNft = async (args: MintCollectionNftApiArgs) => {
       args.nftCollectionAdmin
     );
 
-    const nftSafeData = await program.account.nftSafe.fetch(nftSafeAddress);
+    const adminNftSafeData = await program.account.nftSafe.fetch(
+      nftSafeAddress
+    );
 
-    if (nftSafeData == null) {
+    if (adminNftSafeData == null) {
       throw Error('There is no Regular NFT');
     }
+
+    let parentNftCount = -1;
+
+    for (let i = 0; i < adminNftSafeData.parentMints.length; i++) {
+      if (
+        adminNftSafeData.parentMints[i].mint.toString() ===
+        args.nftCollectionMintAddress.toString()
+      ) {
+        parentNftCount = adminNftSafeData.parentMints[i].nftCount;
+        break;
+      }
+    }
+    //console.log('asdasdas');
+    //console.log(parentNftCount);
 
     const adminPdaKeys: SafePdaKeys = await getSafePdaKeys(
       args.nftCollectionAdmin,
       args.nftCollectionAdmin,
-      nftSafeData.nftCount
+      parentNftCount - 1 // nft parent nft nft count // this has to be -1 count to be changed in future
     );
-
     const pdaKeys: SafePdaKeys = await getSafePdaKeys(
       usersKey,
       args.nftCollectionAdmin,
-      nftSafeData.nftCount
+      adminNftSafeData.nftCount // should be latest nft counnt
     );
 
     const mintCollectionNftInstruction = await getMintCollectionNftInstruction({

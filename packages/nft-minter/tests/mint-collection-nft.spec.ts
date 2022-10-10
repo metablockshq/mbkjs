@@ -2,7 +2,7 @@ import { getNftMinterProgram } from '../src/factory';
 import * as anchor from '@project-serum/anchor';
 import NodeWallet, { addSols, CLUSTER_URL } from './utils/utils';
 import { Keypair, LAMPORTS_PER_SOL } from '@solana/web3.js';
-import { api } from '../src';
+import { api, pda } from '../src';
 import {
   MintCollectionNftApiArgs,
   MintRegularNftApiArgs,
@@ -65,18 +65,31 @@ describe('MINT Colleciton NFT', () => {
         creatorKeypair.secretKey
       );
 
+      const [nftSafeAddress, _] = await pda.findNftSafeAddress(
+        creatorWallet.publicKey
+      );
+
+      const adminNftSafeData = await program.account.nftSafe.fetch(
+        nftSafeAddress
+      );
+
+      const mintAddress = adminNftSafeData.parentMints[0].mint;
+      //console.log(adminNftSafeData.parentMints[0].nftCount);
+
+      //console.log(mintAddress);
+      // transfer to another wallett!!
       const args2: MintCollectionNftApiArgs = {
         connection: connection,
-        wallet: creatorWallet,
+        wallet: anotherWallet,
         mintName: 'Test Mint',
         mintSymbol: 'TEST',
         isMasterEdition: true,
         isParentNft: false, // is this nft mint a parent mint for other mints ?
         mintUri: 'http://mint.uri.com',
         nftCollectionAdmin: creatorKeypair.publicKey,
-        // signature: signature,
-
-        //message: testMessage,
+        nftCollectionMintAddress: mintAddress,
+        signature: signature,
+        message: testMessage,
       };
 
       const tx2 = await api.mintCollectionNft(args2);
