@@ -145,6 +145,7 @@ export interface MintCollectionNftApiArgs extends ApiInputArgs {
   isParentNft: boolean;
   mintUri: string;
   nftCollectionAdmin: PublicKey;
+  nftCollectionMintAddress: PublicKey;
   signature?: Uint8Array | null;
   message?: Uint8Array | null;
 }

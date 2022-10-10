@@ -767,6 +767,32 @@
           {
             "name": "nftCount",
             "type": "u8"
+          },
+          {
+            "name": "parentMints",
+            "type": {
+              "vec": {
+                "defined": "ParentNftMint"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "ParentNftMint",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mint",
+            "type": "publicKey"
+          },
+          {
+            "name": "nftCount",
+            "type": "u8"
           }
         ]
       }
