@@ -160,15 +160,20 @@ const mintRegularNft = async (args: MintRegularNftApiArgs) => {
 
     const [nftSafeAddress, _] = await findNftSafeAddress(usersKey);
 
-    let nftSafeData = await program.account.nftSafe.fetch(nftSafeAddress);
+    let nftSafeData = null;
 
-    if (nftSafeData == null) {
-      await initializeNftSafe({
-        wallet: args.wallet,
-        connection: args.connection,
-      });
-
+    try {
       nftSafeData = await program.account.nftSafe.fetch(nftSafeAddress);
+    } catch (err) {
+      console.log('Nft data does not exists');
+      if (nftSafeData == null) {
+        await initializeNftSafe({
+          wallet: args.wallet,
+          connection: args.connection,
+        });
+
+        nftSafeData = await program.account.nftSafe.fetch(nftSafeAddress);
+      }
     }
 
     const pdaKeys: SafePdaKeys = await getSafePdaKeys(
@@ -241,7 +246,7 @@ const mintCollectionNft = async (args: MintCollectionNftApiArgs) => {
     const pdaKeys: SafePdaKeys = await getSafePdaKeys(
       usersKey,
       args.nftCollectionAdmin,
-      adminNftSafeData.nftCount // should be latest nft counnt
+      adminNftSafeData.nftCount // should be latest nft count
     );
 
     const mintCollectionNftInstruction = await getMintCollectionNftInstruction({

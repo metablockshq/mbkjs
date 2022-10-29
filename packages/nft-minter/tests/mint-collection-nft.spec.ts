@@ -9,7 +9,7 @@ import {
 } from '../src/types/types';
 import nacl from 'tweetnacl';
 
-describe('MINT Colleciton NFT', () => {
+describe('MINT Collection NFT', () => {
   const creatorKeypair = anchor.web3.Keypair.generate();
   const creatorWallet = new NodeWallet(creatorKeypair);
 
