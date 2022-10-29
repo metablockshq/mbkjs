@@ -216,11 +216,11 @@ const mintCollectionNft = async (args: MintCollectionNftApiArgs) => {
       args.nftCollectionAdmin
     );
 
-    const adminNftSafeData = await program.account.nftSafe.fetch(
-      nftSafeAddress
-    );
+    let adminNftSafeData = null;
 
-    if (adminNftSafeData == null) {
+    try {
+      adminNftSafeData = await program.account.nftSafe.fetch(nftSafeAddress);
+    } catch (err) {
       throw Error('There is no Regular NFT');
     }
 
