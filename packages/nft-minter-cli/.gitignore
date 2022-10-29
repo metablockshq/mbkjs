@@ -1,0 +1,8 @@
+build
+node_modules
+node_modules/**
+.DS_Store
+test-ledger
+
+
+wallet/deployer-wallet.json
