@@ -10,7 +10,6 @@
   },
   "scripts": {
     "publish-packages": "yarn lerna publish from-package",
-    "publish": "yarn lerna publish --force-publish",
     "bootstrap": "lerna bootstrap",
     "changed": "lerna changed"
   },
