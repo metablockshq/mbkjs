@@ -252,7 +252,7 @@ const mintCollectionNft = async (args: MintCollectionNftApiArgs) => {
     const mintCollectionNftInstruction = await getMintCollectionNftInstruction({
       pdaKeys: pdaKeys,
       program: program,
-      receiverAddress: usersKey,
+      receiverAddress: args.receiverAddress,
       payerAddress: usersKey,
       isParentNft: args.isParentNft,
       isMasterEdition: args.isMasterEdition,
@@ -265,8 +265,8 @@ const mintCollectionNft = async (args: MintCollectionNftApiArgs) => {
       nftCollectionMetadataBump: adminPdaKeys.mintMetadataBump,
       nftCollectionMasterEditionBump: adminPdaKeys.mintMasterEditionBump,
       nftCollectionAdmin: args.nftCollectionAdmin,
-      message: args.message != null ? args.message! : null,
-      signature: args.signature != null ? args.signature! : null,
+      message: args.message != null ? args.message : null,
+      signature: args.signature != null ? args.signature : null,
     });
 
     const transaction = new Transaction();
