@@ -177,7 +177,6 @@ const mintRegularNft = async (args: MintRegularNftApiArgs) => {
     }
 
     const pdaKeys: SafePdaKeys = await getSafePdaKeys(
-      args.receiverAddress,
       usersKey,
       nftSafeData.nftCount
     );
@@ -240,11 +239,12 @@ const mintCollectionNft = async (args: MintCollectionNftApiArgs) => {
 
     const adminPdaKeys: SafePdaKeys = await getSafePdaKeys(
       args.nftCollectionAdmin,
-      args.nftCollectionAdmin,
       parentNftCount - 1 // nft parent nft nft count // this has to be -1 count to be changed in future
     );
+
+    // console.log(parentNftCount);
+
     const pdaKeys: SafePdaKeys = await getSafePdaKeys(
-      usersKey,
       args.nftCollectionAdmin,
       adminNftSafeData.nftCount // should be latest nft count
     );
@@ -271,7 +271,13 @@ const mintCollectionNft = async (args: MintCollectionNftApiArgs) => {
 
     const transaction = new Transaction();
     transaction.add(mintCollectionNftInstruction);
-    const tx = await program.provider.sendAndConfirm!(transaction, []);
+    const tx = await program.provider.sendAndConfirm!(transaction, []).catch(
+      (err) => {
+        console.log(err);
+
+        throw err;
+      }
+    );
 
     return tx;
   } catch (e) {
