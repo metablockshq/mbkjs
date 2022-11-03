@@ -1,4 +1,4 @@
-import { Transaction } from '@solana/web3.js';
+import { ComputeBudgetProgram, Transaction } from '@solana/web3.js';
 import { getNftMinterProgram } from './factory';
 import { getInitNftSafeInstruction } from './instructions/init-nft-safe';
 import { getInitializeNftMinterInstruction } from './instructions/initialize-nft-minter';
@@ -269,7 +269,12 @@ const mintCollectionNft = async (args: MintCollectionNftApiArgs) => {
       signature: args.signature != null ? args.signature : null,
     });
 
+    const modifyComputeUnits = ComputeBudgetProgram.requestUnits({
+      units: 250000,
+      additionalFee: 0.0001,
+    });
     const transaction = new Transaction();
+    transaction.add(modifyComputeUnits);
     transaction.add(mintCollectionNftInstruction);
     const tx = await program.provider.sendAndConfirm!(transaction, []).catch(
       (err) => {
