@@ -87,6 +87,11 @@ async function getMintCollectionNftInstruction(args: {
       args.payerAddress == args.receiverAddress ? null : args.signature,
   };
 
+  let payerMintAta = args.pdaKeys.payerMintAta;
+  if (args.payerAddress.toString() === args.receiverAddress.toString()) {
+    payerMintAta = args.pdaKeys.receiverMintAta;
+  }
+
   const mintCollectionNftInstruction = await args.program.methods
     .mintCollectionNft(argument)
     .accounts({
@@ -99,6 +104,7 @@ async function getMintCollectionNftInstruction(args: {
       payer: args.payerAddress,
       mint: args.pdaKeys.mintAddress,
       receiverMintAta: args.pdaKeys.receiverMintAta,
+      payerMintAta: payerMintAta,
       mintMetadata: args.pdaKeys.mintMetadataAddress,
       mintMasterEdition: args.pdaKeys.mintMasterEditionAddress,
       tokenMetadataProgram: programIds.TOKEN_METADATA_PROGRAM_ID,

@@ -244,7 +244,7 @@ const mintCollectionNft = async (args: MintCollectionNftApiArgs) => {
       parentNftCount - 1 // nft parent nft nft count // this has to be -1 count to be changed in future
     );
     const pdaKeys: SafePdaKeys = await getSafePdaKeys(
-      args.receiverAddress,
+      usersKey,
       args.nftCollectionAdmin,
       adminNftSafeData.nftCount // should be latest nft count
     );

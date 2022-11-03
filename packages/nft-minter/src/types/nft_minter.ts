@@ -335,6 +335,11 @@ export type NftMinter = {
           "isSigner": false
         },
         {
+          "name": "payerMintAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
           "name": "receiverMintAta",
           "isMut": true,
           "isSigner": false
@@ -1170,6 +1175,11 @@ export const IDL: NftMinter = {
         },
         {
           "name": "mint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "payerMintAta",
           "isMut": true,
           "isSigner": false
         },
