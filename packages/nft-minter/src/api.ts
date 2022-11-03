@@ -1,4 +1,4 @@
-import { Transaction } from '@solana/web3.js';
+import { ComputeBudgetProgram, Transaction } from '@solana/web3.js';
 import { getNftMinterProgram } from './factory';
 import { getInitNftSafeInstruction } from './instructions/init-nft-safe';
 import { getInitializeNftMinterInstruction } from './instructions/initialize-nft-minter';
@@ -177,7 +177,6 @@ const mintRegularNft = async (args: MintRegularNftApiArgs) => {
     }
 
     const pdaKeys: SafePdaKeys = await getSafePdaKeys(
-      args.receiverAddress,
       usersKey,
       nftSafeData.nftCount
     );
@@ -240,11 +239,12 @@ const mintCollectionNft = async (args: MintCollectionNftApiArgs) => {
 
     const adminPdaKeys: SafePdaKeys = await getSafePdaKeys(
       args.nftCollectionAdmin,
-      args.nftCollectionAdmin,
       parentNftCount - 1 // nft parent nft nft count // this has to be -1 count to be changed in future
     );
+
+    // console.log(parentNftCount);
+
     const pdaKeys: SafePdaKeys = await getSafePdaKeys(
-      usersKey,
       args.nftCollectionAdmin,
       adminNftSafeData.nftCount // should be latest nft count
     );
@@ -252,7 +252,7 @@ const mintCollectionNft = async (args: MintCollectionNftApiArgs) => {
     const mintCollectionNftInstruction = await getMintCollectionNftInstruction({
       pdaKeys: pdaKeys,
       program: program,
-      receiverAddress: usersKey,
+      receiverAddress: args.receiverAddress,
       payerAddress: usersKey,
       isParentNft: args.isParentNft,
       isMasterEdition: args.isMasterEdition,
@@ -265,13 +265,24 @@ const mintCollectionNft = async (args: MintCollectionNftApiArgs) => {
       nftCollectionMetadataBump: adminPdaKeys.mintMetadataBump,
       nftCollectionMasterEditionBump: adminPdaKeys.mintMasterEditionBump,
       nftCollectionAdmin: args.nftCollectionAdmin,
-      message: args.message != null ? args.message! : null,
-      signature: args.signature != null ? args.signature! : null,
+      message: args.message != null ? args.message : null,
+      signature: args.signature != null ? args.signature : null,
     });
 
+    const modifyComputeUnits = ComputeBudgetProgram.requestUnits({
+      units: 250000,
+      additionalFee: 0.0001,
+    });
     const transaction = new Transaction();
+    transaction.add(modifyComputeUnits);
     transaction.add(mintCollectionNftInstruction);
-    const tx = await program.provider.sendAndConfirm!(transaction, []);
+    const tx = await program.provider.sendAndConfirm!(transaction, []).catch(
+      (err) => {
+        console.log(err);
+
+        throw err;
+      }
+    );
 
     return tx;
   } catch (e) {

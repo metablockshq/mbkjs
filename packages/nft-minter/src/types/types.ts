@@ -146,6 +146,7 @@ export interface MintCollectionNftApiArgs extends ApiInputArgs {
   mintUri: string;
   nftCollectionAdmin: PublicKey;
   nftCollectionMintAddress: PublicKey;
+  receiverAddress: PublicKey;
   signature?: Uint8Array | null;
   message?: Uint8Array | null;
 }

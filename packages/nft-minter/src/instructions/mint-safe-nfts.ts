@@ -6,7 +6,7 @@ import {
   SYSVAR_RENT_PUBKEY,
 } from '@solana/web3.js';
 import { programIds } from '../factory';
-import { SafePdaKeys } from '../pda';
+import { findAssociatedTokenAddress, SafePdaKeys } from '../pda';
 import { MintCollectionNftArgs, MintRegularNftArgs } from '../types/types';
 
 // mint regular nft instruction
@@ -31,6 +31,11 @@ async function getMintRegularNftInstruction(args: {
     mintUri: args.mintUri,
   };
 
+  const [receiverMintAta, _] = await findAssociatedTokenAddress(
+    args.receiverAddress,
+    args.pdaKeys.mintAddress
+  );
+
   const mintRegularNftInstruction = await args.program.methods
     .mintRegularNft(argument)
     .accounts({
@@ -39,7 +44,7 @@ async function getMintRegularNftInstruction(args: {
       nftSafe: args.pdaKeys.nftSafeAddress,
       mint: args.pdaKeys.mintAddress,
       payerMintAta: args.pdaKeys.payerMintAta,
-      receiverMintAta: args.pdaKeys.receiverMintAta,
+      receiverMintAta: receiverMintAta,
       mintMetadata: args.pdaKeys.mintMetadataAddress,
       mintMasterEdition: args.pdaKeys.mintMasterEditionAddress,
       tokenMetadataProgram: programIds.TOKEN_METADATA_PROGRAM_ID,
@@ -87,6 +92,16 @@ async function getMintCollectionNftInstruction(args: {
       args.payerAddress == args.receiverAddress ? null : args.signature,
   };
 
+  const [receiverMintAta, _] = await findAssociatedTokenAddress(
+    args.receiverAddress,
+    args.pdaKeys.mintAddress
+  );
+
+  let payerMintAta = args.pdaKeys.payerMintAta;
+  if (args.payerAddress.toString() === args.receiverAddress.toString()) {
+    payerMintAta = receiverMintAta;
+  }
+
   const mintCollectionNftInstruction = await args.program.methods
     .mintCollectionNft(argument)
     .accounts({
@@ -98,7 +113,8 @@ async function getMintCollectionNftInstruction(args: {
       receiver: args.receiverAddress,
       payer: args.payerAddress,
       mint: args.pdaKeys.mintAddress,
-      receiverMintAta: args.pdaKeys.receiverMintAta,
+      receiverMintAta: receiverMintAta,
+      payerMintAta: payerMintAta,
       mintMetadata: args.pdaKeys.mintMetadataAddress,
       mintMasterEdition: args.pdaKeys.mintMasterEditionAddress,
       tokenMetadataProgram: programIds.TOKEN_METADATA_PROGRAM_ID,

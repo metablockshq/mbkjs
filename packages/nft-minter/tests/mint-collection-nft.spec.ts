@@ -81,6 +81,7 @@ describe('MINT Collection NFT', () => {
       const args2: MintCollectionNftApiArgs = {
         connection: connection,
         wallet: anotherWallet,
+        receiverAddress: anotherWallet.publicKey,
         mintName: 'Test Mint',
         mintSymbol: 'TEST',
         isMasterEdition: true,

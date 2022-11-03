@@ -139,7 +139,6 @@ export interface SafePdaKeys {
   nftSafeAddress: PublicKey;
   // nftCollectionAdminSafeAddress: PublicKey;
   mintAddress: PublicKey;
-  receiverMintAta: PublicKey;
   payerMintAta: PublicKey;
   mintMetadataAddress: PublicKey;
   mintMetadataBump: number;
@@ -148,7 +147,6 @@ export interface SafePdaKeys {
 }
 
 export const getSafePdaKeys = async (
-  receiverAddress: PublicKey,
   payerAddress: PublicKey,
   nftCount: number
   //nftCollectionAdminAddress: PublicKey = Keypair.generate().publicKey
@@ -163,11 +161,6 @@ export const getSafePdaKeys = async (
   // const [nftCollectionAdminSafeAddress, _6] = await findNftSafeAddress(
   //   nftCollectionAdminAddress
   // );
-
-  const [receiverMintAta, _4] = await findAssociatedTokenAddress(
-    receiverAddress,
-    nftSafeMintAddress
-  );
 
   const [payerMintAta, _5] = await findAssociatedTokenAddress(
     payerAddress,
@@ -186,7 +179,6 @@ export const getSafePdaKeys = async (
     nftSafeAddress: nftSafeAddress,
     mintAddress: nftSafeMintAddress,
     payerMintAta: payerMintAta,
-    receiverMintAta: receiverMintAta,
     mintMetadataAddress: mintMetadataAddress,
     mintMetadataBump: mintMetadataBump,
     mintMasterEditionAddress: mintMasterEditionAddress,

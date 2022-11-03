@@ -335,6 +335,11 @@
           "isSigner": false
         },
         {
+          "name": "payerMintAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
           "name": "receiverMintAta",
           "isMut": true,
           "isSigner": false
