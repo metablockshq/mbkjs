@@ -269,9 +269,8 @@ const mintCollectionNft = async (args: MintCollectionNftApiArgs) => {
       signature: args.signature != null ? args.signature : null,
     });
 
-    const modifyComputeUnits = ComputeBudgetProgram.requestUnits({
-      units: 250000,
-      additionalFee: 0.0001,
+    const modifyComputeUnits = ComputeBudgetProgram.setComputeUnitLimit({
+      units: 350000,
     });
     const transaction = new Transaction();
     transaction.add(modifyComputeUnits);
