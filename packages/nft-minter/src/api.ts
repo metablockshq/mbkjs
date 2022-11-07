@@ -235,7 +235,7 @@ const mintCollectionNft = async (args: MintCollectionNftApiArgs) => {
       }
     }
     //console.log('asdasdas');
-    //console.log(parentNftCount);
+    console.log(parentNftCount);
 
     const adminPdaKeys: SafePdaKeys = await getSafePdaKeys(
       args.nftCollectionAdmin,
@@ -267,6 +267,36 @@ const mintCollectionNft = async (args: MintCollectionNftApiArgs) => {
       nftCollectionAdmin: args.nftCollectionAdmin,
       message: args.message != null ? args.message : null,
       signature: args.signature != null ? args.signature : null,
+    });
+
+    console.log('The pdaKeys ');
+
+    console.log({
+      mintAddress: pdaKeys.mintAddress.toString(),
+      mintMasterEditionAddress: pdaKeys.mintMasterEditionAddress.toString(),
+      mintMetadataAddress: pdaKeys.mintMetadataAddress.toString(),
+      payerMintAta: pdaKeys.payerMintAta.toString(),
+      nftSafeAddress: pdaKeys.nftSafeAddress.toString(),
+      mintMasterEditionBump: pdaKeys.mintMasterEditionBump.toString(),
+      mintMetadataBump: pdaKeys.mintMetadataBump.toString(),
+    });
+
+    console.log({
+      receiverAddress: args.receiverAddress.toString(),
+      payerAddress: usersKey.publicKey.toString(),
+      isParentNft: args.isParentNft,
+      isMasterEdition: args.isMasterEdition,
+      mintUri: args.mintUri,
+      mintSymbol: args.mintSymbol,
+      mintName: args.mintName,
+      nftCollectionMint: adminPdaKeys.mintAddress.toString(),
+      nftCollectionMasterEdition:
+        adminPdaKeys.mintMasterEditionAddress.toString(),
+      nftCollectionMetadata: adminPdaKeys.mintMetadataAddress.toString(),
+      nftCollectionMetadataBump: adminPdaKeys.mintMetadataBump.toString(),
+      nftCollectionMasterEditionBump:
+        adminPdaKeys.mintMasterEditionBump.toString(),
+      nftCollectionAdmin: args.nftCollectionAdmin.toString(),
     });
 
     const modifyComputeUnits = ComputeBudgetProgram.setComputeUnitLimit({
