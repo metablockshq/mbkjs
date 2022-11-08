@@ -281,9 +281,11 @@ const mintCollectionNft = async (args: MintCollectionNftApiArgs) => {
       mintMetadataBump: pdaKeys.mintMetadataBump.toString(),
     });
 
+    console.log('The instruction data :: -> ');
+
     console.log({
       receiverAddress: args.receiverAddress.toString(),
-      payerAddress: usersKey.publicKey.toString(),
+      payerAddress: usersKey.toString(),
       isParentNft: args.isParentNft,
       isMasterEdition: args.isMasterEdition,
       mintUri: args.mintUri,
@@ -293,10 +295,10 @@ const mintCollectionNft = async (args: MintCollectionNftApiArgs) => {
       nftCollectionMasterEdition:
         adminPdaKeys.mintMasterEditionAddress.toString(),
       nftCollectionMetadata: adminPdaKeys.mintMetadataAddress.toString(),
-      nftCollectionMetadataBump: adminPdaKeys.mintMetadataBump.toString(),
-      nftCollectionMasterEditionBump:
-        adminPdaKeys.mintMasterEditionBump.toString(),
+      nftCollectionMetadataBump: adminPdaKeys.mintMetadataBump,
+      nftCollectionMasterEditionBump: adminPdaKeys.mintMasterEditionBump,
       nftCollectionAdmin: args.nftCollectionAdmin.toString(),
+      programId: program.programId.toString(),
     });
 
     const modifyComputeUnits = ComputeBudgetProgram.setComputeUnitLimit({
