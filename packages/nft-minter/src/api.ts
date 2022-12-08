@@ -235,7 +235,7 @@ const mintCollectionNft = async (args: MintCollectionNftApiArgs) => {
       }
     }
     //console.log('asdasdas');
-    //console.log(parentNftCount);
+    console.log(parentNftCount);
 
     const adminPdaKeys: SafePdaKeys = await getSafePdaKeys(
       args.nftCollectionAdmin,
@@ -269,9 +269,40 @@ const mintCollectionNft = async (args: MintCollectionNftApiArgs) => {
       signature: args.signature != null ? args.signature : null,
     });
 
-    const modifyComputeUnits = ComputeBudgetProgram.requestUnits({
-      units: 250000,
-      additionalFee: 0.0001,
+    console.log('The pdaKeys ');
+
+    console.log({
+      mintAddress: pdaKeys.mintAddress.toString(),
+      mintMasterEditionAddress: pdaKeys.mintMasterEditionAddress.toString(),
+      mintMetadataAddress: pdaKeys.mintMetadataAddress.toString(),
+      payerMintAta: pdaKeys.payerMintAta.toString(),
+      nftSafeAddress: pdaKeys.nftSafeAddress.toString(),
+      mintMasterEditionBump: pdaKeys.mintMasterEditionBump.toString(),
+      mintMetadataBump: pdaKeys.mintMetadataBump.toString(),
+    });
+
+    console.log('The instruction data :: -> ');
+
+    console.log({
+      receiverAddress: args.receiverAddress.toString(),
+      payerAddress: usersKey.toString(),
+      isParentNft: args.isParentNft,
+      isMasterEdition: args.isMasterEdition,
+      mintUri: args.mintUri,
+      mintSymbol: args.mintSymbol,
+      mintName: args.mintName,
+      nftCollectionMint: adminPdaKeys.mintAddress.toString(),
+      nftCollectionMasterEdition:
+        adminPdaKeys.mintMasterEditionAddress.toString(),
+      nftCollectionMetadata: adminPdaKeys.mintMetadataAddress.toString(),
+      nftCollectionMetadataBump: adminPdaKeys.mintMetadataBump,
+      nftCollectionMasterEditionBump: adminPdaKeys.mintMasterEditionBump,
+      nftCollectionAdmin: args.nftCollectionAdmin.toString(),
+      programId: program.programId.toString(),
+    });
+
+    const modifyComputeUnits = ComputeBudgetProgram.setComputeUnitLimit({
+      units: 350000,
     });
     const transaction = new Transaction();
     transaction.add(modifyComputeUnits);
