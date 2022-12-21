@@ -1,5 +1,6 @@
 import { Program } from '@project-serum/anchor';
 import {
+  Ed25519Program,
   PublicKey,
   SystemProgram,
   SYSVAR_INSTRUCTIONS_PUBKEY,
@@ -7,7 +8,11 @@ import {
 } from '@solana/web3.js';
 import { programIds } from '../factory';
 import { findAssociatedTokenAddress, SafePdaKeys } from '../pda';
-import { MintCollectionNftArgs, MintRegularNftArgs } from '../types/types';
+import {
+  Creator,
+  MintCollectionNftArgs,
+  MintRegularNftArgs,
+} from '../types/types';
 
 // mint regular nft instruction
 async function getMintRegularNftInstruction(args: {
@@ -20,6 +25,9 @@ async function getMintRegularNftInstruction(args: {
   mintUri: string;
   mintSymbol: string;
   mintName: string;
+  creators: Array<Creator> | null;
+  sellerBasisPoints: number;
+  isMutable: boolean | null;
 }) {
   const argument: MintRegularNftArgs = {
     mintMetadataBump: args.pdaKeys.mintMetadataBump,
@@ -29,6 +37,9 @@ async function getMintRegularNftInstruction(args: {
     isMasterEdition: args.isMasterEdition,
     isParentNft: args.isParentNft,
     mintUri: args.mintUri,
+    creators: args.creators,
+    sellerBasisPoints: args.sellerBasisPoints,
+    isMutable: args.isMutable,
   };
 
   const [receiverMintAta, _] = await findAssociatedTokenAddress(
@@ -68,6 +79,10 @@ async function getMintCollectionNftInstruction(args: {
   mintUri: string;
   mintSymbol: string;
   mintName: string;
+  isPrimarySaleHappened: boolean | null;
+  sellerBasisPoints: number;
+  isMutable: boolean | null;
+  creators: Array<Creator> | null;
   nftCollectionMint: PublicKey;
   nftCollectionMasterEdition: PublicKey;
   nftCollectionMetadata: PublicKey;
@@ -85,6 +100,10 @@ async function getMintCollectionNftInstruction(args: {
     mintName: args.mintName,
     mintSymbol: args.mintSymbol,
     mintUri: args.mintUri,
+    isPrimarySaleHappened: args.isPrimarySaleHappened,
+    sellerBasisPoints: args.sellerBasisPoints,
+    isMutable: args.isMutable,
+    creators: args.creators,
     nftCollectionMasterEditionBump: args.nftCollectionMasterEditionBump,
     nftCollectionMetadataBump: args.nftCollectionMetadataBump,
     message: args.payerAddress == args.receiverAddress ? null : args.message,
@@ -128,4 +147,22 @@ async function getMintCollectionNftInstruction(args: {
   return mintCollectionNftInstruction;
 }
 
-export { getMintRegularNftInstruction, getMintCollectionNftInstruction };
+const getEdInstruction = (args: {
+  message: Uint8Array;
+  authorityAddress: PublicKey;
+  signature: Uint8Array;
+}) => {
+  const edInstruction = Ed25519Program.createInstructionWithPublicKey({
+    message: args.message,
+    publicKey: args.authorityAddress.toBytes(),
+    signature: args.signature,
+    instructionIndex: 0,
+  });
+  return edInstruction;
+};
+
+export {
+  getEdInstruction,
+  getMintRegularNftInstruction,
+  getMintCollectionNftInstruction,
+};

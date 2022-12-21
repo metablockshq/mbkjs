@@ -1,2 +1,2 @@
 export * as initializeNftMinterInstructions from './initialize-nft-minter';
-export * as mintSignedInstructions from './mint-signed-nfts';
+export * as mintSafeNftInstructions from './mint-safe-nfts';

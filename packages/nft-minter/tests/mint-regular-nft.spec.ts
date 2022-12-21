@@ -3,7 +3,7 @@ import * as anchor from '@project-serum/anchor';
 import NodeWallet, { addSols, CLUSTER_URL } from './utils/utils';
 import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { api } from '../src';
-import { MintRegularNftApiArgs } from '../src/types/types';
+import { MintRegularNftApiArgs, NftCreator } from '../src/types/types';
 
 describe('MINT REGULAR NFT', () => {
   const creatorKeypair = anchor.web3.Keypair.generate();
@@ -29,6 +29,13 @@ describe('MINT REGULAR NFT', () => {
 
       console.log('Create Init Safe', tx);
 
+      const nftCreator: NftCreator = {
+        address: creatorWallet.publicKey,
+        share: 100,
+      };
+      const creators: Array<NftCreator> = [];
+      creators.push(nftCreator);
+
       const args1: MintRegularNftApiArgs = {
         connection: connection,
         wallet: creatorWallet,
@@ -38,6 +45,9 @@ describe('MINT REGULAR NFT', () => {
         isParentNft: true, // is this nft mint a parent mint for other mints ?
         mintUri: 'http://mint.uri.com',
         receiverAddress: creatorWallet.publicKey,
+        creators: creators,
+        sellerBasisPoints: 1000,
+        isMutable: null,
       };
       const tx1 = await api.mintRegularNft(args1);
 
