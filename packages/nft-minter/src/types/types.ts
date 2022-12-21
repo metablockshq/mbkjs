@@ -136,6 +136,7 @@ export interface MintRegularNftArgs {
   isMasterEdition: boolean;
   isParentNft: boolean;
   mintUri: string;
+  nftCount: number;
 }
 
 export interface MintCollectionNftApiArgs extends ApiInputArgs {
@@ -159,8 +160,8 @@ export interface MintCollectionNftArgs {
   isMasterEdition: boolean;
   isParentNft: boolean;
   mintUri: string;
-  nftCollectionMetadataBump: number;
-  nftCollectionMasterEditionBump: number;
+  nftRegularMasterEditionBump: number;
+  nftRegularMetadataBump: number;
   signature?: Uint8Array | null;
   message?: Uint8Array | null;
 }

@@ -212,27 +212,6 @@
       ]
     },
     {
-      "name": "initNftSafe",
-      "accounts": [
-        {
-          "name": "payer",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "nftSafe",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
       "name": "mintRegularNft",
       "accounts": [
         {
@@ -360,30 +339,30 @@
           "isSigner": false
         },
         {
-          "name": "nftCollectionAdminSafe",
+          "name": "nftRegularAdminSafe",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "nftCollectionAdmin",
+          "name": "nftRegularAdmin",
           "isMut": false,
           "isSigner": false,
           "docs": [
-            "CHECK : nft collection admin who created the mint"
+            "CHECK : nft regular admin who created the mint"
           ]
         },
         {
-          "name": "nftCollectionMint",
+          "name": "nftRegularMint",
           "isMut": false,
           "isSigner": false
         },
         {
-          "name": "nftCollectionMetadata",
+          "name": "nftRegularMetadata",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "nftCollectionMasterEdition",
+          "name": "nftRegularMasterEdition",
           "isMut": false,
           "isSigner": false
         },
@@ -458,11 +437,15 @@
             "type": "bool"
           },
           {
-            "name": "nftCollectionMetadataBump",
+            "name": "nftRegularMetadataBump",
             "type": "u8"
           },
           {
-            "name": "nftCollectionMasterEditionBump",
+            "name": "nftRegularMasterEditionBump",
+            "type": "u8"
+          },
+          {
+            "name": "nftCollectionCount",
             "type": "u8"
           },
           {
@@ -522,6 +505,10 @@
           {
             "name": "isParentNft",
             "type": "bool"
+          },
+          {
+            "name": "nftCount",
+            "type": "u8"
           }
         ]
       }
@@ -796,7 +783,7 @@
             "type": "publicKey"
           },
           {
-            "name": "nftCount",
+            "name": "nftCollectionCount",
             "type": "u8"
           }
         ]
@@ -838,6 +825,21 @@
       "code": 6006,
       "name": "InvalidSignerError",
       "msg": "Invalid Signer"
+    },
+    {
+      "code": 6007,
+      "name": "ParentNftCountError",
+      "msg": "Parent Nft count error"
+    },
+    {
+      "code": 6008,
+      "name": "InitialParentNftCountError",
+      "msg": "Initial Nft count error"
+    },
+    {
+      "code": 6009,
+      "name": "CollectionNftCountError",
+      "msg": "Collection Nft count error"
     }
   ],
   "metadata": {

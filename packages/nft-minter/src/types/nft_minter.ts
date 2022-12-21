@@ -212,27 +212,6 @@ export type NftMinter = {
       ]
     },
     {
-      "name": "initNftSafe",
-      "accounts": [
-        {
-          "name": "payer",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "nftSafe",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
       "name": "mintRegularNft",
       "accounts": [
         {
@@ -360,30 +339,30 @@ export type NftMinter = {
           "isSigner": false
         },
         {
-          "name": "nftCollectionAdminSafe",
+          "name": "nftRegularAdminSafe",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "nftCollectionAdmin",
+          "name": "nftRegularAdmin",
           "isMut": false,
           "isSigner": false,
           "docs": [
-            "CHECK : nft collection admin who created the mint"
+            "CHECK : nft regular admin who created the mint"
           ]
         },
         {
-          "name": "nftCollectionMint",
+          "name": "nftRegularMint",
           "isMut": false,
           "isSigner": false
         },
         {
-          "name": "nftCollectionMetadata",
+          "name": "nftRegularMetadata",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "nftCollectionMasterEdition",
+          "name": "nftRegularMasterEdition",
           "isMut": false,
           "isSigner": false
         },
@@ -458,11 +437,15 @@ export type NftMinter = {
             "type": "bool"
           },
           {
-            "name": "nftCollectionMetadataBump",
+            "name": "nftRegularMetadataBump",
             "type": "u8"
           },
           {
-            "name": "nftCollectionMasterEditionBump",
+            "name": "nftRegularMasterEditionBump",
+            "type": "u8"
+          },
+          {
+            "name": "nftCollectionCount",
             "type": "u8"
           },
           {
@@ -522,6 +505,10 @@ export type NftMinter = {
           {
             "name": "isParentNft",
             "type": "bool"
+          },
+          {
+            "name": "nftCount",
+            "type": "u8"
           }
         ]
       }
@@ -796,7 +783,7 @@ export type NftMinter = {
             "type": "publicKey"
           },
           {
-            "name": "nftCount",
+            "name": "nftCollectionCount",
             "type": "u8"
           }
         ]
@@ -838,6 +825,21 @@ export type NftMinter = {
       "code": 6006,
       "name": "InvalidSignerError",
       "msg": "Invalid Signer"
+    },
+    {
+      "code": 6007,
+      "name": "ParentNftCountError",
+      "msg": "Parent Nft count error"
+    },
+    {
+      "code": 6008,
+      "name": "InitialParentNftCountError",
+      "msg": "Initial Nft count error"
+    },
+    {
+      "code": 6009,
+      "name": "CollectionNftCountError",
+      "msg": "Collection Nft count error"
     }
   ]
 };
@@ -1056,27 +1058,6 @@ export const IDL: NftMinter = {
       ]
     },
     {
-      "name": "initNftSafe",
-      "accounts": [
-        {
-          "name": "payer",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "nftSafe",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
       "name": "mintRegularNft",
       "accounts": [
         {
@@ -1204,30 +1185,30 @@ export const IDL: NftMinter = {
           "isSigner": false
         },
         {
-          "name": "nftCollectionAdminSafe",
+          "name": "nftRegularAdminSafe",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "nftCollectionAdmin",
+          "name": "nftRegularAdmin",
           "isMut": false,
           "isSigner": false,
           "docs": [
-            "CHECK : nft collection admin who created the mint"
+            "CHECK : nft regular admin who created the mint"
           ]
         },
         {
-          "name": "nftCollectionMint",
+          "name": "nftRegularMint",
           "isMut": false,
           "isSigner": false
         },
         {
-          "name": "nftCollectionMetadata",
+          "name": "nftRegularMetadata",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "nftCollectionMasterEdition",
+          "name": "nftRegularMasterEdition",
           "isMut": false,
           "isSigner": false
         },
@@ -1302,11 +1283,15 @@ export const IDL: NftMinter = {
             "type": "bool"
           },
           {
-            "name": "nftCollectionMetadataBump",
+            "name": "nftRegularMetadataBump",
             "type": "u8"
           },
           {
-            "name": "nftCollectionMasterEditionBump",
+            "name": "nftRegularMasterEditionBump",
+            "type": "u8"
+          },
+          {
+            "name": "nftCollectionCount",
             "type": "u8"
           },
           {
@@ -1366,6 +1351,10 @@ export const IDL: NftMinter = {
           {
             "name": "isParentNft",
             "type": "bool"
+          },
+          {
+            "name": "nftCount",
+            "type": "u8"
           }
         ]
       }
@@ -1640,7 +1629,7 @@ export const IDL: NftMinter = {
             "type": "publicKey"
           },
           {
-            "name": "nftCount",
+            "name": "nftCollectionCount",
             "type": "u8"
           }
         ]
@@ -1682,6 +1671,21 @@ export const IDL: NftMinter = {
       "code": 6006,
       "name": "InvalidSignerError",
       "msg": "Invalid Signer"
+    },
+    {
+      "code": 6007,
+      "name": "ParentNftCountError",
+      "msg": "Parent Nft count error"
+    },
+    {
+      "code": 6008,
+      "name": "InitialParentNftCountError",
+      "msg": "Initial Nft count error"
+    },
+    {
+      "code": 6009,
+      "name": "CollectionNftCountError",
+      "msg": "Collection Nft count error"
     }
   ]
 };
