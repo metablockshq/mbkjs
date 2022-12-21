@@ -101,3 +101,54 @@ export interface MintCollectionNftArgs {
   signature?: Uint8Array | null;
   message?: Uint8Array | null;
 }
+
+export interface UpdateRegularNftArgs {
+  mintMetadataBump: number;
+  mintMasterEditionBump: number;
+  mintBump: number;
+  mintName: string;
+  mintSymbol: string;
+  mintUri: string;
+  creators: Array<Creator> | null;
+  sellerBasisPoints: number;
+  isMutable: boolean | null;
+  isPrimarySaleHappened: boolean | null;
+}
+
+export interface UpdateRegularNftApiArgs extends ApiInputArgs {
+  mintName: string;
+  mintSymbol: string;
+  mintUri: string;
+  creators: Array<NftCreator> | null;
+  sellerBasisPoints: number;
+  isMutable: boolean | null;
+  isPrimarySaleHappened: boolean | null;
+  mintAddress: PublicKey;
+}
+
+export interface UpdateMintCollectionNftArgs {
+  mintMetadataBump: number;
+  mintMasterEditionBump: number;
+  mintName: string;
+  mintSymbol: string;
+  mintUri: string;
+  nftCollectionMetadataBump: number;
+  nftCollectionMasterEditionBump: number;
+  creators: Array<Creator> | null;
+  sellerBasisPoints: number;
+  isMutable: boolean | null;
+  isPrimarySaleHappened: boolean | null;
+}
+
+export interface UpdateCollectionNftApiArgs extends ApiInputArgs {
+  mintName: string;
+  mintSymbol: string;
+  mintUri: string;
+  isPrimarySaleHappened: boolean | null;
+  sellerBasisPoints: number;
+  isMutable: boolean | null;
+  creators: Array<NftCreator> | null;
+  parentNftAdminAddress: PublicKey;
+  parentNftMintAddress: PublicKey;
+  collectionMintAddress: PublicKey;
+}

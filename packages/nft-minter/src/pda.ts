@@ -137,8 +137,8 @@ export const getPdaKeys = async (
 //mint safe pda keys
 export interface SafePdaKeys {
   nftSafeAddress: PublicKey;
-  // nftCollectionAdminSafeAddress: PublicKey;
   mintAddress: PublicKey;
+  mintBump: number;
   payerMintAta: PublicKey;
   mintMetadataAddress: PublicKey;
   mintMetadataBump: number;
@@ -149,18 +149,13 @@ export interface SafePdaKeys {
 export const getSafePdaKeys = async (
   payerAddress: PublicKey,
   nftCount: number
-  //nftCollectionAdminAddress: PublicKey = Keypair.generate().publicKey
 ): Promise<SafePdaKeys> => {
   const [nftSafeAddress, _1] = await findNftSafeAddress(payerAddress);
 
-  const [nftSafeMintAddress, _2] = await findNftSafeMintAddress(
+  const [nftSafeMintAddress, nftMintBump] = await findNftSafeMintAddress(
     payerAddress,
     nftCount
   );
-
-  // const [nftCollectionAdminSafeAddress, _6] = await findNftSafeAddress(
-  //   nftCollectionAdminAddress
-  // );
 
   const [payerMintAta, _5] = await findAssociatedTokenAddress(
     payerAddress,
@@ -175,14 +170,39 @@ export const getSafePdaKeys = async (
     await findMasterEditionAddress(nftSafeMintAddress);
 
   return {
-    //nftCollectionAdminSafeAddress: nftCollectionAdminSafeAddress,
     nftSafeAddress: nftSafeAddress,
     mintAddress: nftSafeMintAddress,
+    mintBump: nftMintBump,
     payerMintAta: payerMintAta,
     mintMetadataAddress: mintMetadataAddress,
     mintMetadataBump: mintMetadataBump,
     mintMasterEditionAddress: mintMasterEditionAddress,
     mintMasterEditionBump: mintMasterEditionBump,
+  };
+};
+
+export interface TokenMetadataKeys {
+  metadataBump: number;
+  masterEditionBump: number;
+  mintAddress: PublicKey;
+  metadataAddress: PublicKey;
+  masterEditionAddress: PublicKey;
+}
+
+export const getTokenMetadataKeys = async (
+  mint: PublicKey
+): Promise<TokenMetadataKeys> => {
+  const [metadataAddress, metadataBump] = await findMetadataAddress(mint);
+
+  const [masterEditionAddress, masterEditionBump] =
+    await findMasterEditionAddress(mint);
+
+  return {
+    metadataBump: metadataBump,
+    masterEditionBump: masterEditionBump,
+    mintAddress: mint,
+    metadataAddress: metadataAddress,
+    masterEditionAddress: masterEditionAddress,
   };
 };
 

@@ -7,11 +7,17 @@ import {
   SYSVAR_RENT_PUBKEY,
 } from '@solana/web3.js';
 import { programIds } from '../factory';
-import { findAssociatedTokenAddress, SafePdaKeys } from '../pda';
+import {
+  findAssociatedTokenAddress,
+  getTokenMetadataKeys,
+  SafePdaKeys,
+} from '../pda';
 import {
   Creator,
   MintCollectionNftArgs,
   MintRegularNftArgs,
+  UpdateMintCollectionNftArgs,
+  UpdateRegularNftArgs,
 } from '../types/types';
 
 // mint regular nft instruction
@@ -161,8 +167,112 @@ const getEdInstruction = (args: {
   return edInstruction;
 };
 
+//update regular nft
+async function getUpdateRegularNftInstruction(args: {
+  pdaKeys: SafePdaKeys;
+  program: Program;
+  payerAddress: PublicKey;
+  mintName: string;
+  mintSymbol: string;
+  mintUri: string;
+  creators: Array<Creator> | null;
+  sellerBasisPoints: number;
+  isMutable: boolean | null;
+  isPrimarySaleHappened: boolean | null;
+}) {
+  const argument: UpdateRegularNftArgs = {
+    mintMetadataBump: args.pdaKeys.mintMetadataBump,
+    mintMasterEditionBump: args.pdaKeys.mintMasterEditionBump,
+    mintBump: args.pdaKeys.mintBump,
+    mintName: args.mintName,
+    mintSymbol: args.mintSymbol,
+    mintUri: args.mintUri,
+    creators: args.creators,
+    sellerBasisPoints: args.sellerBasisPoints,
+    isMutable: args.isMutable,
+    isPrimarySaleHappened: args.isPrimarySaleHappened,
+  };
+
+  const updateRegularNftInstruction = await args.program.methods
+    .updateRegularNft(argument)
+    .accounts({
+      payer: args.payerAddress,
+      nftSafe: args.pdaKeys.nftSafeAddress,
+      mint: args.pdaKeys.mintAddress,
+      mintMetadata: args.pdaKeys.mintMetadataAddress,
+      mintMasterEdition: args.pdaKeys.mintMasterEditionAddress,
+      tokenMetadataProgram: programIds.TOKEN_METADATA_PROGRAM_ID,
+      tokenProgram: programIds.TOKEN_PROGRAM_ID,
+      associatedTokenProgram: programIds.ASSOCIATED_TOKEN_PROGRAM_ID,
+      systemProgram: SystemProgram.programId,
+      rent: SYSVAR_RENT_PUBKEY,
+    })
+    .instruction();
+  return updateRegularNftInstruction;
+}
+
+// update collection nft instruction
+async function getUpdateCollectionNftInstruction(args: {
+  program: Program;
+  mintAddress: PublicKey;
+  nftCollectionAdminSafe: PublicKey;
+  payerAddress: PublicKey;
+  nftCollectionMint: PublicKey;
+  nftCollectionMasterEdition: PublicKey;
+  nftCollectionMetadata: PublicKey;
+  nftCollectionMetadataBump: number;
+  nftCollectionMasterEditionBump: number;
+  nftCollectionAdmin: PublicKey;
+  creators: Array<Creator> | null;
+  sellerBasisPoints: number;
+  isMutable: boolean | null;
+  mintName: string;
+  mintSymbol: string;
+  mintUri: string;
+  isPrimarySaleHappened: boolean | null;
+}) {
+  const metadataDetails = await getTokenMetadataKeys(args.mintAddress);
+
+  const argument: UpdateMintCollectionNftArgs = {
+    mintMetadataBump: metadataDetails.metadataBump,
+    mintMasterEditionBump: metadataDetails.masterEditionBump,
+    mintName: args.mintName,
+    mintSymbol: args.mintSymbol,
+    mintUri: args.mintUri,
+    isPrimarySaleHappened: args.isPrimarySaleHappened,
+    sellerBasisPoints: args.sellerBasisPoints,
+    isMutable: args.isMutable,
+    creators: args.creators,
+    nftCollectionMetadataBump: args.nftCollectionMetadataBump,
+    nftCollectionMasterEditionBump: args.nftCollectionMasterEditionBump,
+  };
+
+  const updateCollectionNftInstruction = await args.program.methods
+    .updateCollectionNft(argument)
+    .accounts({
+      payer: args.payerAddress,
+      mint: args.mintAddress,
+      mintMetadata: metadataDetails.metadataAddress,
+      mintMasterEdition: metadataDetails.masterEditionAddress,
+      tokenMetadataProgram: programIds.TOKEN_METADATA_PROGRAM_ID,
+      nftCollectionAdminSafe: args.nftCollectionAdminSafe,
+      nftCollectionAdmin: args.nftCollectionAdmin,
+      nftCollectionMint: args.nftCollectionMint,
+      nftCollectionMetadata: args.nftCollectionMetadata,
+      nftCollectionMasterEdition: args.nftCollectionMasterEdition,
+      tokenProgram: programIds.TOKEN_PROGRAM_ID,
+      associatedTokenProgram: programIds.ASSOCIATED_TOKEN_PROGRAM_ID,
+      systemProgram: SystemProgram.programId,
+      rent: SYSVAR_RENT_PUBKEY,
+    })
+    .instruction();
+  return updateCollectionNftInstruction;
+}
+
 export {
   getEdInstruction,
   getMintRegularNftInstruction,
   getMintCollectionNftInstruction,
+  getUpdateRegularNftInstruction,
+  getUpdateCollectionNftInstruction,
 };
