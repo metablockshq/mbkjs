@@ -1437,10 +1437,10 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@mbkjs/nft-composer@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@mbkjs/nft-composer/-/nft-composer-2.0.1.tgz#2c5f6e2efd67e37f56171ff7b6957780d2627f04"
-  integrity sha512-fGyVtlGazzSEzMv/hrI2qOS1zjp3Q+AKSo5kJSwS4N8pz5GV7SlLhSHcxmSA0vdVFLYkF/8wanMzB3ATCLeddw==
+"@mbkjs/nft-composer@2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@mbkjs/nft-composer/-/nft-composer-2.0.2.tgz#4413bb35ce626775d3abb16518b67c7f547262d5"
+  integrity sha512-jEitcpr9+Z4ExyhJwqA0XC5WTH+vqg+WeDPrNexSmfl6yVkw+K3lVnuCNT4nTgo4/9Z9N00y9YtHTXd0VLTwmw==
   dependencies:
     "@supabase/supabase-js" "^1.35.3"
 

@@ -1437,10 +1437,10 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@mbkjs/nft-minter@2.0.7":
-  version "2.0.7"
-  resolved "https://registry.yarnpkg.com/@mbkjs/nft-minter/-/nft-minter-2.0.7.tgz#8feebef21d5e2fa67c88cff89e0ffe9ce351bb86"
-  integrity sha512-wDY7WicvWWrg7L1Nm6gdJXt6knvKeNB1OZ4mphNrbpALBGXtp/eZsDnb9JBUgJok9TUbPecdAqf7klbbYJ5iKA==
+"@mbkjs/nft-minter@2.0.19":
+  version "2.0.19"
+  resolved "https://registry.yarnpkg.com/@mbkjs/nft-minter/-/nft-minter-2.0.19.tgz#852675a29c948bb75376efb15361b22f6c05721f"
+  integrity sha512-wLTBxh/ImKBXNd1l2Ad6+vrzzKo8RmuKCo9Gp82Y1zsqDCwoWn2kfP7MqpFwFVaqJYRr/b/+ippxHtAWT3rudQ==
 
 "@metaplex-foundation/mpl-core@^0.0.2":
   version "0.0.2"

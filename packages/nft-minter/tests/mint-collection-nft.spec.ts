@@ -4,6 +4,7 @@ import NodeWallet, { addSols, CLUSTER_URL } from './utils/utils';
 import { Keypair, LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { api, pda } from '../src';
 import {
+  NftCreator,
   MintCollectionNftApiArgs,
   MintRegularNftApiArgs,
 } from '../src/types/types';
@@ -43,15 +44,25 @@ describe('MINT Collection NFT', () => {
 
         console.log('Create Init Safe', tx);
 
+        const nftCreator: NftCreator = {
+          address: creatorWallet.publicKey,
+          share: 100,
+        };
+        const creators: Array<NftCreator> = [];
+        creators.push(nftCreator);
+
         const args1: MintRegularNftApiArgs = {
           connection: connection,
           wallet: creatorWallet,
           mintName: 'Test Mint',
           mintSymbol: 'TEST',
           isMasterEdition: true,
-          isParentNft: true, // is this nft mint a parent mint for other mints ?
+          isParentNft: true, // Check if this is for minting parent nft
           mintUri: 'http://mint.uri.com',
           receiverAddress: creatorWallet.publicKey,
+          creators: creators,
+          sellerBasisPoints: 1000,
+          isMutable: null,
         };
         const tx1 = await api.mintRegularNft(args1);
         console.log('The transaction is ', tx1);
@@ -59,7 +70,7 @@ describe('MINT Collection NFT', () => {
         console.log('already Existing');
       }
 
-      const testMessage = creatorKeypair.publicKey.toBytes();
+      const testMessage = anotherWallet.publicKey.toBytes();
       const signature = nacl.sign.detached(
         testMessage,
         creatorKeypair.secretKey
@@ -76,6 +87,13 @@ describe('MINT Collection NFT', () => {
       const mintAddress = adminNftSafeData.parentMints[0].mint;
       //console.log(adminNftSafeData.parentMints[0].nftCount);
 
+      const nftCreator: NftCreator = {
+        address: creatorWallet.publicKey,
+        share: 100,
+      };
+      const creators: Array<NftCreator> = [];
+      creators.push(nftCreator);
+
       //console.log(mintAddress);
       // transfer to another wallett!!
       const args2: MintCollectionNftApiArgs = {
@@ -84,8 +102,12 @@ describe('MINT Collection NFT', () => {
         receiverAddress: anotherWallet.publicKey,
         mintName: 'Test Mint',
         mintSymbol: 'TEST',
+        isPrimarySaleHappened: false,
+        sellerBasisPoints: 10000,
+        isMutable: null, // optional if set to false, cannot be set back to true
+        creators: null, // optional
         isMasterEdition: true,
-        isParentNft: false, // is this nft mint a parent mint for other mints ?
+        isParentNft: false, // Check if this is for minting parent nft
         mintUri: 'http://mint.uri.com',
         nftCollectionAdmin: creatorKeypair.publicKey,
         nftCollectionMintAddress: mintAddress,

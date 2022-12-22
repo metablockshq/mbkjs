@@ -314,6 +314,69 @@ export type NftMinter = {
       ]
     },
     {
+      "name": "updateRegularNft",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "nftSafe",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "mintMetadata",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "mintMasterEdition",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenMetadataProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": "UpdateRegularNftArgs"
+          }
+        }
+      ]
+    },
+    {
       "name": "mintCollectionNft",
       "accounts": [
         {
@@ -421,6 +484,92 @@ export type NftMinter = {
           }
         }
       ]
+    },
+    {
+      "name": "updateCollectionNft",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "mintMetadata",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "mintMasterEdition",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenMetadataProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "nftCollectionAdminSafe",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "nftCollectionAdmin",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "CHECK : nft collection admin who created the mint"
+          ]
+        },
+        {
+          "name": "nftCollectionMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "nftCollectionMetadata",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "nftCollectionMasterEdition",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": "UpdateMintCollectionNftArgs"
+          }
+        }
+      ]
     }
   ],
   "accounts": [
@@ -448,6 +597,26 @@ export type NftMinter = {
           {
             "name": "mintUri",
             "type": "string"
+          },
+          {
+            "name": "sellerBasisPoints",
+            "type": "u16"
+          },
+          {
+            "name": "creators",
+            "type": {
+              "option": {
+                "vec": {
+                  "defined": "Creator"
+                }
+              }
+            }
+          },
+          {
+            "name": "isMutable",
+            "type": {
+              "option": "bool"
+            }
           },
           {
             "name": "isMasterEdition",
@@ -522,6 +691,146 @@ export type NftMinter = {
           {
             "name": "isParentNft",
             "type": "bool"
+          },
+          {
+            "name": "creators",
+            "type": {
+              "option": {
+                "vec": {
+                  "defined": "Creator"
+                }
+              }
+            }
+          },
+          {
+            "name": "sellerBasisPoints",
+            "type": "u16"
+          },
+          {
+            "name": "isMutable",
+            "type": {
+              "option": "bool"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "updateMintCollectionNftArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mintMetadataBump",
+            "type": "u8"
+          },
+          {
+            "name": "mintMasterEditionBump",
+            "type": "u8"
+          },
+          {
+            "name": "mintName",
+            "type": "string"
+          },
+          {
+            "name": "mintSymbol",
+            "type": "string"
+          },
+          {
+            "name": "mintUri",
+            "type": "string"
+          },
+          {
+            "name": "sellerBasisPoints",
+            "type": "u16"
+          },
+          {
+            "name": "isMutable",
+            "type": {
+              "option": "bool"
+            }
+          },
+          {
+            "name": "creators",
+            "type": {
+              "option": {
+                "vec": {
+                  "defined": "Creator"
+                }
+              }
+            }
+          },
+          {
+            "name": "isPrimarySaleHappened",
+            "type": {
+              "option": "bool"
+            }
+          },
+          {
+            "name": "nftCollectionMetadataBump",
+            "type": "u8"
+          },
+          {
+            "name": "nftCollectionMasterEditionBump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "updateRegularNftArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mintMetadataBump",
+            "type": "u8"
+          },
+          {
+            "name": "mintMasterEditionBump",
+            "type": "u8"
+          },
+          {
+            "name": "mintBump",
+            "type": "u8"
+          },
+          {
+            "name": "mintName",
+            "type": "string"
+          },
+          {
+            "name": "mintSymbol",
+            "type": "string"
+          },
+          {
+            "name": "mintUri",
+            "type": "string"
+          },
+          {
+            "name": "sellerBasisPoints",
+            "type": "u16"
+          },
+          {
+            "name": "creators",
+            "type": {
+              "option": {
+                "vec": {
+                  "defined": "Creator"
+                }
+              }
+            }
+          },
+          {
+            "name": "isMutable",
+            "type": {
+              "option": "bool"
+            }
+          },
+          {
+            "name": "isPrimarySaleHappened",
+            "type": {
+              "option": "bool"
+            }
           }
         ]
       }
@@ -801,6 +1110,26 @@ export type NftMinter = {
           }
         ]
       }
+    },
+    {
+      "name": "Creator",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "address",
+            "type": "publicKey"
+          },
+          {
+            "name": "verified",
+            "type": "bool"
+          },
+          {
+            "name": "share",
+            "type": "u8"
+          }
+        ]
+      }
     }
   ],
   "errors": [
@@ -838,6 +1167,11 @@ export type NftMinter = {
       "code": 6006,
       "name": "InvalidSignerError",
       "msg": "Invalid Signer"
+    },
+    {
+      "code": 6007,
+      "name": "UnverifyCollectionError",
+      "msg": "Unverify collection v3 error"
     }
   ]
 };
@@ -1158,6 +1492,69 @@ export const IDL: NftMinter = {
       ]
     },
     {
+      "name": "updateRegularNft",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "nftSafe",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "mintMetadata",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "mintMasterEdition",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenMetadataProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": "UpdateRegularNftArgs"
+          }
+        }
+      ]
+    },
+    {
       "name": "mintCollectionNft",
       "accounts": [
         {
@@ -1265,6 +1662,92 @@ export const IDL: NftMinter = {
           }
         }
       ]
+    },
+    {
+      "name": "updateCollectionNft",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "mintMetadata",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "mintMasterEdition",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenMetadataProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "nftCollectionAdminSafe",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "nftCollectionAdmin",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "CHECK : nft collection admin who created the mint"
+          ]
+        },
+        {
+          "name": "nftCollectionMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "nftCollectionMetadata",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "nftCollectionMasterEdition",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": "UpdateMintCollectionNftArgs"
+          }
+        }
+      ]
     }
   ],
   "accounts": [
@@ -1292,6 +1775,26 @@ export const IDL: NftMinter = {
           {
             "name": "mintUri",
             "type": "string"
+          },
+          {
+            "name": "sellerBasisPoints",
+            "type": "u16"
+          },
+          {
+            "name": "creators",
+            "type": {
+              "option": {
+                "vec": {
+                  "defined": "Creator"
+                }
+              }
+            }
+          },
+          {
+            "name": "isMutable",
+            "type": {
+              "option": "bool"
+            }
           },
           {
             "name": "isMasterEdition",
@@ -1366,6 +1869,146 @@ export const IDL: NftMinter = {
           {
             "name": "isParentNft",
             "type": "bool"
+          },
+          {
+            "name": "creators",
+            "type": {
+              "option": {
+                "vec": {
+                  "defined": "Creator"
+                }
+              }
+            }
+          },
+          {
+            "name": "sellerBasisPoints",
+            "type": "u16"
+          },
+          {
+            "name": "isMutable",
+            "type": {
+              "option": "bool"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "updateMintCollectionNftArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mintMetadataBump",
+            "type": "u8"
+          },
+          {
+            "name": "mintMasterEditionBump",
+            "type": "u8"
+          },
+          {
+            "name": "mintName",
+            "type": "string"
+          },
+          {
+            "name": "mintSymbol",
+            "type": "string"
+          },
+          {
+            "name": "mintUri",
+            "type": "string"
+          },
+          {
+            "name": "sellerBasisPoints",
+            "type": "u16"
+          },
+          {
+            "name": "isMutable",
+            "type": {
+              "option": "bool"
+            }
+          },
+          {
+            "name": "creators",
+            "type": {
+              "option": {
+                "vec": {
+                  "defined": "Creator"
+                }
+              }
+            }
+          },
+          {
+            "name": "isPrimarySaleHappened",
+            "type": {
+              "option": "bool"
+            }
+          },
+          {
+            "name": "nftCollectionMetadataBump",
+            "type": "u8"
+          },
+          {
+            "name": "nftCollectionMasterEditionBump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "updateRegularNftArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mintMetadataBump",
+            "type": "u8"
+          },
+          {
+            "name": "mintMasterEditionBump",
+            "type": "u8"
+          },
+          {
+            "name": "mintBump",
+            "type": "u8"
+          },
+          {
+            "name": "mintName",
+            "type": "string"
+          },
+          {
+            "name": "mintSymbol",
+            "type": "string"
+          },
+          {
+            "name": "mintUri",
+            "type": "string"
+          },
+          {
+            "name": "sellerBasisPoints",
+            "type": "u16"
+          },
+          {
+            "name": "creators",
+            "type": {
+              "option": {
+                "vec": {
+                  "defined": "Creator"
+                }
+              }
+            }
+          },
+          {
+            "name": "isMutable",
+            "type": {
+              "option": "bool"
+            }
+          },
+          {
+            "name": "isPrimarySaleHappened",
+            "type": {
+              "option": "bool"
+            }
           }
         ]
       }
@@ -1645,6 +2288,26 @@ export const IDL: NftMinter = {
           }
         ]
       }
+    },
+    {
+      "name": "Creator",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "address",
+            "type": "publicKey"
+          },
+          {
+            "name": "verified",
+            "type": "bool"
+          },
+          {
+            "name": "share",
+            "type": "u8"
+          }
+        ]
+      }
     }
   ],
   "errors": [
@@ -1682,6 +2345,11 @@ export const IDL: NftMinter = {
       "code": 6006,
       "name": "InvalidSignerError",
       "msg": "Invalid Signer"
+    },
+    {
+      "code": 6007,
+      "name": "UnverifyCollectionError",
+      "msg": "Unverify collection v3 error"
     }
   ]
 };
