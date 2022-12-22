@@ -120,7 +120,10 @@ const mintRegularNft = async (args: MintRegularNftApiArgs) => {
       mintSymbol: args.mintSymbol,
       mintName: args.mintName,
       creators: creators,
-      sellerBasisPoints: args.sellerBasisPoints,
+      sellerBasisPoints:
+        args.sellerBasisPoints == (undefined || null)
+          ? 100
+          : args.sellerBasisPoints,
       isMutable: args.isMutable,
     };
 
@@ -209,7 +212,10 @@ const mintCollectionNft = async (args: MintCollectionNftApiArgs) => {
       mintSymbol: args.mintSymbol,
       mintName: args.mintName,
       isPrimarySaleHappened: args.isPrimarySaleHappened,
-      sellerBasisPoints: args.sellerBasisPoints,
+      sellerBasisPoints:
+        args.sellerBasisPoints == (undefined || null)
+          ? 100
+          : args.sellerBasisPoints,
       isMutable: args.isMutable,
       creators: creators,
       nftCollectionMint: adminPdaKeys.mintAddress,

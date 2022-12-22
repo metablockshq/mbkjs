@@ -57,7 +57,7 @@ describe('MINT Collection NFT', () => {
           mintName: 'Test Mint',
           mintSymbol: 'TEST',
           isMasterEdition: true,
-          isParentNft: true, // is this nft mint a parent mint for other mints ?
+          isParentNft: true, // Check if this is for minting parent nft
           mintUri: 'http://mint.uri.com',
           receiverAddress: creatorWallet.publicKey,
           creators: creators,
@@ -104,10 +104,10 @@ describe('MINT Collection NFT', () => {
         mintSymbol: 'TEST',
         isPrimarySaleHappened: false,
         sellerBasisPoints: 10000,
-        isMutable: null,
-        creators: null,
+        isMutable: null, // optional if set to false, cannot be set back to true
+        creators: null, // optional
         isMasterEdition: true,
-        isParentNft: false, // is this nft mint a parent mint for other mints ?
+        isParentNft: false, // Check if this is for minting parent nft
         mintUri: 'http://mint.uri.com',
         nftCollectionAdmin: creatorKeypair.publicKey,
         nftCollectionMintAddress: mintAddress,

@@ -39,7 +39,7 @@ export interface MintRegularNftApiArgs extends ApiInputArgs {
   mintUri: string;
   receiverAddress: PublicKey;
   creators: Array<NftCreator> | null;
-  sellerBasisPoints: number;
+  sellerBasisPoints: number | null;
   isMutable: boolean | null;
 }
 
@@ -72,7 +72,7 @@ export interface MintCollectionNftApiArgs extends ApiInputArgs {
   mintSymbol: string;
   mintUri: string;
   isPrimarySaleHappened: boolean | null;
-  sellerBasisPoints: number;
+  sellerBasisPoints: number | null;
   isMutable: boolean | null;
   creators: Array<NftCreator> | null;
   isMasterEdition: boolean;

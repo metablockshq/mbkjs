@@ -42,12 +42,12 @@ describe('MINT REGULAR NFT', () => {
         mintName: 'Test Mint',
         mintSymbol: 'TEST',
         isMasterEdition: true,
-        isParentNft: true, // is this nft mint a parent mint for other mints ?
+        isParentNft: true, // Check if this is for minting parent nft
         mintUri: 'http://mint.uri.com',
         receiverAddress: creatorWallet.publicKey,
         creators: creators,
         sellerBasisPoints: 1000,
-        isMutable: null,
+        isMutable: null, // could be null or true, once false cannot be converted back to true
       };
       const tx1 = await api.mintRegularNft(args1);
 
