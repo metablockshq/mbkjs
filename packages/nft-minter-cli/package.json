@@ -34,7 +34,7 @@
     "trailingComma": "es5"
   },
   "dependencies": {
-    "@mbkjs/nft-minter": "2.0.19",
+    "@mbkjs/nft-minter": "2.0.20",
     "@metaplex-foundation/mpl-token-metadata": "^1.2.4",
     "@project-serum/anchor": "^0.24.2",
     "@project-serum/common": "^0.0.1-beta.3",
