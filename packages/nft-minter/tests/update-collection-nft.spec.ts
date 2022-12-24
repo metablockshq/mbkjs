@@ -76,7 +76,60 @@ describe('Update Collection NFT', () => {
         isMutable: true,
         creators: creators,
         parentNftAdminAddress: creatorWallet.publicKey,
-        parentNftMintAddress: pdaKeys.mintAddress,
+        oldParentNftMintAddress: pdaKeys.mintAddress,
+        newParentNftMintAddress: pdaKeys.mintAddress,
+        collectionMintAddress: collectionPdaKeys.mintAddress,
+      };
+
+      const tx = await api.updateCollectionNft(args);
+
+      console.log(tx);
+    } catch (err) {
+      console.log(err);
+    }
+  });
+
+  it('Another collection mint key update Collection NFT', async () => {
+    try {
+      await mintTestRegularNft(creatorWallet, connection);
+
+      const nftCreator: NftCreator = {
+        address: creatorWallet.publicKey,
+        share: 100,
+      };
+      const creators: Array<NftCreator> = [];
+      creators.push(nftCreator);
+
+      // const nftData = await program.account.
+
+      const pdaKeys: SafePdaKeys = await getSafePdaKeys(
+        creatorWallet.publicKey,
+        1
+      );
+
+      const collectionPdaKeys: SafePdaKeys = await getSafePdaKeys(
+        creatorWallet.publicKey,
+        2
+      );
+
+      const anotherPdaKeys: SafePdaKeys = await getSafePdaKeys(
+        creatorWallet.publicKey, // the creator has to be same for updating with new collection mint address
+        3
+      );
+
+      const args: UpdateCollectionNftApiArgs = {
+        connection: connection,
+        wallet: creatorWallet,
+        mintName: 'COL NAME',
+        mintSymbol: 'CSYML',
+        mintUri: 'Updated collection mint uri',
+        isPrimarySaleHappened: false,
+        sellerBasisPoints: 1000,
+        isMutable: true,
+        creators: creators,
+        parentNftAdminAddress: creatorWallet.publicKey,
+        oldParentNftMintAddress: pdaKeys.mintAddress,
+        newParentNftMintAddress: anotherPdaKeys.mintAddress,
         collectionMintAddress: collectionPdaKeys.mintAddress,
       };
 
@@ -138,12 +191,15 @@ async function mintTestRegularNft(
   connection: anchor.web3.Connection
 ) {
   try {
-    const tx = await api.initializeNftSafe({
-      wallet: creatorWallet,
-      connection: connection,
-    });
-
-    console.log('Create Init Safe', tx);
+    try {
+      const tx = await api.initializeNftSafe({
+        wallet: creatorWallet,
+        connection: connection,
+      });
+      console.log('Create Init Safe', tx);
+    } catch (err) {
+      console.log('already initialized');
+    }
 
     const nftCreator: NftCreator = {
       address: creatorWallet.publicKey,

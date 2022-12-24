@@ -16,6 +16,8 @@ import {
   Creator,
   MintCollectionNftArgs,
   MintRegularNftArgs,
+  NewNftCollectionMintDetails,
+  OldNftCollectionMintDetails,
   UpdateMintCollectionNftArgs,
   UpdateRegularNftArgs,
 } from '../types/types';
@@ -217,11 +219,8 @@ async function getUpdateCollectionNftInstruction(args: {
   mintAddress: PublicKey;
   nftCollectionAdminSafe: PublicKey;
   payerAddress: PublicKey;
-  nftCollectionMint: PublicKey;
-  nftCollectionMasterEdition: PublicKey;
-  nftCollectionMetadata: PublicKey;
-  nftCollectionMetadataBump: number;
-  nftCollectionMasterEditionBump: number;
+  oldCollectionNftDetails: OldNftCollectionMintDetails;
+  newCollectionNftDetails: NewNftCollectionMintDetails;
   nftCollectionAdmin: PublicKey;
   creators: Array<Creator> | null;
   sellerBasisPoints: number;
@@ -243,8 +242,14 @@ async function getUpdateCollectionNftInstruction(args: {
     sellerBasisPoints: args.sellerBasisPoints,
     isMutable: args.isMutable,
     creators: args.creators,
-    nftCollectionMetadataBump: args.nftCollectionMetadataBump,
-    nftCollectionMasterEditionBump: args.nftCollectionMasterEditionBump,
+    oldNftCollectionMetadataBump:
+      args.oldCollectionNftDetails.oldNftCollectionMetadataBump,
+    oldNftCollectionMasterEditionBump:
+      args.oldCollectionNftDetails.oldNftCollectionMasterEditionBump,
+    newNftCollectionMetadataBump:
+      args.newCollectionNftDetails.newNftCollectionMetadataBump,
+    newNftCollectionMasterEditionBump:
+      args.newCollectionNftDetails.newNftCollectionMasterEditionBump,
   };
 
   const updateCollectionNftInstruction = await args.program.methods
@@ -257,9 +262,16 @@ async function getUpdateCollectionNftInstruction(args: {
       tokenMetadataProgram: programIds.TOKEN_METADATA_PROGRAM_ID,
       nftCollectionAdminSafe: args.nftCollectionAdminSafe,
       nftCollectionAdmin: args.nftCollectionAdmin,
-      nftCollectionMint: args.nftCollectionMint,
-      nftCollectionMetadata: args.nftCollectionMetadata,
-      nftCollectionMasterEdition: args.nftCollectionMasterEdition,
+      oldNftCollectionMint: args.oldCollectionNftDetails.oldNftCollectionMint,
+      oldNftCollectionMetadata:
+        args.oldCollectionNftDetails.oldNftCollectionMetadata,
+      oldNftCollectionMasterEdition:
+        args.oldCollectionNftDetails.oldNftCollectionMasterEdition,
+      newNftCollectionMint: args.newCollectionNftDetails.newNftCollectionMint,
+      newNftCollectionMetadata:
+        args.newCollectionNftDetails.newNftCollectionMetadata,
+      newNftCollectionMasterEdition:
+        args.newCollectionNftDetails.newNftCollectionMasterEdition,
       tokenProgram: programIds.TOKEN_PROGRAM_ID,
       associatedTokenProgram: programIds.ASSOCIATED_TOKEN_PROGRAM_ID,
       systemProgram: SystemProgram.programId,

@@ -10,7 +10,12 @@ import {
   getUpdateRegularNftInstruction,
 } from './instructions/mint-safe-nfts';
 
-import { findNftSafeAddress, getSafePdaKeys, SafePdaKeys } from './pda';
+import {
+  findNftSafeAddress,
+  getSafePdaKeys,
+  getTokenMetadataKeys,
+  SafePdaKeys,
+} from './pda';
 import {
   Creator,
   InitializeNftMinterApiArgs,
@@ -18,6 +23,8 @@ import {
   IntializeNftMinterArgs,
   MintCollectionNftApiArgs,
   MintRegularNftApiArgs,
+  NewNftCollectionMintDetails,
+  OldNftCollectionMintDetails,
   UpdateCollectionNftApiArgs,
   UpdateRegularNftApiArgs,
 } from './types/types';
@@ -358,7 +365,7 @@ const updateCollectionNft = async (args: UpdateCollectionNftApiArgs) => {
 
       if (
         adminPdaKeys.mintAddress.toString() ===
-        args.parentNftMintAddress.toString()
+        args.oldParentNftMintAddress.toString()
       ) {
         break;
       }
@@ -384,6 +391,26 @@ const updateCollectionNft = async (args: UpdateCollectionNftApiArgs) => {
       });
     }
 
+    const oldNftCollectionMintDetails: OldNftCollectionMintDetails = {
+      oldNftCollectionMint: adminPdaKeys.mintAddress,
+      oldNftCollectionMasterEdition: adminPdaKeys.mintMasterEditionAddress,
+      oldNftCollectionMetadata: adminPdaKeys.mintMetadataAddress,
+      oldNftCollectionMetadataBump: adminPdaKeys.mintMetadataBump,
+      oldNftCollectionMasterEditionBump: adminPdaKeys.mintMasterEditionBump,
+    };
+
+    const tokenMetadataDetails = await getTokenMetadataKeys(
+      args.newParentNftMintAddress
+    );
+
+    const newNftCollectionMintDetails: NewNftCollectionMintDetails = {
+      newNftCollectionMint: args.newParentNftMintAddress,
+      newNftCollectionMasterEdition: tokenMetadataDetails.masterEditionAddress,
+      newNftCollectionMetadata: tokenMetadataDetails.metadataAddress,
+      newNftCollectionMetadataBump: tokenMetadataDetails.metadataBump,
+      newNftCollectionMasterEditionBump: tokenMetadataDetails.masterEditionBump,
+    };
+
     const mintCollectionNftInstruction =
       await getUpdateCollectionNftInstruction({
         mintAddress: args.collectionMintAddress,
@@ -397,12 +424,9 @@ const updateCollectionNft = async (args: UpdateCollectionNftApiArgs) => {
         isMutable: args.isMutable,
         creators: creators,
         nftCollectionAdminSafe: adminPdaKeys.nftSafeAddress,
-        nftCollectionMint: adminPdaKeys.mintAddress,
-        nftCollectionMasterEdition: adminPdaKeys.mintMasterEditionAddress,
-        nftCollectionMetadata: adminPdaKeys.mintMetadataAddress,
-        nftCollectionMetadataBump: adminPdaKeys.mintMetadataBump,
-        nftCollectionMasterEditionBump: adminPdaKeys.mintMasterEditionBump,
         nftCollectionAdmin: args.parentNftAdminAddress,
+        oldCollectionNftDetails: oldNftCollectionMintDetails,
+        newCollectionNftDetails: newNftCollectionMintDetails,
       });
 
     const modifyComputeUnits = ComputeBudgetProgram.setComputeUnitLimit({

@@ -132,8 +132,10 @@ export interface UpdateMintCollectionNftArgs {
   mintName: string;
   mintSymbol: string;
   mintUri: string;
-  nftCollectionMetadataBump: number;
-  nftCollectionMasterEditionBump: number;
+  oldNftCollectionMetadataBump: number;
+  oldNftCollectionMasterEditionBump: number;
+  newNftCollectionMetadataBump: number;
+  newNftCollectionMasterEditionBump: number;
   creators: Array<Creator> | null;
   sellerBasisPoints: number;
   isMutable: boolean | null;
@@ -149,6 +151,23 @@ export interface UpdateCollectionNftApiArgs extends ApiInputArgs {
   isMutable: boolean | null;
   creators: Array<NftCreator> | null;
   parentNftAdminAddress: PublicKey;
-  parentNftMintAddress: PublicKey;
+  oldParentNftMintAddress: PublicKey;
+  newParentNftMintAddress: PublicKey;
   collectionMintAddress: PublicKey;
+}
+
+export interface OldNftCollectionMintDetails {
+  oldNftCollectionMint: PublicKey;
+  oldNftCollectionMasterEdition: PublicKey;
+  oldNftCollectionMetadata: PublicKey;
+  oldNftCollectionMetadataBump: number;
+  oldNftCollectionMasterEditionBump: number;
+}
+
+export interface NewNftCollectionMintDetails {
+  newNftCollectionMint: PublicKey;
+  newNftCollectionMasterEdition: PublicKey;
+  newNftCollectionMetadata: PublicKey;
+  newNftCollectionMetadataBump: number;
+  newNftCollectionMasterEditionBump: number;
 }
