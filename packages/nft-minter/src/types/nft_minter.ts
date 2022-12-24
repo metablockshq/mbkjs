@@ -527,17 +527,32 @@ export type NftMinter = {
           ]
         },
         {
-          "name": "nftCollectionMint",
+          "name": "oldNftCollectionMint",
           "isMut": false,
           "isSigner": false
         },
         {
-          "name": "nftCollectionMetadata",
+          "name": "oldNftCollectionMetadata",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "nftCollectionMasterEdition",
+          "name": "oldNftCollectionMasterEdition",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "newNftCollectionMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "newNftCollectionMetadata",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "newNftCollectionMasterEdition",
           "isMut": false,
           "isSigner": false
         },
@@ -767,11 +782,19 @@ export type NftMinter = {
             }
           },
           {
-            "name": "nftCollectionMetadataBump",
+            "name": "oldNftCollectionMetadataBump",
             "type": "u8"
           },
           {
-            "name": "nftCollectionMasterEditionBump",
+            "name": "oldNftCollectionMasterEditionBump",
+            "type": "u8"
+          },
+          {
+            "name": "newNftCollectionMetadataBump",
+            "type": "u8"
+          },
+          {
+            "name": "newNftCollectionMasterEditionBump",
             "type": "u8"
           }
         ]
@@ -1705,17 +1728,32 @@ export const IDL: NftMinter = {
           ]
         },
         {
-          "name": "nftCollectionMint",
+          "name": "oldNftCollectionMint",
           "isMut": false,
           "isSigner": false
         },
         {
-          "name": "nftCollectionMetadata",
+          "name": "oldNftCollectionMetadata",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "nftCollectionMasterEdition",
+          "name": "oldNftCollectionMasterEdition",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "newNftCollectionMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "newNftCollectionMetadata",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "newNftCollectionMasterEdition",
           "isMut": false,
           "isSigner": false
         },
@@ -1945,11 +1983,19 @@ export const IDL: NftMinter = {
             }
           },
           {
-            "name": "nftCollectionMetadataBump",
+            "name": "oldNftCollectionMetadataBump",
             "type": "u8"
           },
           {
-            "name": "nftCollectionMasterEditionBump",
+            "name": "oldNftCollectionMasterEditionBump",
+            "type": "u8"
+          },
+          {
+            "name": "newNftCollectionMetadataBump",
+            "type": "u8"
+          },
+          {
+            "name": "newNftCollectionMasterEditionBump",
             "type": "u8"
           }
         ]
