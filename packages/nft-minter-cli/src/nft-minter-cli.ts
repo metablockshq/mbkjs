@@ -121,8 +121,12 @@ programCommand('update_regular_nft')
 
 programCommand('update_collection_nft')
   .requiredOption(
-    '-pm --parentMintAddress <string>',
-    'Collection nft parent mint address'
+    '-om --oldParentMintAddress <string>',
+    'Collection nft old parent mint address'
+  )
+  .requiredOption(
+    '-nm --newParentMintAddress <string>',
+    'Collection nft new parent mint address'
   )
   .requiredOption(
     '-cm --collectionMintAddress <string>',
@@ -141,7 +145,8 @@ programCommand('update_collection_nft')
       env,
       keypair,
       logLevel,
-      parentMintAddress,
+      oldParentMintAddress,
+      newParentMintAddress,
       collectionMintAddress,
       mintName,
       mintSymbol,
@@ -150,7 +155,8 @@ programCommand('update_collection_nft')
     } = cmd.opts();
 
     console.log(
-      parentMintAddress,
+      oldParentMintAddress,
+      newParentMintAddress,
       collectionMintAddress,
       mintName,
       mintSymbol,
@@ -179,7 +185,8 @@ programCommand('update_collection_nft')
         sellerBasisPoints: sellerBasisPoint,
         isMutable: true,
         isPrimarySaleHappened: null,
-        parentNftMintAddress: new PublicKey(parentMintAddress),
+        oldParentNftMintAddress: new PublicKey(oldParentMintAddress),
+        newParentNftMintAddress: new PublicKey(newParentMintAddress),
         parentNftAdminAddress: wallet.publicKey,
         collectionMintAddress: new PublicKey(collectionMintAddress),
       };

@@ -14,7 +14,8 @@ ts-node nft-minter-cli/src/nft-minter-cli.ts update_regular_nft \
 
 ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 -k ./nft-composer-cli/wallet/test-wallet.json \
---parentMintAddress "1234" \
+--oldParentMintAddress "1234" \
+--newParentMintAddress "1234" \
 --collectionMintAddress "1234" \
 --mintName "Name" \
 --mintSymbol "SYMBOL" \
@@ -39,7 +40,8 @@ ts-node nft-minter-cli/src/nft-minter-cli.ts update_regular_nft \
 
 ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 -k ./nft-composer-cli/wallet/test-wallet.json \
---parentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--oldParentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--newParentMintAddress "9dCuPNJCAfHNFibbaEyrv9ASZVtPRbUECgMLHaLGpTrm" \
 --collectionMintAddress "8tCBFqVX3Pk6Dvcxz2CKa4aXtcLh4iKaVNK5SCNgMkv1" \
 --mintName "Acc3ssory #2" \
 --mintSymbol "3moji-Acc" \
@@ -50,7 +52,8 @@ ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 
 ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 -k ./nft-composer-cli/wallet/test-wallet.json \
---parentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--oldParentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--newParentMintAddress "9dCuPNJCAfHNFibbaEyrv9ASZVtPRbUECgMLHaLGpTrm" \
 --collectionMintAddress "6X1NtcqBSe3k3riTv2WbvZheUCkdBBTHs2VFjCXbA14X" \
 --mintName "Acc3ssory #3" \
 --mintSymbol "3moji-Acc" \
@@ -61,7 +64,8 @@ ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 
 ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 -k ./nft-composer-cli/wallet/test-wallet.json \
---parentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--oldParentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--newParentMintAddress "9dCuPNJCAfHNFibbaEyrv9ASZVtPRbUECgMLHaLGpTrm" \
 --collectionMintAddress "Jid6tLNcSommakLZoBhA7dPmPvx7bRCf9LCtqLSxtK1" \
 --mintName "Acc3ssory #4" \
 --mintSymbol "3moji-Acc" \
@@ -73,7 +77,8 @@ ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 **asdasdasdasdas**
 ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 -k ./nft-composer-cli/wallet/test-wallet.json \
---parentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--oldParentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--newParentMintAddress "9dCuPNJCAfHNFibbaEyrv9ASZVtPRbUECgMLHaLGpTrm" \
 --collectionMintAddress \
 --mintName "Acc3ssory #4" \
 --mintSymbol "3moji-Acc" \
@@ -84,7 +89,8 @@ ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 
 ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 -k ./nft-composer-cli/wallet/test-wallet.json \
---parentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--oldParentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--newParentMintAddress "9dCuPNJCAfHNFibbaEyrv9ASZVtPRbUECgMLHaLGpTrm" \
 --collectionMintAddress "9z5BLacngiQig2JP4jkDgfo8ZDh3Rw26ndNTfurJbLNW" \
 --mintName "Acc3ssory #5" \
 --mintSymbol "3moji-Acc" \
@@ -95,7 +101,8 @@ ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 
 ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 -k ./nft-composer-cli/wallet/test-wallet.json \
---parentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--oldParentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--newParentMintAddress "9dCuPNJCAfHNFibbaEyrv9ASZVtPRbUECgMLHaLGpTrm" \
 --collectionMintAddress "tLVfmHKdkmMksQsaMSWnVh8D4eVGpQDSmBP4seY2k5H" \
 --mintName "Acc3ssory #6" \
 --mintSymbol "3moji-Acc" \
@@ -106,7 +113,8 @@ ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 
 ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 -k ./nft-composer-cli/wallet/test-wallet.json \
---parentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--oldParentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--newParentMintAddress "9dCuPNJCAfHNFibbaEyrv9ASZVtPRbUECgMLHaLGpTrm" \
 --collectionMintAddress "4nPgQk2pjdZcbTQas13cnNRZgvYwEqWeLPq7NTbPpnkC" \
 --mintName "Acc3ssory #7" \
 --mintSymbol "3moji-Acc" \
@@ -117,7 +125,8 @@ ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 
 ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 -k ./nft-composer-cli/wallet/test-wallet.json \
---parentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--oldParentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--newParentMintAddress "9dCuPNJCAfHNFibbaEyrv9ASZVtPRbUECgMLHaLGpTrm" \
 --collectionMintAddress "HLbUWf89FLZUxxAj1bcKZkFnMw1SsbpjQdJVt3VgMQz4" \
 --mintName "Acc3ssory #8" \
 --mintSymbol "3moji-Acc" \
@@ -128,7 +137,8 @@ ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 
 ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 -k ./nft-composer-cli/wallet/test-wallet.json \
---parentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--oldParentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--newParentMintAddress "9dCuPNJCAfHNFibbaEyrv9ASZVtPRbUECgMLHaLGpTrm" \
 --collectionMintAddress "3GWkeUEQ419JBEtfGP4GJyqEyRJJ4BRMkg9HhDxEHeBk" \
 --mintName "Acc3ssory #9" \
 --mintSymbol "3moji-Acc" \
@@ -139,7 +149,8 @@ ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 
 ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 -k ./nft-composer-cli/wallet/test-wallet.json \
---parentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--oldParentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--newParentMintAddress "9dCuPNJCAfHNFibbaEyrv9ASZVtPRbUECgMLHaLGpTrm" \
 --collectionMintAddress "BhJmTP4EkfjcNpWo7zWiaVhTPGxeVPArLibVocngJMgZ" \
 --mintName "Acc3ssory #10" \
 --mintSymbol "3moji-Acc" \
@@ -150,7 +161,8 @@ ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 
 ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 -k ./nft-composer-cli/wallet/test-wallet.json \
---parentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--oldParentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--newParentMintAddress "9dCuPNJCAfHNFibbaEyrv9ASZVtPRbUECgMLHaLGpTrm" \
 --collectionMintAddress "8Jk3eGra3q8xZ6E1gBpcbhZagsu4UjkNaHnPdd5WZMuf" \
 --mintName "Acc3ssory #11" \
 --mintSymbol "3moji-Acc" \
@@ -161,7 +173,8 @@ ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 
 ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 -k ./nft-composer-cli/wallet/test-wallet.json \
---parentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--oldParentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--newParentMintAddress "9dCuPNJCAfHNFibbaEyrv9ASZVtPRbUECgMLHaLGpTrm" \
 --collectionMintAddress "FxvZWGf6NwWPrHYYaB9CofeUJ3xoUgLUmRvTuTQ9ZHGV" \
 --mintName "Acc3ssory #12" \
 --mintSymbol "3moji-Acc" \
@@ -172,7 +185,8 @@ ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 
 ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 -k ./nft-composer-cli/wallet/test-wallet.json \
---parentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--oldParentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--newParentMintAddress "9dCuPNJCAfHNFibbaEyrv9ASZVtPRbUECgMLHaLGpTrm" \
 --collectionMintAddress "DUivj578AzPE2xmRrGsKvXWdnLHyRyNmETeBwqHMDDSx" \
 --mintName "Acc3ssory #13" \
 --mintSymbol "3moji-Acc" \
@@ -183,7 +197,8 @@ ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 
 ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 -k ./nft-composer-cli/wallet/test-wallet.json \
---parentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--oldParentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--newParentMintAddress "9dCuPNJCAfHNFibbaEyrv9ASZVtPRbUECgMLHaLGpTrm" \
 --collectionMintAddress "2LFxAyMP5Fa3WergozWERQxDfKzEVKDqbFyPpMh1LAja" \
 --mintName "Acc3ssory #14" \
 --mintSymbol "3moji-Acc" \
@@ -194,7 +209,8 @@ ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 
 ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 -k ./nft-composer-cli/wallet/test-wallet.json \
---parentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--oldParentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--newParentMintAddress "9dCuPNJCAfHNFibbaEyrv9ASZVtPRbUECgMLHaLGpTrm" \
 --collectionMintAddress "8cUoWQnymj7vzL6MZsdWYeUTYHcBDudq2f7RBURqxcbT" \
 --mintName "Acc3ssory #15" \
 --mintSymbol "3moji-Acc" \
@@ -205,7 +221,8 @@ ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 
 ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 -k ./nft-composer-cli/wallet/test-wallet.json \
---parentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--oldParentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--newParentMintAddress "9dCuPNJCAfHNFibbaEyrv9ASZVtPRbUECgMLHaLGpTrm" \
 --collectionMintAddress "6czNfCTXmrzzcQdp9MggVYH1jbtqmSH49V4tdVWwvEsG" \
 --mintName "Acc3ssory #16" \
 --mintSymbol "3moji-Acc" \
@@ -216,7 +233,8 @@ ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 
 ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 -k ./nft-composer-cli/wallet/test-wallet.json \
---parentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--oldParentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--newParentMintAddress "9dCuPNJCAfHNFibbaEyrv9ASZVtPRbUECgMLHaLGpTrm" \
 --collectionMintAddress "9NJMXwd2EVgxGJqn7HcCNBBJqsuDsAQYo6sGenv6xjyo" \
 --mintName "Acc3ssory #17" \
 --mintSymbol "3moji-Acc" \
@@ -227,7 +245,8 @@ ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 
 ts-node nft-minter-cli/src/nft-minter-cli.ts update_collection_nft \
 -k ./nft-composer-cli/wallet/test-wallet.json \
---parentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--oldParentMintAddress "9Y2wkZeSoLKs9njbj9EYcEbVSS47KHiNkMMeFa3PyWA" \
+--newParentMintAddress "9dCuPNJCAfHNFibbaEyrv9ASZVtPRbUECgMLHaLGpTrm" \
 --collectionMintAddress "E5AxWmF32SRYmok4gKY7yfxykibXrDCiZSYkgeLriWzX" \
 --mintName "Acc3ssory #18" \
 --mintSymbol "3moji-Acc" \
