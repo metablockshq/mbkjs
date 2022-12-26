@@ -244,9 +244,7 @@
           "name": "receiver",
           "isMut": false,
           "isSigner": false,
-          "docs": [
-            "CHECK : This the receiver who is receiving the NFT"
-          ]
+          "docs": ["CHECK : This the receiver who is receiving the NFT"]
         },
         {
           "name": "nftSafe",
@@ -388,9 +386,7 @@
           "name": "receiver",
           "isMut": false,
           "isSigner": false,
-          "docs": [
-            "CHECK : This the receiver who is receiving the NFT"
-          ]
+          "docs": ["CHECK : This the receiver who is receiving the NFT"]
         },
         {
           "name": "mint",
@@ -431,9 +427,7 @@
           "name": "nftCollectionAdmin",
           "isMut": false,
           "isSigner": false,
-          "docs": [
-            "CHECK : nft collection admin who created the mint"
-          ]
+          "docs": ["CHECK : nft collection admin who created the mint"]
         },
         {
           "name": "nftCollectionMint",
@@ -522,9 +516,7 @@
           "name": "nftCollectionAdmin",
           "isMut": false,
           "isSigner": false,
-          "docs": [
-            "CHECK : nft collection admin who created the mint"
-          ]
+          "docs": ["CHECK : nft collection admin who created the mint"]
         },
         {
           "name": "oldNftCollectionMint",
@@ -653,10 +645,7 @@
             "name": "signature",
             "type": {
               "option": {
-                "array": [
-                  "u8",
-                  64
-                ]
+                "array": ["u8", 64]
               }
             }
           },
@@ -664,10 +653,7 @@
             "name": "message",
             "type": {
               "option": {
-                "array": [
-                  "u8",
-                  32
-                ]
+                "array": ["u8", 32]
               }
             }
           }
@@ -946,19 +932,13 @@
           {
             "name": "signature",
             "type": {
-              "array": [
-                "u8",
-                64
-              ]
+              "array": ["u8", 64]
             }
           },
           {
             "name": "message",
             "type": {
-              "array": [
-                "u8",
-                32
-              ]
+              "array": ["u8", 32]
             }
           }
         ]
@@ -1198,6 +1178,6 @@
     }
   ],
   "metadata": {
-    "address": "nft2QH2R1f3iSzMDfBXEeuRMebYZzV4RW8WUSSphEKb"
+    "address": "devhRdhbqQh1kN4xb86tqVBKhQQTui7f3LBiphcLsvq"
   }
 }
