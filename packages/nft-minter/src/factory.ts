@@ -35,7 +35,7 @@ const getNftMinterProgram = (connection: Connection, wallet: any) => {
   const provider = getAnchorProvider(connection, wallet);
 
   const nftMinterProgramId = getNftMinterProgramId(connection);
-  console.log(nftMinterProgramId.toString());
+  //console.log(nftMinterProgramId.toString());
 
   const program = new Program<any>(
     nftMinterIdl,
