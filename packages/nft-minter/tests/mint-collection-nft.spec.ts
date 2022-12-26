@@ -77,7 +77,8 @@ describe('MINT Collection NFT', () => {
       );
 
       const [nftSafeAddress, _] = await pda.findNftSafeAddress(
-        creatorWallet.publicKey
+        creatorWallet.publicKey,
+        program
       );
 
       const adminNftSafeData = await program.account.nftSafe.fetch(

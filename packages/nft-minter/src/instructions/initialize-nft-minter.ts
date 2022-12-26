@@ -5,7 +5,7 @@ import { IntializeNftMinterArgs } from '../types/types';
 export const getInitializeNftMinterInstruction = async (
   args: IntializeNftMinterArgs
 ) => {
-  const [nftMinterAddress, _] = await pda.findNftMinterAddress();
+  const [nftMinterAddress, _] = await pda.findNftMinterAddress(args.program);
 
   const createNftMinterInstruction = await args.program.methods
     .initializeNftMinter()

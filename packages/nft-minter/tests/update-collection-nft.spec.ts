@@ -57,12 +57,14 @@ describe('Update Collection NFT', () => {
 
       const pdaKeys: SafePdaKeys = await getSafePdaKeys(
         creatorWallet.publicKey,
-        1
+        1,
+        program
       );
 
       const collectionPdaKeys: SafePdaKeys = await getSafePdaKeys(
         creatorWallet.publicKey,
-        2
+        2,
+        program
       );
 
       const args: UpdateCollectionNftApiArgs = {
@@ -104,17 +106,20 @@ describe('Update Collection NFT', () => {
 
       const pdaKeys: SafePdaKeys = await getSafePdaKeys(
         creatorWallet.publicKey,
-        1
+        1,
+        program
       );
 
       const collectionPdaKeys: SafePdaKeys = await getSafePdaKeys(
         creatorWallet.publicKey,
-        2
+        2,
+        program
       );
 
       const anotherPdaKeys: SafePdaKeys = await getSafePdaKeys(
         creatorWallet.publicKey, // the creator has to be same for updating with new collection mint address
-        3
+        3,
+        program
       );
 
       const args: UpdateCollectionNftApiArgs = {
@@ -151,7 +156,8 @@ async function mintCollectionNft(
   const testMessage = anotherWallet.publicKey.toBytes();
   const signature = nacl.sign.detached(testMessage, creatorKeypair.secretKey);
   const [nftSafeAddress, _] = await pda.findNftSafeAddress(
-    creatorWallet.publicKey
+    creatorWallet.publicKey,
+    program
   );
   const adminNftSafeData = await program.account.nftSafe.fetch(nftSafeAddress);
 

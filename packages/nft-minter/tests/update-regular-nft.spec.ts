@@ -31,7 +31,8 @@ describe('UPDATE REGULAR NFT', () => {
 
       const pdaKeys: SafePdaKeys = await getSafePdaKeys(
         creatorWallet.publicKey,
-        1
+        1,
+        program
       );
 
       const mintAddress = pdaKeys.mintAddress;

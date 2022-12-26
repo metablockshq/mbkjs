@@ -6,7 +6,10 @@ async function getInitNftSafeInstruction(args: {
   program: Program;
   payerAddress: PublicKey;
 }) {
-  const [nftSafeAddress, _1] = await findNftSafeAddress(args.payerAddress);
+  const [nftSafeAddress, _1] = await findNftSafeAddress(
+    args.payerAddress,
+    args.program
+  );
 
   const initNftSafeInstruction = await args.program.methods
     .initNftSafe()

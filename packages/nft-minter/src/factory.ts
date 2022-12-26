@@ -1,9 +1,6 @@
 import { Program, AnchorProvider } from '@project-serum/anchor';
 import { Connection, PublicKey } from '@solana/web3.js';
-
 import nftMinterIdl from './idl/nft_minter.json';
-
-//import { NftMinter } from './types/nft_minter';
 
 const programIds = {
   TOKEN_PROGRAM_ID: new PublicKey(
@@ -21,7 +18,10 @@ const programIds = {
   // TOKEN_METADATA_PROGRAM_ID: new PublicKey(
   //   'zpHebBS4xj9gX4RYfpJYJVFiucnYBjFsAZojh4mTuS1'
   // ),
-  NFT_MINTER_PROGRAM_ID: new PublicKey(nftMinterIdl.metadata.address),
+  MAINNET_NFT_MINTER_PROGRAM_ID: new PublicKey(nftMinterIdl.metadata.address),
+  DEVNET_NFT_MINTER_PROGRAMID: new PublicKey(
+    'devhRdhbqQh1kN4xb86tqVBKhQQTui7f3LBiphcLsvq'
+  ),
 };
 
 const getAnchorProvider = (conn: Connection, wallet: any) => {
@@ -31,14 +31,25 @@ const getAnchorProvider = (conn: Connection, wallet: any) => {
   });
 };
 
-const getNftMinterProgram = (conn: Connection, wallet: any) => {
-  const provider = getAnchorProvider(conn, wallet);
+const getNftMinterProgram = (connection: Connection, wallet: any) => {
+  const provider = getAnchorProvider(connection, wallet);
+
+  const nftMinterProgramId = getNftMinterProgramId(connection);
+
   const program = new Program<any>(
     nftMinterIdl,
-    programIds.NFT_MINTER_PROGRAM_ID,
+    nftMinterProgramId,
     provider
   ) as Program<any>;
   return program;
+};
+
+const getNftMinterProgramId = (connection: Connection) => {
+  if (connection.rpcEndpoint.includes('dev')) {
+    return programIds.DEVNET_NFT_MINTER_PROGRAMID;
+  }
+
+  return programIds.MAINNET_NFT_MINTER_PROGRAM_ID;
 };
 
 export { getNftMinterProgram, getAnchorProvider, programIds };
