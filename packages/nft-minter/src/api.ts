@@ -77,7 +77,7 @@ const mintRegularNft = async (args: MintRegularNftApiArgs) => {
     const program = getNftMinterProgram(args.connection, args.wallet);
     const usersKey = args.wallet.publicKey;
 
-    const [nftSafeAddress, _] = await findNftSafeAddress(usersKey);
+    const [nftSafeAddress, _] = await findNftSafeAddress(usersKey, program);
 
     let nftSafeData = null;
 
@@ -97,7 +97,8 @@ const mintRegularNft = async (args: MintRegularNftApiArgs) => {
 
     const pdaKeys: SafePdaKeys = await getSafePdaKeys(
       usersKey,
-      nftSafeData.nftCount
+      nftSafeData.nftCount,
+      program
     );
 
     let creators: Array<Creator> | null = null;
@@ -155,7 +156,8 @@ const mintCollectionNft = async (args: MintCollectionNftApiArgs) => {
     const usersKey = args.wallet.publicKey;
 
     const [nftSafeAddress, _] = await findNftSafeAddress(
-      args.nftCollectionAdmin
+      args.nftCollectionAdmin,
+      program
     );
 
     let adminNftSafeData = null;
@@ -182,14 +184,16 @@ const mintCollectionNft = async (args: MintCollectionNftApiArgs) => {
 
     const adminPdaKeys: SafePdaKeys = await getSafePdaKeys(
       args.nftCollectionAdmin,
-      parentNftCount - 1 // nft parent nft nft count // this has to be -1 count to be changed in future
+      parentNftCount - 1, // nft parent nft nft count // this has to be -1 count to be changed in future
+      program
     );
 
     // console.log(parentNftCount);
 
     const pdaKeys: SafePdaKeys = await getSafePdaKeys(
       args.nftCollectionAdmin,
-      adminNftSafeData.nftCount // should be latest nft count
+      adminNftSafeData.nftCount, // should be latest nft count
+      program
     );
 
     let creators: Array<Creator> | null = null;
@@ -271,7 +275,7 @@ const updateRegularNft = async (args: UpdateRegularNftApiArgs) => {
     const program = getNftMinterProgram(args.connection, args.wallet);
     const usersKey = args.wallet.publicKey;
 
-    const [nftSafeAddress, _] = await findNftSafeAddress(usersKey);
+    const [nftSafeAddress, _] = await findNftSafeAddress(usersKey, program);
 
     let nftSafeData = null;
 
@@ -287,7 +291,7 @@ const updateRegularNft = async (args: UpdateRegularNftApiArgs) => {
     const nftCounts = nftSafeData.nftCount + 1;
 
     for (let i = 0; i < nftCounts; i++) {
-      pdaKeys = await getSafePdaKeys(usersKey, i);
+      pdaKeys = await getSafePdaKeys(usersKey, i, program);
       if (pdaKeys.mintAddress.toString() === args.mintAddress.toString()) {
         break;
       }
@@ -345,7 +349,8 @@ const updateCollectionNft = async (args: UpdateCollectionNftApiArgs) => {
     const usersKey = args.wallet.publicKey;
 
     const [nftSafeAddress, _] = await findNftSafeAddress(
-      args.parentNftAdminAddress
+      args.parentNftAdminAddress,
+      program
     );
 
     let adminNftSafeData = null;
@@ -361,7 +366,7 @@ const updateCollectionNft = async (args: UpdateCollectionNftApiArgs) => {
     //console.log(adminNftSafeData.nftCount + 1);
 
     for (let i = 0; i < adminNftSafeData.nftCount + 1; i++) {
-      adminPdaKeys = await getSafePdaKeys(usersKey, i);
+      adminPdaKeys = await getSafePdaKeys(usersKey, i, program);
 
       if (
         adminPdaKeys.mintAddress.toString() ===

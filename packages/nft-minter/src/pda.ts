@@ -1,3 +1,4 @@
+import { Program } from '@project-serum/anchor';
 import { Keypair, PublicKey } from '@solana/web3.js';
 import { programIds } from './factory';
 
@@ -37,37 +38,45 @@ const findMasterEditionAddress = async (mint: PublicKey) => {
   );
 };
 
-const findNftMinterAddress = async () => {
+const findNftMinterAddress = async (program: Program<any>) => {
   return await PublicKey.findProgramAddress(
     [Buffer.from('nft-minter')],
-    programIds.NFT_MINTER_PROGRAM_ID
+    program.programId
   );
 };
 
-const findClaimAddress = async (claimant: PublicKey, mint: PublicKey) => {
+const findClaimAddress = async (
+  claimant: PublicKey,
+  mint: PublicKey,
+  program: Program
+) => {
   return await PublicKey.findProgramAddress(
     [Buffer.from('nft-minter'), claimant.toBuffer(), mint.toBuffer()],
-    programIds.NFT_MINTER_PROGRAM_ID
+    program.programId
   );
 };
 
-const findMintAddress = async (claimant: PublicKey) => {
+const findMintAddress = async (claimant: PublicKey, program: Program) => {
   return await PublicKey.findProgramAddress(
     [Buffer.from('nft-minter'), claimant.toBuffer()],
-    programIds.NFT_MINTER_PROGRAM_ID
+    program.programId
   );
 };
 
-export const findNftSafeAddress = async (creator: PublicKey) => {
+export const findNftSafeAddress = async (
+  creator: PublicKey,
+  program: Program
+) => {
   return await PublicKey.findProgramAddress(
     [Buffer.from('nft-safe'), creator.toBuffer()],
-    programIds.NFT_MINTER_PROGRAM_ID
+    program.programId
   );
 };
 
 export const findNftSafeMintAddress = async (
   creator: PublicKey,
-  nftCount: number
+  nftCount: number,
+  program: Program
 ) => {
   return await PublicKey.findProgramAddress(
     [
@@ -75,7 +84,7 @@ export const findNftSafeMintAddress = async (
       creator.toBuffer(),
       Buffer.from(nftCount.toString()),
     ],
-    programIds.NFT_MINTER_PROGRAM_ID
+    program.programId
   );
 };
 
@@ -93,15 +102,17 @@ export interface PdaKeys {
 }
 
 export const getPdaKeys = async (
-  claimantWallet: PublicKey
+  claimantWallet: PublicKey,
+  program: Program
 ): Promise<PdaKeys> => {
-  const [nftMinterAddress, _] = await findNftMinterAddress();
+  const [nftMinterAddress, _] = await findNftMinterAddress(program);
 
-  const [mintAddress, _2] = await findMintAddress(claimantWallet);
+  const [mintAddress, _2] = await findMintAddress(claimantWallet, program);
 
   const [claimAddress, _3] = await findClaimAddress(
     claimantWallet,
-    mintAddress
+    mintAddress,
+    program
   );
 
   const [claimantMintAta, _4] = await findAssociatedTokenAddress(
@@ -148,13 +159,15 @@ export interface SafePdaKeys {
 
 export const getSafePdaKeys = async (
   payerAddress: PublicKey,
-  nftCount: number
+  nftCount: number,
+  program: Program<any>
 ): Promise<SafePdaKeys> => {
-  const [nftSafeAddress, _1] = await findNftSafeAddress(payerAddress);
+  const [nftSafeAddress, _1] = await findNftSafeAddress(payerAddress, program);
 
   const [nftSafeMintAddress, nftMintBump] = await findNftSafeMintAddress(
     payerAddress,
-    nftCount
+    nftCount,
+    program
   );
 
   const [payerMintAta, _5] = await findAssociatedTokenAddress(
