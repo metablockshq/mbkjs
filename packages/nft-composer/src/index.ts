@@ -6,4 +6,4 @@ export * as utils from './accounts/utils';
 export * from './types';
 export * from './error';
 export * as accountsApi from './accounts';
-export * as configApi from './config-api';
+export * as configApi from './configApi';
