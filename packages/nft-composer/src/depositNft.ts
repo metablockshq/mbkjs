@@ -24,9 +24,9 @@ import {
   getInitReceiptInstruction,
 } from './instructions/depositInstructions';
 import { getRawTokenAccount } from './accounts';
-import * as configApi from './config-api';
+import * as configApi from './configApi';
 import { sendTransactions } from './utils/transaction';
-import { getMetaNftUrl, getReceiptUrl } from './api';
+import { getMetaNftUrl, getReceiptUrl } from './getApi';
 
 const depositNft = async (args: GroupedDepositNftApiArgs) => {
   try {
@@ -73,12 +73,13 @@ const depositNft = async (args: GroupedDepositNftApiArgs) => {
         pdaKeys.metaBlocksAuthority
       );
     } catch (err) {
-      const initMetaBlocksAuthorityInstruction =
-        await getInitMetaBlocksAuthorityInstruction({
+      const initMetaBlocksAuthorityInstruction = await getInitMetaBlocksAuthorityInstruction(
+        {
           pdaKeys: pdaKeys,
           usersKey: usersKey,
           program: program,
-        });
+        }
+      );
       transaction1.add(initMetaBlocksAuthorityInstruction);
     }
 
@@ -196,12 +197,13 @@ const depositNftV1 = async (args: GroupedDepositNftApiArgs) => {
         pdaKeys.metaBlocksAuthority
       );
     } catch (err) {
-      const initMetaBlocksAuthorityInstruction =
-        await getInitMetaBlocksAuthorityInstruction({
+      const initMetaBlocksAuthorityInstruction = await getInitMetaBlocksAuthorityInstruction(
+        {
           pdaKeys: pdaKeys,
           usersKey: usersKey,
           program: program,
-        });
+        }
+      );
       initInstructions.push(initMetaBlocksAuthorityInstruction);
     }
 
@@ -334,12 +336,13 @@ const depositRawNft = async (args: GroupedDepositRawNftApiArgs) => {
         pdaKeys.metaBlocksAuthority
       );
     } catch (err) {
-      const initMetaBlocksAuthorityInstruction =
-        await getInitMetaBlocksAuthorityInstruction({
+      const initMetaBlocksAuthorityInstruction = await getInitMetaBlocksAuthorityInstruction(
+        {
           pdaKeys: pdaKeys,
           usersKey: usersKey,
           program: program,
-        });
+        }
+      );
       transaction1.add(initMetaBlocksAuthorityInstruction);
     }
 
