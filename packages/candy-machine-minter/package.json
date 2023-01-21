@@ -1,6 +1,6 @@
 {
   "name": "@mbkjs/candy-machine-minter",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Candy machine bindings",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
