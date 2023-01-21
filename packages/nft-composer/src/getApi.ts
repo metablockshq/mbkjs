@@ -267,7 +267,7 @@ const getReceiptUrl = async (args: {
       receiptUrl: receiptUrl,
     });
 
-    return shortenedReceiptUri(receiptShortenedResult.meta_blocks.short_id);
+    return shortenedReceiptUri(receiptShortenedResult.mbkSchemaData.shortId);
   } catch (err) {
     throw err;
   }
@@ -294,7 +294,7 @@ const getMetaNftUrl = async (args: {
       receiptUrl: receiptUrl,
     });
 
-    return shortIdToMetaDataUrl(metaNftShortIdResult.meta_blocks.short_id);
+    return shortIdToMetaDataUrl(metaNftShortIdResult.mbkSchemaData.shortId);
   } catch (e) {
     let err: any = e;
     if (

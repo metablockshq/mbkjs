@@ -28,9 +28,9 @@ describe('Test URL shortners', () => {
         receiptUrl:
           'https://ctvymyaq3e.execute-api.ap-south-1.amazonaws.com/Prod/receipt-shortener',
       });
-      //console.log(result.meta_blocks.short_id);
+      //console.log(result.mbkSchemaData.shortId);
 
-      assert.isOk(result.meta_blocks.shortId.length > 0);
+      assert.isOk(result.mbkSchemaData.shortId.length > 0);
     } catch (err: any) {
       if (err.response) {
         console.log(err.response.data);
