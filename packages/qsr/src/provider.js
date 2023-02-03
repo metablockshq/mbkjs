@@ -30,10 +30,8 @@ const SolanaProvider = ({ children, config, endpoint }) => {
       new SolflareWalletAdapter(),
       new TorusWalletAdapter(),
       new LedgerWalletAdapter(),
-      new SolletWalletAdapter({ network }),
-      new SolletExtensionWalletAdapter({ network }),
     ],
-    [network]
+    []
   );
 
   return (
