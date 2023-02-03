@@ -22,11 +22,7 @@ import { clusterApiUrl } from "@solana/web3.js";
 
 // 1. The styles for this component are imported in styles/app.css
 // 2. The network can be set to 'devnet', 'testnet', or 'mainnet-beta'.
-const SolanaProvider = ({ children, network }) => {
-  const endpoint = useMemo(() => clusterApiUrl(network), [network]);
-  //const endpoint = useMemo(() => "http://localhost:8899");
-  const config = { commitment: "confirmed" };
-
+const SolanaProvider = ({ children, config, endpoint }) => {
   const wallets = useMemo(
     () => [
       new PhantomWalletAdapter(),
@@ -41,7 +37,10 @@ const SolanaProvider = ({ children, network }) => {
   );
 
   return (
-    <ConnectionProvider endpoint={endpoint} config={config}>
+    <ConnectionProvider
+      endpoint={endpoint}
+      config={config || { commitment: "recent" }}
+    >
       <WalletProvider wallets={wallets} autoConnect={true}>
         <WalletModalProvider>{children}</WalletModalProvider>
       </WalletProvider>
